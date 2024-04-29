@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserProfileComponent } from './user-profile.component';
+import { FormPersonaNaturalComponent } from './form-persona-natural.component';
 
-describe('UserProfileComponent', () => {
-  let component: UserProfileComponent;
-  let fixture: ComponentFixture<UserProfileComponent>;
+describe('FormPersonaNaturalComponent', () => {
+  let component: FormPersonaNaturalComponent;
+  let fixture: ComponentFixture<FormPersonaNaturalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserProfileComponent ]
+      declarations: [ FormPersonaNaturalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserProfileComponent);
+    fixture = TestBed.createComponent(FormPersonaNaturalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
