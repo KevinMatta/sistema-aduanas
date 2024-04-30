@@ -5,7 +5,7 @@
       <div class="card">
         <div class="card-header">
           <h5 class="title">
-            SP009 - SOLICITUD DE CONTRATO DE ADHESION PARA PERSONA NATURAL
+            SP011 - SOLICITUD DE CONTRATO DE ADHESION PARA PERSONA JURIDICA
           </h5>
         </div>
         <div class="card-body">
@@ -21,51 +21,6 @@
                     placeholder="05012005042021"
                     maxlength="20"
                   />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="archivoRTN">Archivo de RTN Solicitante</label>
-                  <input type="file" class="form-control" id="archivoRTN" />
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Documento Nacional de Identificación (DNI)</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="0501200504202"
-                    maxlength="20"
-                  />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="archivoRTN"
-                    >Archivo de Documento Nacional de Identificación (DNI)
-                  </label>
-                  <input type="file" class="form-control" id="archivoRTN" />
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label
-                    >Número Recibo de Servicio Público (ENEE, SANAA, etc.)
-                  </label>
-                  <input type="text" class="form-control" maxlength="20" />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="archivoRTN"
-                    >Archivo del Recibo Servicio Público
-                  </label>
-                  <input type="file" class="form-control" id="archivoRTN" />
                 </div>
               </div>
             </div>
@@ -91,7 +46,8 @@
                       </select>
                     </td>
                     <td>
-                      SD001 - OFICINA REGIONAL DE ADUANAS MÁS CERCANA
+                      SD001 - OFICINA DONDE PRESENTARA LA SOLICITUD Y
+                      DOCUMENTACION
                       <span style="color: red">*</span>
                     </td>
                   </tr>
@@ -105,7 +61,7 @@
                       </select>
                     </td>
                     <td>
-                      SD106 - ESTADO CIVIL DE LA PERSONA
+                      SD106 - ESTADO CIVIL DEL COMERCIANTE
                       <span style="color: red">*</span>
                     </td>
                   </tr>
@@ -119,9 +75,53 @@
                       </select>
                     </td>
                     <td>
-                      SD108 - PROFESIÓN U OFICIO DE LA PERSONA (SEGUN
+                      SD298 - PROFESION U OFICIO DEL REPRESENTANTE LEGAL (SEGUN
                       CLASIFICADOR NACIONAL DE OCUPACIONES DE HONDURAS,
                       CNOH-2018) <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <select class="form-select">
+                        <option selected>- Seleccione -</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                    </td>
+                    <td>
+                      SD109 - FORMA DE REPRESENTACION
+                      <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <select class="form-select">
+                        <option selected>- Seleccione -</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                    </td>
+                    <td>
+                      SD296 - ESTADO CIVIL DEL REPRESENTANTE LEGAL (SI HA
+                      INFORMADO REPRESENTACION BAJO REPRESENTANTE LEGAL)
+                      <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <select class="form-select">
+                        <option selected>- Seleccione -</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                    </td>
+                    <td>
+                      SD298 - PROFESION U OFICIO DEL REPRESENTANTE LEGAL (SI HA
+                      INFORMADO REPRESENTACION BAJO REPRESENTANTE LEGAL)
+                      <span style="color: red">*</span>
                     </td>
                   </tr>
                   <tr>
@@ -148,12 +148,83 @@
                     <td>
                       <input type="text" class="form-control" />
                     </td>
+                    <td>SD302 - ALDEA (EN CASO DE HABER)</td>
+                  </tr>
+                  <tr>
                     <td>
-                      SD007 - DIRECCIÓN COMPLETA (INCLUYA SEGÚN APLIQUE: ALDEA,
-                      CALLE Y AVENIDA, BARRIO O COLONIA, EDIFICIO O NÚMERO DE
-                      LOCAL, APARTAMENTO, Y PUNTOS DE REFERENCIA)
+                      <input type="text" class="form-control" />
+                    </td>
+                    <td>SD303 - CALLE Y AVENIDA (EN CASO DE HABER)</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" class="form-control" />
+                    </td>
+                    <td>
+                      SD304 - BARRIO O COLONIA <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" class="form-control" />
+                    </td>
+                    <td>
+                      SD305 - EDIFICIO CON NUMERO DE LOCAL O APARTAMENTO
                       <span style="color: red">*</span>
                     </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" class="form-control" />
+                    </td>
+                    <td>SD306 - PUNTOS DE REFERENCIA (EN CASO DE HABER)</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <select class="form-select">
+                        <option selected>- Seleccione -</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                    </td>
+                    <td>SD310 - DEPARTAMENTO Y MUNICIPIO</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" class="form-control" />
+                    </td>
+                    <td>SD311 - CIUDAD</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" class="form-control" />
+                    </td>
+                    <td>SD312 - ALDEA (EN CASO DE HABER)</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" class="form-control" />
+                    </td>
+                    <td>SD313 - CALLE Y AVENIDA (EN CASO DE HABER)</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" class="form-control" />
+                    </td>
+                    <td>SD314 - BARRIO O COLONIA</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" class="form-control" />
+                    </td>
+                    <td>SD315 - EDIFICIO CON NUMERO DE LOCAL O APARTAMENTO</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" class="form-control" />
+                    </td>
+                    <td>SD316 - PUNTOS DE REFERENCIA (EN CASO DE HABER)</td>
                   </tr>
                   <tr>
                     <td>
@@ -192,6 +263,67 @@
                     </td>
                     <td>
                       SD201 - CORREO ELECTRÓNICO ALTERNATIVO
+                      <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h6>Datos a Informar</h6>
+            <small
+              >- Todos los datos marcados con un
+              <span style="color: red">*</span> son requeridos.</small
+            >
+            <div class="" style="overflow-x: auto">
+              <table class="table table-bordered">
+                <thead class="text-primary">
+                  <th>
+                    Dato
+                    <p>
+                      Solo se aceptan caracteres alfanuméricos, no utilice
+                      espacios, comas, puntos, etc.
+                    </p>
+                  </th>
+                  <th>Descripcion</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <input type="text" class="form-control" />
+                    </td>
+                    <td>
+                      SS100 - REGISTRO TRIBUTARIO NACIONAL (RTN) DE LA SOCIEDAD
+                      MERCANTIL
+                      <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" class="form-control" />
+                    </td>
+                    <td>
+                      SS128 - REGISTRO TRIBUTARIO NACIONAL (RTN) DEL
+                      REPRESENTANTE LEGAL
+                      <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" class="form-control" />
+                    </td>
+                    <td>
+                      SS018 - DOCUMENTO O TARJETA DE IDENTIDAD DEL REPRESENTANTE
+                      LEGAL
+                      <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" class="form-control" />
+                    </td>
+                    <td>
+                      SS027 - ESCRITURA PUBLICA DE CONSTITUCIÓN Y SUS
+                      MODIFICACIONES SI LAS HUBIERA (DE LA SOCIEDAD MERCANTIL)
                       <span style="color: red">*</span>
                     </td>
                   </tr>
