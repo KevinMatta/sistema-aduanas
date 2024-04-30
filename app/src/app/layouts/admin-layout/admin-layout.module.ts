@@ -4,7 +4,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { FormPersonaNaturalComponent } from '../../form-persona-natural/form-persona-natural.component';
+import { FormPersonaNaturalComponent } from '../../PersonasNaturales/form-persona-natural/form-persona-natural.component';
+import { FormComercianteIndividualComponent } from '../../form-comerciante-individual/form-comerciante-individual.component';
+import { FormPersonaJuridicaComponent } from '../../form-persona-juridica/form-persona-juridica.component';
 import { TableListComponent } from '../../table-list/table-list.component';
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
@@ -27,6 +29,8 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
   declarations: [
     DashboardComponent,
     FormPersonaNaturalComponent,
+    FormComercianteIndividualComponent,
+    FormPersonaJuridicaComponent,
     TableListComponent,
     UpgradeComponent,
     TypographyComponent,

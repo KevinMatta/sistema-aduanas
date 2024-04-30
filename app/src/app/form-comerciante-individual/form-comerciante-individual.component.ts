@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+// import {} from '../components/form-ubicacion/form-ubicacion.component';
 
 @Component({
   selector: 'app-form-comerciante-individual',

@@ -1238,7 +1238,7 @@ textarea.form-control:focus, textarea.form-control:active {
 .form-horizontal .label-on-right {
   padding: 10px 5px 0 15px;
   text-align: right;
-  max-width: 180px;
+  max-width: 179px;
 }
 .form-horizontal .checkbox-radios {
   margin-bottom: 15px;
@@ -4405,4 +4405,4 @@ Created using IcoMoon - icomoon.io
   }
 }
 
-/*# sourceMappingURL=now-ui-dashboard.css.map
+/*# sourceMappingURL=now-ui-dashboard.css.map */

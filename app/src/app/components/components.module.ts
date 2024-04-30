@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { FooterComponent } from './footer/footer.component';
+import { FormUbicacionComponent } from './form-ubicacion/form-ubicacion.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
@@ -17,11 +18,15 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     FooterComponent,
     NavbarComponent,
     SidebarComponent
+    // ,
+    // FormUbicacionComponent
   ],
   exports: [
     FooterComponent,
     NavbarComponent,
     SidebarComponent
+    // ,
+    // FormUbicacionComponent
   ]
 })
 export class ComponentsModule { }

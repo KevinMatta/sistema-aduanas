@@ -1,7 +1,7 @@
 <div class="panel-header panel-header-sm"></div>
 <div class="main-content">
   <div class="row">
-    <div class="col-md-8">
+    <div class="col">
       <div class="card">
         <div class="card-header">
           <h5 class="title">
@@ -32,19 +32,20 @@
             >
             <div class="" style="overflow-x: auto">
               <table class="table table-bordered">
-                <thead class="text-primary">
+                <thead class="text-primary" style="background-color: rgba(0, 0, 0, 0.02);">
                   <th>Dato</th>
                   <th>Descripcion</th>
                 </thead>
                 <tbody>
                   <tr>
                     <td>
-                      <select class="form-select">
-                        <option selected>- Seleccione -</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
+                      <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>- Seleccionar -</button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                          <button class="dropdown-item">Action - 1</button>
+                          <button class="dropdown-item">Action - 2</button>
+                        </div>
+                      </div>
                     </td>
                     <td>
                       SD001 - OFICINA DONDE PRESENTARA LA SOLICITUD Y
@@ -54,12 +55,13 @@
                   </tr>
                   <tr>
                     <td>
-                      <select class="form-select">
-                        <option selected>- Seleccione -</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
+                      <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>- Seleccionar -</button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                          <button class="dropdown-item">Action - 1</button>
+                          <button class="dropdown-item">Action - 2</button>
+                        </div>
+                      </div>
                     </td>
                     <td>
                       SD106 - ESTADO CIVIL DEL COMERCIANTE
@@ -68,12 +70,13 @@
                   </tr>
                   <tr>
                     <td>
-                      <select class="form-select">
-                        <option selected>- Seleccione -</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
+                      <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>- Seleccionar -</button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                          <button class="dropdown-item">Action - 1</button>
+                          <button class="dropdown-item">Action - 2</button>
+                        </div>
+                      </div>
                     </td>
                     <td>
                       SD108 - PROFESION U OFICIO DEL COMERCIANTE (SEGUN
@@ -83,12 +86,13 @@
                   </tr>
                   <tr>
                     <td>
-                      <select class="form-select">
-                        <option selected>- Seleccione -</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
+                      <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>- Seleccionar -</button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                          <button class="dropdown-item">Action - 1</button>
+                          <button class="dropdown-item">Action - 2</button>
+                        </div>
+                      </div>
                     </td>
                     <td>
                       SD109 - FORMA DE REPRESENTACION
@@ -97,12 +101,13 @@
                   </tr>
                   <tr>
                     <td>
-                      <select class="form-select">
-                        <option selected>- Seleccione -</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
+                      <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>- Seleccionar -</button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                          <button class="dropdown-item">Action - 1</button>
+                          <button class="dropdown-item">Action - 2</button>
+                        </div>
+                      </div>
                     </td>
                     <td>
                       SD296 - ESTADO CIVIL DEL REPRESENTANTE LEGAL (SI HA
@@ -112,12 +117,13 @@
                   </tr>
                   <tr>
                     <td>
-                      <select class="form-select">
-                        <option selected>- Seleccione -</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
+                      <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>- Seleccionar -</button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                          <button class="dropdown-item">Action - 1</button>
+                          <button class="dropdown-item">Action - 2</button>
+                        </div>
+                      </div>
                     </td>
                     <td>
                       SD298 - PROFESION U OFICIO DEL REPRESENTANTE LEGAL (SI HA
@@ -125,69 +131,17 @@
                       <span style="color: red">*</span>
                     </td>
                   </tr>
+                  <!-- <form-ubicacion></form-ubicacion> -->
+                  <tr><td colspan="2" class="text-primary" style="background-color: rgba(0, 0, 0, 0.02);">DOMICILIO DEL REPRESENTANTE LEGAL (SI HUBIESE INFORMADO REPRESENTACION BAJO UN REPRESENTANTE LEGAL)</td></tr>
                   <tr>
                     <td>
-                      <select class="form-select">
-                        <option selected>- Seleccione -</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                    </td>
-                    <td>
-                      SD006 - DEPARTAMENTO Y MUNICIPIO
-                      <span style="color: red">*</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="text" class="form-control" />
-                    </td>
-                    <td>SD301 - CIUDAD <span style="color: red">*</span></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="text" class="form-control" />
-                    </td>
-                    <td>SD302 - ALDEA (EN CASO DE HABER)</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="text" class="form-control" />
-                    </td>
-                    <td>SD303 - CALLE Y AVENIDA (EN CASO DE HABER)</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="text" class="form-control" />
-                    </td>
-                    <td>
-                      SD304 - BARRIO O COLONIA <span style="color: red">*</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="text" class="form-control" />
-                    </td>
-                    <td>
-                      SD305 - EDIFICIO CON NUMERO DE LOCAL O APARTAMENTO
-                      <span style="color: red">*</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="text" class="form-control" />
-                    </td>
-                    <td>SD306 - PUNTOS DE REFERENCIA (EN CASO DE HABER)</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <select class="form-select">
-                        <option selected>- Seleccione -</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
+                      <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>- Seleccionar -</button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                          <button class="dropdown-item">Action - 1</button>
+                          <button class="dropdown-item">Action - 2</button>
+                        </div>
+                      </div>
                     </td>
                     <td>SD310 - DEPARTAMENTO Y MUNICIPIO</td>
                   </tr>
@@ -221,6 +175,7 @@
                     </td>
                     <td>SD315 - EDIFICIO CON NUMERO DE LOCAL O APARTAMENTO</td>
                   </tr>
+                  <tr><td colspan="2" class="text-primary" style="background-color: rgba(0, 0, 0, 0.02);">INFORMACION DE CONTACTO (EN EL CONTRATO DE ADHESION SE MOSTRARA LOS NUMEROS DE TELEFONO REGISTRADOS EN LA ADMINISTRACION TRIBUTARIA)</td></tr>
                   <tr>
                     <td>
                       <input type="text" class="form-control" />
@@ -277,15 +232,17 @@
             >
             <div class="" style="overflow-x: auto">
               <table class="table table-bordered">
-                <thead class="text-primary">
+                <thead class="text-primary" style="background-color: rgba(0, 0, 0, 0.02);">
                   <th>
-                    Dato
-                    <p>
+                    <p style="margin-bottom: 0;">
+                      Dato
+                    </p>
+                    <small style="font-weight: 600;">
                       Solo se aceptan caracteres alfanuméricos, no utilice
                       espacios, comas, puntos, etc.
-                    </p>
+                    </small>
                   </th>
-                  <th>Descripcion</th>
+                  <th class="d-flex align-items-start"><div>Descripcion</div></th>
                 </thead>
                 <tbody>
                   <tr>
@@ -341,61 +298,7 @@
                 </tbody>
               </table>
             </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>About Me</label>
-                  <textarea
-                    rows="4"
-                    cols="80"
-                    class="form-control"
-                    placeholder="Here can be your description"
-                    value="Mike"
-                  >
-Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</textarea
-                  >
-                </div>
-              </div>
-            </div>
           </form>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card card-user">
-        <div class="image">
-          <img src="../assets/img/bg5.jpg" alt="..." />
-        </div>
-        <div class="card-body">
-          <div class="author">
-            <a href="#">
-              <img
-                class="avatar border-gray"
-                src="../assets/img/mike.jpg"
-                alt="..."
-              />
-              <h5 class="title">Mike Andrew</h5>
-            </a>
-            <p class="description">michael24</p>
-          </div>
-          <p class="description text-center">
-            "Lamborghini Mercy
-            <br />
-            Your chick she so thirsty <br />
-            I'm in that two seat Lambo"
-          </p>
-        </div>
-        <hr />
-        <div class="button-container">
-          <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-            <i class="fab fa-facebook-f"></i>
-          </button>
-          <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-            <i class="fab fa-twitter"></i>
-          </button>
-          <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-            <i class="fab fa-google-plus-g"></i>
-          </button>
         </div>
       </div>
     </div>
