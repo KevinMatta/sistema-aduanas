@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormComercianteIndividualComponent } from './form-comerciante-individual.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+// import { FormUbicacionComponent } from '../form-ubicacion/form-ubicacion.component';
 
 describe('FormComercianteIndividualComponent', () => {
   let component: FormComercianteIndividualComponent;
@@ -8,7 +10,8 @@ describe('FormComercianteIndividualComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormComercianteIndividualComponent ]
+      declarations: [ FormComercianteIndividualComponent],
+      schemas: [NO_ERRORS_SCHEMA],
     })
     .compileComponents();
   }));
