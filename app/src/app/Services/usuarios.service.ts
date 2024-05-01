@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { DataService } from './data.service'; // Import the DataService interface
+import { DataService } from './data.service';
+import { APIResponse } from '../Models/APIResponseViewModel';
 import { Usuario } from '../Models/UsuariosViewModel';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -10,13 +12,15 @@ import { Usuario } from '../Models/UsuariosViewModel';
 export class UsuariosService implements DataService {
     constructor(private http: HttpClient) {}
 
-    Url = "https://jsonplaceholder.typicode.com/posts";
+    Url = "http://api-aduana.somee.com/API/Usuario/List";
 
     getData(): Observable<any[]> {
         return this.getUsuarios();
     }
 
     getUsuarios(): Observable<Usuario[]> {
-        return this.http.get<Usuario[]>(this.Url);
+        return this.http.get<APIResponse<Usuario[]>>(this.Url).pipe(
+            map(response => response.data.reduce((acc, curr) => acc.concat(curr), []))
+        );
     }
 }
