@@ -8,6 +8,8 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'design_app', class: '' },
+    { path: '/index-usuarios', title: 'Usuarios',  icon:'text_caps-small', class: '', },
+    { path: '/index-roles', title: 'Roles',  icon:'text_caps-small', class: '', },
     { path: '/icons', title: 'Icons',  icon:'education_atom', class: '' },
     { path: '/maps', title: 'Maps',  icon:'location_map-big', class: '' },
     { path: '/notifications', title: 'Notifications',  icon:'ui-1_bell-53', class: '' },
@@ -15,8 +17,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/form-comerciante-individual', title: 'Comerciante individual',  icon:'users_single-02', class: '' },
     { path: '/form-persona-juridica', title: 'Persona Juridica',  icon:'shopping_shop', class: '' },
     { path: '/table-list', title: 'Table List',  icon:'design_bullet-list-67', class: '' },
-    { path: '/typography', title: 'Typography',  icon:'text_caps-small', class: '' },
-    { path: '/upgrade', title: 'Upgrade to PRO',  icon:'objects_spaceship', class: 'active active-pro' }
+    { path: '/login', title: 'Iniciar Sesión',  icon:'objects_spaceship', class: 'active active-pro' }
 
 ];
 

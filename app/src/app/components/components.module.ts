@@ -10,6 +10,8 @@ import { FormPersonaNaturalComponent } from './form-persona-natural/form-persona
 import { FormPersonaJuridicaComponent } from './form-persona-juridica/form-persona-juridica.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { IndexListaComponent } from './index-lista/index-lista.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   imports: [
@@ -24,7 +26,9 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     FormUbicacionComponent,
     FormPersonaNaturalComponent,
     FormComercianteIndividualComponent,
-    FormPersonaJuridicaComponent
+    FormPersonaJuridicaComponent,
+    IndexListaComponent,
+    LoginComponent
   ],
   exports: [
     FooterComponent,
@@ -33,7 +37,9 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     FormUbicacionComponent,
     FormPersonaNaturalComponent,
     FormComercianteIndividualComponent,
-    FormPersonaJuridicaComponent
+    FormPersonaJuridicaComponent,
+    IndexListaComponent,
+    LoginComponent
   ],
   schemas: [NO_ERRORS_SCHEMA],
 })

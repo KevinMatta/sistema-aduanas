@@ -1,0 +1,59 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Lista de {{ titulo }}</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="" style="overflow-x: auto">
+              <table class="table">
+                <thead class="text-primary">
+                  <tr>
+                    <th *ngFor="let prop of obtenerColumnas()">{{ prop }}</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of lista">
+                    <td *ngFor="let prop of obtenerColumnas()">
+                      {{ item[prop] }}
+                    </td>
+                    <td>
+                      <div ngbDropdown>
+                        <button
+                          type="button"
+                          class="btn btn-round btn-primary dropdown-toggle"
+                          ngbDropdownToggle
+                        >
+                          <i class="now-ui-icons loader_gear"></i> Acciones
+                        </button>
+                        <div ngbDropdownMenu class="dropdown-menu-right">
+                          <a class="dropdown-item" href="#">
+                            <i class="now-ui-icons ui-1_zoom-bold"></i>
+                            Ver detalles</a
+                          >
+                          <a class="dropdown-item" href="#">
+                            <i class="now-ui-icons design-2_ruler-pencil"></i>
+                            Editar</a
+                          >
+                          <a class="dropdown-item text-danger" href="#">
+                            <i class="now-ui-icons ui-1_simple-remove"></i>
+
+                            Eliminar</a
+                          >
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

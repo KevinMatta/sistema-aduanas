@@ -12,6 +12,7 @@ import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { UsuariosService } from './Services/usuarios.service';
 
 @NgModule({
   imports: [
@@ -24,11 +25,13 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
     NgbModule,
     ToastrModule.forRoot()
   ],
+  providers: [
+    { provide: 'DataService', useClass: UsuariosService }
+  ],
   declarations: [
     AppComponent,
     AdminLayoutComponent
   ],
-  providers: [],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })
