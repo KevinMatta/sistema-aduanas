@@ -3,9 +3,11 @@
     border-radius: $border-radius-small;
     display: inline-block;
     position: relative;
+    top: -5%;
     width: 100%;
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
     box-shadow: $box-shadow;
+    background: rgba(0, 0, 0, .94);
 
     .card-body{
         padding: 15px 15px 10px 15px;
@@ -14,7 +16,22 @@
             padding-left: 0;
             padding-right: 0;
         }
+        scrollbar-track-color: #000
     }
+
+    .card-body::-webkit-scrollbar {
+        width: 0.5rem;
+      }
+
+    .card-body::-webkit-scrollbar-thumb {
+        background-color: #fff;
+        border-radius: 5px;
+      }
+
+      .card-body::-webkit-scrollbar-track {
+        background-color: rgb(0,0,0);
+        border-radius: 5px;
+      }
 
     .card-header{
       &:not([data-background-color]){
@@ -83,7 +100,7 @@
     label{
         font-size: $font-size-small;
         margin-bottom: 5px;
-        color: $dark-gray;
+        color: white;//$dark-gray;
     }
 
     .card-footer{

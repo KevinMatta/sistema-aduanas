@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormComercianteIndividualComponent implements OnInit {
 
+  tituloUbicacionComerciante = "DOMICILIO DEL COMERCIANTE (PARA EFECTO DE UBICACION, EN EL CONTRATO DE ADHESION SE MOSTRARA EL DOMICILIO FISCAL REGISTRADO EN LA ADMINISTRACION TRIBUTARIA)";
+  tituloUbicacionRepresentante = "DOMICILIO DEL REPRESENTANTE LEGAL (SI HUBIESE INFORMADO REPRESENTACION BAJO UN REPRESENTANTE LEGAL)";
   constructor() { }
 
   ngOnInit() {

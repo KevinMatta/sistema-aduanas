@@ -16,20 +16,13 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label>RTN Solicitante</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="05012005042021"
-                    maxlength="20"
-                  />
+                  <input type="text" class="form-control" placeholder="05012005042021" maxlength="20" />
                 </div>
               </div>
             </div>
             <h6>Datos a Informar</h6>
-            <small
-              >- Todos los datos marcados con un
-              <span style="color: red">*</span> son requeridos.</small
-            >
+            <small>- Todos los datos marcados con un
+              <span style="color: red">*</span> son requeridos.</small>
             <div class="" style="overflow-x: auto">
               <table class="table table-bordered">
                 <thead class="text-primary" style="background-color: rgba(0, 0, 0, 0.02);">
@@ -131,56 +124,17 @@
                       <span style="color: red">*</span>
                     </td>
                   </tr>
-                  <app-form-ubicacion></app-form-ubicacion>
-                  <tr><td colspan="2" class="text-primary" style="background-color: rgba(0, 0, 0, 0.02);">INFORMACION DE CONTACTO (EN EL CONTRATO DE ADHESION SE MOSTRARA LOS NUMEROS DE TELEFONO REGISTRADOS EN LA ADMINISTRACION TRIBUTARIA)</td></tr>
-                  <tr>
-                    <td>
-                      <input type="text" class="form-control" />
-                    </td>
-                    <td>
-                      SD005 - NUMERO DE TELÉFONO FIJO DE LA PERSONA
-                      <span style="color: red">*</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="text" class="form-control" />
-                    </td>
-                    <td>
-                      SD065 - NUMERO DE TELÉFONO CELULAR DE LA PERSONA
-                      <span style="color: red">*</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="text" class="form-control" />
-                    </td>
-                    <td>
-                      SD042 - CORREO ELECTRÓNICO DONDE NOTIFICAR (PARA EFECTOS
-                      DE LA RECEPCIÓN O ENVÍO DE SOLICITUDES, ESCRITOS, AUTOS,
-                      NOTIFICACIONES, REQUERIMIENTOS Y CUALQUIER OTRO PROVEÍDO,
-                      COMUNICACIONES, RESOLUCIONES Y CUALQUIER OTRA ACTUACIÓN
-                      ANTE LA ADMINISTRACIÓN ADUANERA O EMITIDO POR ESTA)
-                      <span style="color: red">*</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="text" class="form-control" />
-                    </td>
-                    <td>
-                      SD201 - CORREO ELECTRÓNICO ALTERNATIVO
-                      <span style="color: red">*</span>
-                    </td>
-                  </tr>
+                  <app-form-ubicacion style="display: contents;"
+                    [titulo]="tituloUbicacionComerciante"></app-form-ubicacion>
+                  <app-form-ubicacion style="display: contents;"
+                    [titulo]="tituloUbicacionRepresentante"></app-form-ubicacion>
+                  <app-form-contacto style="display: contents;"></app-form-contacto>
                 </tbody>
               </table>
             </div>
             <h6>Datos a Informar</h6>
-            <small
-              >- Todos los datos marcados con un
-              <span style="color: red">*</span> son requeridos.</small
-            >
+            <small>- Todos los datos marcados con un
+              <span style="color: red">*</span> son requeridos.</small>
             <div class="" style="overflow-x: auto">
               <table class="table table-bordered">
                 <thead class="text-primary" style="background-color: rgba(0, 0, 0, 0.02);">
@@ -193,7 +147,9 @@
                       espacios, comas, puntos, etc.
                     </small>
                   </th>
-                  <th class="d-flex align-items-start"><div>Descripcion</div></th>
+                  <th class="d-flex align-items-start">
+                    <div>Descripcion</div>
+                  </th>
                 </thead>
                 <tbody>
                   <tr>

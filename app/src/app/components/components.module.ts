@@ -14,6 +14,7 @@ import { IndexListaComponent } from './index-lista/index-lista.component';
 import { LoginComponent } from './login/login.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormContactoComponent } from './form-contacto/form-contacto.component';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { BrowserModule } from '@angular/platform-browser';
     NavbarComponent,
     SidebarComponent,
     FormUbicacionComponent,
+    FormContactoComponent,
     FormPersonaNaturalComponent,
     FormComercianteIndividualComponent,
     FormPersonaJuridicaComponent,
@@ -39,6 +41,7 @@ import { BrowserModule } from '@angular/platform-browser';
     NavbarComponent,
     SidebarComponent,
     FormUbicacionComponent,
+    FormContactoComponent,
     FormPersonaNaturalComponent,
     FormComercianteIndividualComponent,
     FormPersonaJuridicaComponent,

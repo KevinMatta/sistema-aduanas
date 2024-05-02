@@ -2,22 +2,25 @@
 <div class="main-content">
   <div class="row">
     <div class="col">
-      <div class="card" style="height: 70vh">
+      <div class="card" style="height: 80vh;">
         <div class="card-header">
-          <h5 class="title" (click)="Editar('Hola')">Lista de {{ titulo }}</h5>
+          <h5 class="title" style="margin-bottom: 0; color: aliceblue;font-size: 1.6em;">Lista de {{ titulo }}</h5>
         </div>
         <div
           class="card-body"
-          style="overflow-y: auto; overflow-x: auto; max-height: 80%"
+          style="overflow-y: auto; overflow-x: auto; max-height: 80%;"
         >
           <form>
-            <input
-              type="text"
-              class="form-control"
-              style="padding: 8px; margin: 15px auto; width: 100%"
-              placeholder="Buscar..."
-              (keyup)="updateFilter($event)"
-            />
+            <div class="d-flex justify-content-between" style="gap: 10px;">
+              <button class="btn btn-primary" style="min-width: 130px; margin: 0; padding: 5px; font-size: 1rem;"><i class="now-ui-icons ui-1_simple-add" style="margin-right: 5px;"></i>Nuevo</button>              
+              <input
+                type="text"
+                class="form-control"
+                style="padding: 8px; width: 180px; color: #61c3db;"
+                placeholder="Buscar por {{titulo}}..."
+                (keyup)="updateFilter($event)"
+              />
+            </div>
             <ngx-datatable
               #table
               [columns]="columns"
@@ -27,7 +30,7 @@
               class="material table"
               [columnMode]="ColumnMode.force"
               rowHeight="auto"
-              [limit]="10"
+              [limit]="9"
               [scrollbarH]="true"
               [messages]="{ emptyMessage: 'No se encontraron registros' }"
             >
@@ -35,37 +38,43 @@
                 *ngFor="let column of columns; let i = index"
                 name="{{ column.name }}"
                 prop="{{ column.prop }}"
-              >
+                [flexGrow]="1"
+                >
               </ngx-datatable-column>
               <ngx-datatable-column
-                name="Actions"
-                prop="name"
-                style="display: flex; min-width: 400px; gap: 5px"
+              name="Actions"
+              prop="name"
+              style="display: flex; gap: 5px;"
+              [flexGrow]="1" [minWidth]="380"
               >
                 <ng-template
                   ngx-datatable-cell-template
                   let-rowIndex="rowIndex"
                   let-row="row"
-                  style="display: flex; min-width: 400px; gap: 5px"
+                  style="display: flex; gap: 5px"
                 >
                   <div style="display: flex; min-width: 400px; gap: 5px">
                     <button
-                      class="btn btn-primary rounded"
-                      (click)="VerDetalle(row.Id)"
-                    >
-                      <i class="now-ui-icons ui-1_zoom-bold"></i>
-                      Ver detalles
-                    </button>
-                    <button
-                      class="btn btn-primary rounded"
+                      type="button"
+                      class="btn btn-sm btn-primary btn-outline-primary btn-round"
                       (click)="Editar(row.Id)"
                     >
                       <i class="now-ui-icons design-2_ruler-pencil"></i>
                       Editar
                     </button>
                     <button
-                      class="btn btn-primary rounded"
+                      type="button"
+                      class="btn btn-sm  btn-primary btn-outline-primary btn-round"
+                      (click)="VerDetalle(row.Id)"
+                    >
+                      <i class="now-ui-icons ui-1_zoom-bold"></i>
+                      Ver detalles
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-primary btn-outline-primary btn-round"
                       (click)="Eliminar(row.Id)"
+                      style="font-size: 0.7rem;"
                     >
                       <i class="now-ui-icons ui-1_simple-remove"></i>
                       Eliminar

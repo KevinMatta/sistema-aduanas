@@ -24,7 +24,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/form-comerciante-individual', title: 'Comerciante individual',  icon:'users_single-02', class: '' },
     { path: '/form-persona-juridica', title: 'Persona Juridica',  icon:'shopping_shop', class: '' },
     { path: '/table-list', title: 'Table List',  icon:'design_bullet-list-67', class: '' },
-    { path: '/login', title: 'Iniciar Sesión',  icon:'objects_spaceship', class: 'active active-pro' }
+    // { path: '/login', title: 'Iniciar Sesión',  icon:'objects_spaceship', class: 'active active-pro' }
 
 ];
 
