@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UtilitariosService } from 'src/app/Services/utilitarios.service';
 
 @Component({
   selector: 'app-form-persona-natural',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./form-persona-natural.component.css']
 })
 export class FormPersonaNaturalComponent implements OnInit {
-
-  constructor() { }
-
+  
+  constructor(
+    private utilitariosService: UtilitariosService) {}
+  
   ngOnInit() {
+  }
+
+  subirArchivo(){
+    this.utilitariosService.subirImagen();
   }
 
 }
