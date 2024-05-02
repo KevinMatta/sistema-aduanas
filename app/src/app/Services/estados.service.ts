@@ -2,34 +2,35 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
-import { Rol } from '../Models/RolesViewModel';
 import { APIResponse } from '../Models/APIResponseViewModel';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
+import { Estado } from '../Models/EstadosViewModel';
 
 @Injectable({
     providedIn: 'root'
 })
-export class RolesService implements DataService {
+export class EstadosService implements DataService {
     constructor(private http: HttpClient) {}
 
-    Url = environment.urlAPI + "/API/Rol/List";
+    Url = environment.urlAPI + "/API/Estado/List";
 
     getData(): Observable<any[]> {
-        return this.getRoles();
+        return this.getEstados();
     }
 
-    getRoles(): Observable<Rol[]> {
-        return this.http.get<APIResponse<Rol[]>>(this.Url).pipe(
+    getEstados(): Observable<Estado[]> {
+        return this.http.get<APIResponse<Estado[]>>(this.Url).pipe(
             map(response => this.mapResponse(response.data))
         );
     }
 
-    private mapResponse(data: any[]): Rol[] {
+    private mapResponse(data: any[]): Estado[] {
         return data.map(item => {
-            const model: Rol = {
-                Id: item.rol_Id,
-                Rol: item.rol_Descripcion
+            const model: Estado = {
+                Id: item.esta_Id,
+                Estado: item.esta_Descripcion,
+                Pais: item.pais_Descripcion
             };
             return model;
         });

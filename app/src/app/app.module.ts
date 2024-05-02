@@ -13,6 +13,9 @@ import { AppComponent } from './app.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { UsuariosService } from './Services/usuarios.service';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { BrowserModule } from '@angular/platform-browser';
+// import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 @NgModule({
   imports: [
@@ -23,7 +26,10 @@ import { UsuariosService } from './Services/usuarios.service';
     RouterModule,
     AppRoutingModule,
     NgbModule,
-    ToastrModule.forRoot()
+    NgxDatatableModule,
+    BrowserModule,
+    // DatatableComponent
+    ToastrModule.forRoot(),
   ],
   providers: [
     { provide: 'DataService', useClass: UsuariosService }

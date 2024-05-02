@@ -2,55 +2,78 @@
 <div class="main-content">
   <div class="row">
     <div class="col">
-      <div class="card">
+      <div class="card" style="height: 70vh">
         <div class="card-header">
-          <h5 class="title">Lista de {{ titulo }}</h5>
+          <h5 class="title" (click)="Editar('Hola')">Lista de {{ titulo }}</h5>
         </div>
-        <div class="card-body">
+        <div
+          class="card-body"
+          style="overflow-y: auto; overflow-x: auto; max-height: 80%"
+        >
           <form>
-            <div class="" style="overflow-x: auto">
-              <table class="table">
-                <thead class="text-primary">
-                  <tr>
-                    <th *ngFor="let prop of obtenerColumnas()">{{ prop }}</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of lista">
-                    <td *ngFor="let prop of obtenerColumnas()">
-                      {{ item[prop] }}
-                    </td>
-                    <td>
-                      <div ngbDropdown>
-                        <button
-                          type="button"
-                          class="btn btn-round btn-primary dropdown-toggle"
-                          ngbDropdownToggle
-                        >
-                          <i class="now-ui-icons loader_gear"></i> Acciones
-                        </button>
-                        <div ngbDropdownMenu class="dropdown-menu-right">
-                          <a class="dropdown-item" href="#">
-                            <i class="now-ui-icons ui-1_zoom-bold"></i>
-                            Ver detalles</a
-                          >
-                          <a class="dropdown-item" href="#">
-                            <i class="now-ui-icons design-2_ruler-pencil"></i>
-                            Editar</a
-                          >
-                          <a class="dropdown-item text-danger" href="#">
-                            <i class="now-ui-icons ui-1_simple-remove"></i>
-
-                            Eliminar</a
-                          >
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <input
+              type="text"
+              class="form-control"
+              style="padding: 8px; margin: 15px auto; width: 100%"
+              placeholder="Buscar..."
+              (keyup)="updateFilter($event)"
+            />
+            <ngx-datatable
+              #table
+              [columns]="columns"
+              [rows]="rows"
+              [headerHeight]="50"
+              [footerHeight]="50"
+              class="material table"
+              [columnMode]="ColumnMode.force"
+              rowHeight="auto"
+              [limit]="10"
+              [scrollbarH]="true"
+              [messages]="{ emptyMessage: 'No se encontraron registros' }"
+            >
+              <ngx-datatable-column
+                *ngFor="let column of columns; let i = index"
+                name="{{ column.name }}"
+                prop="{{ column.prop }}"
+              >
+              </ngx-datatable-column>
+              <ngx-datatable-column
+                name="Actions"
+                prop="name"
+                style="display: flex; min-width: 400px; gap: 5px"
+              >
+                <ng-template
+                  ngx-datatable-cell-template
+                  let-rowIndex="rowIndex"
+                  let-row="row"
+                  style="display: flex; min-width: 400px; gap: 5px"
+                >
+                  <div style="display: flex; min-width: 400px; gap: 5px">
+                    <button
+                      class="btn btn-primary rounded"
+                      (click)="VerDetalle(row.Id)"
+                    >
+                      <i class="now-ui-icons ui-1_zoom-bold"></i>
+                      Ver detalles
+                    </button>
+                    <button
+                      class="btn btn-primary rounded"
+                      (click)="Editar(row.Id)"
+                    >
+                      <i class="now-ui-icons design-2_ruler-pencil"></i>
+                      Editar
+                    </button>
+                    <button
+                      class="btn btn-primary rounded"
+                      (click)="Eliminar(row.Id)"
+                    >
+                      <i class="now-ui-icons ui-1_simple-remove"></i>
+                      Eliminar
+                    </button>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
           </form>
         </div>
       </div>

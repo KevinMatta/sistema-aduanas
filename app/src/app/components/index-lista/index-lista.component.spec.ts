@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IndexListaComponent } from './index-lista.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 // import { Usuario } from 'src/app/Models/UsuariosViewModel';
 
 describe('IndexListaComponent', () => {
@@ -9,7 +10,8 @@ describe('IndexListaComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IndexListaComponent ]
+      declarations: [ IndexListaComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

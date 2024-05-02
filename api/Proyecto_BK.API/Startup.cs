@@ -68,6 +68,8 @@ namespace Proyecto_BK.API
 
             app.UseRouting();
 
+            app.UseCors("AllowAll");
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

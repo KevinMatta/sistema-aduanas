@@ -12,11 +12,15 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { IndexListaComponent } from './index-lista/index-lista.component';
 import { LoginComponent } from './login/login.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
+    NgxDatatableModule,
+    BrowserModule,
     NgbModule
   ],
   declarations: [

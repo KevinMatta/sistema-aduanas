@@ -9,14 +9,20 @@ import { TableListComponent } from '../../table-list/table-list.component';
 import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
-import { UpgradeComponent } from '../../upgrade/upgrade.component';
+// import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { IndexListaComponent } from '../../components/index-lista/index-lista.component';
 import { LoginComponent } from '../../components/login/login.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'index-usuarios',     component: IndexListaComponent, data: { titulo: 'Usuarios' }},
-    { path: 'index-roles',     component: IndexListaComponent, data: { titulo: 'Roles' }},
+    { path: 'index-aduanas',     component: IndexListaComponent, data: { titulo: 'Aduanas' }},
+    { path: 'index-empresas',     component: IndexListaComponent, data: { titulo: 'Empresas' }},
+    { path: 'index-paises',     component: IndexListaComponent, data: { titulo: 'Paises' }},
+    { path: 'index-estados',     component: IndexListaComponent, data: { titulo: 'Estados' }},
+    { path: 'index-ciudades',     component: IndexListaComponent, data: { titulo: 'Ciudades' }},
+    { path: 'index-empleados',     component: IndexListaComponent, data: { titulo: 'Empleados' }},
+    { path: 'index-estados-civiles',     component: IndexListaComponent, data: { titulo: 'Estados Civiles' }},
     // { path: 'form-ubicacion',   component: FormUbicacionComponent },
     { path: 'form-persona-natural',   component: FormPersonaNaturalComponent },
     { path: 'form-comerciante-individual',   component: FormComercianteIndividualComponent },

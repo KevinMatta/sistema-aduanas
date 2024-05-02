@@ -16,7 +16,10 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
-            "allowedCommonJsDependencies": ["hammerjs", "chart.js"],
+            "allowedCommonJsDependencies": [
+              "hammerjs",
+              "chart.js"
+            ],
             "assets": [
               "src/assets",
               "src/favicon.ico"
@@ -26,10 +29,15 @@
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/ngx-toastr/toastr.css",
               "src/assets/scss/now-ui-dashboard.scss",
-              "src/assets/demo/demo.css"
+              "src/assets/demo/demo.css",
+              "node_modules/datatables.net-dt/css/jquery.dataTables.min.css",
+              "node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css"
             ],
             "scripts": [
-              "node_modules/chart.js/dist/Chart.min.js"
+              "node_modules/chart.js/dist/Chart.min.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/datatables.net/js/jquery.dataTables.min.js",
+              "node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js"
             ]
           },
           "configurations": {

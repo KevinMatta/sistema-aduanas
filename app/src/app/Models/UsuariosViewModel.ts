@@ -1,16 +1,17 @@
 export class Usuario {
-    usua_Id: number;
-    usua_Usuario: string;
-    usua_Clave?: string;
+    Id: number;
+    Usuario: string;
+    Clave?: string;
     rol_Id?: number;
-    usua_IsAdmin: boolean;
-    usua_Estado: boolean;
-    usua_Creacion: number;
-    usua_FechaCreacion: string;
+    Admin: boolean;
+    Estado: boolean;
+    Actions?: string;
+    usua_Creacion?: number;
+    usua_FechaCreacion?: string;
     usua_Modifica?: number;
     usua_FechaModifica?: string;
     rol_Descripcion?: string;
-    creacion: string;
-    modifica?: string;
-    rol?: number;
+    Creacion?: string;
+    Modifica?: string;
+    Rol?: number;
 }
