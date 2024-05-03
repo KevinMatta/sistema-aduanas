@@ -101,6 +101,22 @@ namespace sistema_aduana.BusinessLogic.Services
             }
         }
         #endregion
+
+        //#region PersonaNatural
+        //public ServiceResult PersonaNaturalListar()
+        //{
+        //    var result = new ServiceResult();
+        //    try
+        //    {
+        //        var list = _personaNaturalRepository.List();
+        //        return result.Ok(list);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return result.Error(ex.Message);
+        //    }
+        //}
+        //#endregion
         #region EstadoCivil
         public ServiceResult EstadoCivilListar()
         {

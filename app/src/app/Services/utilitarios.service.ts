@@ -14,9 +14,9 @@ import { Ciudad } from '../Models/CiudadesViewModel';
 export class UtilitariosService{
     constructor(private http: HttpClient) {}
 
-    Url = environment.urlAPI + "/API/Ciudad/List";
-
-    subirImagen(){
-
+    subirImagen(url:string, formData : FormData){
+        this.http.post(environment.urlAPI + url, formData).subscribe((res:any)=>{
+            console.log(res);
+        })
     }
 }

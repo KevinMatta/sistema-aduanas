@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UtilitariosService } from 'src/app/Services/utilitarios.service';
+import { UtilitariosService } from '../../Services/utilitarios.service';
 
 @Component({
   selector: 'app-form-persona-natural',
@@ -8,14 +8,21 @@ import { UtilitariosService } from 'src/app/Services/utilitarios.service';
 })
 export class FormPersonaNaturalComponent implements OnInit {
   
+  endpointSubirRTN = "/PersonaNatural/SubirRTN";
+
   constructor(
     private utilitariosService: UtilitariosService) {}
   
   ngOnInit() {
   }
 
-  subirArchivo(){
-    this.utilitariosService.subirImagen();
+  subirArchivo(event:any){
+    if (event.target.files.length > 0) {
+      const pdf = event.target.files[0];
+      const formData = new FormData();
+      formData.append('pdf', pdf);
+      this.utilitariosService.subirImagen(this.endpointSubirRTN, formData);
+    }
   }
 
 }
