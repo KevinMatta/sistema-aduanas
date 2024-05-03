@@ -14,9 +14,12 @@ import { Ciudad } from '../Models/CiudadesViewModel';
 export class UtilitariosService{
     constructor(private http: HttpClient) {}
 
-    subirImagen(url:string, formData : FormData){
-        this.http.post(environment.urlAPI + url, formData).subscribe((res:any)=>{
+    subirImagen(endpoint:string, formData : FormData){
+        const url = environment.urlAPI + endpoint;
+        const response = true;
+        this.http.post(url, formData).subscribe((res:any)=>{
             console.log(res);
         })
+        return response;
     }
 }
