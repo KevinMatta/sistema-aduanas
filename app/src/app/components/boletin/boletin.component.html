@@ -1,0 +1,171 @@
+<div class="panel-header panel-header-sm"></div>
+<div id="boletin" class="main-content">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col">
+              <img
+                src="./assets/img/logo_aduanas_blanco.png"
+                alt="Logo Aduana"
+              />
+            </div>
+            <div class="col">
+              <h6 class="title">ADMINISTRACION ADUANERA DE HONDURAS</h6>
+              <h6 class="title">BOLETIN DE PAGO</h6>
+              <h6 class="title">0014 - ADUANA TOCONTIN</h6>
+            </div>
+            <div class="col">
+              <div class="row">
+                <small
+                  >- confirme la validez de este boletín mediante la lectura de
+                  este código QR-</small
+                >
+              </div>
+              <div class="row">QR</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row">
+              <div class="col mb-4">
+                <table class="table-bordered">
+                  <tbody>
+                    <tr>
+                      <td colspan="2">
+                        Liquidacion:
+                        <span style="font-weight: 700">20260106692036</span>
+                      </td>
+                      <td colspan="2">
+                        Declaracion No.:
+                        <span style="font-weight: 700">200014037776P</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">Tipo Liquidacion: AUTOLIQUIDACION</td>
+                      <td colspan="2">
+                        <div>
+                          Importador/Exportador:
+                          <span style="font-weight: 700">03019003258145</span>
+                        </div>
+                        <div>EMPRESA</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>F. Emisión: 14/10/2020</td>
+                      <td>Estado: REGISTRADA</td>
+                      <td colspan="2">
+                        Preimpreso:
+                        <span style="font-weight: 700">5997078</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">Observaciones:</td>
+                      <td colspan="2">
+                        <div>Declarante: 08011954031889</div>
+                        <div>NOMBRE DEL DECLARANTE</div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <table class="table-bordered">
+                  <tbody>
+                    <tr>
+                      <td>Boletín No.</td>
+                      <td class="text-center">1</td>
+                      <td colspan="6">260106692036</td>
+                    </tr>
+                    <tr>
+                      <td>Periodo</td>
+                      <td class="text-center">2</td>
+                      <td>10-2020</td>
+                      <td class="text-center">5</td>
+                      <td>Código Impuesto</td>
+                      <td class="text-center">18</td>
+                      <td>800</td>
+                      <td class="text-center">3</td>
+                    </tr>
+                    <tr>
+                      <td>R.T.N</td>
+                      <td class="text-center">4</td>
+                      <td>03019003258145</td>
+                      <td class="text-center">3</td>
+                      <td>Código Concepto de Pago</td>
+                      <td class="text-center">19</td>
+                      <td>1</td>
+                      <td class="text-center">2</td>
+                    </tr>
+                    <tr>
+                      <td colspan="8" class="text-center">
+                        Detalle de la Liquidación
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="4">Concepto</td>
+                      <td>Tipo Obligacion</td>
+                      <td>Casilla Fénix</td>
+                      <td>Total Pagar/Garantizar</td>
+                      <td>Dígito</td>
+                    </tr>
+                    <tr>
+                      <td colspan="4">
+                        DAI DERECHOS ARANCELARIOS A LA IMPORTACION
+                      </td>
+                      <td>P-A PAGAR</td>
+                      <td>104</td>
+                      <td>219.45</td>
+                      <td class="text-center">1</td>
+                    </tr>
+                    <tr>
+                      <td colspan="4">ISV IMPTO SOBRE VENTAS</td>
+                      <td>P-A PAGAR</td>
+                      <td>111</td>
+                      <td>16348.08</td>
+                      <td class="text-center">1</td>
+                    </tr>
+                    <tr>
+                      <td colspan="4">STD SERVICIO TRANSPORTE DE DATOS</td>
+                      <td>P-A PAGAR</td>
+                      <td>145</td>
+                      <td>122.14</td>
+                      <td class="text-center">2</td>
+                    </tr>
+                    <tr>
+                      <td colspan="6" class="text-end">Total a Pagar</td>
+                      <td colspan="2">L. 16,689.67</td>
+                    </tr>
+                    <tr>
+                      <td colspan="6" class="text-end">Total a Garantizar</td>
+                      <td colspan="2">L. 0.00</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="convertHtml2Pdf()"
+              >
+                Registrarse
+              </button>
+            </div>
+            <iframe
+              [src]="blobUrl"
+              width="100%"
+              height="500px"
+              frameborder="0"
+            ></iframe>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

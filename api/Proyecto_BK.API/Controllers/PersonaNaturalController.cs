@@ -1,12 +1,8 @@
-﻿using Amazon;
-using Amazon.S3;
-using Amazon.S3.Transfer;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using sistema_aduana.BusinessLogic.Services;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,6 +26,26 @@ namespace sistema_aduana.API.Controllers
         //    return Ok(list);
         //}
 
+        [HttpPost("SubirRTNsolicitante")]
+        public async Task<IActionResult> SubirRTNsolicitante()
+        {
+            try
+            {
+                var pdf = Request.Form.Files[0];
+                var keyName = Request.Form["keyName"];
+
+                using (var stream = pdf.OpenReadStream())
+                {
+                    var response = await _gralService.SubirArchivoAsync(stream, keyName);
+                }
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
 
         //[HttpPost("SubirDNI")]
         //public IActionResult SubirDNI()

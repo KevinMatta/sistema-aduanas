@@ -5,3 +5,15 @@
 .form-control{
     color: #61c3db;
 }
+
+.card {
+    top: -1%;
+}
+
+tr{
+    transition: all 0.2s ease;
+}
+
+tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}

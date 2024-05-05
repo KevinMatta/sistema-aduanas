@@ -3,7 +3,7 @@ import { NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app.routing';
@@ -15,7 +15,9 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { UsuariosService } from './Services/usuarios.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { BrowserModule } from '@angular/platform-browser';
-// import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { PdfViewerModule } from "ng2-pdf-viewer";
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -27,11 +29,13 @@ import { BrowserModule } from '@angular/platform-browser';
     AppRoutingModule,
     NgbModule,
     NgxDatatableModule,
+    NgbDatepickerModule,
     BrowserModule,
-    // DatatableComponent
+    PdfViewerModule,
     ToastrModule.forRoot(),
   ],
   providers: [
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
     { provide: 'DataService', useClass: UsuariosService }
   ],
   declarations: [
@@ -42,3 +46,5 @@ import { BrowserModule } from '@angular/platform-browser';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

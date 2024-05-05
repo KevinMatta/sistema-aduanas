@@ -13,8 +13,12 @@ import { Ciudad } from '../Models/CiudadesViewModel';
 })
 export class UtilitariosService{
     constructor(private http: HttpClient) {}
+    
+    previewPdf() {
 
-    subirImagen(endpoint:string, formData : FormData){
+    }
+
+    subirArchivo(endpoint:string, formData : FormData){
         const url = environment.urlAPI + endpoint;
         const response = true;
         this.http.post(url, formData).subscribe((res:any)=>{

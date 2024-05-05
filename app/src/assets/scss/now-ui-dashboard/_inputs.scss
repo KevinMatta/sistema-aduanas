@@ -284,7 +284,7 @@
     border-left: 0 none;
 }
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
-    background-color: $light-gray;
+    background-color: rgba(222, 222, 222, 0.208);
     color: $default-color;
     cursor: not-allowed;
 }

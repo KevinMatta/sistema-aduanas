@@ -1,5 +1,5 @@
 <div class="panel-header panel-header-sm"></div>
-<div class="main-content">
+<div id="boletin" class="main-content">
   <div class="row">
     <div class="col">
       <div class="card">
@@ -15,26 +15,63 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label>RTN Solicitante</label>
-                  <input type="text" class="form-control" placeholder="05012005042021" maxlength="20" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="05012005042021"
+                    maxlength="20"
+                    (blur)="RtnSolicitanteBlur($event)"
+                  />
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="archivoRTN">Archivo de RTN Solicitante</label>
-                  <input type="file" class="form-control" id="archivoRTN" (change)="subirArchivo($event)" />
+                  <input
+                    type="file"
+                    class="form-control"
+                    id="archivoRTN"
+                    (change)="subirArchivo($event)"
+                  />
                 </div>
               </div>
+            </div>
+            <pdf-viewer
+              [src]="
+                'https://kobybucketvjeb.s3.us-east-2.amazonaws.com/05012005042021_RTNsolicitante_PeNa.pdf'
+              "
+              [render-text]="true"
+              [original-size]="true"
+            ></pdf-viewer>
+            <div class="row">
+              <!-- <ngx-extended-pdf-viewer
+                  style="width: 400px; height: 500px"
+                [src]="
+                  'https://kobybucketvjeb.s3.us-east-2.amazonaws.com/05012005042021_RTNsolicitante_PeNa.pdf'
+                "
+                [zoom]="'auto'"
+                [showPresentationModeButton]="true"
+                [backgroundColor]="'#000000'"
+                [height]="'75vh'"
+                [language]="'es'"
+              ></ngx-extended-pdf-viewer> -->
             </div>
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Documento Nacional de Identificación (DNI)</label>
-                  <input type="text" class="form-control" placeholder="0501200504202" maxlength="20" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="0501200504202"
+                    maxlength="20"
+                  />
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="archivoRTN">Archivo de Documento Nacional de Identificación (DNI)
+                  <label for="archivoRTN"
+                    >Archivo de Documento Nacional de Identificación (DNI)
                   </label>
                   <input type="file" class="form-control" id="archivoRTN" />
                 </div>
@@ -43,22 +80,31 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Número Recibo de Servicio Público (ENEE, SANAA, etc.)
+                  <label
+                    >Número Recibo de Servicio Público (ENEE, SANAA, etc.)
                   </label>
-                  <input type="text" class="form-control" maxlength="20" placeholder="333333" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    maxlength="20"
+                    placeholder="333333"
+                  />
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="archivoRTN">Archivo del Recibo Servicio Público
+                  <label for="archivoRTN"
+                    >Archivo del Recibo Servicio Público
                   </label>
                   <input type="file" class="form-control" id="archivoRTN" />
                 </div>
               </div>
             </div>
             <h6>Datos a Informar</h6>
-            <small>- Todos los datos marcados con un
-              <span style="color: red">*</span> son requeridos.</small>
+            <small
+              >- Todos los datos marcados con un
+              <span style="color: red">*</span> son requeridos.</small
+            >
             <div class="" style="overflow-x: auto">
               <table class="table table-bordered">
                 <thead class="text-primary">
@@ -69,7 +115,13 @@
                   <tr>
                     <td>
                       <div ngbDropdown class="d-inline-block">
-                        <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>Toggle dropdown</button>
+                        <button
+                          class="btn btn-primary"
+                          id="dropdownMenu1"
+                          ngbDropdownToggle
+                        >
+                          - Seleccionar -
+                        </button>
                         <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
                           <button class="dropdown-item">Action - 1</button>
                           <button class="dropdown-item">Action - 2</button>
@@ -84,7 +136,13 @@
                   <tr>
                     <td>
                       <div ngbDropdown class="d-inline-block">
-                        <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>Toggle dropdown</button>
+                        <button
+                          class="btn btn-primary"
+                          id="dropdownMenu1"
+                          ngbDropdownToggle
+                        >
+                          - Seleccionar -
+                        </button>
                         <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
                           <button class="dropdown-item">Action - 1</button>
                           <button class="dropdown-item">Action - 2</button>
@@ -99,7 +157,13 @@
                   <tr>
                     <td>
                       <div ngbDropdown class="d-inline-block">
-                        <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>Toggle dropdown</button>
+                        <button
+                          class="btn btn-primary"
+                          id="dropdownMenu1"
+                          ngbDropdownToggle
+                        >
+                          - Seleccionar -
+                        </button>
                         <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
                           <button class="dropdown-item">Action - 1</button>
                           <button class="dropdown-item">Action - 2</button>
@@ -113,15 +177,26 @@
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="2" class="text-primary" style="background-color: rgba(0, 0, 0, 0.02)">
-                      DOMICILIO DE LA PERSONA (PARA EFECTO DE UBICACIÓN, EN EL CONTRATO DE ADHESIÓN SE MOSTRARÁ EL
-                      DOMICILIO FISCAL REGISTRADO EN LA ADMINISTRACION TRIBUTARIA)
+                    <td
+                      colspan="2"
+                      class="text-primary"
+                      style="background-color: rgba(0, 0, 0, 0.02)"
+                    >
+                      DOMICILIO DE LA PERSONA (PARA EFECTO DE UBICACIÓN, EN EL
+                      CONTRATO DE ADHESIÓN SE MOSTRARÁ EL DOMICILIO FISCAL
+                      REGISTRADO EN LA ADMINISTRACION TRIBUTARIA)
                     </td>
                   </tr>
                   <tr>
                     <td>
                       <div ngbDropdown class="d-inline-block">
-                        <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>Toggle dropdown</button>
+                        <button
+                          class="btn btn-primary"
+                          id="dropdownMenu1"
+                          ngbDropdownToggle
+                        >
+                          - Seleccionar -
+                        </button>
                         <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
                           <button class="dropdown-item">Action - 1</button>
                           <button class="dropdown-item">Action - 2</button>
@@ -135,13 +210,21 @@
                   </tr>
                   <tr>
                     <td>
-                      <input type="text" class="form-control" placeholder="San Pedro Sula" />
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="San Pedro Sula"
+                      />
                     </td>
                     <td>SD301 - CIUDAD <span style="color: red">*</span></td>
                   </tr>
                   <tr>
                     <td>
-                      <input type="text" class="form-control" placeholder="13 calle 9 avenida junto a pollos lenca" />
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="13 calle 9 avenida junto a pollos lenca"
+                      />
                     </td>
                     <td>
                       SD007 - DIRECCIÓN COMPLETA (INCLUYA SEGÚN APLIQUE: ALDEA,
@@ -150,11 +233,9 @@
                       <span style="color: red">*</span>
                     </td>
                   </tr>
-                  <app-form-contacto style="display: contents;"></app-form-contacto>
-                  <!-- <tr>
-                    <td colspan="2">
-                    </td>
-                  </tr> -->
+                  <app-form-contacto
+                    style="display: contents"
+                  ></app-form-contacto>
                 </tbody>
               </table>
               <div class="d-flex justify-content-end">

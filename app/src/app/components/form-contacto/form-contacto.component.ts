@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-form-contacto',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./form-contacto.component.css']
 })
 export class FormContactoComponent implements OnInit {
+
+  @Input('entidad') entidad: string = "DE LA ???";
 
   constructor() { }
 

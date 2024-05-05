@@ -4,7 +4,7 @@
     class="text-primary"
     style="background-color: rgba(0, 0, 0, 0.02)"
   >
-    {{titulo}}
+    {{ titulo }}
   </td>
 </tr>
 <tr>
@@ -20,15 +20,43 @@
     </div>
   </td>
   <td>
-    SD006 - DEPARTAMENTO Y MUNICIPIO
+    SD000 - PAIS
     <span style="color: red">*</span>
   </td>
 </tr>
 <tr>
   <td>
-    <input type="text" class="form-control" placeholder="San Pedro Sula" />
+    <div ngbDropdown class="d-inline-block">
+      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
+        - Seleccionar -
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+        <button class="dropdown-item">Action - 1</button>
+        <button class="dropdown-item">Action - 2</button>
+      </div>
+    </div>
   </td>
-  <td>SD301 - CIUDAD <span style="color: red">*</span></td>
+  <td>
+    SD000 - ESTADO
+    <span style="color: red">*</span>
+  </td>
+</tr>
+<tr>
+  <td>
+    <div ngbDropdown class="d-inline-block">
+      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
+        - Seleccionar -
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+        <button class="dropdown-item">Action - 1</button>
+        <button class="dropdown-item">Action - 2</button>
+      </div>
+    </div>
+  </td>
+  <td>
+    SD006 - CIUDAD
+    <span style="color: red">*</span>
+  </td>
 </tr>
 <tr>
   <td>

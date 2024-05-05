@@ -12,10 +12,15 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 // import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { IndexListaComponent } from '../../components/index-lista/index-lista.component';
 import { LoginComponent } from '../../components/login/login.component';
+import { FormDeclaracionValorComponent } from '../../components/form-declaracion-valor/form-declaracion-valor.component';
+import { BoletinComponent } from '../../components/boletin/boletin.component';
+import { FormUsuariosComponent } from '../../components/form-usuarios/form-usuarios.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'index-usuarios',     component: IndexListaComponent, data: { titulo: 'Usuarios' }},
+    { path: 'form-usuarios',     component: FormUsuariosComponent},
+    { path: 'index-roles',     component: IndexListaComponent, data: { titulo: 'Roles' }},
     { path: 'index-aduanas',     component: IndexListaComponent, data: { titulo: 'Aduanas' }},
     { path: 'index-empresas',     component: IndexListaComponent, data: { titulo: 'Empresas' }},
     { path: 'index-paises',     component: IndexListaComponent, data: { titulo: 'Paises' }},
@@ -27,6 +32,8 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'form-persona-natural',   component: FormPersonaNaturalComponent },
     { path: 'form-comerciante-individual',   component: FormComercianteIndividualComponent },
     { path: 'form-persona-juridica',   component: FormPersonaJuridicaComponent },
+    { path: 'form-declaracion-valor',   component: FormDeclaracionValorComponent },
+    { path: 'boletin',   component: BoletinComponent },
     { path: 'table-list',     component: TableListComponent },
     { path: 'icons',          component: IconsComponent },
     { path: 'maps',           component: MapsComponent },

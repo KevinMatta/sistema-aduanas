@@ -9,6 +9,7 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'design_app', class: '' },
     { path: '/index-usuarios', title: 'Usuarios',  icon:'text_caps-small', class: '', },
+    { path: '/form-usuarios', title: 'Usuarios',  icon:'text_caps-small', class: '', },
     { path: '/index-roles', title: 'Roles',  icon:'text_caps-small', class: '', },
     { path: '/index-aduanas', title: 'Aduanas',  icon:'text_caps-small', class: '', },
     { path: '/index-empleados', title: 'Empleados',  icon:'text_caps-small', class: '', },
@@ -23,6 +24,8 @@ export const ROUTES: RouteInfo[] = [
     { path: '/form-persona-natural', title: 'Persona Natural',  icon:'users_single-02', class: '' },
     { path: '/form-comerciante-individual', title: 'Comerciante individual',  icon:'users_single-02', class: '' },
     { path: '/form-persona-juridica', title: 'Persona Juridica',  icon:'shopping_shop', class: '' },
+    { path: '/form-declaracion-valor', title: 'Declaración de valor',  icon:'files_single-copy-04', class: '' },
+    { path: '/boletin', title: 'Boletín de pago',  icon:'files_paper', class: '' },
     { path: '/table-list', title: 'Table List',  icon:'design_bullet-list-67', class: '' },
     // { path: '/login', title: 'Iniciar Sesión',  icon:'objects_spaceship', class: 'active active-pro' }
 

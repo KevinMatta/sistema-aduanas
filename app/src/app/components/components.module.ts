@@ -15,6 +15,8 @@ import { LoginComponent } from './login/login.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormContactoComponent } from './form-contacto/form-contacto.component';
+import { FormDeclaracionValorComponent } from './form-declaracion-valor/form-declaracion-valor.component';
+import { FormUsuariosComponent } from './form-usuarios/form-usuarios.component';
 
 @NgModule({
   imports: [
@@ -30,9 +32,11 @@ import { FormContactoComponent } from './form-contacto/form-contacto.component';
     SidebarComponent,
     FormUbicacionComponent,
     FormContactoComponent,
+    FormUsuariosComponent,
     FormPersonaNaturalComponent,
     FormComercianteIndividualComponent,
     FormPersonaJuridicaComponent,
+    FormDeclaracionValorComponent,
     IndexListaComponent,
     LoginComponent
   ],
@@ -45,6 +49,7 @@ import { FormContactoComponent } from './form-contacto/form-contacto.component';
     FormPersonaNaturalComponent,
     FormComercianteIndividualComponent,
     FormPersonaJuridicaComponent,
+    FormDeclaracionValorComponent,
     IndexListaComponent,
     LoginComponent
   ],
