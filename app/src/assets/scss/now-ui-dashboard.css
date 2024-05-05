@@ -127,7 +127,7 @@ That's all.
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQI12PQkNdi1VTQ5gbSwkAsDQARLAIGtOSFUAAAAABJRU5ErkJggg==);
 }
 .ngx-datatable.material .datatable-header {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid #61C3DB;
 }
 .ngx-datatable.material .datatable-header .datatable-header-cell {
   text-align: left;
@@ -1522,7 +1522,7 @@ fieldset[disabled] .btn-link.active {
 }
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
-  background-color: #E3E3E3;
+  background-color: rgba(222, 222, 222, 0.208);
   color: #61C3DB;
   cursor: not-allowed;
 }
@@ -4790,6 +4790,9 @@ Created using IcoMoon - icomoon.io
   .page-header .container h6.category-absolute {
     width: 90%;
   }
+}
+ngb-modal-backdrop {
+  z-index: 1050 !important;
 }
 
 /*# sourceMappingURL=now-ui-dashboard.css.map */

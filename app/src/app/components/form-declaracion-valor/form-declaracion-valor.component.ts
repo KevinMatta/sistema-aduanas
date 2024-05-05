@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-// import { MatDialog } from '@angular/material/dialog';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-form-declaracion-valor',
@@ -13,13 +13,26 @@ export class FormDeclaracionValorComponent implements OnInit {
   ngOnInit() {
   }
 
-  constructor() {}
+  closeResult = '';
 
-  openDialog() {
-    // this.dialog.open(DialogElementsExampleDialog);
-    
-    this.display = "true";
-    console.log(this.display);
+  constructor(private modalService: NgbModal) {}
+
+  open(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
   input24: string = "- SELECCIONE -";
