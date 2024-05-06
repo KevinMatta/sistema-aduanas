@@ -14,6 +14,15 @@ import { CiudadesService } from '../../Services/ciudades.service';
 
 type ColumnType = { prop: string } | { name: string };
 
+declare interface RouteInfo {
+  path: string;
+  title: string;
+  icon: string;
+  class: string;
+}
+export const ROUTES: RouteInfo[] = [
+  { path: '/roles-por-pantalla', title: 'Roles por pantall',  icon: '', class: '' },
+];
 
 @Component({
   selector: 'app-index-lista',

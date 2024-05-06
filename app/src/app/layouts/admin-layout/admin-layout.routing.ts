@@ -15,12 +15,14 @@ import { LoginComponent } from '../../components/login/login.component';
 import { FormDeclaracionValorComponent } from '../../components/form-declaracion-valor/form-declaracion-valor.component';
 import { BoletinComponent } from '../../components/boletin/boletin.component';
 import { FormUsuariosComponent } from '../../components/form-usuarios/form-usuarios.component';
+import { RolesPorPantallaComponent } from '../../components/roles-por-pantalla/roles-por-pantalla.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'index-usuarios',     component: IndexListaComponent, data: { titulo: 'Usuarios' }},
     { path: 'form-usuarios',     component: FormUsuariosComponent},
     { path: 'index-roles',     component: IndexListaComponent, data: { titulo: 'Roles' }},
+    { path: 'roles-por-pantalla',     component: RolesPorPantallaComponent},
     { path: 'index-aduanas',     component: IndexListaComponent, data: { titulo: 'Aduanas' }},
     { path: 'index-empresas',     component: IndexListaComponent, data: { titulo: 'Empresas' }},
     { path: 'index-paises',     component: IndexListaComponent, data: { titulo: 'Paises' }},

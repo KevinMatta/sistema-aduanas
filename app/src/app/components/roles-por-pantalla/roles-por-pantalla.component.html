@@ -1,0 +1,160 @@
+<div class="panel-header panel-header-sm"></div>
+<div id="boletin" class="main-content">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Roles por pantalla</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <div
+              class="d-flex align-items-center flex-column"
+              style="min-height: 50vh; justify-content: start"
+            >
+              <form (ngSubmit)="onSubmit()" #rolesForm="ngForm">
+                <div style="min-width: 280px; display: flex; gap: 20px">
+                  <div>
+                    <label style="color: #3dbdd9">Rol</label>
+                    <input
+                      [(ngModel)]="rolId"
+                      name="rolId"
+                      type="hidden"
+                      value="{{ Rol_Id }}"
+                      style="max-width: 280px"
+                    />
+                    <input
+                      [(ngModel)]="rolDescripcion"
+                      name="rolDescripcion"
+                      class="form-control"
+                      style="max-width: 280px"
+                      [disabled]="Rol_Id !== 0"
+                    />
+                  </div>
+                  <button
+                    class="btn btn-primary"
+                    style="max-height: 40px; align-self: end"
+                    type="submit"
+                    [disabled]="Rol_Id === 0"
+                  >
+                    Guardar
+                  </button>
+                </div>
+              </form>
+              <div class="outer">
+                <ul id="ul">
+                  <li>
+                    <span class="caret">
+                      <label>Sistema electoral</label>
+                    </span>
+                    <input
+                      id="checkboxSistemaElectoral"
+                      type="checkbox"
+                      style="margin-left: 10px"
+                      class="Sist_CkBox"
+                      [checked]="Rol_Id !== 0"
+                      [disabled]="Rol_Id === 0"
+                    />
+                    <ul
+                      id="root"
+                      class="nested"
+                      style="
+                        border-left: 3px dashed gray;
+                        left: -26px;
+                        position: relative;
+                        top: -6px;
+                        padding-left: 0;
+                        margin-left: 32px;
+                      "
+                    >
+                      <ng-container *ngIf="esquemas && pantallas">
+                        <li
+                          *ngFor="let esquema of esquemas"
+                          style="
+                            position: relative;
+                            min-height: 30px;
+                            background: #fff;
+                            border-bottom: 3px dashed gray;
+                          "
+                        >
+                          <div
+                            style="
+                              position: absolute;
+                              top: 50%;
+                              min-width: 100%;
+                              z-index: 1;
+                              background: #fff;
+                              left: 15px;
+                            "
+                          >
+                            <span class="caret">
+                              <label>{{ esquema.Value }}</label>
+                            </span>
+                            <input
+                              [id]="esquema.Key"
+                              class="Esqu_CkBox"
+                              type="checkbox"
+                              style="margin-left: 10px"
+                              [disabled]="Rol_Id === 0"
+                            />
+                            <ul
+                              class="nested esquemaRoot"
+                              style="
+                                left: -26px;
+                                position: relative;
+                                top: -6px;
+                                border-left: 3px dashed gray;
+                                padding-left: 0;
+                                margin-left: 32px;
+                              "
+                            >
+                              <ng-container *ngFor="let pantalla of pantallas">
+                                <li
+                                  *ngIf="pantalla.Esqu_Id === esquema.Key"
+                                  style="
+                                    position: relative;
+                                    min-height: 30px;
+                                    background: #fff;
+                                    border-bottom: 3px dashed gray;
+                                  "
+                                >
+                                  <div
+                                    style="
+                                      position: absolute;
+                                      top: 50%;
+                                      min-width: 300px;
+                                      z-index: 1;
+                                      background: #fff;
+                                      left: 15px;
+                                    "
+                                  >
+                                    <input
+                                      [id]="pantalla.Pant_Id"
+                                      type="checkbox"
+                                      class="Pant_CkBox"
+                                      [checked]="
+                                        isPantallaChecked(pantalla.Pant_Id)
+                                      "
+                                      [disabled]="Rol_Id === 0"
+                                    />
+                                    <label for="{{ pantalla.Pant_Id }}">{{
+                                      pantalla.Pant_Descripcion
+                                    }}</label>
+                                  </div>
+                                </li>
+                              </ng-container>
+                            </ul>
+                          </div>
+                        </li>
+                      </ng-container>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

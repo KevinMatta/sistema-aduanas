@@ -17,6 +17,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormContactoComponent } from './form-contacto/form-contacto.component';
 import { FormDeclaracionValorComponent } from './form-declaracion-valor/form-declaracion-valor.component';
 import { FormUsuariosComponent } from './form-usuarios/form-usuarios.component';
+import { RolesPorPantallaComponent } from './roles-por-pantalla/roles-por-pantalla.component';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { FormUsuariosComponent } from './form-usuarios/form-usuarios.component';
     FormUbicacionComponent,
     FormContactoComponent,
     FormUsuariosComponent,
+    RolesPorPantallaComponent,
     FormPersonaNaturalComponent,
     FormComercianteIndividualComponent,
     FormPersonaJuridicaComponent,
