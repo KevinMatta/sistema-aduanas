@@ -60,7 +60,15 @@ namespace sistema_aduana.BusinessLogic.Services
                         newMemoryStream.Position = 0;
 
                         var fileTransferUtility = new TransferUtility(client);
-                        await fileTransferUtility.UploadAsync(newMemoryStream, bucketName, keyName);
+                        try
+                        {
+                            await fileTransferUtility.UploadAsync(newMemoryStream, bucketName, keyName);
+
+                        }
+                        catch (Exception ex)
+                        {
+                            return result.Error("Error al subir el archivo");
+                        }
                     }
                 }
                 return result.Ok();

@@ -17,6 +17,7 @@ namespace SistemaMedico.DataAcces.Repository
         #endregion
         #region Pantallas
         public static string PantallasListar = "[Acce].[sp_Pantallas_listar]";
+        public static string EsquemasListar = "[Acce].[sp_Esquemas_listar]";
         #endregion
         #endregion
 

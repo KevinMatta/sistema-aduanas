@@ -22,7 +22,13 @@ namespace sistema_aduana.API.Controllers
         [HttpGet("List")]
         public IActionResult Index()
         {
-            var list = _acceService.RolesListar();
+            var list = _acceService.PantallasListar();
+            return Ok(list);
+        }
+        [HttpGet("ListEsquemas")]
+        public IActionResult IndexEsquemas()
+        {
+            var list = _acceService.EsquemasListar();
             return Ok(list);
         }
     }

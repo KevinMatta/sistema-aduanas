@@ -80,7 +80,7 @@ export class IndexListaComponent implements OnInit {
     return data.map(obj => {
         const newObj: { [key: string]: string } = {};
         Object.keys(obj).forEach(key => {
-            newObj[key] = obj[key];//String(obj[key] ?? '');
+            newObj[key] = obj[key];
         });
         return newObj;
     });

@@ -27,5 +27,18 @@ namespace sistema_aduana.DataAccess.Repository
                 return result;
             }
         }
+        public IEnumerable<tbEsquemas> ListEsqu()
+        {
+            string sql = ScriptsDatabase.EsquemasListar;
+
+            List<tbEsquemas> result = new List<tbEsquemas>();
+
+            using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
+            {
+                result = db.Query<tbEsquemas>(sql, commandType: CommandType.Text).ToList();
+
+                return result;
+            }
+        }
     }
 }

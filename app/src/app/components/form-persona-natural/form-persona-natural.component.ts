@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 import { UtilitariosService } from '../../Services/utilitarios.service';
 import { ToastrService } from 'ngx-toastr';
-import * as html2pdf from "html2pdf.js";
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+// import * as html2pdf from "html2pdf.js";
 
 @Component({
   selector: 'app-form-persona-natural',
@@ -9,29 +10,38 @@ import * as html2pdf from "html2pdf.js";
   styleUrls: ['./form-persona-natural.component.css']
 })
 export class FormPersonaNaturalComponent implements OnInit {
-  
+
   endpointSubirRTN = "/API/PersonaNatural/SubirRTNsolicitante";
 
   RtnSolicitante = "";
 
-  pdfRtnSolicitanteUrl ="https://kobybucketvjeb.s3.us-east-2.amazonaws.com/05012005042021_RTNsolicitante_PeNa.pdf";
+  pdfRtnSolicitanteUrl = "";
+
+  trustedUrl: SafeResourceUrl;
 
   constructor(
+    private sanitizer: DomSanitizer,
     private utilitariosService: UtilitariosService,
-    private toastr: ToastrService) {}
-  
+    private toastr: ToastrService) {
+  }
   ngOnInit() {
   }
 
-  convertHtml2Pdf(){
+  sanitizarUrl(url: string) {
+    this.trustedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+      this.sanitizer.sanitize(SecurityContext.URL, url)
+    );
+  }
+
+  convertHtml2Pdf() {
     const options = {
       filename: 'boletin',
-      image: {type: 'jpeg'},
+      image: { type: 'jpeg' },
       html2canvas: {},
-      jsPDF: {orientation: 'vertical'},
+      jsPDF: { orientation: 'vertical' },
     };
-    const content:Element = document.getElementById('boletin');
-    html2pdf().from(content).set(options).save();
+    const content: Element = document.getElementById('boletin');
+    // html2pdf().from(content).set(options).save();
   }
 
   RtnSolicitanteBlur(event: any) {
@@ -39,7 +49,7 @@ export class FormPersonaNaturalComponent implements OnInit {
     this.RtnSolicitante = val;
   }
 
-  async subirArchivo(event:any){
+  async subirArchivo(event: any) {
     if (this.RtnSolicitante == "") {
       this.toastr.warning('<span class="now-ui-icons ui-1_bell-53"></span> Por favor ingrese el RTN del solicitante.', '', {
         timeOut: 3000,
@@ -51,7 +61,7 @@ export class FormPersonaNaturalComponent implements OnInit {
       event.target.value = null;
       return;
     }
-    
+
     if (event.target.files.length > 0) {
       const pdf = event.target.files[0];
       const formData = new FormData();
@@ -60,12 +70,13 @@ export class FormPersonaNaturalComponent implements OnInit {
       formData.append('keyName', keyName);
       const res = await this.utilitariosService.subirArchivo(this.endpointSubirRTN, formData);
       console.log(res);
-      
+
       if (res) {
-        this.pdfRtnSolicitanteUrl = "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/"+ keyName;
-        console.log(this.pdfRtnSolicitanteUrl);
+        this.pdfRtnSolicitanteUrl = "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
+        this.sanitizarUrl(this.pdfRtnSolicitanteUrl);
+        console.log(this.trustedUrl, 'trustedUrl');
         
-        
+
         this.toastr.success('<span class="now-ui-icons ui-1_bell-53"></span> RTN guardado con éxito.', '', {
           timeOut: 3000,
           closeButton: true,

@@ -56,7 +56,7 @@ export class SidebarComponent implements OnInit {
 
   belongsToAnySchema(menuItem: RouteInfo): boolean {
     return !['Acce', 'Gral', 'Adua'].some((schema) =>{ 
-        console.log(this.belongsToSchema(menuItem, schema), menuItem, schema);
+        // console.log(this.belongsToSchema(menuItem, schema), menuItem, schema);
         return this.belongsToSchema(menuItem, schema)
       }
     );

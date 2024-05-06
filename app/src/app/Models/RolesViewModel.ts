@@ -6,7 +6,6 @@ export class Rol {
     rol_FechaCreacion?: string;
     rol_Modifica?: number;
     rol_FechaModifica?: string;
-    rol_Descripcion?: string;
     Creacion?: string;
     Modifica?: string;
 }

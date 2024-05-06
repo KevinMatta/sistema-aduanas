@@ -52,6 +52,22 @@ namespace sistema_aduana.BusinessLogic.Services
         }
         #endregion
 
+        #region Esquemas
+        public ServiceResult EsquemasListar()
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _pantallaRepository.ListEsqu();
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+        #endregion
+
         #region Pantallas
         public ServiceResult PantallasListar()
         {
