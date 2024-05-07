@@ -3,11 +3,7 @@ import { NO_ERRORS_SCHEMA, NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
-import {
-  NgbDatepickerModule,
-  NgbModal,
-  NgbModule,
-} from "@ng-bootstrap/ng-bootstrap";
+import { NgbDatepickerModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrModule } from "ngx-toastr";
 
 import { AppRoutingModule } from "./app.routing";
@@ -20,7 +16,6 @@ import { UsuariosService } from "./Services/usuarios.service";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { BrowserModule } from "@angular/platform-browser";
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
-import { PdfViewerModule } from "ng2-pdf-viewer";
 import { MAT_DIALOG_DEFAULT_OPTIONS } from "@angular/material/dialog";
 import { FormUsuariosComponent } from "./components/form-usuarios/form-usuarios.component";
 
@@ -36,7 +31,6 @@ import { FormUsuariosComponent } from "./components/form-usuarios/form-usuarios.
     NgxDatatableModule,
     NgbDatepickerModule,
     BrowserModule,
-    PdfViewerModule,
     ToastrModule.forRoot(),
   ],
   providers: [
