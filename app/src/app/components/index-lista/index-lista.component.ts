@@ -51,10 +51,7 @@ export class IndexListaComponent implements OnInit {
   roles: Rol[];
 
   open() {
-    const modalRef = this.modalService.open(FormUsuariosComponent);
-    console.log(this.titulo);
-    modalRef.componentInstance.titulo = this.titulo;
-    // modalRef.componentInstance.roles = this.roles;
+    this.modalService.open(FormUsuariosComponent);
   }
 
   constructor(
@@ -86,10 +83,7 @@ export class IndexListaComponent implements OnInit {
   ngOnInit() {
     this.rolesService.getData().subscribe(
       (data: Rol[]) => {
-        console.log(data);
         this.roles = data;
-        console.log(this.roles, "this.roles");
-        // console.log(this.indexComponent.roles, "this.indexComponent.roles");
       },
       (error) => {
         console.log(error);

@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import { DataService } from "./data.service";
@@ -13,13 +13,9 @@ import { FormUsuariosComponent } from "../components/form-usuarios/form-usuarios
   providedIn: "root",
 })
 export class UsuariosService implements DataService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   BaseUrl = environment.urlAPI + "/API/Usuario/";
-
-  Editar(val: any): void {
-    console.log(val + "DESDE EL SERVICIO");
-  }
 
   getData(): Observable<any[]> {
     return this.getUsuarios();
@@ -31,10 +27,17 @@ export class UsuariosService implements DataService {
       .pipe(map((response) => this.mapResponse(response.data)));
   }
 
-  crearUsuario(usuario: Usuario): Observable<APIResponse<any>> {
+  Editar(val: any): void {
+    console.log(val + "DESDE EL SERVICIO");
+  }
+
+
+  Crear(usuario:any): Observable<any> {
+    console.log(this.BaseUrl + "Crear", 'url');
+    
+    new FormData()
     return this.http
-      .post<APIResponse<any>>(this.BaseUrl + "Crear", JSON.stringify(usuario))
-      .pipe(map((response) => response));
+      .post<any>(this.BaseUrl + "Crear", usuario, {headers: new HttpHeaders({'Content-Type': 'application/json'})}).pipe(map(response=>response));
   }
 
   private mapResponse(data: any[]): Usuario[] {
@@ -43,8 +46,7 @@ export class UsuariosService implements DataService {
         Id: item.usua_Id,
         Usuario: item.usua_Usuario,
         Rol: item.rol_Descripcion,
-        Admin: item.usua_IsAdmin,
-        Estado: item.usua_Estado,
+        Admin: item.usua_IsAdmin ? 'SI' : 'NO'
       };
       return model;
     });

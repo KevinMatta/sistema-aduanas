@@ -682,7 +682,7 @@
 </div> -->
 
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">Nuevo {{ titulo }}</h4>
+  <h4 class="modal-title" id="modal-basic-title">Nuevo Usuario</h4>
   <button
     type="button"
     class="btn btn-sm btn-outline-primary"
@@ -700,25 +700,12 @@
         <input
           type="text"
           class="form-control"
-          placeholder="05012005042021"
+          placeholder="SuperStar003"
           maxlength="20"
+          (change)="usuarioOnChange($event)"
         />
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Contraseña</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="*******"
-          minlength="6"
-          (change)="contraOnChange($event)"
-        />
-      </div>
-    </div>
-  </div>
-  <div class="row">
     <div class="col-md-6">
       <div class="form-group">
         <label>Rol</label>
@@ -728,18 +715,11 @@
             class="btn btn-primary m-0"
             id="dropdownMenu1"
             ngbDropdownToggle
-            [disabled]="usuario.Admin"
+            [disabled]="usuario.EsAdmin"
           >
             {{ usuario.Rol }}
           </button>
           <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-            <!-- <button
-              type="button"
-              class="dropdown-item"
-              (click)="rolSelect(0, '- Seleccionar -')"
-            >
-              - Seleccionar -
-            </button> -->
             <button
               *ngFor="let rol of roles"
               type="button"
@@ -752,7 +732,35 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="row">
     <div class="col-md-6">
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input
+          type="password"
+          class="form-control"
+          placeholder="*******"
+          minlength="6"
+          (change)="contraOnChange($event)"
+        />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Confirmar Contraseña</label>
+        <input
+          type="password"
+          class="form-control"
+          placeholder="*******"
+          minlength="6"
+          (change)="confirmarContraOnChange($event)"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col d-flex justify-content-center" style="min-height: 80px;">
       <div class="form-group">
         <label for="">Administrador</label>
         <input
@@ -788,7 +796,7 @@
     <i class="now-ui-icons ui-1_simple-remove" style="margin-right: 5px"></i>
     Cancelar
   </button>
-  <button class="btn btn-primary">
+  <button class="btn btn-primary" (click)="guardar()">
     <i class="now-ui-icons ui-1_check" style="margin-right: 5px"></i>
     Guardar
   </button>

@@ -4,8 +4,8 @@ export class Usuario {
   Clave?: string;
   rol_Id?: number;
   Rol?: string;
-  Admin: boolean;
-  Estado: boolean;
+  EsAdmin?: boolean;
+  Admin: string;
   Actions?: string;
   usua_Creacion?: number;
   usua_FechaCreacion?: string;
