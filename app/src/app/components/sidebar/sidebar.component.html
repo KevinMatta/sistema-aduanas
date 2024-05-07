@@ -113,7 +113,7 @@
       </li>
     </ng-container>
     <!-- Render nav-items not belonging to any schema -->
-    <ng-container *ngFor="let menuItem of menuItems">
+    <!-- <ng-container *ngFor="let menuItem of menuItems">
       <ng-container *ngIf="!belongsToAnySchema(menuItem)">
         <li routerLinkActive="active" class="nav-item">
           <a [routerLink]="[menuItem.path]">
@@ -122,6 +122,6 @@
           </a>
         </li>
       </ng-container>
-    </ng-container>
+    </ng-container> -->
   </ul>
 </div>

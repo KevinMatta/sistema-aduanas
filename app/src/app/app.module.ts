@@ -1,23 +1,28 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
-import { NgbDatepickerModule, NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { NO_ERRORS_SCHEMA, NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
+import { RouterModule } from "@angular/router";
+import {
+  NgbDatepickerModule,
+  NgbModal,
+  NgbModule,
+} from "@ng-bootstrap/ng-bootstrap";
+import { ToastrModule } from "ngx-toastr";
 
-import { AppRoutingModule } from './app.routing';
-import { ComponentsModule } from './components/components.module';
+import { AppRoutingModule } from "./app.routing";
+import { ComponentsModule } from "./components/components.module";
 
-import { AppComponent } from './app.component';
+import { AppComponent } from "./app.component";
 
-import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { UsuariosService } from './Services/usuarios.service';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { BrowserModule } from '@angular/platform-browser';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
+import { UsuariosService } from "./Services/usuarios.service";
+import { NgxDatatableModule } from "@swimlane/ngx-datatable";
+import { BrowserModule } from "@angular/platform-browser";
+import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import { PdfViewerModule } from "ng2-pdf-viewer";
-import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from "@angular/material/dialog";
+import { FormUsuariosComponent } from "./components/form-usuarios/form-usuarios.component";
 
 @NgModule({
   imports: [
@@ -35,16 +40,14 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
     ToastrModule.forRoot(),
   ],
   providers: [
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
-    { provide: 'DataService', useClass: UsuariosService }
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } },
+    { provide: "DataService", useClass: UsuariosService },
   ],
-  declarations: [
-    AppComponent,
-    AdminLayoutComponent
-  ],
+  declarations: [AppComponent, AdminLayoutComponent, FormUsuariosComponent],
+  entryComponents: [FormUsuariosComponent],
   schemas: [NO_ERRORS_SCHEMA],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
 
 platformBrowserDynamic().bootstrapModule(AppModule);

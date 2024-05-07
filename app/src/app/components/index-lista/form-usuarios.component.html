@@ -680,116 +680,97 @@
     Close
   </button>
 </div> -->
-
-<div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">Nuevo {{ titulo }}</h4>
-  <button
-    type="button"
-    class="btn btn-sm btn-outline-primary"
-    aria-label="Close"
-    (click)="activeModal.dismiss('Cross click')"
-  >
-    <i class="now-ui-icons ui-1_simple-remove"></i>
-  </button>
-</div>
-<div class="modal-body">
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Usuario</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="05012005042021"
-          maxlength="20"
-        />
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Contraseña</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="*******"
-          minlength="6"
-          (change)="contraOnChange($event)"
-        />
-      </div>
-    </div>
+<!-- <ng-template #content let-modal> -->
+<ng-container>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Nuevo {{ titulo }}</h4>
+    <button
+      type="button"
+      class="btn btn-sm btn-outline-primary"
+      aria-label="Close"
+      (click)="activeModal.dismiss('Cross click')"
+    >
+      <i class="now-ui-icons ui-1_simple-remove"></i>
+    </button>
   </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Rol</label>
-        <div ngbDropdown class="d-block">
-          <button
-            type="button"
-            class="btn btn-primary m-0"
-            id="dropdownMenu1"
-            ngbDropdownToggle
-            [disabled]="usuario.Admin"
-          >
-            {{ usuario.Rol }}
-          </button>
-          <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-            <!-- <button
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Usuario</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="05012005042021"
+            maxlength="20"
+          />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Contraseña</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="*******"
+            minlength="6"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Rol</label>
+          <div ngbDropdown class="d-block">
+            <button
               type="button"
-              class="dropdown-item"
-              (click)="rolSelect(0, '- Seleccionar -')"
+              class="btn btn-primary m-0"
+              id="dropdownMenu1"
+              ngbDropdownToggle
             >
               - Seleccionar -
-            </button> -->
-            <button
-              *ngFor="let rol of roles"
-              type="button"
-              class="dropdown-item"
-              (click)="rolSelect(rol.Id, rol.Rol)"
-            >
-              {{ rol.Rol }}
             </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+              <button
+                *ngFor="let role of roles"
+                type="button"
+                class="dropdown-item"
+                (click)="selectRol(role.Id)"
+              >
+                {{ role.Rol }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="">Administrador</label>
+          <input class="switch-input" type="radio" name="rdo" id="si" />
+          <input class="switch-input" type="radio" name="rdo" id="no" checked />
+          <div class="switch">
+            <label for="si">Sí</label>
+            <label for="no">No</label>
+            <span></span>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="">Administrador</label>
-        <input
-          class="switch-input"
-          type="radio"
-          name="rdo"
-          id="si"
-          (click)="adminToggle()"
-        />
-        <input
-          class="switch-input"
-          type="radio"
-          name="rdo"
-          id="no"
-          (click)="adminToggle()"
-          checked
-        />
-        <div class="switch">
-          <label for="si">Sí</label>
-          <label for="no">No</label>
-          <span></span>
-        </div>
-      </div>
-    </div>
   </div>
-</div>
-<div class="modal-footer" style="gap: 5px">
-  <button
-    type="button"
-    class="btn btn-outline-primary"
-    (click)="activeModal.close('Save click')"
-  >
-    <i class="now-ui-icons ui-1_simple-remove" style="margin-right: 5px"></i>
-    Cancelar
-  </button>
-  <button class="btn btn-primary">
-    <i class="now-ui-icons ui-1_check" style="margin-right: 5px"></i>
-    Guardar
-  </button>
-</div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="activeModal.close('Save click')"
+    >
+      <i class="now-ui-icons ui-1_simple-remove" style="margin-right: 5px"></i>
+      Cancelar
+    </button>
+    <button class="btn btn-primary">
+      <i class="now-ui-icons ui-1_check" style="margin-right: 5px"></i>
+      Guardar
+    </button>
+  </div></ng-container
+>
+<!--</ng-template> -->

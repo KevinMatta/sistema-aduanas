@@ -12,7 +12,8 @@ import { EstadosCivilesService } from "../../Services/estados-civiles.service";
 import { EstadosService } from "../../Services/estados.service";
 import { CiudadesService } from "../../Services/ciudades.service";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-// import { FormUsuariosComponent } from '../form-usuarios/form-usuarios.component';
+import { Rol } from "../../Models/RolesViewModel";
+import { FormUsuariosComponent } from "../form-usuarios/form-usuarios.component";
 
 type ColumnType = { prop: string } | { name: string };
 
@@ -47,10 +48,13 @@ export class IndexListaComponent implements OnInit {
   //   });
   // }
 
+  roles: Rol[];
+
   open() {
-    const modalRef = this.modalService.open(NgbdModalContent);
+    const modalRef = this.modalService.open(FormUsuariosComponent);
     console.log(this.titulo);
     modalRef.componentInstance.titulo = this.titulo;
+    // modalRef.componentInstance.roles = this.roles;
   }
 
   constructor(
@@ -80,6 +84,19 @@ export class IndexListaComponent implements OnInit {
   ColumnMode = ColumnMode;
 
   ngOnInit() {
+    this.rolesService.getData().subscribe(
+      (data: Rol[]) => {
+        console.log(data);
+        this.roles = data;
+        console.log(this.roles, "this.roles");
+        // console.log(this.indexComponent.roles, "this.indexComponent.roles");
+      },
+      (error) => {
+        console.log(error);
+        this.isLoading = false;
+      }
+    );
+
     this.route.data.subscribe((data) => {
       const titulo = data["titulo"];
       this.titulo = titulo;
@@ -94,6 +111,16 @@ export class IndexListaComponent implements OnInit {
             this.columns = this.formatColumnas(Object.keys(this.rows[0]));
           }
           this.isLoading = false;
+        },
+        (error) => {
+          console.log(error);
+          this.isLoading = false;
+        }
+      );
+      this.rolesService.getData().subscribe(
+        (data: Rol[]) => {
+          console.log(data);
+          this.roles = data;
         },
         (error) => {
           console.log(error);
@@ -181,26 +208,150 @@ export class IndexListaComponent implements OnInit {
   }
 }
 
-@Component({
-  selector: "ngbd-modal-content",
-  template: `
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Nuevo {{ titulo }}</h4>
-    </div>
-    <div class="modal-body"></div>
-    <div class="modal-footer">
-      <button
-        type="button"
-        class="btn btn-outline-dark"
-        (click)="activeModal.close('Close click')"
-      >
-        Close
-      </button>
-    </div>
-  `,
-})
-export class NgbdModalContent {
-  @Input() titulo;
+// @Component({
+//   selector: "app-modal-content",
+//   // template: `
+//   //   <ng-container>
+//   //     <div class="modal-header">
+//   //       <h4 class="modal-title" id="modal-basic-title">Nuevo {{ titulo }}</h4>
+//   //       <button
+//   //         type="button"
+//   //         class="btn btn-sm btn-outline-primary"
+//   //         aria-label="Close"
+//   //         (click)="activeModal.dismiss('Cross click')"
+//   //       >
+//   //         <i class="now-ui-icons ui-1_simple-remove"></i>
+//   //       </button>
+//   //     </div>
+//   //     <div class="modal-body">
+//   //       <div class="row">
+//   //         <div class="col-md-6">
+//   //           <div class="form-group">
+//   //             <label>Usuario</label>
+//   //             <input
+//   //               type="text"
+//   //               class="form-control"
+//   //               placeholder="05012005042021"
+//   //               maxlength="20"
+//   //             />
+//   //           </div>
+//   //         </div>
+//   //         <div class="col-md-6">
+//   //           <div class="form-group">
+//   //             <label>Contraseña</label>
+//   //             <input
+//   //               type="text"
+//   //               class="form-control"
+//   //               placeholder="*******"
+//   //               minlength="6"
+//   //             />
+//   //           </div>
+//   //         </div>
+//   //       </div>
+//   //       <div class="row">
+//   //         <div class="col-md-6">
+//   //           <div class="form-group">
+//   //             <label>Rol</label>
+//   //             <div ngbDropdown class="d-block">
+//   //               <button
+//   //                 type="button"
+//   //                 class="btn btn-primary m-0"
+//   //                 id="dropdownMenu1"
+//   //                 ngbDropdownToggle
+//   //               >
+//   //                 - Seleccionar -
+//   //               </button>
+//   //               <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+//   //                 <button
+//   //                   *ngFor="let rol of roles"
+//   //                   type="button"
+//   //                   class="dropdown-item"
+//   //                   (click)="selectRol(rol.Id)"
+//   //                 >
+//   //                   {{ rol.Rol }}
+//   //                 </button>
+//   //               </div>
+//   //             </div>
+//   //           </div>
+//   //         </div>
+//   //         <ul>
+//   //           <li *ngFor="let rol of roles">{{ rol.Rol }}</li>
+//   //         </ul>
+//   //         <div class="col-md-6">
+//   //           <div class="form-group">
+//   //             <label for="">Administrador</label>
+//   //             <input class="switch-input" type="radio" name="rdo" id="si" />
+//   //             <input
+//   //               class="switch-input"
+//   //               type="radio"
+//   //               name="rdo"
+//   //               id="no"
+//   //               checked
+//   //             />
+//   //             <div class="switch">
+//   //               <label for="si">Sí</label>
+//   //               <label for="no">No</label>
+//   //               <span></span>
+//   //             </div>
+//   //           </div>
+//   //         </div>
+//   //       </div>
+//   //     </div>
+//   //     <div class="modal-footer">
+//   //       <button
+//   //         type="button"
+//   //         class="btn btn-outline-primary"
+//   //         (click)="activeModal.close('Save click')"
+//   //       >
+//   //         <i
+//   //           class="now-ui-icons ui-1_simple-remove"
+//   //           style="margin-right: 5px"
+//   //         ></i>
+//   //         Cancelar
+//   //       </button>
+//   //       <button class="btn btn-primary">
+//   //         <i class="now-ui-icons ui-1_check" style="margin-right: 5px"></i>
+//   //         Guardar
+//   //       </button>
+//   //     </div>
+//   // </ng-container>
+//   // `,
+//   templateUrl: "./form-usuarios.component.html",
+//   styleUrls: ["./index-lista.component.css"],
+// })
+// export class NgbdModalContent implements OnInit {
+//   @Input() titulo;
+//   // @Input() roles;
+//   hola: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
+//   roles: Rol[];
 
-  constructor(public activeModal: NgbActiveModal) {}
-}
+//   rolSeleccionado: number;
+
+//   constructor(
+//     public activeModal: NgbActiveModal,
+//     private rolesService: RolesService
+//   ) {}
+
+//   isLoading = true;
+//   ngOnInit(): void {
+//     // console.log(this.roles);
+
+//     this.rolesService.getData().subscribe(
+//       (data: Rol[]) => {
+//         console.log(data);
+//         this.roles = data;
+//         console.log(this.roles, "this.roles");
+//         // console.log(this.indexComponent.roles, "this.indexComponent.roles");
+//       },
+//       (error) => {
+//         console.log(error);
+//         this.isLoading = false;
+//       }
+//     );
+//   }
+
+//   selectRol(rolId: number) {
+//     this.rolSeleccionado = rolId;
+//     console.log(this.rolSeleccionado, "rolSeleccionado");
+//   }
+// }
