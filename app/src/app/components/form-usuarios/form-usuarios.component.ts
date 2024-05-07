@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import {NgbActiveModal, NgbDateStruct, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-form-usuarios',
@@ -7,8 +7,11 @@ import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./form-usuarios.component.css']
 })
 export class FormUsuariosComponent implements OnInit {
-  model: NgbDateStruct;
-  constructor(){}
-  ngOnInit() {}
+  constructor(private activeModal: NgbActiveModal) {}
+  ngOnInit() {
+  }
+  closeModal() {
+    this.activeModal.close('Modal Closed');
+  }
 
 }

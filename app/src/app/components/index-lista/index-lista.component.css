@@ -1,3 +1,92 @@
 .form-control:focus{
     background-color: transparent;
 }
+
+
+.switch {
+    font-weight: 700;
+    position: absolute;
+    width: 150px;
+    height: 40px;
+    text-align: center;
+    background: #61c3db;
+    transition: all 0.2s ease;
+    border-radius: 25px;
+  }
+  .switch span {
+    position: absolute;
+    width: 20px;
+    height: 4px;
+    top: 50%;
+    left: 50%;
+    margin: -2px 0px 0px -4px;
+    background: white;
+    display: block;
+    transform: rotate(-45deg);
+    transition: all 0.2s ease;
+    border-radius: 2px;
+  }
+  .switch span:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 4px;
+    height: 12px;
+    margin-top: -8px;
+    background: white;
+    transition: all 0.2s ease;
+    border-radius: 2px;
+  }
+  
+  .switch-input {
+    display: none;
+  }
+  
+  .switch label {
+    cursor: pointer;
+    color: #fff;
+    width: 60px;
+    line-height: 50px;
+    transition: all 0.2s ease;
+  }
+  
+  label[for=si] {
+    position: absolute;
+    left: 0px;
+    height: 20px;
+    top: -15%;
+  }
+  
+  label[for=no] {
+    position: absolute;
+    right: 0px;
+    top: -15%;
+  }
+  
+  #no:checked ~ .switch {
+    background: transparent;
+    border: 1px solid #61c3db;
+  }
+  
+  #no:checked ~ .switch span {
+    background: #61c3db;
+    margin-left: -8px;
+  }
+  #no:checked ~ .switch span:after {
+    background: #61c3db;
+    height: 20px;
+    margin-top: -8px;
+    margin-left: 8px;
+  }
+  
+  #si:checked ~ .switch label[for=si] {
+    color: white;
+  }
+  
+  #si:checked ~ .switch label[for=no] {
+    color: #3b3333;
+  }
+  
+  #no:checked ~ .switch label[for=no] {
+    color: #61c3db;
+  }

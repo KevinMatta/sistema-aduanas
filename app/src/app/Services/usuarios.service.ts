@@ -6,14 +6,20 @@ import { APIResponse } from '../Models/APIResponseViewModel';
 import { Usuario } from '../Models/UsuariosViewModel';
 import { environment } from '../../environments/environment' 
 import { map } from 'rxjs/operators';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormUsuariosComponent } from '../components/form-usuarios/form-usuarios.component';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UsuariosService implements DataService {
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private modalService: NgbModal) {}
 
     Url = environment.urlAPI + "/API/Usuario/List";
+
+    open() {
+        const modalRef = this.modalService.open(FormUsuariosComponent, {ariaLabelledBy: 'modal-basic-title'});
+    }
 
     Editar(val: any):void{
         console.log(val + 'DESDE EL SERVICIO');

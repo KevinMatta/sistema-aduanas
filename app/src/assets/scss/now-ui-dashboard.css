@@ -4795,4 +4795,8 @@ ngb-modal-backdrop {
   z-index: 1050 !important;
 }
 
+.modal-content {
+  background-color: rgba(32, 30, 30, 0.9019607843);
+}
+
 /*# sourceMappingURL=now-ui-dashboard.css.map */
