@@ -9,7 +9,6 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'design_app', class: '' },
     { path: '/index-usuarios', title: 'Acce.Usuarios',  icon:'text_caps-small', class: '', },
-    { path: '/form-usuarios', title: 'Acce.Usuarios',  icon:'text_caps-small', class: '', },
     { path: '/index-roles', title: 'Acce.Roles',  icon:'text_caps-small', class: '', },
     { path: '/index-aduanas', title: 'Adua.Aduanas',  icon:'text_caps-small', class: '', },
     { path: '/index-empleados', title: 'Gral.Empleados',  icon:'text_caps-small', class: '', },
@@ -42,6 +41,9 @@ export class SidebarComponent implements OnInit {
     Gral: true,
     Adua: true,
   };
+
+  esquemasMap:Map<string, string> =  new Map<string, string>();
+
   // public isAccesoCollapsed = true;
   // public isGeneralCollapsed = true;
   // public isAduanaCollapsed = true;
@@ -67,6 +69,9 @@ export class SidebarComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.esquemasMap.set('Acce', "Acceso");
+    this.esquemasMap.set('Gral', "General");
+    this.esquemasMap.set('Adua', "Aduana");
     this.menuItems = ROUTES.filter(menuItem => menuItem);
   }
   isMobileMenu() {

@@ -8,11 +8,11 @@ import { UsuariosService } from "../../Services/usuarios.service";
 // import { MensajesService } from "../../Services/mensajes.service";
 
 @Component({
-  selector: "app-modal-content",
-  templateUrl: "./form-usuarios.component.html",
-  styleUrls: ["./form-usuarios.component.css"],
+  selector: "app-form-paises",
+  templateUrl: "./form-paises.component.html",
+  styleUrls: ["./form-paises.component.css"],
 })
-export class FormUsuariosComponent implements OnInit {
+export class FormPaisesComponent implements OnInit {
   @Input() usuarioParaEditar: Usuario;
   roles: Rol[];
 

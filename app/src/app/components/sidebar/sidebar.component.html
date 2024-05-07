@@ -91,7 +91,7 @@
           [attr.aria-expanded]="!isCollapsed[schema]"
         >
           <i class="now-ui-icons ui-1_lock-circle-open"></i>
-          {{ schema }}
+          {{ esquemasMap.get(schema) }}
         </a>
         <ul class="nav pl-2">
           <div [ngbCollapse]="isCollapsed[schema]">
@@ -103,7 +103,7 @@
                 >
                   <a [routerLink]="[menuItem.path]">
                     <i class="now-ui-icons {{ menuItem.icon }}"></i>
-                    <p>{{ menuItem.title }}</p>
+                    <p>{{ menuItem.title.split('.')[1] }}</p>
                   </a>
                 </li>
               </ng-container>
