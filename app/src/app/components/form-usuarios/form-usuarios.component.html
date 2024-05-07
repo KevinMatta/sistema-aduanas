@@ -703,6 +703,7 @@
           placeholder="SuperStar003"
           maxlength="20"
           (change)="usuarioOnChange($event)"
+          [value]="usuario.Usuario"
         />
       </div>
     </div>
@@ -733,7 +734,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div *ngIf="!usuarioParaEditar" class="row">
     <div class="col-md-6">
       <div class="form-group">
         <label>Contraseña</label>
@@ -769,6 +770,7 @@
           name="rdo"
           id="si"
           (click)="adminToggle()"
+          [checked]="usuario.EsAdmin"
         />
         <input
           class="switch-input"
@@ -776,7 +778,7 @@
           name="rdo"
           id="no"
           (click)="adminToggle()"
-          checked
+          [checked]="!usuario.EsAdmin"
         />
         <div class="switch">
           <label for="si">Sí</label>

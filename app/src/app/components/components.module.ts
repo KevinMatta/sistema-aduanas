@@ -18,6 +18,7 @@ import { FormContactoComponent } from "./form-contacto/form-contacto.component";
 import { FormDeclaracionValorComponent } from "./form-declaracion-valor/form-declaracion-valor.component";
 import { FormUsuariosComponent } from "./form-usuarios/form-usuarios.component";
 import { RolesPorPantallaComponent } from "./roles-por-pantalla/roles-por-pantalla.component";
+import { MensajesComponent } from "./mensajes/mensajes.component";
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { RolesPorPantallaComponent } from "./roles-por-pantalla/roles-por-pantal
     FormPersonaJuridicaComponent,
     FormDeclaracionValorComponent,
     IndexListaComponent,
+    MensajesComponent,
     LoginComponent,
   ],
   exports: [
@@ -52,6 +54,7 @@ import { RolesPorPantallaComponent } from "./roles-por-pantalla/roles-por-pantal
     FormPersonaJuridicaComponent,
     FormDeclaracionValorComponent,
     IndexListaComponent,
+    MensajesComponent,
     LoginComponent,
   ],
   schemas: [NO_ERRORS_SCHEMA],

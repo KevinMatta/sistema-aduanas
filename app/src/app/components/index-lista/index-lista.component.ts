@@ -38,24 +38,36 @@ export const ROUTES: RouteInfo[] = [
   styleUrls: ["./index-lista.component.css"],
 })
 export class IndexListaComponent implements OnInit {
-  // openModal() {
-  //   //ModalComponent is component name where modal is declare
-  //   const modalRef = this.modalService.open(FormUsuariosComponent);
-  //   modalRef.result.then((result) => {
-  //     console.log(result);
-  //   }).catch((error) => {
-  //     console.log(error);
-  //   });
-  // }
 
   roles: Rol[];
 
-  open() {
-    this.modalService.open(FormUsuariosComponent);
-  }
+  open(Id?: number | string) {
+    let modalRef = this.modalService.open(FormUsuariosComponent);
+    if (Id) {
+      const objetoEncontrado = this.rows.find(obj=>obj.Id === Id);
+      modalRef.componentInstance.usuarioParaEditar = objetoEncontrado;
+    }
+    modalRef.result.then((data) => {
+      if (data === true) {
+        this.service.getData().subscribe(
+          (data: any[]) => {
+            this.rows = this.formatFilas(data);
+            this.temp = [...this.rows];
+            if (this.rows.length > 0) {
+              this.columns = this.formatColumnas(Object.keys(this.rows[0]));
+            }
+            this.isLoading = false;
+          },
+          (error) => {
+            console.log(error);
+            this.isLoading = false;
+          }
+        );
+      }
+    });
+  } 
 
   constructor(
-    // public modalService: NgbModal,
     private modalService: NgbModal,
     private route: ActivatedRoute,
     private usuariosService: UsuariosService,
@@ -77,7 +89,6 @@ export class IndexListaComponent implements OnInit {
   columns = [];
   service: any;
   isLoading: boolean = true;
-  // filterText: string = '';
   ColumnMode = ColumnMode;
 
   ngOnInit() {
@@ -105,16 +116,6 @@ export class IndexListaComponent implements OnInit {
             this.columns = this.formatColumnas(Object.keys(this.rows[0]));
           }
           this.isLoading = false;
-        },
-        (error) => {
-          console.log(error);
-          this.isLoading = false;
-        }
-      );
-      this.rolesService.getData().subscribe(
-        (data: Rol[]) => {
-          console.log(data);
-          this.roles = data;
         },
         (error) => {
           console.log(error);
@@ -168,13 +169,13 @@ export class IndexListaComponent implements OnInit {
     }
   }
 
-  private preprocessData() {
-    this.rows.forEach((item) => {
-      this.columns.forEach((prop) => {
-        item[prop + "_isBoolean"] = typeof item[prop] === "boolean";
-      });
-    });
-  }
+  // private preprocessData() {
+  //   this.rows.forEach((item) => {
+  //     this.columns.forEach((prop) => {
+  //       item[prop + "_isBoolean"] = typeof item[prop] === "boolean";
+  //     });
+  //   });
+  // }
 
   updateFilter(event) {
     const val = event.target.value.toLowerCase();

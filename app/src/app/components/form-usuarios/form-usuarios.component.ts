@@ -1,14 +1,11 @@
 import { Component, Input, OnInit } from "@angular/core";
-import {
-  NgbActiveModal,
-  NgbDateStruct,
-  NgbModal,
-} from "@ng-bootstrap/ng-bootstrap";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { Rol } from "../../Models/RolesViewModel";
 import { RolesService } from "../../Services/roles.service";
 import { Usuario } from "../../Models/UsuariosViewModel";
 import { ToastrService } from "ngx-toastr";
 import { UsuariosService } from "../../Services/usuarios.service";
+// import { MensajesService } from "../../Services/mensajes.service";
 
 @Component({
   selector: "app-modal-content",
@@ -16,6 +13,7 @@ import { UsuariosService } from "../../Services/usuarios.service";
   styleUrls: ["./form-usuarios.component.css"],
 })
 export class FormUsuariosComponent implements OnInit {
+  @Input() usuarioParaEditar: Usuario;
   roles: Rol[];
 
   usuario: Usuario = new Usuario();
@@ -25,13 +23,25 @@ export class FormUsuariosComponent implements OnInit {
     public activeModal: NgbActiveModal,
     private rolesService: RolesService,
     private toastr: ToastrService,
-    private usuariosService: UsuariosService
-  ) {}
+    private usuariosService: UsuariosService,
+    // private mensajesService:MensajesService
+  ) { }
 
   isLoading = true;
   ngOnInit(): void {
-    this.usuario.Rol = "- Seleccionar -";
-    this.usuario.EsAdmin = false;
+    console.log(this.usuarioParaEditar);
+
+    if (this.usuarioParaEditar) {
+      this.usuario.Id = this.usuarioParaEditar.Id;
+      this.usuario.Usuario = this.usuarioParaEditar.Usuario;
+      this.usuario.Rol = this.usuarioParaEditar.Rol ?? "- Seleccionar -";
+      this.usuario.EsAdmin = this.usuarioParaEditar.Admin === 'SI';
+      console.log(this.usuario.EsAdmin, "ESADMIN");
+
+    } else {
+      this.usuario.Rol = "- Seleccionar -";
+      this.usuario.EsAdmin = false;
+    }
 
     this.rolesService.getData().subscribe(
       (data: Rol[]) => {
@@ -64,8 +74,6 @@ export class FormUsuariosComponent implements OnInit {
   }
 
   async guardar() {
-    console.log(this.usuario);
-    
     if (!this.usuario.Usuario) {
       this.mostrarWarning('Por favor ingrese el nombre de usuario.');
       return;
@@ -76,35 +84,52 @@ export class FormUsuariosComponent implements OnInit {
         return;
       }
     }
-    if (!this.usuario.Clave) {
-      this.mostrarWarning('Por favor ingrese su contraseña.');
-      return;
+    if (!this.usuarioParaEditar) {
+      if (!this.usuario.Clave) {
+        this.mostrarWarning('Por favor ingrese su contraseña.');
+        return;
+      }
+      if (this.usuario.Clave !== this.confirmarClave) {
+        this.mostrarWarning('Las contraseñas no coinciden.');
+        return;
+      }
+      await this.usuariosService.Crear(this.usuario).subscribe(
+        (data: any) => {
+          if (data.code >= 200 && data.code <= 300) {
+            this.mostrarSuccess('Usuario creado con éxito.')
+            this.activeModal.close(true);
+          } else {
+            this.activeModal.close(false);
+            this.mostrarError('Error al crear el usuario.');
+          }
+        },
+        (error) => {
+          this.mostrarError('Error al crear el usuario.');
+          console.log(error);
+          this.isLoading = false;
+        }
+      );
+    } else {
+      await this.usuariosService.Editar(this.usuario).subscribe(
+        (data: any) => {
+          if (data.code >= 200 && data.code <= 300) {
+            this.mostrarSuccess('Usuario editado con éxito.');
+            this.activeModal.close(true);
+          } else {
+            this.activeModal.close(false);
+            this.mostrarError('Error al editar el usuario.');
+          }
+        },
+        (error) => {
+          this.mostrarError('Error al editar el usuario.');
+          console.log(error);
+          this.isLoading = false;
+        }
+      );
     }
-    if (this.usuario.Clave !== this.confirmarClave) {
-      this.mostrarWarning('Las contraseñas no coinciden.');
-      return;
-    }
-
-    const json = {
-      Usua_Id: 0,
-      Usua_Usuario: this.usuario.Usuario,
-      Usua_Clave: this.usuario.Clave,
-      Rol_Id: this.usuario.rol_Id ?? 0,
-      Usua_IsAdmin: this.usuario.EsAdmin ?? false,
-      Usua_Estado: true,
-      Usua_Creacion: 1,
-      Usua_FechaCreacion: Date.now(),
-      Usua_Modifica: 1,
-      Usua_FechaModifica: Date.now(),
-      Rol_Descripcion: "string",
-      Creacion: "string",
-      Modifica: "string"
-    }
-    
-    const response = await this.usuariosService.Crear(json);
-    console.log(response, 'response');
-    
-    this.toastr.success('<span class="now-ui-icons ui-1_bell-53"></span> Usuario guardado con éxito.', '', {
+  }
+  mostrarSuccess(mensaje: string) {
+    this.toastr.success(`<span class="now-ui-icons ui-1_bell-53"></span> ${mensaje}`, '', {
       timeOut: 3000,
       closeButton: true,
       enableHtml: true,
@@ -112,12 +137,21 @@ export class FormUsuariosComponent implements OnInit {
       positionClass: 'toast-bottom-right'
     });
   }
-  mostrarWarning(mensaje: string){
+  mostrarWarning(mensaje: string) {
     this.toastr.warning(`<span class="now-ui-icons ui-1_bell-53"></span> ${mensaje}`, '', {
       timeOut: 3000,
       closeButton: true,
       enableHtml: true,
       toastClass: "alert alert-warning alert-with-icon",
+      positionClass: 'toast-bottom-right'
+    });
+  }
+  mostrarError(mensaje: string) {
+    this.toastr.error(`<span class="now-ui-icons ui-1_bell-53"></span> ${mensaje}`, '', {
+      timeOut: 3000,
+      closeButton: true,
+      enableHtml: true,
+      toastClass: "alert alert-error alert-with-icon",
       positionClass: 'toast-bottom-right'
     });
   }

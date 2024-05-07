@@ -27,17 +27,45 @@ export class UsuariosService implements DataService {
       .pipe(map((response) => this.mapResponse(response.data)));
   }
 
-  Editar(val: any): void {
-    console.log(val + "DESDE EL SERVICIO");
+  Editar(usuario:any): Observable<any> {
+    const json = {
+      Usua_Id: usuario.Id,
+      Usua_Usuario: usuario.Usuario,
+      Usua_Clave: usuario.Clave ?? 'AAA',
+      Rol_Id: usuario.rol_Id,
+      Usua_IsAdmin: usuario.EsAdmin ?? false,
+      Usua_Estado: true,
+      Usua_Creacion: 1,
+      Usua_FechaCreacion: new Date().toISOString(),
+      Usua_Modifica: 1,
+      Usua_FechaModifica: new Date().toISOString(),
+      Rol_Descripcion: "string",
+      Creacion: "string",
+      Modifica: "string"
+    }
+    return this.http
+      .put<any>(this.BaseUrl + "Actualizar", json, {headers: new HttpHeaders({'Content-Type': 'application/json'})}).pipe(map(response=>response));
   }
 
 
   Crear(usuario:any): Observable<any> {
-    console.log(this.BaseUrl + "Crear", 'url');
-    
-    new FormData()
+    const json = {
+      Usua_Id: 0,
+      Usua_Usuario: usuario.Usuario,
+      Usua_Clave: usuario.Clave,
+      Rol_Id: usuario.rol_Id,
+      Usua_IsAdmin: usuario.EsAdmin ?? false,
+      Usua_Estado: true,
+      Usua_Creacion: 1,
+      Usua_FechaCreacion: new Date().toISOString(),
+      Usua_Modifica: 1,
+      Usua_FechaModifica: new Date().toISOString(),
+      Rol_Descripcion: "string",
+      Creacion: "string",
+      Modifica: "string"
+    }
     return this.http
-      .post<any>(this.BaseUrl + "Crear", usuario, {headers: new HttpHeaders({'Content-Type': 'application/json'})}).pipe(map(response=>response));
+      .post<any>(this.BaseUrl + "Crear", json, {headers: new HttpHeaders({'Content-Type': 'application/json'})}).pipe(map(response=>response));
   }
 
   private mapResponse(data: any[]): Usuario[] {

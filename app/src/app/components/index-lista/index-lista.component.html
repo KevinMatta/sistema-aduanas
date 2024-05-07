@@ -85,9 +85,10 @@
               >
                 <div style="display: flex; min-width: 400px; gap: 5px">
                   <button
+                    *ngIf="!path"
                     type="button"
                     class="btn btn-sm btn-primary btn-outline-primary btn-round"
-                    (click)="Editar(row.Id)"
+                    (click)="open(row.Id)"
                   >
                     <i class="now-ui-icons design-2_ruler-pencil"></i>
                     Editar
