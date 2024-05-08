@@ -15,6 +15,7 @@
   "dependencies": {
     "-": "0.0.1",
     "@adactive/bootstrap-tagsinput": "0.8.2",
+    "@angular-devkit/schematics": "^13.3.11",
     "@angular/animations": "^13.2.6",
     "@angular/cdk": "^13.2.6",
     "@angular/common": "^13.2.6",
@@ -30,6 +31,7 @@
     "@angular/router": "^13.2.6",
     "@ng-bootstrap/ng-bootstrap": "12.0.1",
     "@popperjs/core": "^2.11.4",
+    "@schematics/angular": "^13.3.11",
     "@swimlane/ngx-datatable": "^20.1.0",
     "ajv": "7.0.1",
     "ajv-keywords": "4.0.0",
@@ -48,7 +50,6 @@
     "jquery": "^3.7.1",
     "jw-bootstrap-switch-ng2": "2.0.5",
     "ng2-charts": "2.4.2",
-    "ng2-pdf-viewer": "^7.0.2",
     "ngx-extended-pdf-viewer": "^13.0.0-alpha.13",
     "ngx-toastr": "13.2.0",
     "nouislider": "14.6.3",

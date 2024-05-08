@@ -1,6 +1,6 @@
 export class Esquema {
     Id:number;
-    Esquema:number;
+    Esquema:string;
     NumPantallas?:number;
     esqu_Creacion?: number;
     esqu_FechaCreacion?: string;

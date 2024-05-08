@@ -13,7 +13,7 @@ import { FormUsuariosComponent } from "../components/form-usuarios/form-usuarios
   providedIn: "root",
 })
 export class UsuariosService implements DataService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   BaseUrl = environment.urlAPI + "/API/Usuario/";
 
@@ -27,11 +27,20 @@ export class UsuariosService implements DataService {
       .pipe(map((response) => this.mapResponse(response.data)));
   }
 
-  Editar(usuario:any): Observable<any> {
+  Eliminar(val: any): Observable<any> {
+    console.log(val + "Para Eliminar");
+    return this.http.delete<any>(
+      `${environment.urlAPI}/API/Usuario/Eliminar/?Usua_Id=${val}&Usua_Modifica=1
+      `,
+      { observe: "response" }
+    );
+  }
+
+  Editar(usuario: any): Observable<any> {
     const json = {
       Usua_Id: usuario.Id,
       Usua_Usuario: usuario.Usuario,
-      Usua_Clave: usuario.Clave ?? 'AAA',
+      Usua_Clave: usuario.Clave ?? "AAA",
       Rol_Id: usuario.rol_Id,
       Usua_IsAdmin: usuario.EsAdmin ?? false,
       Usua_Estado: true,
@@ -41,14 +50,16 @@ export class UsuariosService implements DataService {
       Usua_FechaModifica: new Date().toISOString(),
       Rol_Descripcion: "string",
       Creacion: "string",
-      Modifica: "string"
-    }
+      Modifica: "string",
+    };
     return this.http
-      .put<any>(this.BaseUrl + "Actualizar", json, {headers: new HttpHeaders({'Content-Type': 'application/json'})}).pipe(map(response=>response));
+      .put<any>(this.BaseUrl + "Actualizar", json, {
+        headers: new HttpHeaders({ "Content-Type": "application/json" }),
+      })
+      .pipe(map((response) => response));
   }
 
-
-  Crear(usuario:any): Observable<any> {
+  Crear(usuario: any): Observable<any> {
     const json = {
       Usua_Id: 0,
       Usua_Usuario: usuario.Usuario,
@@ -62,10 +73,13 @@ export class UsuariosService implements DataService {
       Usua_FechaModifica: new Date().toISOString(),
       Rol_Descripcion: "string",
       Creacion: "string",
-      Modifica: "string"
-    }
+      Modifica: "string",
+    };
     return this.http
-      .post<any>(this.BaseUrl + "Crear", json, {headers: new HttpHeaders({'Content-Type': 'application/json'})}).pipe(map(response=>response));
+      .post<any>(this.BaseUrl + "Crear", json, {
+        headers: new HttpHeaders({ "Content-Type": "application/json" }),
+      })
+      .pipe(map((response) => response));
   }
 
   private mapResponse(data: any[]): Usuario[] {
@@ -74,7 +88,7 @@ export class UsuariosService implements DataService {
         Id: item.usua_Id,
         Usuario: item.usua_Usuario,
         Rol: item.rol_Descripcion,
-        Admin: item.usua_IsAdmin ? 'SI' : 'NO'
+        Admin: item.usua_IsAdmin ? "SI" : "NO",
       };
       return model;
     });

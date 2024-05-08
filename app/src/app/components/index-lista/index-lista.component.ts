@@ -14,6 +14,8 @@ import { CiudadesService } from "../../Services/ciudades.service";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Rol } from "../../Models/RolesViewModel";
 import { FormUsuariosComponent } from "../form-usuarios/form-usuarios.component";
+import { HttpResponse } from "@angular/common/http";
+import { ToastrService } from "ngx-toastr";
 
 type ColumnType = { prop: string } | { name: string };
 
@@ -38,13 +40,13 @@ export const ROUTES: RouteInfo[] = [
   styleUrls: ["./index-lista.component.css"],
 })
 export class IndexListaComponent implements OnInit {
-
   roles: Rol[];
+  itemToDelete: any;
 
   open(Id?: number | string) {
     let modalRef = this.modalService.open(FormUsuariosComponent);
     if (Id) {
-      const objetoEncontrado = this.rows.find(obj=>obj.Id === Id);
+      const objetoEncontrado = this.rows.find((obj) => obj.Id === Id);
       modalRef.componentInstance.usuarioParaEditar = objetoEncontrado;
     }
     modalRef.result.then((data) => {
@@ -65,7 +67,7 @@ export class IndexListaComponent implements OnInit {
         );
       }
     });
-  } 
+  }
 
   constructor(
     private modalService: NgbModal,
@@ -78,7 +80,8 @@ export class IndexListaComponent implements OnInit {
     private paisesService: PaisesService,
     private estadosService: EstadosService,
     private ciudadesService: CiudadesService,
-    private estadosCivilesService: EstadosCivilesService
+    private estadosCivilesService: EstadosCivilesService,
+    private toastr: ToastrService
   ) {}
   @ViewChild(DatatableComponent) table: DatatableComponent;
 
@@ -148,7 +151,8 @@ export class IndexListaComponent implements OnInit {
       case "Usuarios":
         return this.usuariosService;
       case "Roles":
-        this.path = "/roles-por-pantalla";
+        this.path = "/layout/layout/roles-por-pantalla";
+        console.log(this.path, 'path');
         return this.rolesService;
       case "Aduanas":
         return this.aduanasService;
@@ -198,155 +202,441 @@ export class IndexListaComponent implements OnInit {
     this.table.offset = 0;
   }
 
+  private preprocessData() {
+    this.rows.forEach((item) => {
+      this.columns.forEach((prop) => {
+        item[prop + "_isBoolean"] = typeof item[prop] === "boolean";
+      });
+    });
+  }
+
   Editar(val: any): void {
     console.log(val);
   }
+
+  confirmDeleteModal(row) {
+    console.log(row);
+    this.itemToDelete = row;
+    const modalRef = this.modalService.open(NgbdDeleteConfirmationModal);
+    modalRef.result
+      .then((result) => {
+        if (result === "confirm") {
+          this.confirmDelete();
+        }
+      })
+      .catch((error) => {
+        console.log("Se cerró el modal sin confirmar la eliminación.");
+      });
+  }
+  confirmDelete() {
+    console.log("hola");
+    if (this.itemToDelete) {
+      switch (this.titulo) {
+        case "Usuarios":
+          this.usuariosService.Eliminar(this.itemToDelete.Id).subscribe(
+            (response: HttpResponse<any>) => {
+              if (response.status === 200) {
+                this.itemToDelete = null;
+                this.toastr.success(
+                  '<span class="now-ui-icons ui-1_bell-53"></span> Registro Eliminado correctamente',
+                  "Exito",
+                  {
+                    timeOut: 3000,
+                    closeButton: true,
+                    enableHtml: true,
+                    toastClass: "alert alert-success alert-with-icon",
+                    positionClass: "toast-top-right",
+                  }
+                );
+                setTimeout(() => {
+                  window.location.reload();
+                }, 1000);
+              } else {
+                this.toastr.warning(
+                  '<span class="now-ui-icons ui-1_bell-53"></span> Ya existe un registro con el mismoo id',
+                  "Alerta",
+                  {
+                    timeOut: 3000,
+                    closeButton: true,
+                    enableHtml: true,
+                    toastClass: "alert alert-success alert-with-icon",
+                    positionClass: "toast-top-right",
+                  }
+                );
+              }
+              this.itemToDelete = null;
+            },
+            (error) => {
+              this.toastr.error(
+                '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo  realizar la peticionn',
+                "Error",
+                {
+                  timeOut: 3000,
+                  closeButton: true,
+                  enableHtml: true,
+                  toastClass: "alert alert-success alert-with-icon",
+                  positionClass: "toast-top-right",
+                }
+              );
+            }
+          );
+          break;
+        case "Roles":
+          this.rolesService
+            .Eliminar(this.itemToDelete.Id)
+            .subscribe((response: HttpResponse<any>) => {
+              if (response.status === 200) {
+                this.itemToDelete = null;
+                this.toastr.success(
+                  '<span class="now-ui-icons ui-1_bell-53"></span> Registro Eliminado correctamente',
+                  "Exito",
+                  {
+                    timeOut: 3000,
+                    closeButton: true,
+                    enableHtml: true,
+                    toastClass: "alert alert-success alert-with-icon",
+                    positionClass: "toast-top-right",
+                  }
+                );
+                setTimeout(() => {
+                  window.location.reload();
+                });
+              } else {
+                this.toastr.warning(
+                  '<span class="now-ui-icons ui-1_bell-53"></span> Ya existe un registro con el mismo id',
+                  "Alerta",
+
+                  {
+                    timeOut: 3000,
+                  }
+                );
+              }
+            }),
+            (error) => {
+              this.toastr.error(
+                '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo  realizar la peticionn',
+                "Error",
+                {
+                  timeOut: 3000,
+                }
+              );
+            };
+          break;
+        case "Aduanas":
+          this.aduanasService.Eliminar(this.itemToDelete.Id).subscribe(
+            (response: HttpResponse<any>) => {
+              if (response.status === 200) {
+                this.itemToDelete = null;
+                this.toastr.success(
+                  '<span class="now-ui-icons ui-1_bell-53"></span> Registro Eliminado correctamente',
+                  "Exito",
+                  {
+                    timeOut: 3000,
+                    closeButton: true,
+                    enableHtml: true,
+                    toastClass: "alert alert-success alert-with-icon",
+                    positionClass: "toast-top-right",
+                  }
+                );
+                setTimeout(() => {
+                  window.location.reload();
+                });
+              } else {
+                this.toastr.warning(
+                  '<span class="now-ui-icons ui-1_bell-53"></span> Ya existe un registro con el mismo id',
+                  "Alerta",
+                  {
+                    timeOut: 3000,
+                  }
+                );
+              }
+            },
+            (error) => {
+              this.toastr.error(
+                '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo  realizar la peticionn',
+                "Error",
+                {
+                  timeOut: 3000,
+                }
+              );
+            }
+          );
+          break;
+        case "Paises":
+          this.paisesService.Eliminar(this.itemToDelete.Id).subscribe(
+            (response: HttpResponse<any>) => {
+              if (response.status === 200) {
+                this.itemToDelete = null;
+                this.toastr.success(
+                  '<span class="now-ui-icons ui-1_bell-53"></span> Registro Eliminado correctamente',
+                  "Exito",
+                  {
+                    timeOut: 3000,
+                    closeButton: true,
+                    enableHtml: true,
+                    toastClass: "alert alert-success alert-with-icon",
+                    positionClass: "toast-top-right",
+                  }
+                );
+                setTimeout(() => {
+                  window.location.reload();
+                });
+              } else {
+                this.toastr.warning(
+                  '<span class="now-ui-icons ui-1_bell-53"></span> Ya existe un registro con el mismo id',
+                  "Alerta",
+                  {
+                    timeOut: 3000,
+                  }
+                );
+              }
+            },
+            (error) => {
+              this.toastr.error(
+                '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo  realizar la peticionn',
+                "Error",
+                {
+                  timeOut: 3000,
+                }
+              );
+            }
+          );
+          break;
+
+        case "Estados":
+          this.estadosService
+            .Eliminar(this.itemToDelete.Id)
+            .subscribe((response: HttpResponse<any>) => {
+              if (response.status === 200) {
+                this.itemToDelete = null;
+                this.toastr.success(
+                  '<span class="now-ui-icons ui-1_bell-53"></span> Registro Eliminado correctamente',
+                  "Exito",
+                  {
+                    timeOut: 3000,
+                    closeButton: true,
+                    enableHtml: true,
+                    toastClass: "alert alert-success alert-with-icon",
+                    positionClass: "toast-top-right",
+                  }
+                );
+                setTimeout(() => {
+                  window.location.reload();
+                });
+              } else {
+                this.toastr.warning(
+                  '<span class="now-ui-icons ui-1_bell-53"></span> Ya existe un registro con el mismo id',
+                  "Alerta",
+                  {
+                    timeOut: 3000,
+                  }
+                );
+              }
+            }),
+            (error) => {
+              this.toastr.error(
+                '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo  realizar la peticionn',
+                "Error",
+                {
+                  timeOut: 3000,
+                }
+              );
+            };
+          break;
+        case "Estados Civiles":
+          this.estadosCivilesService
+            .Eliminar(this.itemToDelete.Id)
+            .subscribe((response: HttpResponse<any>) => {
+              if (response.status === 200) {
+                this.itemToDelete = null;
+                this.toastr.success(
+                  '<span class="now-ui-icons ui-1_bell-53"></span> Registro Eliminado correctamente',
+                  "Exito",
+                  {
+                    timeOut: 3000,
+                    closeButton: true,
+                    enableHtml: true,
+                    toastClass: "alert alert-success alert-with-icon",
+                    positionClass: "toast-top-right",
+                  }
+                );
+                setTimeout(() => {
+                  window.location.reload();
+                });
+              } else {
+                this.toastr.warning(
+                  '<span class="now-ui-icons ui-1_bell-53"></span> Ya existe un registro con el mismo id',
+                  "Alerta",
+                  {
+                    timeOut: 3000,
+                  }
+                );
+              }
+            }),
+            (error) => {
+              this.toastr.error(
+                '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo  realizar la peticionn',
+                "Error",
+                {
+                  timeOut: 3000,
+                }
+              );
+            };
+          break;
+        case "Empresas":
+          this.empresasService
+            .Eliminar(this.itemToDelete.Id)
+            .subscribe((response: HttpResponse<any>) => {
+              if (response.status === 200) {
+                this.itemToDelete = null;
+                this.toastr.success(
+                  '<span class="now-ui-icons ui-1_bell-53"></span> Registro Eliminado correctamente',
+                  "Exito",
+                  {
+                    timeOut: 3000,
+                    closeButton: true,
+                    enableHtml: true,
+                    toastClass: "alert alert-success alert-with-icon",
+                    positionClass: "toast-top-right",
+                  }
+                );
+                setTimeout(() => {
+                  window.location.reload();
+                });
+              } else {
+                this.toastr.warning(
+                  '<span class="now-ui-icons ui-1_bell-53"></span> Ya existe un registro con el mismo id',
+                  "Alerta",
+                  {
+                    timeOut: 3000,
+                  }
+                );
+              }
+            }),
+            (error) => {
+              this.toastr.error(
+                '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo  realizar la peticionn',
+                "Error",
+                {
+                  timeOut: 3000,
+                }
+              );
+            };
+          break;
+        case "Empleados":
+          this.empleadosService
+            .Eliminar(this.itemToDelete.Id)
+            .subscribe((response: HttpResponse<any>) => {
+              if (response.status === 200) {
+                this.itemToDelete = null;
+                this.toastr.success(
+                  '<span class="now-ui-icons ui-1_bell-53"></span> Registro Eliminado correctamente',
+                  "Exito",
+                  {
+                    timeOut: 3000,
+                    closeButton: true,
+                    enableHtml: true,
+                    toastClass: "alert alert-success alert-with-icon",
+                    positionClass: "toast-top-right",
+                  }
+                );
+                setTimeout(() => {
+                  window.location.reload();
+                });
+              } else {
+                this.toastr.warning(
+                  '<span class="now-ui-icons ui-1_bell-53"></span> Ya existe un registro con el mismo id',
+                  "Alerta",
+                  {
+                    timeOut: 3000,
+                  }
+                );
+              }
+            }),
+            (error) => {
+              this.toastr.error(
+                '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo  realizar la peticionn',
+                "Error",
+                {
+                  timeOut: 3000,
+                }
+              );
+            };
+          break;
+        case "Ciudades":
+          this.ciudadesService
+            .Eliminar(this.itemToDelete.Id)
+            .subscribe((response: HttpResponse<any>) => {
+              if (response.status === 200) {
+                this.itemToDelete = null;
+                this.toastr.success(
+                  '<span class="now-ui-icons ui-1_bell-53"></span> Registro Eliminado correctamente',
+                  "Exito",
+                  {
+                    timeOut: 3000,
+                    closeButton: true,
+                    enableHtml: true,
+                    toastClass: "alert alert-success alert-with-icon",
+                    positionClass: "toast-top-right",
+                  }
+                );
+                setTimeout(() => {
+                  window.location.reload();
+                });
+              } else {
+                this.toastr.warning(
+                  '<span class="now-ui-icons ui-1_bell-53"></span> Ya existe un registro con el mismo id',
+                  "Alerta",
+                  {
+                    timeOut: 3000,
+                  }
+                );
+              }
+            }),
+            (error) => {
+              this.toastr.error(
+                '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo  realizar la peticionn',
+                "Error",
+                {
+                  timeOut: 3000,
+                }
+              );
+            };
+        default:
+          console.error("Tipo de servicio no manejado para eliminar");
+          break;
+      }
+    }
+  }
 }
-
-// @Component({
-//   selector: "app-modal-content",
-//   // template: `
-//   //   <ng-container>
-//   //     <div class="modal-header">
-//   //       <h4 class="modal-title" id="modal-basic-title">Nuevo {{ titulo }}</h4>
-//   //       <button
-//   //         type="button"
-//   //         class="btn btn-sm btn-outline-primary"
-//   //         aria-label="Close"
-//   //         (click)="activeModal.dismiss('Cross click')"
-//   //       >
-//   //         <i class="now-ui-icons ui-1_simple-remove"></i>
-//   //       </button>
-//   //     </div>
-//   //     <div class="modal-body">
-//   //       <div class="row">
-//   //         <div class="col-md-6">
-//   //           <div class="form-group">
-//   //             <label>Usuario</label>
-//   //             <input
-//   //               type="text"
-//   //               class="form-control"
-//   //               placeholder="05012005042021"
-//   //               maxlength="20"
-//   //             />
-//   //           </div>
-//   //         </div>
-//   //         <div class="col-md-6">
-//   //           <div class="form-group">
-//   //             <label>Contraseña</label>
-//   //             <input
-//   //               type="text"
-//   //               class="form-control"
-//   //               placeholder="*******"
-//   //               minlength="6"
-//   //             />
-//   //           </div>
-//   //         </div>
-//   //       </div>
-//   //       <div class="row">
-//   //         <div class="col-md-6">
-//   //           <div class="form-group">
-//   //             <label>Rol</label>
-//   //             <div ngbDropdown class="d-block">
-//   //               <button
-//   //                 type="button"
-//   //                 class="btn btn-primary m-0"
-//   //                 id="dropdownMenu1"
-//   //                 ngbDropdownToggle
-//   //               >
-//   //                 - Seleccionar -
-//   //               </button>
-//   //               <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-//   //                 <button
-//   //                   *ngFor="let rol of roles"
-//   //                   type="button"
-//   //                   class="dropdown-item"
-//   //                   (click)="selectRol(rol.Id)"
-//   //                 >
-//   //                   {{ rol.Rol }}
-//   //                 </button>
-//   //               </div>
-//   //             </div>
-//   //           </div>
-//   //         </div>
-//   //         <ul>
-//   //           <li *ngFor="let rol of roles">{{ rol.Rol }}</li>
-//   //         </ul>
-//   //         <div class="col-md-6">
-//   //           <div class="form-group">
-//   //             <label for="">Administrador</label>
-//   //             <input class="switch-input" type="radio" name="rdo" id="si" />
-//   //             <input
-//   //               class="switch-input"
-//   //               type="radio"
-//   //               name="rdo"
-//   //               id="no"
-//   //               checked
-//   //             />
-//   //             <div class="switch">
-//   //               <label for="si">Sí</label>
-//   //               <label for="no">No</label>
-//   //               <span></span>
-//   //             </div>
-//   //           </div>
-//   //         </div>
-//   //       </div>
-//   //     </div>
-//   //     <div class="modal-footer">
-//   //       <button
-//   //         type="button"
-//   //         class="btn btn-outline-primary"
-//   //         (click)="activeModal.close('Save click')"
-//   //       >
-//   //         <i
-//   //           class="now-ui-icons ui-1_simple-remove"
-//   //           style="margin-right: 5px"
-//   //         ></i>
-//   //         Cancelar
-//   //       </button>
-//   //       <button class="btn btn-primary">
-//   //         <i class="now-ui-icons ui-1_check" style="margin-right: 5px"></i>
-//   //         Guardar
-//   //       </button>
-//   //     </div>
-//   // </ng-container>
-//   // `,
-//   templateUrl: "./form-usuarios.component.html",
-//   styleUrls: ["./index-lista.component.css"],
-// })
-// export class NgbdModalContent implements OnInit {
-//   @Input() titulo;
-//   // @Input() roles;
-//   hola: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
-//   roles: Rol[];
-
-//   rolSeleccionado: number;
-
-//   constructor(
-//     public activeModal: NgbActiveModal,
-//     private rolesService: RolesService
-//   ) {}
-
-//   isLoading = true;
-//   ngOnInit(): void {
-//     // console.log(this.roles);
-
-//     this.rolesService.getData().subscribe(
-//       (data: Rol[]) => {
-//         console.log(data);
-//         this.roles = data;
-//         console.log(this.roles, "this.roles");
-//         // console.log(this.indexComponent.roles, "this.indexComponent.roles");
-//       },
-//       (error) => {
-//         console.log(error);
-//         this.isLoading = false;
-//       }
-//     );
-//   }
-
-//   selectRol(rolId: number) {
-//     this.rolSeleccionado = rolId;
-//     console.log(this.rolSeleccionado, "rolSeleccionado");
-//   }
-// }
+@Component({
+  selector: "ngbd-delete-confirmation-modal",
+  template: `
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Eliminar {{ titulo }}</h4>
+    </div>
+    <div class="modal-body">
+      <p>¿Estás seguro de que deseas eliminar este elemento?</p>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-danger btn-round"
+        (click)="activeModal.close('confirm')"
+      >
+        Eliminar
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-secondary btn-round"
+        (click)="activeModal.dismiss('cancel')"
+      >
+        Cancelar
+      </button>
+    </div>
+  `,
+})
+export class NgbdDeleteConfirmationModal {
+  @Input() titulo;
+  constructor(public activeModal: NgbActiveModal) {}
+}
