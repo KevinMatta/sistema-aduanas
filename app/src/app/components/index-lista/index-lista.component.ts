@@ -151,7 +151,8 @@ export class IndexListaComponent implements OnInit {
       case "Usuarios":
         return this.usuariosService;
       case "Roles":
-        this.path = "/roles-por-pantalla";
+        this.path = "/layout/layout/roles-por-pantalla";
+        console.log(this.path, 'path');
         return this.rolesService;
       case "Aduanas":
         return this.aduanasService;

@@ -39,6 +39,7 @@ export class FormUsuariosComponent implements OnInit {
       console.log(this.usuario.EsAdmin, "ESADMIN");
 
     } else {
+      this.usuario.Usuario = "";
       this.usuario.Rol = "- Seleccionar -";
       this.usuario.EsAdmin = false;
     }

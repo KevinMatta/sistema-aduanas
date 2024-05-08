@@ -1,6 +1,6 @@
 export class Pantalla {
     Id:number;
-    Pantalla:number;
+    Pantalla:string;
     Esqu_Id:number;
     pant_Estado?: boolean;
     pant_Creacion?: number;

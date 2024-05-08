@@ -54,6 +54,7 @@ export class RolesPorPantallaComponent implements OnInit {
       });
       this.pantallasService.getData().subscribe((data: Pantalla[]) => {
         this.pantallas = data;
+        console.log(this.pantallas, 'pantallas');
         console.log(this.esquemas, 'esquemas antes del loop');
         this.pantallas.forEach(pant => {
           const index = this.esquemas.findIndex(esqu => esqu.Id === pant.Esqu_Id)
@@ -116,6 +117,8 @@ export class RolesPorPantallaComponent implements OnInit {
     event.target.parentElement.querySelector('.nested').classList.toggle('active');
     if (!toggle) {
       const texto = event.target.children[0].textContent;
+      console.log(texto, 'texto');
+      
       const esquema = this.esquemas.find(esqu => esqu.Esquema === texto);
       event.target.parentElement.querySelector('.nested').closest('li').style.marginBottom = ((esquema.NumPantallas * 30) + 10) + 'px';
     } else {
