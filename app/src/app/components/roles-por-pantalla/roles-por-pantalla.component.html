@@ -1,0 +1,104 @@
+<div class="panel-header panel-header-sm"></div>
+<div id="boletin" class="main-content">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Roles por pantalla</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="d-flex align-items-center flex-column" style="min-height: 100vh; justify-content: start">
+              <div class="d-flex w-100 justify-content-center" style="gap: 20px">
+                <div>
+                  <label style="color: #3dbdd9">Rol</label>
+                  <input [(ngModel)]="rolId" name="rolId" type="hidden" value="{{ Rol_Id }}" style="max-width: 280px" />
+                  <input [(ngModel)]="rolDescripcion" name="rolDescripcion" class="form-control"
+                    style="max-width: 280px" [disabled]="Rol_Id !== 0" />
+                </div>
+                <button class="btn btn-primary" style="max-height: 40px; align-self: end; margin: 0;" type="submit">
+                  Guardar
+                </button>
+              </div>
+              <div class="outer">
+                <ul id="ul" style="list-style: none;">
+                  <li>
+                    <span class="caretRP" (click)="caretClick($event)">
+                      <label>Sistema electoral</label>
+                    </span>
+                    <input id="checkboxSistemaElectoral" type="checkbox" style="margin-left: 10px" class="Sist_CkBox"
+                      [checked]="Rol_Id !== 0" />
+                    <ul id="root" class="nested active" style="
+                        border-left: 3px dashed gray;
+                        left: -26px;
+                        position: relative;
+                        top: -6px;
+                        padding-left: 0;
+                        margin-left: 32px;
+                        list-style: none;
+                      ">
+                      <ng-container *ngIf="esquemas && pantallas">
+                        <li *ngFor="let esquema of esquemas" style="
+                          position: relative;
+                          min-height: 30px;
+                          border-bottom: 3px dashed gray;
+                        " [ngStyle]="{'margin-bottom': ((esquema.NumPantallas * 30) + 10) + 'px' }">
+                          <div style="
+                              position: absolute;
+                              top: 50%;
+                              min-width: 100%;
+                              z-index: 1;
+                              left: 15px;
+                              background-color: #0d0e0f;
+                            ">
+                            <span class="caretRP" (click)="caretClick($event)">
+                              <label>{{ esquema.Esquema }}</label>
+                            </span>
+                            <input [id]="esquema.Id" class="Esqu_CkBox" type="checkbox" style="margin-left: 10px" />
+                            <ul class="nested esquemaRoot active" style="
+                                left: -26px;
+                                position: relative;
+                                top: -6px;
+                                border-left: 3px dashed gray;
+                                padding-left: 0;
+                                margin-left: 32px;
+                                list-style: none;
+                              ">
+                              <ng-container *ngFor="let pantalla of pantallas">
+                                <li *ngIf="pantalla.Esqu_Id === esquema.Id" style="
+                                    position: relative;
+                                    min-height: 30px;
+                                    border-bottom: 3px dashed gray;
+                                  ">
+                                  <div style="
+                                      position: absolute;
+                                      top: 50%;
+                                      min-width: 300px;
+                                      z-index: 1;
+                                      left: 15px;
+                                      background-color: #0d0e0f;
+                                    ">
+                                    <input [id]="pantalla.Id" type="checkbox" class="Pant_CkBox mr-1" [checked]="
+                                        isPantallaChecked(pantalla.Id)
+                                      " />
+                                    <label for="{{ pantalla.Id }}">{{
+                                      pantalla.Pantalla
+                                      }}</label>
+                                  </div>
+                                </li>
+                              </ng-container>
+                            </ul>
+                          </div>
+                        </li>
+                      </ng-container>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

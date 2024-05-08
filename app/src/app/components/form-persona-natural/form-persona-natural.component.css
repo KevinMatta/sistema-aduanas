@@ -1,0 +1,11 @@
+.form-control:focus{
+    background-color: transparent;
+}
+
+.form-control{
+    color: #61c3db;
+}
+
+.card{
+    top: -2%;
+}

@@ -4,19 +4,19 @@
 
 @mixin form-control-placeholder($color, $opacity){
    .form-control::-moz-placeholder{
-       color: $color;
+       color: white;//$color;
        @include opacity(1);
    }
    .form-control:-moz-placeholder{
-       color: $color;
+       color: white;//$color;
        @include opacity(1);
    }
    .form-control::-webkit-input-placeholder{
-       color: $color;
+       color: white;//$color;
        @include opacity(1);
    }
    .form-control:-ms-input-placeholder{
-       color: $color;
+       color: white;//$color;
        @include opacity(1);
    }
 }
@@ -132,11 +132,11 @@
 
     .form-control{
         border-color: $color1;
-        color: $color2;
+        color: #61c3db;//$color2;
 
         &:focus{
             border-color: $color3;
-            background-color: $color4;
+            background-color: transparent;//$color6;
             color: $color3;
         }
     }
@@ -174,12 +174,12 @@
     .input-group.no-border{
         .form-control{
             background-color: $color5;
-            color: $color2;
+            color: #61c3db;//$color2;
 
             &:focus,
             &:active,
             &:active{
-                background-color: $color6;
+                background-color: transparent;//$color6;
                 color: $color3;
             }
         }
@@ -191,7 +191,7 @@
             &:focus,
             &:active,
             &:active{
-                background-color: $color6;
+                background-color: transparent;//$color6;
                 color: $color3;
             }
         }
@@ -200,7 +200,7 @@
             &:focus{
                 & + .input-group-prepend .input-group-text,
                 & + .input-group-append .input-group-text{
-                    background-color: $color6;
+                background-color: transparent;//$color6;
                     color: $color3;
                 }
             }
@@ -208,7 +208,7 @@
 
         .input-group-prepend .input-group-text,
         .input-group-append .input-group-text{
-            background-color: $color5;
+            background-color: transparent;//$color6;
             border: none;
             color: $color2;
         }
@@ -216,7 +216,7 @@
         &.input-group-focus{
             .input-group-prepend .input-group-text,
             .input-group-append .input-group-text{
-                background-color: $color6;
+                background-color: transparent;//$color6;
                 color: $color3;
             }
         }

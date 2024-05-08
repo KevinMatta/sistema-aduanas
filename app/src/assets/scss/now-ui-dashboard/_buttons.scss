@@ -98,6 +98,11 @@
 .btn-danger  { @include btn-styles($danger-color, $danger-states-color); }
 .btn-neutral { @include btn-styles($white-color, $white-color); }
 
+.btn-outline-primary {
+    background-color: transparent;
+    border: 1px solid #61c3db;
+    color: #61c3db;
+}
 .btn{
      &:disabled,
      &[disabled],

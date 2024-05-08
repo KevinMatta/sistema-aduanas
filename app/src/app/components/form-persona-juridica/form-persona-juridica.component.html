@@ -1,0 +1,189 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+            SP011 - SOLICITUD DE CONTRATO DE ADHESION PARA PERSONA JURIDICA
+          </h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <h6>Datos generales</h6>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>RTN Solicitante</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="05012005042021"
+                    maxlength="20"
+                  />
+                </div>
+              </div>
+            </div>
+            <h6>Datos a Informar</h6>
+            <small
+              >- Todos los datos marcados con un
+              <span style="color: red">*</span> son requeridos.</small
+            >
+            <div class="" style="overflow-x: auto">
+              <table class="table table-bordered">
+                <thead class="text-primary">
+                  <th>Dato</th>
+                  <th>Descripcion</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div ngbDropdown class="d-inline-block">
+                        <button
+                          class="btn btn-primary"
+                          id="dropdownMenu1"
+                          ngbDropdownToggle
+                        >
+                          - Seleccionar -
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                          <button class="dropdown-item">Action - 1</button>
+                          <button class="dropdown-item">Action - 2</button>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      SD001 - OFICINA DONDE PRESENTARA LA SOLICITUD Y
+                      DOCUMENTACION
+                      <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div ngbDropdown class="d-inline-block">
+                        <button
+                          class="btn btn-primary"
+                          id="dropdownMenu1"
+                          ngbDropdownToggle
+                        >
+                          - Seleccionar -
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                          <button class="dropdown-item">Action - 1</button>
+                          <button class="dropdown-item">Action - 2</button>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      SD296 - ESTADO CIVIL DEL REPRESENTANTE LEGAL
+                      <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div ngbDropdown class="d-inline-block">
+                        <button
+                          class="btn btn-primary"
+                          id="dropdownMenu1"
+                          ngbDropdownToggle
+                        >
+                          - Seleccionar -
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                          <button class="dropdown-item">Action - 1</button>
+                          <button class="dropdown-item">Action - 2</button>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      SD298 - PROFESION U OFICIO DEL REPRESENTANTE LEGAL (SEGUN
+                      CLASIFICADOR NACIONAL DE OCUPACIONES DE HONDURAS,
+                      CNOH-2018) <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                  <app-form-ubicacion
+                    [titulo]="
+                      'DOMICILIO DE LA EMPRESA (PARA EFECTO DE UBICACION, EN EL CONTRATO DE ADHESION SE MOSTRARA EL DOMICILIO FISCAL REGISTRADO EN LA ADMINISTRACION TRIBUTARIA)'
+                    "
+                    style="display: contents"
+                  ></app-form-ubicacion>
+                  <app-form-ubicacion
+                    [titulo]="
+                      'DOMICILIO DEL REPRESENTANTE LEGAL (PARA EFECTO DE UBICACION, EN EL CONTRATO DE ADHESION SE MOSTRARA EL DOMICILIO FISCAL REGISTRADO EN LA ADMINISTRACION TRIBUTARIA)'
+                    "
+                    style="display: contents"
+                  ></app-form-ubicacion>
+                  <app-form-contacto
+                    [entidad]="'DE LA EMPRESA'"
+                    style="display: contents"
+                  ></app-form-contacto>
+                </tbody>
+              </table>
+            </div>
+            <h6>Datos a Informar</h6>
+            <small
+              >- Todos los datos marcados con un
+              <span style="color: red">*</span> son requeridos.</small
+            >
+            <div class="" style="overflow-x: auto">
+              <table class="table table-bordered">
+                <thead class="text-primary">
+                  <th>
+                    Dato
+                    <p>
+                      Solo se aceptan caracteres alfanuméricos, no utilice
+                      espacios, comas, puntos, etc.
+                    </p>
+                  </th>
+                  <th>Descripcion</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <input type="text" class="form-control" />
+                    </td>
+                    <td>
+                      SS100 - REGISTRO TRIBUTARIO NACIONAL (RTN) DE LA SOCIEDAD
+                      MERCANTIL
+                      <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" class="form-control" />
+                    </td>
+                    <td>
+                      SS128 - REGISTRO TRIBUTARIO NACIONAL (RTN) DEL
+                      REPRESENTANTE LEGAL
+                      <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" class="form-control" />
+                    </td>
+                    <td>
+                      SS018 - DOCUMENTO O TARJETA DE IDENTIDAD DEL REPRESENTANTE
+                      LEGAL
+                      <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" class="form-control" />
+                    </td>
+                    <td>
+                      SS027 - ESCRITURA PUBLICA DE CONSTITUCIÓN Y SUS
+                      MODIFICACIONES SI LAS HUBIERA (DE LA SOCIEDAD MERCANTIL)
+                      <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+.form-control:focus{
+    background-color: transparent;
+}
+
+.form-control{
+    color: #61c3db;
+}
+
+.card {
+    top: -.5%;
+}
+
+tr{
+    transition: all 0.2s ease;
+}
+
+tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}

@@ -1,0 +1,97 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "DbaduanaContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Context",
+   "ProjectRootNamespace": "sistema_aduana.DataAccess",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 1,
+   "Tables": [
+      {
+         "Name": "[Acce].[tbPantallas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acce].[tbPantallasPorRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acce].[tbRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acce].[tbUsuarios]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Adua].[tbAduanas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbCiudades]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbComerciantesIndividuales]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbEmpleados]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbEmpresas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbEstados]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbEstadosCiviles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbOficinas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbPaises]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbPersonasJuridicas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbPersonasNaturales]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbProfesiones]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "vb600.dbAduana",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

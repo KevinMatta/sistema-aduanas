@@ -1,0 +1,51 @@
+.form-control:focus {
+    background-color: transparent;
+}
+
+.form-control {
+    color: #61c3db;
+}
+
+.card {
+    top: -2%;
+}
+
+.outer {
+    font-family: poppins;
+    font-size: 20px;
+}
+
+.outer ul {
+    list-style: none;
+}
+
+.outer #ul {
+    margin: 0;
+    padding: 0;
+}
+
+.caretRP {
+    cursor: pointer;
+    user-select: none;
+    display: initial;
+}
+
+.caretRP::before {
+    content: "\25B6";
+    color: #3dbdd9;
+    display: inline-block;
+    transform: rotate(90deg);
+    margin-right: 5px;
+}
+
+.caretRP-down::before {
+    transform: rotate(0deg);
+}
+
+.nested {
+    display: none;
+}
+
+.active {
+    display: block;
+}

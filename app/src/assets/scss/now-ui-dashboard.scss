@@ -15,8 +15,14 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+
+@import 'swimlane/ngx-datatable/index.css';
+@import 'swimlane/ngx-datatable/themes/material.scss';
+@import 'swimlane/ngx-datatable/assets/icons.css';
+
+
 //  @import "~bootstrap/scss/bootstrap";
- @import 'now-ui-dashboard/variables';
+ @import 'now-ui-dashboard/variables'; 
  @import 'now-ui-dashboard/mixins';
 
  // Plugins CSS
@@ -25,7 +31,7 @@
 
  // Core CSS
  @import "now-ui-dashboard/buttons";
- @import "now-ui-dashboard/inputs";
+ @import "now-ui-dashboard/inputs"; 
  @import "now-ui-dashboard/typography";
  @import "now-ui-dashboard/misc";
  @import "now-ui-dashboard/checkboxes-radio";
@@ -50,3 +56,11 @@
  @import "now-ui-dashboard/cards/card-map";
 
  @import "now-ui-dashboard/responsive";
+
+ ngb-modal-backdrop {
+    z-index: 1050 !important;
+}
+
+.modal-content {
+    background-color: #201e1ee6;
+}

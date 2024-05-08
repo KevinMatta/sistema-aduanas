@@ -1,0 +1,232 @@
+<div class="panel-header panel-header-sm"></div>
+<div id="boletin" class="main-content">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">
+            SP009 - SOLICITUD DE CONTRATO DE ADHESION PARA PERSONA NATURAL
+          </h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <h6>Datos generales</h6>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>RTN Solicitante</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="05012005042021"
+                    maxlength="20"
+                    (blur)="RtnSolicitanteBlur($event)"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="archivoRTN">Archivo de RTN Solicitante</label>
+                  <input
+                    type="file"
+                    class="form-control"
+                    id="archivoRTN"
+                    (change)="subirArchivo($event)"
+                  />
+                </div>
+              </div>
+            </div>
+            <p *ngIf="trustedUrl">{{trustedUrl}}</p>
+            <object *ngIf="trustedUrl" width="100%" height="500px" [data]="trustedUrl" type="application/pdf" ></object>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Documento Nacional de Identificación (DNI)</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="0501200504202"
+                    maxlength="20"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="archivoRTN"
+                    >Archivo de Documento Nacional de Identificación (DNI)
+                  </label>
+                  <input type="file" class="form-control" id="archivoRTN" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label
+                    >Número Recibo de Servicio Público (ENEE, SANAA, etc.)
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    maxlength="20"
+                    placeholder="333333"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="archivoRTN"
+                    >Archivo del Recibo Servicio Público
+                  </label>
+                  <input type="file" class="form-control" id="archivoRTN" />
+                </div>
+              </div>
+            </div>
+            <h6>Datos a Informar</h6>
+            <small
+              >- Todos los datos marcados con un
+              <span style="color: red">*</span> son requeridos.</small
+            >
+            <div class="" style="overflow-x: auto">
+              <table class="table table-bordered">
+                <thead class="text-primary">
+                  <th>Dato</th>
+                  <th>Descripcion</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div ngbDropdown class="d-inline-block">
+                        <button
+                          class="btn btn-primary"
+                          id="dropdownMenu1"
+                          ngbDropdownToggle
+                        >
+                          - Seleccionar -
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                          <button class="dropdown-item">Action - 1</button>
+                          <button class="dropdown-item">Action - 2</button>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      SD001 - OFICINA REGIONAL DE ADUANAS MÁS CERCANA
+                      <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div ngbDropdown class="d-inline-block">
+                        <button
+                          class="btn btn-primary"
+                          id="dropdownMenu1"
+                          ngbDropdownToggle
+                        >
+                          - Seleccionar -
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                          <button class="dropdown-item">Action - 1</button>
+                          <button class="dropdown-item">Action - 2</button>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      SD106 - ESTADO CIVIL DE LA PERSONA
+                      <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div ngbDropdown class="d-inline-block">
+                        <button
+                          class="btn btn-primary"
+                          id="dropdownMenu1"
+                          ngbDropdownToggle
+                        >
+                          - Seleccionar -
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                          <button class="dropdown-item">Action - 1</button>
+                          <button class="dropdown-item">Action - 2</button>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      SD108 - PROFESIÓN U OFICIO DE LA PERSONA (SEGUN
+                      CLASIFICADOR NACIONAL DE OCUPACIONES DE HONDURAS,
+                      CNOH-2018) <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      colspan="2"
+                      class="text-primary"
+                      style="background-color: rgba(0, 0, 0, 0.02)"
+                    >
+                      DOMICILIO DE LA PERSONA (PARA EFECTO DE UBICACIÓN, EN EL
+                      CONTRATO DE ADHESIÓN SE MOSTRARÁ EL DOMICILIO FISCAL
+                      REGISTRADO EN LA ADMINISTRACION TRIBUTARIA)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div ngbDropdown class="d-inline-block">
+                        <button
+                          class="btn btn-primary"
+                          id="dropdownMenu1"
+                          ngbDropdownToggle
+                        >
+                          - Seleccionar -
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                          <button class="dropdown-item">Action - 1</button>
+                          <button class="dropdown-item">Action - 2</button>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      SD006 - DEPARTAMENTO Y MUNICIPIO
+                      <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="San Pedro Sula"
+                      />
+                    </td>
+                    <td>SD301 - CIUDAD <span style="color: red">*</span></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="13 calle 9 avenida junto a pollos lenca"
+                      />
+                    </td>
+                    <td>
+                      SD007 - DIRECCIÓN COMPLETA (INCLUYA SEGÚN APLIQUE: ALDEA,
+                      CALLE Y AVENIDA, BARRIO O COLONIA, EDIFICIO O NÚMERO DE
+                      LOCAL, APARTAMENTO, Y PUNTOS DE REFERENCIA)
+                      <span style="color: red">*</span>
+                    </td>
+                  </tr>
+                  <app-form-contacto
+                    style="display: contents"
+                  ></app-form-contacto>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-primary">Registrarse</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
