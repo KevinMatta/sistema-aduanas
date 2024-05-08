@@ -13,7 +13,7 @@ import { PaisesService } from "../../Services/paises.service";
   styleUrls: ["./form-paises.component.css"],
 })
 export class FormPaisesComponent implements OnInit {
-  @Input() paisParaEditar: Pais;
+  @Input() objetoParaEditar: Pais;
   roles: Rol[];
 
   pais: Pais = new Pais();
@@ -28,11 +28,11 @@ export class FormPaisesComponent implements OnInit {
 
   isLoading = true;
   ngOnInit(): void {
-    console.log(this.paisParaEditar);
+    console.log(this.objetoParaEditar);
 
-    if (this.paisParaEditar) {
-      this.pais.Id = this.paisParaEditar.Id;
-      this.pais.Pais = this.paisParaEditar.Pais;
+    if (this.objetoParaEditar) {
+      this.pais.Id = this.objetoParaEditar.Id;
+      this.pais.Pais = this.objetoParaEditar.Pais;
     } else {
       this.pais.Pais = "";
     }
@@ -58,15 +58,14 @@ export class FormPaisesComponent implements OnInit {
       this.mostrarWarning('Por favor ingrese el nombre del país.');
       return;
     }
-    if (!this.paisParaEditar) {
+    if (!this.objetoParaEditar) {
       await this.paisService.Crear(this.pais).subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
             this.mostrarSuccess('País creado con éxito.')
             this.activeModal.close(true);
           } else {
-            this.activeModal.close(false);
-            this.mostrarError('Error al crear el país.');
+            this.mostrarError('Ya existe ese país.');
           }
         },
         (error) => {

@@ -48,8 +48,10 @@ export class IndexListaComponent implements OnInit {
   open(Id?: number | string) {
     let modalRef = this.modalService.open(this.modal);
     if (Id) {
+      console.log(Id);
+      console.log(this.rows);
       const objetoEncontrado = this.rows.find((obj) => obj.Id === Id);
-      modalRef.componentInstance.usuarioParaEditar = objetoEncontrado;
+      modalRef.componentInstance.objetoParaEditar = objetoEncontrado;
     }
     modalRef.result.then((data) => {
       if (data === true) {
@@ -60,14 +62,13 @@ export class IndexListaComponent implements OnInit {
             if (this.rows.length > 0) {
               this.columns = this.formatColumnas(Object.keys(this.rows[0]));
             }
-            this.isLoading = false;
-          },
-          (error) => {
-            console.log(error);
-            this.isLoading = false;
+            // this.isLoading = false;
           }
         );
       }
+    }).catch(err=>{
+      // console.log(err);
+      // this.isLoading = false;
     });
   }
 

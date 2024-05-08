@@ -682,7 +682,7 @@
 </div> -->
 
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">Nuevo Pais</h4>
+  <h4 class="modal-title" id="modal-basic-title">{{objetoParaEditar ? "Editar" : "Nuevo"}} Pais</h4>
   <button
     type="button"
     class="btn btn-sm btn-outline-primary"
@@ -700,7 +700,7 @@
         <input
           type="text"
           class="form-control"
-          placeholder="SuperStar003"
+          placeholder="Japón"
           maxlength="20"
           (change)="paisOnChange($event)"
           [value]="pais.Pais"

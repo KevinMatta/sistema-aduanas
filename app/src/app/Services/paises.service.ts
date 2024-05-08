@@ -13,7 +13,7 @@ import { Pais } from "../Models/PaisesViewModel";
 export class PaisesService implements DataService {
   constructor(private http: HttpClient) {}
 
-  BaseUrl = environment.urlAPI + "/API/Pais/List";
+  BaseUrl = environment.urlAPI + "/API/Pais/";
 
   getData(): Observable<any[]> {
     return this.getPaises();
@@ -21,14 +21,14 @@ export class PaisesService implements DataService {
 
   getPaises(): Observable<Pais[]> {
     return this.http
-      .get<APIResponse<Pais[]>>(this.BaseUrl)
+      .get<APIResponse<Pais[]>>(this.BaseUrl + "List")
       .pipe(map((response) => this.mapResponse(response.data)));
   }
 
   Eliminar(val: any): Observable<any> {
     console.log(val + "Para Eliminar");
     return this.http.delete<any>(
-      `${environment.urlAPI}/API/Pais/Eliminar/?Pais_Id=${val}&Pais_Modifica=1
+      `${this.BaseUrl + "Eliminar/"}?Pais_Id=${val}&Pais_Modifica=1
         `,
       { observe: "response" }
     );
@@ -36,14 +36,13 @@ export class PaisesService implements DataService {
 
   Editar(pais: any): Observable<any> {
     const json = {
-      Pais_Id: pais.Id,
-      Pais_Usuario: pais.Pais,
-      Pais_Estado: true,
-      Pais_Creacion: 1,
-      Pais_FechaCreacion: new Date().toISOString(),
-      Pais_Modifica: 1,
-      Pais_FechaModifica: new Date().toISOString(),
-      Rol_Descripcion: "string",
+      pais_Id: pais.Id,
+      pais_Descripcion: pais.Pais,
+      pais_Estado: true,
+      pais_Creacion: 1,
+      pais_FechaCreacion: new Date().toISOString(),
+      pais_Modifica: 1,
+      pais_FechaModifica: new Date().toISOString(),
       Creacion: "string",
       Modifica: "string",
     };
@@ -56,14 +55,22 @@ export class PaisesService implements DataService {
 
   Crear(pais: any): Observable<any> {
     const json = {
-      Usua_Id: 0,
-      Usua_Usuario: pais.Pais,
-      Usua_Estado: true,
-      Usua_Creacion: 1,
-      Usua_FechaCreacion: new Date().toISOString(),
-      Usua_Modifica: 1,
-      Usua_FechaModifica: new Date().toISOString(),
-      Rol_Descripcion: "string",
+      // "pais_Id": 0,
+      // "pais_Descripcion": "string",
+      // "pais_Estado": true,
+      // "pais_Creacion": 0,
+      // "pais_FechaCreacion": "2024-05-08T20:58:00.424Z",
+      // "pais_Modifica": 0,
+      // "pais_FechaModifica": "2024-05-08T20:58:00.424Z",
+      // "creacion": "string",
+      // "modifica": "string"
+      pais_Id: 0,
+      pais_Descripcion: pais.Pais,
+      pais_Estado: true,
+      pais_Creacion: 1,
+      pais_FechaCreacion: new Date().toISOString(),
+      pais_Modifica: 1,
+      pais_FechaModifica: new Date().toISOString(),
       Creacion: "string",
       Modifica: "string",
     };

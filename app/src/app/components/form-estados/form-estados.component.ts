@@ -29,7 +29,7 @@ export class FormEstadosComponent implements OnInit {
   isLoading = true;
   ngOnInit(): void {
     console.log(this.usuarioParaEditar);
-
+    
     if (this.usuarioParaEditar) {
       this.usuario.Id = this.usuarioParaEditar.Id;
       this.usuario.Usuario = this.usuarioParaEditar.Usuario;
