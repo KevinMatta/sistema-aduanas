@@ -17,6 +17,8 @@ namespace sistema_aduana.Common.Models
         public int? Pant_Modifica { get; set; }
         public DateTime? Pant_FechaModifica { get; set; }
         [NotMapped]
+        public int Esqu_Id { get; set; }
+        [NotMapped]
         public string Creacion { get; set; }
         [NotMapped]
         public string Modifica { get; set; }

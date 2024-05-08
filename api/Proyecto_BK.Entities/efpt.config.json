@@ -14,10 +14,6 @@
    "SelectedToBeGenerated": 2,
    "Tables": [
       {
-         "Name": "[Acce].[tbEsquemas]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[Acce].[tbPantallas]",
          "ObjectType": 0
       },

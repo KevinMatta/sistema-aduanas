@@ -17,6 +17,8 @@ namespace sistema_aduana.Entities.Entities
             tbAduanasAdua_ModificaNavigation = new HashSet<tbAduanas>();
             tbCiudadesCiud_CreacionNavigation = new HashSet<tbCiudades>();
             tbCiudadesCiud_ModificaNavigation = new HashSet<tbCiudades>();
+            tbComerciantesIndividualesCoIn_CreacionNavigation = new HashSet<tbComerciantesIndividuales>();
+            tbComerciantesIndividualesCoIn_ModificaNavigation = new HashSet<tbComerciantesIndividuales>();
             tbEmpleadosEmpl_CreacionNavigation = new HashSet<tbEmpleados>();
             tbEmpleadosEmpl_ModificaNavigation = new HashSet<tbEmpleados>();
             tbEmpleadosUsua = new HashSet<tbEmpleados>();
@@ -26,19 +28,27 @@ namespace sistema_aduana.Entities.Entities
             tbEstadosCivilesEsCi_ModificaNavigation = new HashSet<tbEstadosCiviles>();
             tbEstadosEsta_CreacionNavigation = new HashSet<tbEstados>();
             tbEstadosEsta_ModificaNavigation = new HashSet<tbEstados>();
+            tbOficinasOfic_CreacionNavigation = new HashSet<tbOficinas>();
+            tbOficinasOfic_ModificaNavigation = new HashSet<tbOficinas>();
             tbPaisesPais_CreacionNavigation = new HashSet<tbPaises>();
             tbPaisesPais_ModificaNavigation = new HashSet<tbPaises>();
             tbPantallasPant_CreacionNavigation = new HashSet<tbPantallas>();
             tbPantallasPant_ModificaNavigation = new HashSet<tbPantallas>();
             tbPantallasPorRolesPaRo_CreacionNavigation = new HashSet<tbPantallasPorRoles>();
             tbPantallasPorRolesPaRo_ModificaNavigation = new HashSet<tbPantallasPorRoles>();
+            tbPersonasJuridicasPeJu_CreacionNavigation = new HashSet<tbPersonasJuridicas>();
+            tbPersonasJuridicasPeJu_ModificaNavigation = new HashSet<tbPersonasJuridicas>();
+            tbPersonasNaturalesPeNa_CreacionNavigation = new HashSet<tbPersonasNaturales>();
+            tbPersonasNaturalesPeNa_ModificaNavigation = new HashSet<tbPersonasNaturales>();
+            tbProfesionesProf_CreacionNavigation = new HashSet<tbProfesiones>();
+            tbProfesionesProf_ModificaNavigation = new HashSet<tbProfesiones>();
             tbRolesRol_CreacionNavigation = new HashSet<tbRoles>();
             tbRolesRol_ModificaNavigation = new HashSet<tbRoles>();
         }
 
         public int Usua_Id { get; set; }
         public string Usua_Usuario { get; set; }
-        public byte[] Usua_Clave { get; set; }
+        public string Usua_Clave { get; set; }
         public int? Rol_Id { get; set; }
         public bool? Usua_IsAdmin { get; set; }
         public bool? Usua_Estado { get; set; }
@@ -62,6 +72,8 @@ namespace sistema_aduana.Entities.Entities
         public virtual ICollection<tbAduanas> tbAduanasAdua_ModificaNavigation { get; set; }
         public virtual ICollection<tbCiudades> tbCiudadesCiud_CreacionNavigation { get; set; }
         public virtual ICollection<tbCiudades> tbCiudadesCiud_ModificaNavigation { get; set; }
+        public virtual ICollection<tbComerciantesIndividuales> tbComerciantesIndividualesCoIn_CreacionNavigation { get; set; }
+        public virtual ICollection<tbComerciantesIndividuales> tbComerciantesIndividualesCoIn_ModificaNavigation { get; set; }
         public virtual ICollection<tbEmpleados> tbEmpleadosEmpl_CreacionNavigation { get; set; }
         public virtual ICollection<tbEmpleados> tbEmpleadosEmpl_ModificaNavigation { get; set; }
         public virtual ICollection<tbEmpleados> tbEmpleadosUsua { get; set; }
@@ -71,12 +83,20 @@ namespace sistema_aduana.Entities.Entities
         public virtual ICollection<tbEstadosCiviles> tbEstadosCivilesEsCi_ModificaNavigation { get; set; }
         public virtual ICollection<tbEstados> tbEstadosEsta_CreacionNavigation { get; set; }
         public virtual ICollection<tbEstados> tbEstadosEsta_ModificaNavigation { get; set; }
+        public virtual ICollection<tbOficinas> tbOficinasOfic_CreacionNavigation { get; set; }
+        public virtual ICollection<tbOficinas> tbOficinasOfic_ModificaNavigation { get; set; }
         public virtual ICollection<tbPaises> tbPaisesPais_CreacionNavigation { get; set; }
         public virtual ICollection<tbPaises> tbPaisesPais_ModificaNavigation { get; set; }
         public virtual ICollection<tbPantallas> tbPantallasPant_CreacionNavigation { get; set; }
         public virtual ICollection<tbPantallas> tbPantallasPant_ModificaNavigation { get; set; }
         public virtual ICollection<tbPantallasPorRoles> tbPantallasPorRolesPaRo_CreacionNavigation { get; set; }
         public virtual ICollection<tbPantallasPorRoles> tbPantallasPorRolesPaRo_ModificaNavigation { get; set; }
+        public virtual ICollection<tbPersonasJuridicas> tbPersonasJuridicasPeJu_CreacionNavigation { get; set; }
+        public virtual ICollection<tbPersonasJuridicas> tbPersonasJuridicasPeJu_ModificaNavigation { get; set; }
+        public virtual ICollection<tbPersonasNaturales> tbPersonasNaturalesPeNa_CreacionNavigation { get; set; }
+        public virtual ICollection<tbPersonasNaturales> tbPersonasNaturalesPeNa_ModificaNavigation { get; set; }
+        public virtual ICollection<tbProfesiones> tbProfesionesProf_CreacionNavigation { get; set; }
+        public virtual ICollection<tbProfesiones> tbProfesionesProf_ModificaNavigation { get; set; }
         public virtual ICollection<tbRoles> tbRolesRol_CreacionNavigation { get; set; }
         public virtual ICollection<tbRoles> tbRolesRol_ModificaNavigation { get; set; }
     }

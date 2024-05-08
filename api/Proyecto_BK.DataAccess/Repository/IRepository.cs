@@ -10,8 +10,8 @@ namespace sistema_aduana.DataAcces.Repository
     {
         public RequestStatus Insert(T item);
         public RequestStatus Update(T item);
-        public RequestStatus Delete(int? id);
+        public RequestStatus Delete(int? id, int usuario, DateTime fecha);
         public IEnumerable<T> List();
-        public IEnumerable<T> Find(int? id);
+        public T Find(int? id);
     }
 }

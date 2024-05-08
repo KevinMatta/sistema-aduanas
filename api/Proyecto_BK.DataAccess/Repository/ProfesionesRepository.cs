@@ -13,54 +13,55 @@ using System.Threading.Tasks;
 
 namespace sistema_aduana.DataAccess.Repository
 {
-    public class EstadoRepository : IRepository<tbEstados>
+    public class ProfesionesRepository : IRepository<tbProfesiones>
     {
         public RequestStatus Delete(int? id, int usuario, DateTime fecha)
         {
-            string sql = ScriptsDatabase.EstadosEliminar;
+            string sql = ScriptsDatabase.ProfesionesEliminar;
             using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
             {
-                var parametro = new DynamicParameters();
-                parametro.Add("@Esta_Id", id);
-                parametro.Add("@Esta_Modifica", usuario);
-                parametro.Add("@Esta_FechaModifica", fecha);
+                var parameter = new DynamicParameters();
+                parameter.Add("@Prof_Id", id);
+                parameter.Add("@Prof_Modifica", usuario);
+                parameter.Add("@Prof_FechaModifica", fecha);
 
                 var result = db.Execute(
-                    sql, parametro,
+                    sql, parameter,
                     commandType: CommandType.StoredProcedure
                 );
 
                 string mensaje = (result == 1) ? "exito" : "error";
 
                 return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+
             };
         }
 
-        public tbEstados Find(int? id)
+        public tbProfesiones Find(int? Prof_Id)
         {
-            string sql = ScriptsDatabase.EstadosBuscar;
+            string sql = ScriptsDatabase.ProfesionesBuscar;
 
-            tbEstados result = new tbEstados();
+            tbProfesiones result = new tbProfesiones();
 
             using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
             {
-                var parameters = new { Esta_Id = id };
-                result = db.QueryFirstOrDefault<tbEstados>(sql, parameters, commandType: CommandType.StoredProcedure);
+                var parameters = new { Prof_Id };
+                result = db.QueryFirstOrDefault<tbProfesiones>(sql, parameters, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public RequestStatus Insert(tbEstados item)
+        public RequestStatus Insert(tbProfesiones item)
         {
-            string sql = ScriptsDatabase.EstadosCrear;
+            string sql = ScriptsDatabase.ProfesionesCrear;
 
             using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
             {
                 var parameter = new DynamicParameters();
-                parameter.Add("@Esta_Descripcion", item.Esta_Descripcion);
-                parameter.Add("@Pais_Id", item.Pais_Id);
-                parameter.Add("@Esta_Creacion", item.Esta_Creacion);
-                parameter.Add("@Esta_FechaCreacion", item.Esta_FechaCreacion);
+                parameter.Add("@Prof_Descripcion", item.Prof_Descripcion);
+                parameter.Add("@Prof_Estado", item.Prof_Estado);
+                parameter.Add("@Prof_Creacion", item.Prof_Creacion);
+                parameter.Add("@Prof_FechaCreacion", item.Prof_FechaCreacion);
 
                 var result = db.Execute(sql, parameter, commandType: CommandType.StoredProcedure);
                 string mensaje = (result == 1) ? "exito" : "error";
@@ -68,36 +69,37 @@ namespace sistema_aduana.DataAccess.Repository
             }
         }
 
-        public IEnumerable<tbEstados> List()
+        public IEnumerable<tbProfesiones> List()
         {
-            string sql = ScriptsDatabase.EstadosListar;
+            string sql = ScriptsDatabase.ProfesionesListar;
 
-            List<tbEstados> result = new List<tbEstados>();
+            List<tbProfesiones> result = new List<tbProfesiones>();
 
             using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
             {
-                result = db.Query<tbEstados>(sql, commandType: CommandType.Text).ToList();
+                result = db.Query<tbProfesiones>(sql, commandType: CommandType.Text).ToList();
 
                 return result;
             }
         }
 
-        public RequestStatus Update(tbEstados item)
+        public RequestStatus Update(tbProfesiones item)
         {
-            string sql = ScriptsDatabase.EstadosActualizar;
+            string sql = ScriptsDatabase.ProfesionesActualizar;
 
             using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
             {
                 var parameter = new DynamicParameters();
-                parameter.Add("@Esta_Id", item.Esta_Id);
-                parameter.Add("@Esta_Descripcion", item.Esta_Descripcion);
-                parameter.Add("@Pais_Id", item.Pais_Id);
-                parameter.Add("@Esta_Modifica", item.Esta_Modifica);
-                parameter.Add("@Esta_FechaModifica", item.Esta_FechaModifica);
+                parameter.Add("@Prof_Id", item.Prof_Id);
+                parameter.Add("@Prof_Descripcion", item.Prof_Descripcion);
+                parameter.Add("@Prof_Estado", item.Prof_Estado);
+                parameter.Add("@Prof_Modifica", item.Prof_Modifica);
+                parameter.Add("@Prof_FechaModifica", item.Prof_FechaModifica);
 
                 var result = db.Execute(sql, parameter, commandType: CommandType.StoredProcedure);
                 string mensaje = (result == 1) ? "exito" : "error";
                 return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+
             }
         }
 

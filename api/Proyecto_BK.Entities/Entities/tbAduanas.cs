@@ -9,6 +9,11 @@ namespace sistema_aduana.Entities.Entities
 {
     public partial class tbAduanas
     {
+        public tbAduanas()
+        {
+            tbOficinas = new HashSet<tbOficinas>();
+        }
+
         public int Adua_Id { get; set; }
         public string Adua_Descripcion { get; set; }
         public bool? Adua_Estado { get; set; }
@@ -16,6 +21,9 @@ namespace sistema_aduana.Entities.Entities
         public DateTime Adua_FechaCreacion { get; set; }
         public int? Adua_Modifica { get; set; }
         public DateTime? Adua_FechaModifica { get; set; }
+        public int? Ciud_Id { get; set; }
+        [NotMapped]
+        public string Ciud_Descripcion { get; set; }
         [NotMapped]
         public string Creacion { get; set; }
         [NotMapped]
@@ -23,5 +31,7 @@ namespace sistema_aduana.Entities.Entities
 
         public virtual tbUsuarios Adua_CreacionNavigation { get; set; }
         public virtual tbUsuarios Adua_ModificaNavigation { get; set; }
+        public virtual tbCiudades Ciud { get; set; }
+        public virtual ICollection<tbOficinas> tbOficinas { get; set; }
     }
 }

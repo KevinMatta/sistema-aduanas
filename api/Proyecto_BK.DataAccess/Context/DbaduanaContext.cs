@@ -21,13 +21,18 @@ namespace sistema_aduana.DataAccess.Context
 
         public virtual DbSet<tbAduanas> tbAduanas { get; set; }
         public virtual DbSet<tbCiudades> tbCiudades { get; set; }
+        public virtual DbSet<tbComerciantesIndividuales> tbComerciantesIndividuales { get; set; }
         public virtual DbSet<tbEmpleados> tbEmpleados { get; set; }
         public virtual DbSet<tbEmpresas> tbEmpresas { get; set; }
         public virtual DbSet<tbEstados> tbEstados { get; set; }
         public virtual DbSet<tbEstadosCiviles> tbEstadosCiviles { get; set; }
+        public virtual DbSet<tbOficinas> tbOficinas { get; set; }
         public virtual DbSet<tbPaises> tbPaises { get; set; }
         public virtual DbSet<tbPantallas> tbPantallas { get; set; }
         public virtual DbSet<tbPantallasPorRoles> tbPantallasPorRoles { get; set; }
+        public virtual DbSet<tbPersonasJuridicas> tbPersonasJuridicas { get; set; }
+        public virtual DbSet<tbPersonasNaturales> tbPersonasNaturales { get; set; }
+        public virtual DbSet<tbProfesiones> tbProfesiones { get; set; }
         public virtual DbSet<tbRoles> tbRoles { get; set; }
         public virtual DbSet<tbUsuarios> tbUsuarios { get; set; }
 
@@ -63,6 +68,11 @@ namespace sistema_aduana.DataAccess.Context
                     .WithMany(p => p.tbAduanasAdua_ModificaNavigation)
                     .HasForeignKey(d => d.Adua_Modifica)
                     .HasConstraintName("FK__tbAduanas__Adua___59063A47");
+
+                entity.HasOne(d => d.Ciud)
+                    .WithMany(p => p.tbAduanas)
+                    .HasForeignKey(d => d.Ciud_Id)
+                    .HasConstraintName("FK__tbAduanas__Ciud___3C34F16F");
             });
 
             modelBuilder.Entity<tbCiudades>(entity =>
@@ -99,6 +109,112 @@ namespace sistema_aduana.DataAccess.Context
                     .HasForeignKey(d => d.Esta_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__tbCiudade__Esta___4316F928");
+            });
+
+            modelBuilder.Entity<tbComerciantesIndividuales>(entity =>
+            {
+                entity.HasKey(e => e.CoIn_Id)
+                    .HasName("PK__tbComerc__4F286E29F1FE14D3");
+
+                entity.ToTable("tbComerciantesIndividuales", "Gral");
+
+                entity.Property(e => e.CoIn_Aldea)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_AldeaRepresentanteLegal)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_BarrioOcolonia)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_BarrioOcoloniaRepresentanteLegal)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_CalleYavenida)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_CalleYavenidaRepresentanteLegal)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_DNIRepresentanteLegal)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_Declaracion)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_EdificioYnum)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_EdificioYnumRepresentanteLegal)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.CoIn_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.CoIn_FechaModifica).HasColumnType("datetime");
+
+                entity.Property(e => e.CoIn_PuntosDeReferencia)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_PuntosDeReferenciaRepresentanteLegal)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_RtnRepresentanteLegal)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_RtnSolicitante)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Ciud_RepresentanteLegalNavigation)
+                    .WithMany(p => p.tbComerciantesIndividuales)
+                    .HasForeignKey(d => d.Ciud_RepresentanteLegal)
+                    .HasConstraintName("FK__tbComerci__Ciud___0E6E26BF");
+
+                entity.HasOne(d => d.CoIn_CreacionNavigation)
+                    .WithMany(p => p.tbComerciantesIndividualesCoIn_CreacionNavigation)
+                    .HasForeignKey(d => d.CoIn_Creacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbComerci__CoIn___10566F31");
+
+                entity.HasOne(d => d.CoIn_ModificaNavigation)
+                    .WithMany(p => p.tbComerciantesIndividualesCoIn_ModificaNavigation)
+                    .HasForeignKey(d => d.CoIn_Modifica)
+                    .HasConstraintName("FK__tbComerci__CoIn___114A936A");
+
+                entity.HasOne(d => d.EsCi_RepresentanteLegalNavigation)
+                    .WithMany(p => p.tbComerciantesIndividuales)
+                    .HasForeignKey(d => d.EsCi_RepresentanteLegal)
+                    .HasConstraintName("FK__tbComerci__EsCi___0D7A0286");
+
+                entity.HasOne(d => d.PeNa)
+                    .WithMany(p => p.tbComerciantesIndividuales)
+                    .HasForeignKey(d => d.PeNa_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbComerci__PeNa___0C85DE4D");
+
+                entity.HasOne(d => d.Prof_RepresentanteLegalNavigation)
+                    .WithMany(p => p.tbComerciantesIndividuales)
+                    .HasForeignKey(d => d.Prof_RepresentanteLegal)
+                    .HasConstraintName("FK__tbComerci__Prof___0F624AF8");
             });
 
             modelBuilder.Entity<tbEmpleados>(entity =>
@@ -262,6 +378,42 @@ namespace sistema_aduana.DataAccess.Context
                     .HasConstraintName("FK__tbEstados__EsCi___5535A963");
             });
 
+            modelBuilder.Entity<tbOficinas>(entity =>
+            {
+                entity.HasKey(e => e.Ofic_Id)
+                    .HasName("PK__tbOficin__F1DA4A4CB33794D1");
+
+                entity.ToTable("tbOficinas", "Gral");
+
+                entity.Property(e => e.Ofic_Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Ofic_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Ofic_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.Ofic_FechaModifica).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Adua)
+                    .WithMany(p => p.tbOficinas)
+                    .HasForeignKey(d => d.Adua_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbOficina__Adua___05D8E0BE");
+
+                entity.HasOne(d => d.Ofic_CreacionNavigation)
+                    .WithMany(p => p.tbOficinasOfic_CreacionNavigation)
+                    .HasForeignKey(d => d.Ofic_Creacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbOficina__Ofic___02FC7413");
+
+                entity.HasOne(d => d.Ofic_ModificaNavigation)
+                    .WithMany(p => p.tbOficinasOfic_ModificaNavigation)
+                    .HasForeignKey(d => d.Ofic_Modifica)
+                    .HasConstraintName("FK__tbOficina__Ofic___03F0984C");
+            });
+
             modelBuilder.Entity<tbPaises>(entity =>
             {
                 entity.HasKey(e => e.Pais_Id)
@@ -357,6 +509,256 @@ namespace sistema_aduana.DataAccess.Context
                     .HasForeignKey(d => d.Rol_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__tbPantall__Rol_I__47DBAE45");
+            });
+
+            modelBuilder.Entity<tbPersonasJuridicas>(entity =>
+            {
+                entity.HasKey(e => e.PeJu_Id)
+                    .HasName("PK__tbPerson__BC87E27F4AA2CCB2");
+
+                entity.ToTable("tbPersonasJuridicas", "Gral");
+
+                entity.Property(e => e.PeJu_Aldea)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeJu_AldeaRepresentanteLegal)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeJu_BarrioOcolonia)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeJu_BarrioOcoloniaRepresentanteLegal)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeJu_CalleYavenida)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeJu_CalleYavenidaRepresentanteLegal)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeJu_DNIRepresentanteLegal)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeJu_EdificioYnum)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeJu_EdificioYnumRepresentanteLegal)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeJu_Escritura)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeJu_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.PeJu_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.PeJu_FechaModifica).HasColumnType("datetime");
+
+                entity.Property(e => e.PeJu_PuntosDeReferencia)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeJu_PuntosDeReferenciaRepresentanteLegal)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeJu_RtnRepresentanteLegal)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeJu_RtnSolicitante)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Ciud_RepresentanteLegalNavigation)
+                    .WithMany(p => p.tbPersonasJuridicas)
+                    .HasForeignKey(d => d.Ciud_RepresentanteLegal)
+                    .HasConstraintName("FK__tbPersona__Ciud___1CBC4616");
+
+                entity.HasOne(d => d.EsCi_RepresentanteLegalNavigation)
+                    .WithMany(p => p.tbPersonasJuridicas)
+                    .HasForeignKey(d => d.EsCi_RepresentanteLegal)
+                    .HasConstraintName("FK__tbPersona__EsCi___1AD3FDA4");
+
+                entity.HasOne(d => d.PeJu_CreacionNavigation)
+                    .WithMany(p => p.tbPersonasJuridicasPeJu_CreacionNavigation)
+                    .HasForeignKey(d => d.PeJu_Creacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbPersona__PeJu___1DB06A4F");
+
+                entity.HasOne(d => d.PeJu_ModificaNavigation)
+                    .WithMany(p => p.tbPersonasJuridicasPeJu_ModificaNavigation)
+                    .HasForeignKey(d => d.PeJu_Modifica)
+                    .HasConstraintName("FK__tbPersona__PeJu___1EA48E88");
+
+                entity.HasOne(d => d.PeNa)
+                    .WithMany(p => p.tbPersonasJuridicas)
+                    .HasForeignKey(d => d.PeNa_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbPersona__PeNa___19DFD96B");
+
+                entity.HasOne(d => d.Prof_RepresentanteLegalNavigation)
+                    .WithMany(p => p.tbPersonasJuridicas)
+                    .HasForeignKey(d => d.Prof_RepresentanteLegal)
+                    .HasConstraintName("FK__tbPersona__Prof___1BC821DD");
+            });
+
+            modelBuilder.Entity<tbPersonasNaturales>(entity =>
+            {
+                entity.HasKey(e => e.PeNa_Id)
+                    .HasName("PK__tbPerson__D364BF30F3F6BB60");
+
+                entity.ToTable("tbPersonasNaturales", "Gral");
+
+                entity.Property(e => e.PeNa_Apellido)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeNa_CodigoCorreo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeNa_CodigoCorreoAlternativa)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeNa_Correo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeNa_CorreoAlternativa)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeNa_DNI)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeNa_DNIurlPdf)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeNa_Direccion)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeNa_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.PeNa_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.PeNa_FechaModifica).HasColumnType("datetime");
+
+                entity.Property(e => e.PeNa_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeNa_NumReciboPublico)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeNa_NumReciboPublicoUrlPdf)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeNa_Rtn)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeNa_RtnUrlPdf)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeNa_TelefonoCelular)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PeNa_TelefonoFijo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Ciud)
+                    .WithMany(p => p.tbPersonasNaturales)
+                    .HasForeignKey(d => d.Ciud_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbPersona__Ciud___0A9D95DB");
+
+                entity.HasOne(d => d.EsCi)
+                    .WithMany(p => p.tbPersonasNaturales)
+                    .HasForeignKey(d => d.EsCi_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbPersona__EsCi___08B54D69");
+
+                entity.HasOne(d => d.Ofic)
+                    .WithMany(p => p.tbPersonasNaturales)
+                    .HasForeignKey(d => d.Ofic_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbPersona__Ofic___09A971A2");
+
+                entity.HasOne(d => d.PeNa_CreacionNavigation)
+                    .WithMany(p => p.tbPersonasNaturalesPeNa_CreacionNavigation)
+                    .HasForeignKey(d => d.PeNa_Creacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbPersona__PeNa___06CD04F7");
+
+                entity.HasOne(d => d.PeNa_ModificaNavigation)
+                    .WithMany(p => p.tbPersonasNaturalesPeNa_ModificaNavigation)
+                    .HasForeignKey(d => d.PeNa_Modifica)
+                    .HasConstraintName("FK__tbPersona__PeNa___07C12930");
+
+                entity.HasOne(d => d.Prof)
+                    .WithMany(p => p.tbPersonasNaturales)
+                    .HasForeignKey(d => d.Prof_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbPersona__Prof___0B91BA14");
+            });
+
+            modelBuilder.Entity<tbProfesiones>(entity =>
+            {
+                entity.HasKey(e => e.Prof_Id)
+                    .HasName("PK__tbProfes__A46610E50FE09D6C");
+
+                entity.ToTable("tbProfesiones", "Gral");
+
+                entity.Property(e => e.Prof_Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Prof_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Prof_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.Prof_FechaModifica).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Prof_CreacionNavigation)
+                    .WithMany(p => p.tbProfesionesProf_CreacionNavigation)
+                    .HasForeignKey(d => d.Prof_Creacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbProfesi__Prof___01142BA1");
+
+                entity.HasOne(d => d.Prof_ModificaNavigation)
+                    .WithMany(p => p.tbProfesionesProf_ModificaNavigation)
+                    .HasForeignKey(d => d.Prof_Modifica)
+                    .HasConstraintName("FK__tbProfesi__Prof___02084FDA");
             });
 
             modelBuilder.Entity<tbRoles>(entity =>
