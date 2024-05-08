@@ -136,12 +136,132 @@ GO
 CREATE TABLE [Adua].[tbAduanas] (
   [Adua_Id] int PRIMARY KEY IDENTITY(1, 1),
   [Adua_Descripcion] varchar(50) NOT NULL,
+  Ciud_Id int,
   [Adua_Estado] bit DEFAULT (1),
   [Adua_Creacion] int NOT NULL,
   [Adua_FechaCreacion] datetime NOT NULL,
   [Adua_Modifica] int,
   [Adua_FechaModifica] datetime
 )
+GO
+
+--tablas extras
+CREATE TABLE Gral.tbProfesiones (
+  Prof_Id int PRIMARY KEY IDENTITY(1, 1),
+  Prof_Descripcion varchar(50) NOT NULL,
+  Prof_Estado bit default 1,
+  Prof_Creacion int NOT NULL,
+  Prof_FechaCreacion datetime NOT NULL,
+  Prof_Modifica int,
+  Prof_FechaModifica datetime
+);
+GO
+
+CREATE TABLE Gral.tbOficinas (
+  Ofic_Id int PRIMARY KEY IDENTITY(1, 1),
+  Ofic_Descripcion varchar(100) NOT NULL,
+  Adua_Id int NOT NULL,
+  Ofic_Estado bit default 1,
+  Ofic_Creacion int NOT NULL,
+  Ofic_FechaCreacion datetime NOT NULL,
+  Ofic_Modifica int,
+  Ofic_FechaModifica datetime
+);
+GO
+
+CREATE TABLE Gral.tbPersonasNaturales (
+  PeNa_Id int PRIMARY KEY IDENTITY(1, 1),
+  PeNa_Nombre varchar(50) NOT NULL,
+  PeNa_Apellido varchar(50) NOT NULL,
+  PeNa_Rtn varchar(50) NOT NULL,
+  PeNa_RtnUrlPdf varchar(50),
+  PeNa_DNI varchar(50) NOT NULL,
+  PeNa_DNIurlPdf varchar(50),
+  PeNa_NumReciboPublico varchar(50) NOT NULL,
+  PeNa_NumReciboPublicoUrlPdf varchar(50),
+  Ofic_Id int NOT NULL,
+  EsCi_Id int NOT NULL,
+  Prof_Id int NOT NULL,
+  Ciud_Id int NOT NULL,
+  PeNa_Direccion varchar(50) NOT NULL,
+  PeNa_TelefonoFijo varchar(50),
+  PeNa_TelefonoCelular varchar(50),
+  PeNa_Correo varchar(50),
+  PeNa_CodigoCorreo varchar(50),
+  PeNa_CorreoAlternativa varchar(50),
+  PeNa_CodigoCorreoAlternativa varchar(50),
+  PeNa_Estado bit default 1,
+  PeNa_Creacion int NOT NULL,
+  PeNa_FechaCreacion datetime NOT NULL,
+  PeNa_Modifica int,
+  PeNa_FechaModifica datetime
+);
+GO
+
+CREATE TABLE Gral.tbComerciantesIndividuales (
+  CoIn_Id int PRIMARY KEY IDENTITY(1, 1),
+  CoIn_RtnSolicitante varchar(50) NOT NULL,
+  PeNa_Id INT NOT NULL,
+  CoIn_Aldea varchar(50),
+  CoIn_CalleYavenida varchar(50),
+  CoIn_BarrioOcolonia varchar(50) NOT NULL,
+  CoIn_EdificioYnum varchar(50) NOT NULL,
+  CoIn_PuntosDeReferencia varchar(50),
+  CoIn_Declaracion varchar(50) NOT NULL,
+  CoIn_RepresentanteLegal bit,
+
+  --opcionales
+  EsCi_RepresentanteLegal int,
+  Prof_RepresentanteLegal int,
+  Ciud_RepresentanteLegal int,
+  CoIn_AldeaRepresentanteLegal varchar(50),
+  CoIn_CalleYavenidaRepresentanteLegal varchar(50),
+  CoIn_BarrioOcoloniaRepresentanteLegal varchar(50),
+  CoIn_EdificioYnumRepresentanteLegal varchar(50),
+  CoIn_PuntosDeReferenciaRepresentanteLegal varchar(50),
+  CoIn_RtnRepresentanteLegal varchar(50),
+  CoIn_DNIRepresentanteLegal varchar(50),
+
+  --auditoria
+  CoIn_Estado bit default 1,
+  CoIn_Creacion int NOT NULL,
+  CoIn_FechaCreacion datetime NOT NULL,
+  CoIn_Modifica int,
+  CoIn_FechaModifica datetime
+);
+GO
+
+CREATE TABLE Gral.tbPersonasJuridicas (
+  PeJu_Id int PRIMARY KEY IDENTITY(1, 1),
+  PeJu_RtnSolicitante varchar(50) NOT NULL,
+  PeJu_Aldea varchar(50),
+  PeJu_CalleYavenida varchar(50),
+  PeJu_BarrioOcolonia varchar(50) NOT NULL,
+  PeJu_EdificioYnum varchar(50) NOT NULL,
+  PeJu_PuntosDeReferencia varchar(50),
+  PeJu_Escritura varchar(50),
+  PeNa_Id INT NOT NULL,
+
+  --opcionales
+  EsCi_RepresentanteLegal int,
+  Prof_RepresentanteLegal int,
+  Ciud_RepresentanteLegal int,
+  PeJu_AldeaRepresentanteLegal varchar(50),
+  PeJu_CalleYavenidaRepresentanteLegal varchar(50),
+  PeJu_BarrioOcoloniaRepresentanteLegal varchar(50),
+  PeJu_EdificioYnumRepresentanteLegal varchar(50),
+  PeJu_PuntosDeReferenciaRepresentanteLegal varchar(50),
+  PeJu_RtnRepresentanteLegal varchar(50),
+  PeJu_DNIRepresentanteLegal varchar(50),
+
+  --PeJu_Rtn varchar(50),
+  --auditoria
+  PeJu_Estado bit default 1,
+  PeJu_Creacion int NOT NULL,
+  PeJu_FechaCreacion datetime NOT NULL,
+  PeJu_Modifica int,
+  PeJu_FechaModifica datetime
+);
 GO
 
 --INSERTS PARA QUE FUNCIONE LA BASE DE DATOS
@@ -235,7 +355,7 @@ GO
 INSERT INTO [Gral].[tbEmpleados] ([Empl_Rtn], [Empl_PrimerNombre], [Empl_PrimerApellido], [Empl_Sexo], [Usua_Id], [EsCi_Id], [Empr_Id], [EmpL_Creacion], [EmpL_FechaCreacion])
 VALUES 
 ('0501200120525', 'Kevin', 'Mata', 'M', 1, 1, 1, 1, '2024-04-30T08:00:00'),
-('0101199800005', 'Victo', 'Espinoza', 'M', 2, 2, 1, 1, '2024-04-26T14:45:00');
+('0101199800005', 'Victor', 'Espinoza', 'M', 2, 2, 1, 1, '2024-04-26T14:45:00');
 
 
 ALTER TABLE [Gral].[tbCiudades] ADD FOREIGN KEY ([Esta_Id]) REFERENCES [Gral].[tbEstados] ([Esta_Id])
@@ -304,6 +424,9 @@ GO
 ALTER TABLE [Gral].[tbEmpleados] ADD FOREIGN KEY ([Empl_Modifica]) REFERENCES [Acce].[tbUsuarios] ([Usua_Id])
 GO
 
+ALTER TABLE [Adua].[tbAduanas] ADD FOREIGN KEY ([Ciud_Id]) REFERENCES [Gral].[tbCiudades] ([Ciud_Id])
+GO
+
 ALTER TABLE [Adua].[tbAduanas] ADD FOREIGN KEY ([Adua_Creacion]) REFERENCES [Acce].[tbUsuarios] ([Usua_Id])
 GO
 
@@ -326,4 +449,74 @@ ALTER TABLE [Gral].[tbEmpleados] ADD FOREIGN KEY ([Empr_Id]) REFERENCES [Gral].[
 GO
 
 ALTER TABLE [Gral].[tbEstados] ADD FOREIGN KEY ([Pais_Id]) REFERENCES [Gral].[tbPaises] ([Pais_Id])
+GO
+
+--relaciones extra
+ALTER TABLE [Gral].[tbProfesiones] ADD FOREIGN KEY ([Prof_Creacion]) REFERENCES [Acce].[tbUsuarios] ([Usua_Id])
+GO
+
+ALTER TABLE [Gral].[tbProfesiones] ADD FOREIGN KEY ([Prof_Modifica]) REFERENCES [Acce].[tbUsuarios] ([Usua_Id])
+GO
+
+ALTER TABLE [Gral].[tbOficinas] ADD FOREIGN KEY ([Ofic_Creacion]) REFERENCES [Acce].[tbUsuarios] ([Usua_Id])
+GO
+
+ALTER TABLE [Gral].[tbOficinas] ADD FOREIGN KEY ([Ofic_Modifica]) REFERENCES [Acce].[tbUsuarios] ([Usua_Id])
+GO
+
+ALTER TABLE [Gral].[tbOficinas] ADD FOREIGN KEY ([Adua_Id]) REFERENCES [Adua].[tbAduanas] ([Adua_Id])
+GO
+
+ALTER TABLE [Gral].[tbPersonasNaturales] ADD FOREIGN KEY ([PeNa_Creacion]) REFERENCES [Acce].[tbUsuarios] ([Usua_Id])
+GO
+
+ALTER TABLE [Gral].[tbPersonasNaturales] ADD FOREIGN KEY ([PeNa_Modifica]) REFERENCES [Acce].[tbUsuarios] ([Usua_Id])
+GO
+
+ALTER TABLE [Gral].[tbPersonasNaturales] ADD FOREIGN KEY ([EsCi_Id]) REFERENCES [Gral].[tbEstadosCiviles] ([EsCi_Id])
+GO
+
+ALTER TABLE [Gral].[tbPersonasNaturales] ADD FOREIGN KEY ([Ofic_Id]) REFERENCES [Gral].[tbOficinas] ([Ofic_Id])
+GO
+
+ALTER TABLE [Gral].[tbPersonasNaturales] ADD FOREIGN KEY ([Ciud_Id]) REFERENCES [Gral].[tbCiudades] ([Ciud_Id])
+GO
+
+ALTER TABLE [Gral].[tbPersonasNaturales] ADD FOREIGN KEY ([Prof_Id]) REFERENCES [Gral].[tbProfesiones] ([Prof_Id])
+GO
+
+ALTER TABLE [Gral].[tbComerciantesIndividuales] ADD FOREIGN KEY ([PeNa_Id]) REFERENCES [Gral].[tbPersonasNaturales] ([PeNa_Id])
+GO
+
+ALTER TABLE [Gral].[tbComerciantesIndividuales] ADD FOREIGN KEY ([EsCi_RepresentanteLegal]) REFERENCES [Gral].[tbEstadosCiviles] ([EsCi_Id])
+GO
+
+ALTER TABLE [Gral].[tbComerciantesIndividuales] ADD FOREIGN KEY ([Ciud_RepresentanteLegal]) REFERENCES [Gral].[tbCiudades] ([Ciud_Id])
+GO
+
+ALTER TABLE [Gral].[tbComerciantesIndividuales] ADD FOREIGN KEY ([Prof_RepresentanteLegal]) REFERENCES [Gral].[tbProfesiones] ([Prof_Id])
+GO
+
+ALTER TABLE [Gral].[tbComerciantesIndividuales] ADD FOREIGN KEY ([CoIn_Creacion]) REFERENCES [Acce].[tbUsuarios] ([Usua_Id])
+GO
+
+ALTER TABLE [Gral].[tbComerciantesIndividuales] ADD FOREIGN KEY ([CoIn_Modifica]) REFERENCES [Acce].[tbUsuarios] ([Usua_Id])
+GO
+
+ALTER TABLE [Gral].[tbPersonasJuridicas] ADD FOREIGN KEY ([PeNa_Id]) REFERENCES [Gral].[tbPersonasNaturales] ([PeNa_Id])
+GO
+
+ALTER TABLE [Gral].[tbPersonasJuridicas] ADD FOREIGN KEY ([EsCi_RepresentanteLegal]) REFERENCES [Gral].[tbEstadosCiviles] ([EsCi_Id])
+GO
+
+ALTER TABLE [Gral].[tbPersonasJuridicas] ADD FOREIGN KEY ([Prof_RepresentanteLegal]) REFERENCES [Gral].[tbProfesiones] ([Prof_Id])
+GO
+
+ALTER TABLE [Gral].[tbPersonasJuridicas] ADD FOREIGN KEY ([Ciud_RepresentanteLegal]) REFERENCES [Gral].[tbCiudades] ([Ciud_Id])
+GO
+
+ALTER TABLE [Gral].[tbPersonasJuridicas] ADD FOREIGN KEY ([PeJu_Creacion]) REFERENCES [Acce].[tbUsuarios] ([Usua_Id])
+GO
+
+ALTER TABLE [Gral].[tbPersonasJuridicas] ADD FOREIGN KEY ([PeJu_Modifica]) REFERENCES [Acce].[tbUsuarios] ([Usua_Id])
 GO
