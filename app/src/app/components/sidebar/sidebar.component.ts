@@ -135,6 +135,8 @@ export class SidebarComponent implements OnInit {
   // public isGeneralCollapsed = true;
   // public isAduanaCollapsed = true;
 
+  esquemasMap:Map<string, string> = new Map<string, string>();
+
   toggleCollapse(schema: string) {
     this.isCollapsed[schema] = !this.isCollapsed[schema];
   }
@@ -155,6 +157,9 @@ export class SidebarComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    this.esquemasMap.set('Acce', "Acceso");
+    this.esquemasMap.set('Gral', "General");
+    this.esquemasMap.set('Adua', "Aduana");
     this.menuItems = ROUTES.filter((menuItem) => menuItem);
   }
   isMobileMenu() {

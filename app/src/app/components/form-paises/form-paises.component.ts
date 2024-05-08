@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { Rol } from "../../Models/RolesViewModel";
 import { RolesService } from "../../Services/roles.service";
-import { Usuario } from "../../Models/UsuariosViewModel";
+import { Pais } from "../../Models/PaisesViewModel";
 import { ToastrService } from "ngx-toastr";
-import { UsuariosService } from "../../Services/usuarios.service";
+import { PaisesService } from "../../Services/paises.service";
 // import { MensajesService } from "../../Services/mensajes.service";
 
 @Component({
@@ -13,33 +13,28 @@ import { UsuariosService } from "../../Services/usuarios.service";
   styleUrls: ["./form-paises.component.css"],
 })
 export class FormPaisesComponent implements OnInit {
-  @Input() usuarioParaEditar: Usuario;
+  @Input() paisParaEditar: Pais;
   roles: Rol[];
 
-  usuario: Usuario = new Usuario();
+  pais: Pais = new Pais();
   confirmarClave: string;
 
   constructor(
     public activeModal: NgbActiveModal,
     private rolesService: RolesService,
     private toastr: ToastrService,
-    private usuariosService: UsuariosService
+    private paisService: PaisesService
   ) { }
 
   isLoading = true;
   ngOnInit(): void {
-    console.log(this.usuarioParaEditar);
+    console.log(this.paisParaEditar);
 
-    if (this.usuarioParaEditar) {
-      this.usuario.Id = this.usuarioParaEditar.Id;
-      this.usuario.Usuario = this.usuarioParaEditar.Usuario;
-      this.usuario.Rol = this.usuarioParaEditar.Rol ?? "- Seleccionar -";
-      this.usuario.EsAdmin = this.usuarioParaEditar.Admin === 'SI';
-      console.log(this.usuario.EsAdmin, "ESADMIN");
-
+    if (this.paisParaEditar) {
+      this.pais.Id = this.paisParaEditar.Id;
+      this.pais.Pais = this.paisParaEditar.Pais;
     } else {
-      this.usuario.Rol = "- Seleccionar -";
-      this.usuario.EsAdmin = false;
+      this.pais.Pais = "";
     }
 
     this.rolesService.getData().subscribe(
@@ -53,74 +48,46 @@ export class FormPaisesComponent implements OnInit {
     );
   }
 
-  rolSelect(rolId: number, rol: string) {
-    this.usuario.rol_Id = rolId;
-    this.usuario.Rol = rol;
-  }
-  usuarioOnChange(event: any) {
-    this.usuario.Usuario = event.target.value;
-  }
-  contraOnChange(event: any) {
-    this.usuario.Clave = event.target.value;
-  }
-  confirmarContraOnChange(event: any) {
-    this.confirmarClave = event.target.value;
-  }
-  adminToggle() {
-    this.usuario.rol_Id = null;
-    this.usuario.Rol = "- Seleccionar -";
-    this.usuario.EsAdmin = !this.usuario.EsAdmin;
+
+  paisOnChange(event: any) {
+    this.pais.Pais = event.target.value;
   }
 
   async guardar() {
-    if (!this.usuario.Usuario) {
-      this.mostrarWarning('Por favor ingrese el nombre de usuario.');
+    if (!this.pais.Pais) {
+      this.mostrarWarning('Por favor ingrese el nombre del país.');
       return;
     }
-    if (!this.usuario.EsAdmin) {
-      if (!this.usuario.rol_Id) {
-        this.mostrarWarning('Por favor seleccione un rol.');
-        return;
-      }
-    }
-    if (!this.usuarioParaEditar) {
-      if (!this.usuario.Clave) {
-        this.mostrarWarning('Por favor ingrese su contraseña.');
-        return;
-      }
-      if (this.usuario.Clave !== this.confirmarClave) {
-        this.mostrarWarning('Las contraseñas no coinciden.');
-        return;
-      }
-      await this.usuariosService.Crear(this.usuario).subscribe(
+    if (!this.paisParaEditar) {
+      await this.paisService.Crear(this.pais).subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
-            this.mostrarSuccess('Usuario creado con éxito.')
+            this.mostrarSuccess('País creado con éxito.')
             this.activeModal.close(true);
           } else {
             this.activeModal.close(false);
-            this.mostrarError('Error al crear el usuario.');
+            this.mostrarError('Error al crear el país.');
           }
         },
         (error) => {
-          this.mostrarError('Error al crear el usuario.');
+          this.mostrarError('Error al crear el pais.');
           console.log(error);
           this.isLoading = false;
         }
       );
     } else {
-      await this.usuariosService.Editar(this.usuario).subscribe(
+      await this.paisService.Editar(this.pais).subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
-            this.mostrarSuccess('Usuario editado con éxito.');
+            this.mostrarSuccess('País editado con éxito.');
             this.activeModal.close(true);
           } else {
             this.activeModal.close(false);
-            this.mostrarError('Error al editar el usuario.');
+            this.mostrarError('Error al editar el país.');
           }
         },
         (error) => {
-          this.mostrarError('Error al editar el usuario.');
+          this.mostrarError('Error al editar el país.');
           console.log(error);
           this.isLoading = false;
         }

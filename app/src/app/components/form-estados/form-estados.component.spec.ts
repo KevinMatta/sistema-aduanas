@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormPaisesComponent } from './form-paises.component';
+import { FormEstadosComponent } from './form-estados.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('FormEstadosComponent', () => {
-  let component: FormPaisesComponent;
-  let fixture: ComponentFixture<FormPaisesComponent>;
+  let component: FormEstadosComponent;
+  let fixture: ComponentFixture<FormEstadosComponent>;
 
 
 
@@ -13,14 +13,14 @@ describe('FormEstadosComponent', () => {
   
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormPaisesComponent ],
+      declarations: [ FormEstadosComponent ],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FormPaisesComponent);
+    fixture = TestBed.createComponent(FormEstadosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

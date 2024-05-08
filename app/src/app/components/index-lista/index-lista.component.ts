@@ -16,6 +16,7 @@ import { Rol } from "../../Models/RolesViewModel";
 import { FormUsuariosComponent } from "../form-usuarios/form-usuarios.component";
 import { HttpResponse } from "@angular/common/http";
 import { ToastrService } from "ngx-toastr";
+import { FormPaisesComponent } from "../form-paises/form-paises.component";
 
 type ColumnType = { prop: string } | { name: string };
 
@@ -43,8 +44,9 @@ export class IndexListaComponent implements OnInit {
   roles: Rol[];
   itemToDelete: any;
 
+  modal:any;
   open(Id?: number | string) {
-    let modalRef = this.modalService.open(FormUsuariosComponent);
+    let modalRef = this.modalService.open(this.modal);
     if (Id) {
       const objetoEncontrado = this.rows.find((obj) => obj.Id === Id);
       modalRef.componentInstance.usuarioParaEditar = objetoEncontrado;
@@ -149,6 +151,7 @@ export class IndexListaComponent implements OnInit {
   private getService(type: string): DataService {
     switch (type) {
       case "Usuarios":
+        this.modal = FormUsuariosComponent;
         return this.usuariosService;
       case "Roles":
         this.path = "/layout/layout/roles-por-pantalla";
@@ -159,6 +162,7 @@ export class IndexListaComponent implements OnInit {
       case "Empresas":
         return this.empresasService;
       case "Paises":
+        this.modal = FormPaisesComponent
         return this.paisesService;
       case "Estados":
         return this.estadosService;

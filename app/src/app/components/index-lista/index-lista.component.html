@@ -15,7 +15,7 @@
         </div>
         <div
           class="card-body"
-          style="overflow-y: auto; overflow-x: auto; max-height: 80%"
+          
         >
           <div class="d-flex justify-content-between" style="gap: 10px">
             <a
@@ -59,7 +59,7 @@
             class="material table"
             [columnMode]="ColumnMode.force"
             rowHeight="auto"
-            [limit]="9"
+            [limit]="7"
             [scrollbarH]="true"
             [messages]="{ emptyMessage: 'No se encontraron registros' }"
           >
@@ -68,6 +68,7 @@
               name="{{ column.name }}"
               prop="{{ column.prop }}"
               [flexGrow]="1"
+              [maxWidth]="50"
             >
             </ngx-datatable-column>
             <ngx-datatable-column
@@ -99,7 +100,7 @@
                     (click)="VerDetalle(row.Id)"
                   >
                     <i class="now-ui-icons ui-1_zoom-bold"></i>
-                    Ver detalles
+                    Detalle
                   </button>
                   <button type="button" class="btn btn-sm btn-primary btn-outline-primary btn-round" (click)="confirmDeleteModal(row)">
                     <i class="now-ui-icons ui-1_simple-remove"></i>
