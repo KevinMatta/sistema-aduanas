@@ -23,7 +23,7 @@
             id="dropdownMenu1"
             ngbDropdownToggle
           >
-            {{ aduana.Estado }}
+            {{ empresa.Estado }}
           </button>
           <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
             <button
@@ -48,7 +48,7 @@
             id="dropdownMenu1"
             ngbDropdownToggle
           >
-            {{ aduana.Ciudad }}
+            {{ empresa.Ciudad }}
           </button>
           <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
             <button
@@ -73,8 +73,8 @@
           class="form-control"
           placeholder="Aduana Tocontin"
           maxlength="20"
-          (change)="aduanaOnChange($event)"
-          [value]="aduana.Aduana"
+          (change)="empresaOnChange($event)"
+          [value]="empresa.Empresa"
           style="max-width: 150px"
         />
       </div>

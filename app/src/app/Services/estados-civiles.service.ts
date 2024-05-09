@@ -35,15 +35,13 @@ export class EstadosCivilesService implements DataService {
 
   Editar(esta: any): Observable<any> {
     const json = {
-      esta_Id: esta.Id,
-      pais_Id: esta.pais_Id,
-      esta_Descripcion: esta.Estado,
-      esta_Estado: true,
-      esta_Creacion: 1,
-      esta_FechaCreacion: new Date().toISOString(),
-      esta_Modifica: 1,
-      esta_FechaModifica: new Date().toISOString(),
-      pais_Descripcion: esta.Pais ?? "pais_descripcion",
+      esCi_Id: esta.Id,
+      esCi_Descripcion: esta['Estado Civil'],
+      esCi_Estado: true,
+      esCi_Creacion: 1,
+      esCi_FechaCreacion: new Date().toISOString(),
+      esCi_Modifica: 1,
+      esCi_FechaModifica: new Date().toISOString(),
       Creacion: "string",
       Modifica: "string",
     };
@@ -56,15 +54,13 @@ export class EstadosCivilesService implements DataService {
 
   Crear(esta: any): Observable<any> {
     const json = {
-      esta_Id: 0,
-      pais_Id: esta.pais_Id,
-      esta_Descripcion: esta.Estado,
-      pais_Estado: true,
-      pais_Creacion: 1,
-      pais_FechaCreacion: new Date().toISOString(),
-      pais_Modifica: 1,
-      pais_FechaModifica: new Date().toISOString(),
-      pais_Descripcion: esta.Pais ?? "pais_descripcion",
+      esCi_Id: 0,
+      esCi_Descripcion: esta['Estado Civil'],
+      esCi_Estado: true,
+      esCi_Creacion: 1,
+      esCi_FechaCreacion: new Date().toISOString(),
+      esCi_Modifica: 1,
+      esCi_FechaModifica: new Date().toISOString(),
       Creacion: "string",
       Modifica: "string",
     };

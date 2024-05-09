@@ -2,6 +2,7 @@ import { Component, OnInit, SecurityContext } from '@angular/core';
 import { UtilitariosService } from '../../Services/utilitarios.service';
 import { ToastrService } from 'ngx-toastr';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { PersonaNatural } from "../../Models/PersonaNaturalViewModel";
 // import * as html2pdf from "html2pdf.js";
 
 @Component({
@@ -13,9 +14,7 @@ export class FormPersonaNaturalComponent implements OnInit {
 
   endpointSubirRTN = "/API/PersonaNatural/SubirRTNsolicitante";
 
-  RtnSolicitante = "";
-
-  pdfRtnSolicitanteUrl = "";
+  personaNatural:PersonaNatural = new PersonaNatural();
 
   trustedUrl: SafeResourceUrl;
 
@@ -33,24 +32,34 @@ export class FormPersonaNaturalComponent implements OnInit {
     );
   }
 
-  convertHtml2Pdf() {
-    const options = {
-      filename: 'boletin',
-      image: { type: 'jpeg' },
-      html2canvas: {},
-      jsPDF: { orientation: 'vertical' },
-    };
-    const content: Element = document.getElementById('boletin');
-    // html2pdf().from(content).set(options).save();
+  // convertHtml2Pdf() {
+  //   const options = {
+  //     filename: 'boletin',
+  //     image: { type: 'jpeg' },
+  //     html2canvas: {},
+  //     jsPDF: { orientation: 'vertical' },
+  //   };
+  //   const content: Element = document.getElementById('boletin');
+  //   // html2pdf().from(content).set(options).save();
+  // }
+
+  RtnSolicitanteOnChange(event: any) {
+    const val = event.target.value;
+    this.personaNatural.RtnSolicitante = val;
   }
 
-  RtnSolicitanteBlur(event: any) {
+  DNIOnChange(event: any) {
     const val = event.target.value;
-    this.RtnSolicitante = val;
+    this.personaNatural.DNI = val;
+  }
+
+  ReciboPublicoOnChange(event: any) {
+    const val = event.target.value;
+    this.personaNatural.NumReciboPublico = val;
   }
 
   async subirArchivo(event: any) {
-    if (this.RtnSolicitante == "") {
+    if (this.personaNatural.RtnSolicitante == "") {
       this.toastr.warning('<span class="now-ui-icons ui-1_bell-53"></span> Por favor ingrese el RTN del solicitante.', '', {
         timeOut: 3000,
         closeButton: true,
@@ -66,14 +75,14 @@ export class FormPersonaNaturalComponent implements OnInit {
       const pdf = event.target.files[0];
       const formData = new FormData();
       formData.append('pdf', pdf);
-      const keyName = this.RtnSolicitante + '_RTNsolicitante_PeNa.pdf'
+      const keyName = this.personaNatural.RtnSolicitante + '_RTNsolicitante_PeNa.pdf'
       formData.append('keyName', keyName);
       const res = await this.utilitariosService.subirArchivo(this.endpointSubirRTN, formData);
       console.log(res);
 
       if (res) {
-        this.pdfRtnSolicitanteUrl = "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
-        this.sanitizarUrl(this.pdfRtnSolicitanteUrl);
+        this.personaNatural.RtnSolicitanteUrl = "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
+        this.sanitizarUrl(this.personaNatural.RtnSolicitanteUrl);
         console.log(this.trustedUrl, 'trustedUrl');
         
 
@@ -87,5 +96,4 @@ export class FormPersonaNaturalComponent implements OnInit {
       }
     }
   }
-
 }

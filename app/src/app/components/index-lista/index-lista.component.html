@@ -68,7 +68,7 @@
               name="{{ column.name }}"
               prop="{{ column.prop }}"
               [flexGrow]="1"
-              [maxWidth]="column.name === 'Id' || column.name === 'Admin' ? 90 : 'auto'"
+              [maxWidth]="column.name === 'Id' || column.name === 'Admin' || column.name === 'Sexo' ? 90 : column.name === 'Empresa' ? 300 : 'auto'"
             >
             </ngx-datatable-column>
             <ngx-datatable-column

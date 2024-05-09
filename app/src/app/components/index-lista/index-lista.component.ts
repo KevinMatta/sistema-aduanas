@@ -19,6 +19,7 @@ import { ToastrService } from "ngx-toastr";
 import { FormPaisesComponent } from "../form-paises/form-paises.component";
 import { FormEstadosComponent } from "../form-estados/form-estados.component";
 import { FormCiudadesComponent } from "../form-ciudades/form-ciudades.component";
+import { FormEstadosCivilesComponent } from "../form-estados-civiles/form-estados-civiles.component";
 
 type ColumnType = { prop: string } | { name: string };
 
@@ -180,7 +181,7 @@ export class IndexListaComponent implements OnInit {
         // this.modal = FormEmpleadosComponent;
         return this.empleadosService;
       case "Estados Civiles":
-        // this.modal = FormEstadosCivilesComponent;
+        this.modal = FormEstadosCivilesComponent;
         return this.estadosCivilesService;
       default:
         throw new Error("Invalid service type");

@@ -5,22 +5,22 @@ import { EstadosService } from "../../Services/estados.service";
 import { Estado } from "../../Models/EstadosViewModel";
 import { Ciudad } from "../../Models/CiudadesViewModel";
 import { CiudadesService } from "../../Services/ciudades.service";
-import { Aduana } from "../../Models/AduanasViewModel";
-import { AduanasService } from "../../Services/aduanas.service";
-// import { MensajesService } from "../../Services/mensajes.service";
+import { Empresa } from "../../Models/EmpresasViewModel";
+import { EmpresasService } from "../../Services/empresas.service";
+import { MensajesService, } from "../../Services/mensajes.service";
 
 @Component({
-  selector: "app-form-aduanas",
-  templateUrl: "./form-aduanas.component.html",
-  styleUrls: ["./form-aduanas.component.css"],
+  selector: "app-form-empresas",
+  templateUrl: "./form-empresas.component.html",
+  styleUrls: ["./form-empresas.component.css"],
 })
-export class FormCiudadesComponent implements OnInit {
-  @Input() objetoParaEditar: Aduana;
+export class FormEmpresasComponent implements OnInit {
+  @Input() objetoParaEditar: Empresa;
   estados: Estado[];
   ciudades: Ciudad[];
   ciudadesFiltrados: Ciudad[];
 
-  aduana: Aduana = new Aduana();
+  empresa: Empresa = new Empresa();
   confirmarClave: string;
 
   constructor(
@@ -28,7 +28,8 @@ export class FormCiudadesComponent implements OnInit {
     private estadosService: EstadosService,
     private toastr: ToastrService,
     private ciudadesService: CiudadesService,
-    private aduanasService: AduanasService,
+    private empresasService: EmpresasService,
+    private MensajesService: MensajesService
   ) {}
 
   isLoading = true;
@@ -36,16 +37,16 @@ export class FormCiudadesComponent implements OnInit {
     console.log(this.objetoParaEditar);
 
     if (this.objetoParaEditar) {
-      this.aduana.Id = this.objetoParaEditar.Id;
-      this.aduana.Aduana = this.objetoParaEditar.Aduana;
-      this.aduana.Estado = this.objetoParaEditar.Estado ?? "- Seleccionar -";
-      this.aduana.Ciudad = this.objetoParaEditar.Ciudad ?? "- Seleccionar -";
+      this.empresa.Id = this.objetoParaEditar.Id;
+      this.empresa.Empresa = this.objetoParaEditar.Empresa;
+      this.empresa.Estado = this.objetoParaEditar.Estado ?? "- Seleccionar -";
+      this.empresa.Ciudad = this.objetoParaEditar.Ciudad ?? "- Seleccionar -";
     } else {
-      this.aduana.Aduana = "";
-      this.aduana.Estado = "- Seleccionar -";
-      this.aduana.Ciudad = "- Seleccionar -";
+      this.empresa.Empresa = "";
+      this.empresa.Estado = "- Seleccionar -";
+      this.empresa.Ciudad = "- Seleccionar -";
     }
-
+  
     this.estadosService.getData().subscribe(
       (data: Estado[]) => {
         this.estados = data;
@@ -55,6 +56,7 @@ export class FormCiudadesComponent implements OnInit {
         this.isLoading = false;
       }
     );
+
     this.ciudadesService.getData().subscribe(
       (data: Ciudad[]) => {
         this.ciudades = data;
@@ -75,68 +77,68 @@ export class FormCiudadesComponent implements OnInit {
   }
 
   estadosSelect(estaId: number, esta: string) {
-    this.aduana.esta_Id = estaId;
-    this.aduana.Estado = esta;
-    this.filtrarCiudades(this.aduana.esta_Id);
+    this.empresa.esta_Id = estaId;
+    this.empresa.Estado = esta;
+    this.filtrarCiudades(this.empresa.esta_Id);
   }
 
   ciudadesSelect(ciudId: number, ciudad: string) {
-    this.aduana.ciud_Id = ciudId;
-    this.aduana.Ciudad = ciudad;
+    this.empresa.ciud_Id = ciudId;
+    this.empresa.Ciudad = ciudad;
   }
 
-  aduanaOnChange(event: any) {
-    this.aduana.Aduana = event.target.value;
+  empresaOnChange(event: any) {
+    this.empresa.Empresa = event.target.value;
   }
 
   async guardar() {
-    if (!this.aduana.esta_Id) {
+    if (!this.empresa.esta_Id) {
       this.mostrarWarning("Por favor seleccione un Estado.");
       return;
     }
-    if (!this.aduana.ciud_Id) {
+    if (!this.empresa.ciud_Id) {
       this.mostrarWarning("Por favor seleccione un ciudad.");
       return;
     }
-    if (!this.aduana.Aduana) {
+    if (!this.empresa.Empresa) {
       this.mostrarWarning("Por favor ingrese el nombre de la aduana.");
       return;
     }
-    if (!this.objetoParaEditar) {
-      await this.aduanasService.Crear(this.aduana).subscribe(
-        (data: any) => {
-          if (data.code >= 200 && data.code <= 300) {
-            this.mostrarSuccess("Aduana creada con éxito.");
-            this.activeModal.close(true);
-          } else {
-            this.activeModal.close(false);
-            this.mostrarError("Ya existe una aduana con este nombre.");
-          }
-        },
-        (error) => {
-          this.mostrarError("Error al crear la aduana.");
-          console.log(error);
-          this.isLoading = false;
-        }
-      );
-    } else {
-      await this.estadosService.Editar(this.aduana).subscribe(
-        (data: any) => {
-          if (data.code >= 200 && data.code <= 300) {
-            this.mostrarSuccess("Aduana editada con éxito.");
-            this.activeModal.close(true);
-          } else {
-            this.activeModal.close(false);
-            this.mostrarError("Ya existe una aduana con este nombre.");
-          }
-        },
-        (error) => {
-          this.mostrarError("Error al editar la aduana.");
-          console.log(error);
-          this.isLoading = false;
-        }
-      );
-    }
+    // if (!this.objetoParaEditar) {
+    //   await this.empresasService.Crear(this.empresa).subscribe(
+    //     (data: any) => {
+    //       if (data.code >= 200 && data.code <= 300) {
+    //         this.mostrarSuccess("Aduana creada con éxito.");
+    //         this.activeModal.close(true);
+    //       } else {
+    //         this.activeModal.close(false);
+    //         this.mostrarError("Ya existe una aduana con este nombre.");
+    //       }
+    //     },
+    //     (error) => {
+    //       this.mostrarError("Error al crear la aduana.");
+    //       console.log(error);
+    //       this.isLoading = false;
+    //     }
+    //   );
+    // } else {
+    //   await this.empresasService.Editar(this.empresa).subscribe(
+    //     (data: any) => {
+    //       if (data.code >= 200 && data.code <= 300) {
+    //         this.mostrarSuccess("Aduana editada con éxito.");
+    //         this.activeModal.close(true);
+    //       } else {
+    //         this.activeModal.close(false);
+    //         this.mostrarError("Ya existe una aduana con este nombre.");
+    //       }
+    //     },
+    //     (error) => {
+    //       this.mostrarError("Error al editar la aduana.");
+    //       console.log(error);
+    //       this.isLoading = false;
+    //     }
+    //   );
+    // }
   }
   mostrarSuccess(mensaje: string) {
     this.toastr.success(
