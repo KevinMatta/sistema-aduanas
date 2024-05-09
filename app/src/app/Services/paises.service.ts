@@ -28,7 +28,7 @@ export class PaisesService implements DataService {
   Eliminar(val: any): Observable<any> {
     console.log(val + "Para Eliminar");
     return this.http.delete<any>(
-      `${this.BaseUrl + "Eliminar/"}?Pais_Id=${val}&Pais_Modifica=1
+      `${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1
         `,
       { observe: "response" }
     );
@@ -55,15 +55,6 @@ export class PaisesService implements DataService {
 
   Crear(pais: any): Observable<any> {
     const json = {
-      // "pais_Id": 0,
-      // "pais_Descripcion": "string",
-      // "pais_Estado": true,
-      // "pais_Creacion": 0,
-      // "pais_FechaCreacion": "2024-05-08T20:58:00.424Z",
-      // "pais_Modifica": 0,
-      // "pais_FechaModifica": "2024-05-08T20:58:00.424Z",
-      // "creacion": "string",
-      // "modifica": "string"
       pais_Id: 0,
       pais_Descripcion: pais.Pais,
       pais_Estado: true,

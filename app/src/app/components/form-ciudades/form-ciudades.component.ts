@@ -1,24 +1,25 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { Rol } from "../../Models/RolesViewModel";
-import { RolesService } from "../../Services/roles.service";
 import { ToastrService } from "ngx-toastr";
 import { EstadosService } from "../../Services/estados.service";
 import { Pais } from "../../Models/PaisesViewModel";
 import { Estado } from "../../Models/EstadosViewModel";
+import { Ciudad } from "../../Models/CiudadesViewModel";
 import { PaisesService } from "../../Services/paises.service";
 // import { MensajesService } from "../../Services/mensajes.service";
 
 @Component({
-  selector: "app-form-estados",
-  templateUrl: "./form-estados.component.html",
-  styleUrls: ["./form-estados.component.css"],
+  selector: "app-form-ciudades",
+  templateUrl: "./form-ciudades.component.html",
+  styleUrls: ["./form-ciudades.component.css"],
 })
-export class FormEstadosComponent implements OnInit {
-  @Input() objetoParaEditar: Estado;
+export class FormCiudadesComponent implements OnInit {
+  @Input() objetoParaEditar: Ciudad;
   paises: Pais[];
+  estados: Estado[];
+  estadosFiltrados: Estado[];
 
-  estado: Estado = new Estado();
+  ciudad: Ciudad = new Ciudad();
   confirmarClave: string;
 
   constructor(
@@ -33,12 +34,14 @@ export class FormEstadosComponent implements OnInit {
     console.log(this.objetoParaEditar);
 
     if (this.objetoParaEditar) {
-      this.estado.Id = this.objetoParaEditar.Id;
-      this.estado.Estado = this.objetoParaEditar.Estado;
-      this.estado.Pais = this.objetoParaEditar.Pais ?? "- Seleccionar -";
+      this.ciudad.Id = this.objetoParaEditar.Id;
+      this.ciudad.Ciudad = this.objetoParaEditar.Ciudad;
+      this.ciudad.Pais = this.objetoParaEditar.Pais ?? "- Seleccionar -";
+      this.ciudad.Estado = this.objetoParaEditar.Estado ?? "- Seleccionar -";
     } else {
-      this.estado.Estado = "";
-      this.estado.Pais = "- Seleccionar -";
+      this.ciudad.Ciudad = "";
+      this.ciudad.Pais = "- Seleccionar -";
+      this.ciudad.Estado = "- Seleccionar -";
     }
 
     this.paisesService.getData().subscribe(
@@ -50,27 +53,55 @@ export class FormEstadosComponent implements OnInit {
         this.isLoading = false;
       }
     );
+    this.estadosService.getData().subscribe(
+      (data: Estado[]) => {
+        this.estados = data;
+      },
+      (error) => {
+        console.log(error);
+        this.isLoading = false;
+      }
+    );
+  }
+
+  filtrarEstados(pais_Id: number) {
+    console.log(pais_Id, "pais_Id", this.estados, "this.estados");
+
+    this.estadosFiltrados = this.estados.filter(
+      (estado) => estado.pais_Id === pais_Id
+    );
   }
 
   paisSelect(paisId: number, pais: string) {
-    this.estado.pais_Id = paisId;
-    this.estado.Pais = pais;
+    this.ciudad.pais_Id = paisId;
+    this.ciudad.Pais = pais;
+    this.filtrarEstados(this.ciudad.pais_Id);
   }
-  estadoOnChange(event: any) {
-    this.estado.Estado = event.target.value;
+
+  estadoSelect(estadoId: number, estado: string) {
+    this.ciudad.esta_Id = estadoId;
+    this.ciudad.Estado = estado;
+  }
+
+  ciudadOnChange(event: any) {
+    this.ciudad.Ciudad = event.target.value;
   }
 
   async guardar() {
-    if (!this.estado.Estado) {
-      this.mostrarWarning("Por favor ingrese el nombre del Estado.");
-      return;
-    }
-    if (!this.estado.pais_Id) {
+    if (!this.ciudad.pais_Id) {
       this.mostrarWarning("Por favor seleccione un país.");
       return;
     }
+    if (!this.ciudad.esta_Id) {
+      this.mostrarWarning("Por favor seleccione un Estado.");
+      return;
+    }
+    if (!this.ciudad.Ciudad) {
+      this.mostrarWarning("Por favor ingrese el nombre de la ciudad.");
+      return;
+    }
     if (!this.objetoParaEditar) {
-      await this.estadosService.Crear(this.estado).subscribe(
+      await this.estadosService.Crear(this.ciudad).subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
             this.mostrarSuccess("estado creado con éxito.");
@@ -87,7 +118,7 @@ export class FormEstadosComponent implements OnInit {
         }
       );
     } else {
-      await this.estadosService.Editar(this.estado).subscribe(
+      await this.estadosService.Editar(this.ciudad).subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
             this.mostrarSuccess("estado editado con éxito.");

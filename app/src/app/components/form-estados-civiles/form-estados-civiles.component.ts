@@ -3,29 +3,27 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { Rol } from "../../Models/RolesViewModel";
 import { RolesService } from "../../Services/roles.service";
 import { ToastrService } from "ngx-toastr";
-import { EstadosService } from "../../Services/estados.service";
-import { Pais } from "../../Models/PaisesViewModel";
-import { Estado } from "../../Models/EstadosViewModel";
-import { PaisesService } from "../../Services/paises.service";
+import { EstadosCivilesService } from "../../Services/estados-civiles.service";
+import { EstadoCivil } from "../../Models/EstadosCivilesViewModel";
 // import { MensajesService } from "../../Services/mensajes.service";
 
 @Component({
-  selector: "app-form-estados",
-  templateUrl: "./form-estados.component.html",
-  styleUrls: ["./form-estados.component.css"],
+  selector: "app-form-estados-civiles",
+  templateUrl: "./form-estados-civiles.component.html",
+  styleUrls: ["./form-estados-civiles.component.css"],
 })
-export class FormEstadosComponent implements OnInit {
-  @Input() objetoParaEditar: Estado;
-  paises: Pais[];
+export class FormEstadosCivilesComponent implements OnInit {
+  @Input() objetoParaEditar: EstadoCivil;
+  roles: Rol[];
 
-  estado: Estado = new Estado();
+  estadoCivil: EstadoCivil = new EstadoCivil();
   confirmarClave: string;
 
   constructor(
     public activeModal: NgbActiveModal,
-    private paisesService: PaisesService,
+    private rolesService: RolesService,
     private toastr: ToastrService,
-    private estadosService: EstadosService
+    private estadosCivilesService: EstadosCivilesService
   ) {}
 
   isLoading = true;
@@ -33,17 +31,15 @@ export class FormEstadosComponent implements OnInit {
     console.log(this.objetoParaEditar);
 
     if (this.objetoParaEditar) {
-      this.estado.Id = this.objetoParaEditar.Id;
-      this.estado.Estado = this.objetoParaEditar.Estado;
-      this.estado.Pais = this.objetoParaEditar.Pais ?? "- Seleccionar -";
+      this.estadoCivil.Id = this.objetoParaEditar.Id;
+      this.estadoCivil["Estado Civil"] = this.objetoParaEditar["Estado Civil"];
     } else {
-      this.estado.Estado = "";
-      this.estado.Pais = "- Seleccionar -";
+      this.estadoCivil["Estado Civil"] = "";
     }
 
-    this.paisesService.getData().subscribe(
-      (data: Pais[]) => {
-        this.paises = data;
+    this.rolesService.getData().subscribe(
+      (data: Rol[]) => {
+        this.roles = data;
       },
       (error) => {
         console.log(error);
@@ -52,53 +48,44 @@ export class FormEstadosComponent implements OnInit {
     );
   }
 
-  paisSelect(paisId: number, pais: string) {
-    this.estado.pais_Id = paisId;
-    this.estado.Pais = pais;
-  }
-  estadoOnChange(event: any) {
-    this.estado.Estado = event.target.value;
+  estadoCivilOnChange(event: any) {
+    this.estadoCivil["Estado Civil"] = event.target.value;
   }
 
   async guardar() {
-    if (!this.estado.Estado) {
-      this.mostrarWarning("Por favor ingrese el nombre del Estado.");
-      return;
-    }
-    if (!this.estado.pais_Id) {
-      this.mostrarWarning("Por favor seleccione un país.");
+    if (!this.estadoCivil["Estado Civil"]) {
+      this.mostrarWarning("Por favor ingrese el nombre del Estado civil.");
       return;
     }
     if (!this.objetoParaEditar) {
-      await this.estadosService.Crear(this.estado).subscribe(
+      await this.estadosCivilesService.Crear(this.estadoCivil).subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
-            this.mostrarSuccess("estado creado con éxito.");
+            this.mostrarSuccess("Estado Civil creado con éxito.");
             this.activeModal.close(true);
           } else {
-            this.activeModal.close(false);
-            this.mostrarError("Error al crear el estado.");
+            this.mostrarError("Ya existe un Estado Civil.");
           }
         },
         (error) => {
-          this.mostrarError("Error al crear el estado.");
           console.log(error);
+          this.mostrarError("Error al crear el estado civil.");
           this.isLoading = false;
         }
       );
     } else {
-      await this.estadosService.Editar(this.estado).subscribe(
+      await this.estadosCivilesService.Editar(this.estadoCivil).subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
-            this.mostrarSuccess("estado editado con éxito.");
+            this.mostrarSuccess("Estado civil editado con éxito.");
             this.activeModal.close(true);
           } else {
             this.activeModal.close(false);
-            this.mostrarError("Error al editar el estado.");
+            this.mostrarError("Error al editar el Estado civil.");
           }
         },
         (error) => {
-          this.mostrarError("Error al editar el estado.");
+          this.mostrarError("Error al editar el Estado civil.");
           console.log(error);
           this.isLoading = false;
         }

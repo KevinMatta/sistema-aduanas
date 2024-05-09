@@ -1,11 +1,14 @@
 export class Ciudad {
-    Id:number;
-    Estado:string;
-    Ciudad:string;
-    ciud_Creacion?: number;
-    ciud_FechaCreacion?: string;
-    ciud_Modifica?: number;
-    ciud_FechaModifica?: string;
-    Creacion?: string;
-    Modifica?: string;
+  Id: number;
+  Pais?: string;
+  pais_Id?: number;
+  Estado: string;
+  esta_Id?: number;
+  Ciudad: string;
+  ciud_Creacion?: number;
+  ciud_FechaCreacion?: string;
+  ciud_Modifica?: number;
+  ciud_FechaModifica?: string;
+  Creacion?: string;
+  Modifica?: string;
 }

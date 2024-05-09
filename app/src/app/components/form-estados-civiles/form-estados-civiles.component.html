@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h4 class="modal-title" id="modal-basic-title">
-    {{ objetoParaEditar ? "Editar" : "Nuevo" }} País
+    {{ objetoParaEditar ? "Editar" : "Nuevo" }} Estado Civil
   </h4>
   <button
     type="button"
@@ -15,14 +15,14 @@
   <div class="row">
     <div class="col d-flex justify-content-center">
       <div class="form-group">
-        <label>Estados</label>
+        <label>Estado Civil</label>
         <input
           type="text"
           class="form-control"
           placeholder="Cortés"
           maxlength="20"
-          (change)="paisOnChange($event)"
-          [value]="pais.Pais"
+          (change)="estadoCivilOnChange($event)"
+          [value]="estadoCivil['Estado Civil']"
           style="max-width: 150px"
         />
       </div>

@@ -17,6 +17,8 @@ import { FormUsuariosComponent } from "../form-usuarios/form-usuarios.component"
 import { HttpResponse } from "@angular/common/http";
 import { ToastrService } from "ngx-toastr";
 import { FormPaisesComponent } from "../form-paises/form-paises.component";
+import { FormEstadosComponent } from "../form-estados/form-estados.component";
+import { FormCiudadesComponent } from "../form-ciudades/form-ciudades.component";
 
 type ColumnType = { prop: string } | { name: string };
 
@@ -44,32 +46,30 @@ export class IndexListaComponent implements OnInit {
   roles: Rol[];
   itemToDelete: any;
 
-  modal:any;
+  modal: any;
   open(Id?: number | string) {
     let modalRef = this.modalService.open(this.modal);
     if (Id) {
-      console.log(Id);
-      console.log(this.rows);
       const objetoEncontrado = this.rows.find((obj) => obj.Id === Id);
       modalRef.componentInstance.objetoParaEditar = objetoEncontrado;
     }
-    modalRef.result.then((data) => {
-      if (data === true) {
-        this.service.getData().subscribe(
-          (data: any[]) => {
+    modalRef.result
+      .then((data) => {
+        if (data === true) {
+          this.service.getData().subscribe((data: any[]) => {
             this.rows = this.formatFilas(data);
             this.temp = [...this.rows];
             if (this.rows.length > 0) {
               this.columns = this.formatColumnas(Object.keys(this.rows[0]));
             }
             // this.isLoading = false;
-          }
-        );
-      }
-    }).catch(err=>{
-      // console.log(err);
-      // this.isLoading = false;
-    });
+          });
+        }
+      })
+      .catch((err) => {
+        // console.log(err);
+        // this.isLoading = false;
+      });
   }
 
   constructor(
@@ -135,7 +135,10 @@ export class IndexListaComponent implements OnInit {
     return data.map((obj) => {
       const newObj: { [key: string]: string } = {};
       Object.keys(obj).forEach((key) => {
-        newObj[key] = obj[key];
+        // Check if the key contains an underscore
+        if (!key.includes("_")) {
+          newObj[key] = obj[key];
+        }
       });
       return newObj;
     });
@@ -156,35 +159,33 @@ export class IndexListaComponent implements OnInit {
         return this.usuariosService;
       case "Roles":
         this.path = "/layout/layout/roles-por-pantalla";
-        console.log(this.path, 'path');
+        console.log(this.path, "path");
         return this.rolesService;
       case "Aduanas":
+        // this.modal = FormAduanasComponent;
         return this.aduanasService;
       case "Empresas":
+        // this.modal = FormEmpresasComponent;
         return this.empresasService;
       case "Paises":
-        this.modal = FormPaisesComponent
+        this.modal = FormPaisesComponent;
         return this.paisesService;
       case "Estados":
+        this.modal = FormEstadosComponent;
         return this.estadosService;
       case "Ciudades":
+        this.modal = FormCiudadesComponent;
         return this.ciudadesService;
       case "Empleados":
+        // this.modal = FormEmpleadosComponent;
         return this.empleadosService;
       case "Estados Civiles":
+        // this.modal = FormEstadosCivilesComponent;
         return this.estadosCivilesService;
       default:
         throw new Error("Invalid service type");
     }
   }
-
-  // private preprocessData() {
-  //   this.rows.forEach((item) => {
-  //     this.columns.forEach((prop) => {
-  //       item[prop + "_isBoolean"] = typeof item[prop] === "boolean";
-  //     });
-  //   });
-  // }
 
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
@@ -207,18 +208,6 @@ export class IndexListaComponent implements OnInit {
     this.table.offset = 0;
   }
 
-  private preprocessData() {
-    this.rows.forEach((item) => {
-      this.columns.forEach((prop) => {
-        item[prop + "_isBoolean"] = typeof item[prop] === "boolean";
-      });
-    });
-  }
-
-  Editar(val: any): void {
-    console.log(val);
-  }
-
   confirmDeleteModal(row) {
     console.log(row);
     this.itemToDelete = row;
@@ -234,7 +223,6 @@ export class IndexListaComponent implements OnInit {
       });
   }
   confirmDelete() {
-    console.log("hola");
     if (this.itemToDelete) {
       switch (this.titulo) {
         case "Usuarios":
@@ -370,40 +358,19 @@ export class IndexListaComponent implements OnInit {
         case "Paises":
           this.paisesService.Eliminar(this.itemToDelete.Id).subscribe(
             (response: HttpResponse<any>) => {
-              if (response.status === 200) {
+              console.log(response, "response");
+              if (response.body.code >= 200 && response.body.code < 300) {
                 this.itemToDelete = null;
-                this.toastr.success(
-                  '<span class="now-ui-icons ui-1_bell-53"></span> Registro Eliminado correctamente',
-                  "Exito",
-                  {
-                    timeOut: 3000,
-                    closeButton: true,
-                    enableHtml: true,
-                    toastClass: "alert alert-success alert-with-icon",
-                    positionClass: "toast-top-right",
-                  }
-                );
+                this.mostrarSuccess("País eliminado correctamente.");
                 setTimeout(() => {
                   window.location.reload();
-                });
+                }, 2000);
               } else {
-                this.toastr.warning(
-                  '<span class="now-ui-icons ui-1_bell-53"></span> Ya existe un registro con el mismo id',
-                  "Alerta",
-                  {
-                    timeOut: 3000,
-                  }
-                );
+                this.mostrarError("Hay Estados que dependen de este país.");
               }
             },
             (error) => {
-              this.toastr.error(
-                '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo  realizar la peticionn',
-                "Error",
-                {
-                  timeOut: 3000,
-                }
-              );
+              this.mostrarError("Error al intentar eliminar el país.");
             }
           );
           break;
@@ -412,40 +379,18 @@ export class IndexListaComponent implements OnInit {
           this.estadosService
             .Eliminar(this.itemToDelete.Id)
             .subscribe((response: HttpResponse<any>) => {
-              if (response.status === 200) {
+              if (response.body.code >= 200 && response.body.code < 300) {
                 this.itemToDelete = null;
-                this.toastr.success(
-                  '<span class="now-ui-icons ui-1_bell-53"></span> Registro Eliminado correctamente',
-                  "Exito",
-                  {
-                    timeOut: 3000,
-                    closeButton: true,
-                    enableHtml: true,
-                    toastClass: "alert alert-success alert-with-icon",
-                    positionClass: "toast-top-right",
-                  }
-                );
+                this.mostrarSuccess("Estado eliminado correctamente.");
                 setTimeout(() => {
                   window.location.reload();
-                });
+                }, 2000);
               } else {
-                this.toastr.warning(
-                  '<span class="now-ui-icons ui-1_bell-53"></span> Ya existe un registro con el mismo id',
-                  "Alerta",
-                  {
-                    timeOut: 3000,
-                  }
-                );
+                this.mostrarError("Hay Ciudades que dependen de este Estado.");
               }
             }),
             (error) => {
-              this.toastr.error(
-                '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo  realizar la peticionn',
-                "Error",
-                {
-                  timeOut: 3000,
-                }
-              );
+              this.mostrarError("Error al intentar eliminar la ciudad.");
             };
           break;
         case "Estados Civiles":
@@ -572,46 +517,64 @@ export class IndexListaComponent implements OnInit {
           this.ciudadesService
             .Eliminar(this.itemToDelete.Id)
             .subscribe((response: HttpResponse<any>) => {
-              if (response.status === 200) {
+              if (response.body.code >= 200 && response.body.code < 300) {
                 this.itemToDelete = null;
-                this.toastr.success(
-                  '<span class="now-ui-icons ui-1_bell-53"></span> Registro Eliminado correctamente',
-                  "Exito",
-                  {
-                    timeOut: 3000,
-                    closeButton: true,
-                    enableHtml: true,
-                    toastClass: "alert alert-success alert-with-icon",
-                    positionClass: "toast-top-right",
-                  }
-                );
+                this.mostrarSuccess("Ciudad eliminada correctamente.");
                 setTimeout(() => {
                   window.location.reload();
-                });
+                }, 2000);
               } else {
-                this.toastr.warning(
-                  '<span class="now-ui-icons ui-1_bell-53"></span> Ya existe un registro con el mismo id',
-                  "Alerta",
-                  {
-                    timeOut: 3000,
-                  }
-                );
+                this.mostrarError("Hay registros que dependen de esta ciudad.");
               }
             }),
             (error) => {
-              this.toastr.error(
-                '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo  realizar la peticionn',
-                "Error",
-                {
-                  timeOut: 3000,
-                }
-              );
+              this.mostrarError("Error al intentar eliminar ciudad.");
             };
         default:
           console.error("Tipo de servicio no manejado para eliminar");
           break;
       }
     }
+  }
+
+  mostrarSuccess(mensaje: string) {
+    this.toastr.success(
+      `<span class="now-ui-icons ui-1_bell-53"></span> ${mensaje}`,
+      "",
+      {
+        timeOut: 3000,
+        closeButton: true,
+        enableHtml: true,
+        toastClass: "alert alert-success alert-with-icon",
+        positionClass: "toast-bottom-right",
+      }
+    );
+  }
+  mostrarWarning(mensaje: string) {
+    this.toastr.warning(
+      `<span class="now-ui-icons ui-1_bell-53"></span> ${mensaje}`,
+      "",
+      {
+        timeOut: 3000,
+        closeButton: true,
+        enableHtml: true,
+        toastClass: "alert alert-warning alert-with-icon",
+        positionClass: "toast-bottom-right",
+      }
+    );
+  }
+  mostrarError(mensaje: string) {
+    this.toastr.error(
+      `<span class="now-ui-icons ui-1_bell-53"></span> ${mensaje}`,
+      "",
+      {
+        timeOut: 3000,
+        closeButton: true,
+        enableHtml: true,
+        toastClass: "alert alert-error alert-with-icon",
+        positionClass: "toast-bottom-right",
+      }
+    );
   }
 }
 @Component({

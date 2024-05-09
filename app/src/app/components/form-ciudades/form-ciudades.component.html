@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h4 class="modal-title" id="modal-basic-title">
-    {{ objetoParaEditar ? "Editar" : "Nuevo" }} Estados
+    {{ objetoParaEditar ? "Editar" : "Nuevo" }} Ciudad
   </h4>
   <button
     type="button"
@@ -23,7 +23,7 @@
             id="dropdownMenu1"
             ngbDropdownToggle
           >
-            {{ estado.Pais }}
+            {{ ciudad.Pais }}
           </button>
           <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
             <button
@@ -41,13 +41,40 @@
     <div class="col-md-6">
       <div class="form-group">
         <label>Estado</label>
+        <div ngbDropdown class="d-block">
+          <button
+            type="button"
+            class="btn btn-primary m-0"
+            id="dropdownMenu1"
+            ngbDropdownToggle
+          >
+            {{ ciudad.Estado }}
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+            <button
+              *ngFor="let estado of estadosFiltrados"
+              type="button"
+              class="dropdown-item"
+              (click)="estadoSelect(estado.Id, estado.Estado)"
+            >
+              {{ estado.Estado }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col d-flex justify-content-center">
+      <div class="form-group">
+        <label>Ciudad</label>
         <input
           type="text"
           class="form-control"
-          placeholder="Cortés"
+          placeholder="San Pedro Sula"
           maxlength="20"
-          (change)="estadoOnChange($event)"
-          [value]="estado.Estado"
+          (change)="ciudadOnChange($event)"
+          [value]="ciudad.Ciudad"
           style="max-width: 150px"
         />
       </div>
