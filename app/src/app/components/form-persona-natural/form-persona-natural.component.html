@@ -79,11 +79,17 @@
                   <td>
                     <div ngbDropdown class="d-inline-block">
                       <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
-                        - Seleccionar -
+                        {{personaNatural.Estado}}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button class="dropdown-item">Action - 1</button>
-                        <button class="dropdown-item">Action - 2</button>
+                        <button
+                          *ngFor="let estado of estados"
+                          type="button"
+                          class="dropdown-item"
+                          (click)="estadoSelect(estado.Id, estado.Estado)"
+                        >
+                          {{ estado.Estado }}
+                        </button>
                       </div>
                     </div>
                   </td>
@@ -96,11 +102,17 @@
                   <td>
                     <div ngbDropdown class="d-inline-block">
                       <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
-                        - Seleccionar -
+                        {{personaNatural.Ciudad}}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button class="dropdown-item">Action - 1</button>
-                        <button class="dropdown-item">Action - 2</button>
+                        <button
+                          *ngFor="let ciudad of ciudadesFiltradas"
+                          type="button"
+                          class="dropdown-item"
+                          (click)="ciudadSelect(ciudad.Id, ciudad.Ciudad)"
+                        >
+                          {{ ciudad.Ciudad }}
+                        </button>
                       </div>
                     </div>
                   </td>
@@ -111,7 +123,7 @@
                 </tr>
                 <tr>
                   <td>
-                    <input type="text" class="form-control" placeholder="13 calle 9 avenida junto a pollos lenca" />
+                    <input type="text" class="form-control" (change)="DireccionOnChange($event)" placeholder="13 calle 9 avenida junto a pollos lenca" />
                   </td>
                   <td>
                     SD007 - DIRECCIÓN COMPLETA (INCLUYA SEGÚN APLIQUE: ALDEA,
@@ -124,11 +136,17 @@
                   <td>
                     <div ngbDropdown class="d-inline-block">
                       <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
-                        - Seleccionar -
+                        {{personaNatural.Aduana}}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button class="dropdown-item">Action - 1</button>
-                        <button class="dropdown-item">Action - 2</button>
+                        <button
+                          *ngFor="let aduana of aduanas"
+                          type="button"
+                          class="dropdown-item"
+                          (click)="aduanaSelect(aduana.Id, aduana.Aduana)"
+                        >
+                          {{ aduana.Aduana }}
+                        </button>
                       </div>
                     </div>
                   </td>
@@ -141,11 +159,17 @@
                   <td>
                     <div ngbDropdown class="d-inline-block">
                       <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
-                        - Seleccionar -
+                        {{personaNatural['Estado Civil']}}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button class="dropdown-item">Action - 1</button>
-                        <button class="dropdown-item">Action - 2</button>
+                        <button
+                          *ngFor="let esCi of estadosCiviles"
+                          type="button"
+                          class="dropdown-item"
+                          (click)="estadoCivilSelect(esCi.Id, esCi['Estado Civil'])"
+                        >
+                          {{ esCi['Estado Civil'] }}
+                        </button>
                       </div>
                     </div>
                   </td>
@@ -158,11 +182,17 @@
                   <td>
                     <div ngbDropdown class="d-inline-block">
                       <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
-                        - Seleccionar -
+                        {{personaNatural.Profesion}}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button class="dropdown-item">Action - 1</button>
-                        <button class="dropdown-item">Action - 2</button>
+                        <button
+                          *ngFor="let prof of profesiones"
+                          type="button"
+                          class="dropdown-item"
+                          (click)="profesionSelect(prof.Id, prof.Profesion)"
+                        >
+                          {{ prof.Profesion }}
+                        </button>
                       </div>
                     </div>
                   </td>
@@ -172,7 +202,9 @@
                     CNOH-2018) <span style="color: red">*</span>
                   </td>
                 </tr>
-                <app-form-contacto style="display: contents" [entidad]="'DE LA PERSONA'"></app-form-contacto>
+                <app-form-contacto style="display: contents" 
+                  [entidad]="'DE LA PERSONA'"
+                  (telefonoFijo)="onTelefonoFijoChange($event)"></app-form-contacto>
               </tbody>
             </table>
             <div class="d-flex justify-content-end">

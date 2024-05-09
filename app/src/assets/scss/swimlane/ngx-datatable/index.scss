@@ -106,9 +106,11 @@
 
   .datatable-body-cell,
   .datatable-header-cell {
+    display: flex !important;
+    justify-content: center !important;
     overflow-x: hidden;
     vertical-align: top;
-    display: inline-block;
+    // display: inline-block;
     line-height: 1.625;
 
     &:focus {

@@ -19,7 +19,10 @@ import { ToastrService } from "ngx-toastr";
 import { FormPaisesComponent } from "../form-paises/form-paises.component";
 import { FormEstadosComponent } from "../form-estados/form-estados.component";
 import { FormCiudadesComponent } from "../form-ciudades/form-ciudades.component";
+import { FormAduanasComponent } from "../form-aduanas/form-aduanas.component";
+import { FormProfesionesComponent } from "../form-profesiones/form-profesiones.component";
 import { FormEstadosCivilesComponent } from "../form-estados-civiles/form-estados-civiles.component";
+import { ProfesionesService } from "../../Services/profesiones.service";
 
 type ColumnType = { prop: string } | { name: string };
 
@@ -84,6 +87,7 @@ export class IndexListaComponent implements OnInit {
     private paisesService: PaisesService,
     private estadosService: EstadosService,
     private ciudadesService: CiudadesService,
+    private profesionesService: ProfesionesService,
     private estadosCivilesService: EstadosCivilesService,
     private toastr: ToastrService
   ) {}
@@ -163,10 +167,10 @@ export class IndexListaComponent implements OnInit {
         console.log(this.path, "path");
         return this.rolesService;
       case "Aduanas":
-        // this.modal = FormAduanasComponent;
+        this.modal = FormAduanasComponent;
         return this.aduanasService;
       case "Empresas":
-        // this.modal = FormEmpresasComponent;
+        this.path = "/layout/layout/form-empresas";
         return this.empresasService;
       case "Paises":
         this.modal = FormPaisesComponent;
@@ -178,8 +182,11 @@ export class IndexListaComponent implements OnInit {
         this.modal = FormCiudadesComponent;
         return this.ciudadesService;
       case "Empleados":
-        // this.modal = FormEmpleadosComponent;
+        this.path = "/layout/layout/form-empleados";
         return this.empleadosService;
+      case "Profesiones":
+        this.modal = FormProfesionesComponent;
+        return this.profesionesService;
       case "Estados Civiles":
         this.modal = FormEstadosCivilesComponent;
         return this.estadosCivilesService;

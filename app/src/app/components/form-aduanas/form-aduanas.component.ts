@@ -14,7 +14,7 @@ import { AduanasService } from "../../Services/aduanas.service";
   templateUrl: "./form-aduanas.component.html",
   styleUrls: ["./form-aduanas.component.css"],
 })
-export class FormCiudadesComponent implements OnInit {
+export class FormAduanasComponent implements OnInit {
   @Input() objetoParaEditar: Aduana;
   estados: Estado[];
   ciudades: Ciudad[];

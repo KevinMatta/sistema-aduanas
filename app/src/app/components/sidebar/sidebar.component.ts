@@ -38,6 +38,12 @@ export const ROUTES: RouteInfo[] = [
     class: "",
   },
   {
+    path: "layout/index-profesiones",
+    title: "Gral.Profesiones",
+    icon: "text_caps-small",
+    class: "",
+  },
+  {
     path: "layout/index-empleados",
     title: "Gral.Empleados",
     icon: "text_caps-small",

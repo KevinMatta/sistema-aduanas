@@ -5,46 +5,45 @@ import { DataService } from "./data.service";
 import { APIResponse } from "../Models/APIResponseViewModel";
 import { environment } from "../../environments/environment";
 import { map } from "rxjs/operators";
-// import { Estado } from "../Models/EstadosViewModel";
-import { Ciudad } from "../Models/CiudadesViewModel";
+import { Pais } from "../Models/PaisesViewModel";
+import { Profesion } from "../Models/ProfesionesViewModel";
 
 @Injectable({
   providedIn: "root",
 })
-export class CiudadesService implements DataService {
+export class ProfesionesService implements DataService {
   constructor(private http: HttpClient) {}
 
-  BaseUrl = environment.urlAPI + "/API/Ciudad/";
+  BaseUrl = environment.urlAPI + "/API/Profesion/";
 
   getData(): Observable<any[]> {
-    return this.getCiudades();
+    return this.getPaises();
   }
 
-  getCiudades(): Observable<Ciudad[]> {
+  getPaises(): Observable<Profesion[]> {
     return this.http
-      .get<APIResponse<Ciudad[]>>(this.BaseUrl + "List")
+      .get<APIResponse<Profesion[]>>(this.BaseUrl + "List")
       .pipe(map((response) => this.mapResponse(response.data)));
   }
 
   Eliminar(val: any): Observable<any> {
     console.log(val + "Para Eliminar");
     return this.http.delete<any>(
-      `${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1`,
+      `${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1
+        `,
       { observe: "response" }
     );
   }
 
-  Editar(ciud: any): Observable<any> {
+  Editar(prof: any): Observable<any> {
     const json = {
-      ciud_Id: ciud.Id,
-      pais_Id: ciud.pais_Id,
-      esta_Id: ciud.esta_Id,
-      esta_Descripcion: ciud.Estado,
-      esta_Estado: true,
-      esta_Creacion: 1,
-      esta_FechaCreacion: new Date().toISOString(),
-      esta_Modifica: 1,
-      esta_FechaModifica: new Date().toISOString(),
+      prof_Id: prof.Id,
+      prof_Descripcion: prof.Profesion,
+      prof_Estado: true,
+      prof_Creacion: 1,
+      prof_FechaCreacion: new Date().toISOString(),
+      prof_Modifica: 1,
+      prof_FechaModifica: new Date().toISOString(),
       Creacion: "string",
       Modifica: "string",
     };
@@ -55,17 +54,15 @@ export class CiudadesService implements DataService {
       .pipe(map((response) => response));
   }
 
-  Crear(ciud: any): Observable<any> {
+  Crear(prof: any): Observable<any> {
     const json = {
-      ciud_Id: 0,
-      pais_Id: ciud.pais_Id,
-      esta_Id: ciud.esta_Id,
-      pais_Descripcion: ciud.Pais,
-      pais_Estado: true,
-      pais_Creacion: 1,
-      pais_FechaCreacion: new Date().toISOString(),
-      pais_Modifica: 1,
-      pais_FechaModifica: new Date().toISOString(),
+      prof_Id: 0,
+      prof_Descripcion: prof.Profesion,
+      prof_Estado: true,
+      prof_Creacion: 1,
+      prof_FechaCreacion: new Date().toISOString(),
+      prof_Modifica: 1,
+      prof_FechaModifica: new Date().toISOString(),
       Creacion: "string",
       Modifica: "string",
     };
@@ -76,15 +73,11 @@ export class CiudadesService implements DataService {
       .pipe(map((response) => response));
   }
 
-  private mapResponse(data: any[]): Ciudad[] {
+  private mapResponse(data: any[]): Profesion[] {
     return data.map((item) => {
-      const model: Ciudad = {
-        Id: item.ciud_Id,
-        Ciudad: item.ciud_Descripcion,
-        esta_Id: item.esta_Id,
-        Estado: item.esta_Descripcion,
-        pais_Id: item.pais_Id,
-        Pais: item.pais_Descripcion
+      const model: Profesion = {
+        Id: item.prof_Id,
+        Profesion: item.prof_Descripcion,
       };
       return model;
     });

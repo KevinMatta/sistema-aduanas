@@ -58,6 +58,11 @@ export const AdminLayoutRoutes: Routes = [
     data: { titulo: "Ciudades" },
   },
   {
+    path: "layout/index-profesiones",
+    component: IndexListaComponent,
+    data: { titulo: "Profesiones" },
+  },
+  {
     path: "layout/index-empleados",
     component: IndexListaComponent,
     data: { titulo: "Empleados" },

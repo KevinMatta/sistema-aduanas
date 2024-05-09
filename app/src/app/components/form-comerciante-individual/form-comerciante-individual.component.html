@@ -10,258 +10,210 @@
           </h5>
         </div>
         <div class="card-body">
-          <form>
-            <h6>Datos generales</h6>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>RTN Solicitante</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="05012005042021"
-                    maxlength="20"
-                  />
-                </div>
+          <h6>Datos generales</h6>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>RTN Solicitante</label>
+                <input type="text" class="form-control" placeholder="05012005042021" maxlength="20" />
               </div>
             </div>
-            <h6>Datos a Informar</h6>
-            <small
-              >- Todos los datos marcados con un
-              <span style="color: red">*</span> son requeridos.</small
-            >
-            <div class="" style="overflow-x: auto">
-              <table class="table table-bordered">
-                <thead
-                  class="text-primary"
-                  style="background-color: rgba(0, 0, 0, 0.02)"
-                >
-                  <th>Dato</th>
-                  <th>Descripcion</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <div ngbDropdown class="d-inline-block">
-                        <button
-                          class="btn btn-primary"
-                          id="dropdownMenu1"
-                          ngbDropdownToggle
-                        >
-                          - Seleccionar -
-                        </button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                          <button class="dropdown-item">Action - 1</button>
-                          <button class="dropdown-item">Action - 2</button>
-                        </div>
+          </div>
+          <h6>Datos a Informar</h6>
+          <small>- Todos los datos marcados con un
+            <span style="color: red">*</span> son requeridos.</small>
+          <div class="" style="overflow-x: auto">
+            <table class="table table-bordered">
+              <thead class="text-primary" style="background-color: rgba(0, 0, 0, 0.02)">
+                <th>Dato</th>
+                <th>Descripcion</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div ngbDropdown class="d-inline-block">
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
+                        - Seleccionar -
+                      </button>
+                      <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                        <button class="dropdown-item">Action - 1</button>
+                        <button class="dropdown-item">Action - 2</button>
                       </div>
-                    </td>
-                    <td>
-                      SD001 - OFICINA DONDE PRESENTARA LA SOLICITUD Y
-                      DOCUMENTACION
-                      <span style="color: red">*</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div ngbDropdown class="d-inline-block">
-                        <button
-                          class="btn btn-primary"
-                          id="dropdownMenu1"
-                          ngbDropdownToggle
-                        >
-                          - Seleccionar -
-                        </button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                          <button class="dropdown-item">Action - 1</button>
-                          <button class="dropdown-item">Action - 2</button>
-                        </div>
+                    </div>
+                  </td>
+                  <td>
+                    SD106 - ESTADO CIVIL DEL COMERCIANTE
+                    <span style="color: red">*</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div ngbDropdown class="d-inline-block">
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
+                        - Seleccionar -
+                      </button>
+                      <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                        <button class="dropdown-item">Action - 1</button>
+                        <button class="dropdown-item">Action - 2</button>
                       </div>
-                    </td>
-                    <td>
-                      SD106 - ESTADO CIVIL DEL COMERCIANTE
-                      <span style="color: red">*</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div ngbDropdown class="d-inline-block">
-                        <button
-                          class="btn btn-primary"
-                          id="dropdownMenu1"
-                          ngbDropdownToggle
-                        >
-                          - Seleccionar -
-                        </button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                          <button class="dropdown-item">Action - 1</button>
-                          <button class="dropdown-item">Action - 2</button>
-                        </div>
+                    </div>
+                  </td>
+                  <td>
+                    SD108 - PROFESION U OFICIO DEL COMERCIANTE (SEGUN
+                    CLASIFICADOR NACIONAL DE OCUPACIONES DE HONDURAS,
+                    CNOH-2018) <span style="color: red">*</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div ngbDropdown class="d-inline-block">
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
+                        - Seleccionar -
+                      </button>
+                      <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                        <button class="dropdown-item">Action - 1</button>
+                        <button class="dropdown-item">Action - 2</button>
                       </div>
-                    </td>
-                    <td>
-                      SD108 - PROFESION U OFICIO DEL COMERCIANTE (SEGUN
-                      CLASIFICADOR NACIONAL DE OCUPACIONES DE HONDURAS,
-                      CNOH-2018) <span style="color: red">*</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div ngbDropdown class="d-inline-block">
-                        <button
-                          class="btn btn-primary"
-                          id="dropdownMenu1"
-                          ngbDropdownToggle
-                        >
-                          - Seleccionar -
-                        </button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                          <button class="dropdown-item">Action - 1</button>
-                          <button class="dropdown-item">Action - 2</button>
-                        </div>
+                    </div>
+                  </td>
+                  <td>
+                    SD109 - FORMA DE REPRESENTACION
+                    <span style="color: red">*</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div ngbDropdown class="d-inline-block">
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
+                        - Seleccionar -
+                      </button>
+                      <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                        <button class="dropdown-item">Action - 1</button>
+                        <button class="dropdown-item">Action - 2</button>
                       </div>
-                    </td>
-                    <td>
-                      SD109 - FORMA DE REPRESENTACION
-                      <span style="color: red">*</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div ngbDropdown class="d-inline-block">
-                        <button
-                          class="btn btn-primary"
-                          id="dropdownMenu1"
-                          ngbDropdownToggle
-                        >
-                          - Seleccionar -
-                        </button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                          <button class="dropdown-item">Action - 1</button>
-                          <button class="dropdown-item">Action - 2</button>
-                        </div>
+                    </div>
+                  </td>
+                  <td>
+                    SD296 - ESTADO CIVIL DEL REPRESENTANTE LEGAL (SI HA
+                    INFORMADO REPRESENTACION BAJO REPRESENTANTE LEGAL)
+                    <span style="color: red">*</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div ngbDropdown class="d-inline-block">
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
+                        - Seleccionar -
+                      </button>
+                      <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                        <button class="dropdown-item">Action - 1</button>
+                        <button class="dropdown-item">Action - 2</button>
                       </div>
-                    </td>
-                    <td>
-                      SD296 - ESTADO CIVIL DEL REPRESENTANTE LEGAL (SI HA
-                      INFORMADO REPRESENTACION BAJO REPRESENTANTE LEGAL)
-                      <span style="color: red">*</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div ngbDropdown class="d-inline-block">
-                        <button
-                          class="btn btn-primary"
-                          id="dropdownMenu1"
-                          ngbDropdownToggle
-                        >
-                          - Seleccionar -
-                        </button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                          <button class="dropdown-item">Action - 1</button>
-                          <button class="dropdown-item">Action - 2</button>
-                        </div>
+                    </div>
+                  </td>
+                  <td>
+                    SD298 - PROFESION U OFICIO DEL REPRESENTANTE LEGAL (SI HA
+                    INFORMADO REPRESENTACION BAJO REPRESENTANTE LEGAL)
+                    <span style="color: red">*</span>
+                  </td>
+                </tr>
+                <app-form-ubicacion style="display: contents"
+                  [titulo]="tituloUbicacionComerciante"></app-form-ubicacion>
+                <app-form-ubicacion style="display: contents"
+                  [titulo]="tituloUbicacionRepresentante"></app-form-ubicacion>
+                <app-form-contacto [entidad]="'DEL COMERCIANTE'" style="display: contents"></app-form-contacto>
+                <tr>
+                  <td>
+                    <div ngbDropdown class="d-inline-block">
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
+                        - Seleccionar -
+                      </button>
+                      <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                        <button class="dropdown-item">Action - 1</button>
+                        <button class="dropdown-item">Action - 2</button>
                       </div>
-                    </td>
-                    <td>
-                      SD298 - PROFESION U OFICIO DEL REPRESENTANTE LEGAL (SI HA
-                      INFORMADO REPRESENTACION BAJO REPRESENTANTE LEGAL)
-                      <span style="color: red">*</span>
-                    </td>
-                  </tr>
-                  <app-form-ubicacion
-                    style="display: contents"
-                    [titulo]="tituloUbicacionComerciante"
-                  ></app-form-ubicacion>
-                  <app-form-ubicacion
-                    style="display: contents"
-                    [titulo]="tituloUbicacionRepresentante"
-                  ></app-form-ubicacion>
-                  <app-form-contacto
-                    [entidad]="'DEL COMERCIANTE'"
-                    style="display: contents"
-                  ></app-form-contacto>
-                </tbody>
-              </table>
-            </div>
-            <h6>Datos a Informar</h6>
-            <small
-              >- Todos los datos marcados con un
-              <span style="color: red">*</span> son requeridos.</small
-            >
-            <div class="" style="overflow-x: auto">
-              <table class="table table-bordered">
-                <thead
-                  class="text-primary"
-                  style="background-color: rgba(0, 0, 0, 0.02)"
-                >
-                  <th>
-                    <p style="margin-bottom: 0">Dato</p>
-                    <small style="font-weight: 600">
-                      Solo se aceptan caracteres alfanuméricos, no utilice
-                      espacios, comas, puntos, etc.
-                    </small>
-                  </th>
-                  <th class="d-flex align-items-start">
-                    <div>Descripcion</div>
-                  </th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <input type="text" class="form-control" />
-                    </td>
-                    <td>
-                      SS100 - REGISTRO TRIBUTARIO NACIONAL (RTN) DEL COMERCIANTE
-                      INDIVIDUAL
-                      <span style="color: red">*</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="text" class="form-control" />
-                    </td>
-                    <td>
-                      SS017 - DOCUMENTO O TARJETA DE IDENTIDAD DEL COMERCIANTE
-                      INDIVIDUAL
-                      <span style="color: red">*</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="text" class="form-control" />
-                    </td>
-                    <td>
-                      SS128 - REGISTRO TRIBUTARIO NACIONAL (RTN) DEL
-                      REPRESENTANTE LEGAL (SI HA INFORMADO REPRESENTACION BAJO
-                      REPRESENTANTE LEGAL)
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="text" class="form-control" />
-                    </td>
-                    <td>
-                      SS018 - DOCUMENTO O TARJETA DE IDENTIDAD DEL REPRESENTANTE
-                      LEGAL (SI HA INFORMADO REPRESENTACION BAJO REPRESENTANTE
-                      LEGAL)
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="text" class="form-control" />
-                    </td>
-                    <td>
-                      SS090 - DECLARACIÓN DE COMERCIANTE INDIVIDUAL Y SUS
-                      MODIFICACIONES SI LAS HUBIERA
-                      <span style="color: red">*</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </form>
+                    </div>
+                  </td>
+                  <td>
+                    SD001 - OFICINA DONDE PRESENTARA LA SOLICITUD Y
+                    DOCUMENTACION
+                    <span style="color: red">*</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h6>Datos a Informar</h6>
+          <small>- Todos los datos marcados con un
+            <span style="color: red">*</span> son requeridos.</small>
+          <div class="" style="overflow-x: auto">
+            <table class="table table-bordered">
+              <thead class="text-primary" style="background-color: rgba(0, 0, 0, 0.02)">
+                <th>
+                  <p style="margin-bottom: 0">Dato</p>
+                  <small style="font-weight: 600">
+                    Solo se aceptan caracteres alfanuméricos, no utilice
+                    espacios, comas, puntos, etc.
+                  </small>
+                </th>
+                <th class="d-flex align-items-start">
+                  <div>Descripcion</div>
+                </th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <input type="text" class="form-control" />
+                  </td>
+                  <td>
+                    SS100 - REGISTRO TRIBUTARIO NACIONAL (RTN) DEL COMERCIANTE
+                    INDIVIDUAL
+                    <span style="color: red">*</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="text" class="form-control" />
+                  </td>
+                  <td>
+                    SS017 - DOCUMENTO O TARJETA DE IDENTIDAD DEL COMERCIANTE
+                    INDIVIDUAL
+                    <span style="color: red">*</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="text" class="form-control" />
+                  </td>
+                  <td>
+                    SS128 - REGISTRO TRIBUTARIO NACIONAL (RTN) DEL
+                    REPRESENTANTE LEGAL (SI HA INFORMADO REPRESENTACION BAJO
+                    REPRESENTANTE LEGAL)
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="text" class="form-control" />
+                  </td>
+                  <td>
+                    SS018 - DOCUMENTO O TARJETA DE IDENTIDAD DEL REPRESENTANTE
+                    LEGAL (SI HA INFORMADO REPRESENTACION BAJO REPRESENTANTE
+                    LEGAL)
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="text" class="form-control" />
+                  </td>
+                  <td>
+                    SS090 - DECLARACIÓN DE COMERCIANTE INDIVIDUAL Y SUS
+                    MODIFICACIONES SI LAS HUBIERA
+                    <span style="color: red">*</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
