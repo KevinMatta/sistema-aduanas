@@ -1,6 +1,6 @@
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NO_ERRORS_SCHEMA, NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { NgbDatepickerModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
@@ -31,6 +31,7 @@ import { FormUsuariosComponent } from "./components/form-usuarios/form-usuarios.
     NgxDatatableModule,
     NgbDatepickerModule,
     BrowserModule,
+    ReactiveFormsModule,
     ToastrModule.forRoot(),
   ],
   providers: [

@@ -3,8 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { PaisesService } from "../../Services/paises.service";
 import { AduanasService } from "../../Services/aduanas.service";
+import { EstadosService } from "../../Services/estados.service";
+import { CiudadesService } from "../../Services/ciudades.service";
 import { Pais } from "../../Models/PaisesViewModel";
 import { Aduana } from "../../Models/AduanasViewModel";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Estado } from '../../Models/EstadosViewModel';
+import { Ciudad } from '../../Models/CiudadesViewModel';
 @Component({
   selector: 'app-form-declaracion-valor',
   templateUrl: './form-declaracion-valor.component.html',
@@ -15,13 +20,27 @@ export class FormDeclaracionValorComponent implements OnInit {
   display:any ="false";
   aduanas:Aduana[];
   paises: Pais[];
+  estados: Estado[];
+  ciudades:Ciudad[];
   paiselect:string;
+  estadoselec:string;
   aduselect:string;
+  aduseling:string;
+  ciuselec:string;
   closeResult = '';
+  formDeva: FormGroup;
 
-  constructor(private modalService: NgbModal, private paisesService: PaisesService, private aduanasService: AduanasService) {}
+  constructor(private modalService: NgbModal, private paisesService: PaisesService,
+     private aduanasService: AduanasService, private estadosService: EstadosService
+     , private fb:FormBuilder, private ciudadesService:CiudadesService
+    ) {}
+     
   ngOnInit() {
     this.paiselect = "- Seleccionar -";
+    this.aduselect = "- Seleccionar -";
+    this.aduseling="- Seleccionar -";
+    this.estadoselec="- Seleccionar -";
+    this.ciuselec="- Seleccionar -";
     this.paisesService.getData().subscribe(
       (data: Pais[]) => {
         this.paises = data;
@@ -30,10 +49,35 @@ export class FormDeclaracionValorComponent implements OnInit {
         console.log(error);
       }
     );
+    this.ciudadesService.getData().subscribe(
+      (data: Ciudad[]) => {
+        this.ciudades = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    
+    //formgroup 
+      this.formDeva = this.fb.group({
+
+
+      })
+
+    //---endformgroup
 
     this.aduanasService.getData().subscribe(
       (data: Aduana[]) => {
         this.aduanas = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    this.estadosService.getData().subscribe(
+      (data: Estado[]) => {
+        this.estados = data;
       },
       (error) => {
         console.log(error);
@@ -53,6 +97,15 @@ export class FormDeclaracionValorComponent implements OnInit {
   }
   aduSelect(adus: number, adu: string) {
     this.aduselect = adu;
+  }
+  aduSelectIn(adus: number, adu: string) {
+    this.aduseling = adu;
+  }
+  estadoSelec(esID: number, esd: string) {
+    this.estadoselec = esd;
+  }
+  ciudadSelec(idc: number, ciu: string) {
+    this.ciuselec = ciu;
   }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {

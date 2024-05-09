@@ -21,16 +21,16 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      {{aduselect}}
+                      {{aduseling}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
                       <button
-                        *ngFor="let pais of paises"
+                        *ngFor="let pais of aduanas"
                         type="button"
                         class="dropdown-item"
-                        (click)="aduSelect(pais.Id, pais.Pais)"
+                        (click)="aduSelectIn(pais.Id, pais.Aduana)"
                       >
-                        {{ pais.Pais }}
+                        {{ pais.Aduana }}
                       </button>
                     </div>
                   </div>
@@ -46,14 +46,14 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                    {{paiselect}}
+                    {{aduselect}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
                       <button
                         *ngFor="let pais of aduanas"
                         type="button"
                         class="dropdown-item"
-                        (click)="paisSelect(pais.Id, pais.Aduana)"
+                        (click)="aduSelect(pais.Id, pais.Aduana)"
                       >
                         {{ pais.Aduana }}
                       </button>
@@ -132,15 +132,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{estadoselec}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of estados"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="estadoSelec(pais.Id, pais.Estado)"
+                    >
+                      {{ pais.Estado }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -155,14 +157,16 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{ciuselec}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
+                      <button
+                        *ngFor="let pais of ciudades"
+                        type="button"
+                        class="dropdown-item"
+                        (click)="aduSelectIn(pais.Id, pais.Ciudad)"
+                      >
+                        {{ pais.Ciudad }}
                       </button>
                     </div>
                   </div>
@@ -225,10 +229,13 @@
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
                       <button type="button" class="dropdown-item">
-                        Action - 1
+                        Distribuidor
                       </button>
                       <button type="button" class="dropdown-item">
-                        Action - 2
+                        Mayorista
+                      </button>
+                      <button type="button" class="dropdown-item">
+                        Mayorista
                       </button>
                     </div>
                   </div>

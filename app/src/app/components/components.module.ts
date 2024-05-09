@@ -2,7 +2,7 @@ import { NO_ERRORS_SCHEMA, NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-
+import { FormsModule } from '@angular/forms';
 import { FooterComponent } from "./footer/footer.component";
 import { FormUbicacionComponent } from "./form-ubicacion/form-ubicacion.component";
 import { FormComercianteIndividualComponent } from "./form-comerciante-individual/form-comerciante-individual.component";
@@ -20,12 +20,14 @@ import { FormDeclaracionValorComponent } from "./form-declaracion-valor/form-dec
 import { RolesPorPantallaComponent } from "./roles-por-pantalla/roles-por-pantalla.component";
 import { MensajesComponent } from "./mensajes/mensajes.component";
 
+
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     NgxDatatableModule,
     BrowserModule,
+    FormsModule,
     NgbModule,
   ],
   declarations: [
