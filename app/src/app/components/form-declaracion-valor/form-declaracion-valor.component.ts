@@ -1,7 +1,10 @@
 
 import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-
+import { PaisesService } from "../../Services/paises.service";
+import { AduanasService } from "../../Services/aduanas.service";
+import { Pais } from "../../Models/PaisesViewModel";
+import { Aduana } from "../../Models/AduanasViewModel";
 @Component({
   selector: 'app-form-declaracion-valor',
   templateUrl: './form-declaracion-valor.component.html',
@@ -10,13 +13,33 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 export class FormDeclaracionValorComponent implements OnInit {
 
   display:any ="false";
-  ngOnInit() {
-  }
-
+  aduanas:Aduana[];
+  paises: Pais[];
+  paiselect:string;
+  aduselect:string;
   closeResult = '';
 
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal, private paisesService: PaisesService, private aduanasService: AduanasService) {}
+  ngOnInit() {
+    this.paiselect = "- Seleccionar -";
+    this.paisesService.getData().subscribe(
+      (data: Pais[]) => {
+        this.paises = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
 
+    this.aduanasService.getData().subscribe(
+      (data: Aduana[]) => {
+        this.aduanas = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -25,6 +48,12 @@ export class FormDeclaracionValorComponent implements OnInit {
     });
   }
 
+  paisSelect(paisId: number, pais: string) {
+    this.paiselect = pais;
+  }
+  aduSelect(adus: number, adu: string) {
+    this.aduselect = adu;
+  }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
