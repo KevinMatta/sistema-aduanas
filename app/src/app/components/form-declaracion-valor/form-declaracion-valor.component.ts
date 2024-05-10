@@ -40,6 +40,10 @@ export class FormDeclaracionValorComponent implements OnInit {
   siruacioncomselected:string;
   nivelselected:string;
   paiselect:string;
+  paiselecttrans:string;
+  Monedas: string[] = ["Dolar", "Lempira", "Yuan","Rublos",  "Libras Esterlinas"];
+  MonedaSel:string;
+
   estadoselec:string;
   aduselect:string;
   aduseling:string;
@@ -59,6 +63,7 @@ export class FormDeclaracionValorComponent implements OnInit {
     this.estadoselec ="- Seleccionar -";
     this.ciuselec ="- Seleccionar -";
     this.nivelselected ="- Seleccionar -";
+    this.MonedaSel="- Seleccionar -";
     this.paisselectInfoGeneral ="- Seleccionar -";
     this.EstadoSelctInfoGen ="- Seleccionar -";
     this.ciuSelctInfoGen = "- Seleccionar -";
@@ -69,6 +74,7 @@ export class FormDeclaracionValorComponent implements OnInit {
     this.paisselectCARC = "- Seleccionar -";
     this.FormaEnvioSelect = "- Seleccionar -";
     this.pagoefecSel= "- Seleccionar -";
+    this.paiselecttrans= "- Seleccionar -";
     this.FormaPago= "- Seleccionar -";
     this.paisesService.getData().subscribe(
       (data: Pais[]) => {
@@ -177,6 +183,12 @@ export class FormDeclaracionValorComponent implements OnInit {
   }
   FormaPagoS(pai:string){
     this.FormaPago = pai;
+  }
+  PaisSelectrans(pIs:number, pai:string){
+    this.paiselecttrans = pai;
+  }
+  MonSl( pai:string){
+    this.MonedaSel = pai;
   }
   private getDismissReason(reason: any): string {   
     if (reason === ModalDismissReasons.ESC) {

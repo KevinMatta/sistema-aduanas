@@ -700,24 +700,9 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Otra Forma de Pago (Especifique)</label>
-                  <div ngbDropdown class="d-block">
-                    <button
-                      type="button"
-                      class="btn btn-primary m-0"
-                      id="dropdownMenu1"
-                      ngbDropdownToggle
-                    >
-                      - Seleccionar -
-                    </button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
-                    </div>
-                  </div>
+                  <input type="text" class="form-control" />
+                    
+                  
                 </div>
               </div>
               <div class="col-md-6">
@@ -760,15 +745,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{paiselecttrans}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of paises"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="PaisSelectrans(pais.Id, pais.Pais)"
+                    >
+                      {{ pais.Pais }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -791,15 +778,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{MonedaSel}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of Monedas"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="MonSl(pais)"
+                    >
+                      {{ pais }}
+                    </button>
                     </div>
                   </div>
                 </div>
