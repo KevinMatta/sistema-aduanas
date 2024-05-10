@@ -12,11 +12,11 @@ namespace sistema_aduana.API.Controllers
 {
     [ApiController]
     [Route("/API/[controller]")]
-    public class EmpleadoController : Controller
+    public class ProfesionController : Controller
     {
         private readonly GralService _gralService;
         private readonly IMapper _mapper;
-        public EmpleadoController(GralService gralService, IMapper mapper)
+        public ProfesionController(GralService gralService, IMapper mapper)
         {
             _gralService = gralService;
             _mapper = mapper;
@@ -24,24 +24,24 @@ namespace sistema_aduana.API.Controllers
         [HttpGet("List")]
         public IActionResult Index()
         {
-            var list = _gralService.EmpleadoListar();
+            var list = _gralService.ProfesionesListar();
             return Ok(list);
         }
 
         [HttpGet("Buscar/{id}")]
         public IActionResult Buscar(int id)
         {
-            var result = _gralService.EmpleadoBuscar(id);
+            var result = _gralService.ProfesionesBuscar(id);
             return Ok(result);
         }
 
         [HttpPost("Crear")]
-        public IActionResult Crear(EmpleadoViewModel item)
+        public IActionResult Crear(ProfesionViewModel item)
         {
             try
             {
-                var empleado = _mapper.Map<tbEmpleados>(item);
-                var result = _gralService.EmpleadoCrear(empleado);
+                var profesion = _mapper.Map<tbProfesiones>(item);
+                var result = _gralService.ProfesionesCrear(profesion);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -51,12 +51,12 @@ namespace sistema_aduana.API.Controllers
         }
 
         [HttpPut("Actualizar")]
-        public IActionResult Actualizar(EmpleadoViewModel item)
+        public IActionResult Actualizar(ProfesionViewModel item)
         {
             try
             {
-                var empleado = _mapper.Map<tbEmpleados>(item);
-                var result = _gralService.EmpleadoActualizar(empleado);
+                var profesion = _mapper.Map<tbProfesiones>(item);
+                var result = _gralService.ProfesionesActualizar(profesion);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -70,7 +70,7 @@ namespace sistema_aduana.API.Controllers
         {
             try
             {
-                var result = _gralService.EmpleadoEliminar(id, usuario, DateTime.Now);
+                var result = _gralService.ProfesionesEliminar(id, usuario, DateTime.Now);
                 return Ok(result);
             }
             catch (Exception ex)

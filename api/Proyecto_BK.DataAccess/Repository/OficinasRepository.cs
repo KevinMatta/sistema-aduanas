@@ -13,17 +13,17 @@ using System.Threading.Tasks;
 
 namespace sistema_aduana.DataAccess.Repository
 {
-    public class EstadoRepository : IRepository<tbEstados>
+    public class OficinasRepository : IRepository<tbOficinas>
     {
         public RequestStatus Delete(int? id, int usuario, DateTime fecha)
         {
-            string sql = ScriptsDatabase.EstadosEliminar;
+            string sql = ScriptsDatabase.OficinasEliminar;
             using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("@Esta_Id", id);
-                parametro.Add("@Esta_Modifica", usuario);
-                parametro.Add("@Esta_FechaModifica", fecha);
+                parametro.Add("@Ofic_Id", id);
+                parametro.Add("@Ofic_Modifica", usuario);
+                parametro.Add("@Ofic_FechaModifica", fecha);
 
                 var result = db.Execute(
                     sql, parametro,
@@ -36,31 +36,31 @@ namespace sistema_aduana.DataAccess.Repository
             };
         }
 
-        public tbEstados Find(int? id)
+        public tbOficinas Find(int? id)
         {
-            string sql = ScriptsDatabase.EstadosBuscar;
+            string sql = ScriptsDatabase.OficinasBuscar;
 
-            tbEstados result = new tbEstados();
+            tbOficinas result = new tbOficinas();
 
             using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
             {
-                var parameters = new { Esta_Id = id };
-                result = db.QueryFirstOrDefault<tbEstados>(sql, parameters, commandType: CommandType.StoredProcedure);
+                var parameters = new { Ofic_Id = id };
+                result = db.QueryFirstOrDefault<tbOficinas>(sql, parameters, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
-        public RequestStatus Insert(tbEstados item)
+        public RequestStatus Insert(tbOficinas item)
         {
-            string sql = ScriptsDatabase.EstadosCrear;
+            string sql = ScriptsDatabase.OficinasCrear;
 
             using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
             {
                 var parameter = new DynamicParameters();
-                parameter.Add("@Esta_Descripcion", item.Esta_Descripcion);
-                parameter.Add("@Pais_Id", item.Pais_Id);
-                parameter.Add("@Esta_Creacion", item.Esta_Creacion);
-                parameter.Add("@Esta_FechaCreacion", item.Esta_FechaCreacion);
+                parameter.Add("@Ofic_Descripcion", item.Ofic_Descripcion);
+                parameter.Add("@Adua_Id", item.Adua_Id);
+                parameter.Add("@Ofic_Creacion", item.Ofic_Creacion);
+                parameter.Add("@Ofic_FechaCreacion", item.Ofic_FechaCreacion);
 
                 var result = db.Execute(sql, parameter, commandType: CommandType.StoredProcedure);
                 string mensaje = (result == 1) ? "exito" : "error";
@@ -68,32 +68,32 @@ namespace sistema_aduana.DataAccess.Repository
             }
         }
 
-        public IEnumerable<tbEstados> List()
+        public IEnumerable<tbOficinas> List()
         {
-            string sql = ScriptsDatabase.EstadosListar;
+            string sql = ScriptsDatabase.OficinasListar;
 
-            List<tbEstados> result = new List<tbEstados>();
+            List<tbOficinas> result = new List<tbOficinas>();
 
             using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
             {
-                result = db.Query<tbEstados>(sql, commandType: CommandType.Text).ToList();
+                result = db.Query<tbOficinas>(sql, commandType: CommandType.Text).ToList();
 
                 return result;
             }
         }
 
-        public RequestStatus Update(tbEstados item)
+        public RequestStatus Update(tbOficinas item)
         {
-            string sql = ScriptsDatabase.EstadosActualizar;
+            string sql = ScriptsDatabase.OficinasActualizar;
 
             using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
             {
                 var parameter = new DynamicParameters();
-                parameter.Add("@Esta_Id", item.Esta_Id);
-                parameter.Add("@Esta_Descripcion", item.Esta_Descripcion);
-                parameter.Add("@Pais_Id", item.Pais_Id);
-                parameter.Add("@Esta_Modifica", item.Esta_Modifica);
-                parameter.Add("@Esta_FechaModifica", item.Esta_FechaModifica);
+                parameter.Add("@Ofic_Id", item.Ofic_Id);
+                parameter.Add("@Ofic_Descripcion", item.Ofic_Descripcion);
+                parameter.Add("@Adua_Id", item.Adua_Id);
+                parameter.Add("@Ofic_Modifica", item.Ofic_Modifica);
+                parameter.Add("@Ofic_FechaModifica", item.Ofic_FechaModifica);
 
                 var result = db.Execute(sql, parameter, commandType: CommandType.StoredProcedure);
                 string mensaje = (result == 1) ? "exito" : "error";

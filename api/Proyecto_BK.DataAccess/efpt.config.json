@@ -38,6 +38,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[Gral].[tbComerciantesIndividuales]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[Gral].[tbEmpleados]",
          "ObjectType": 0
       },
@@ -54,7 +58,23 @@
          "ObjectType": 0
       },
       {
+         "Name": "[Gral].[tbOficinas]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[Gral].[tbPaises]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbPersonasJuridicas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbPersonasNaturales]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbProfesiones]",
          "ObjectType": 0
       }
    ],

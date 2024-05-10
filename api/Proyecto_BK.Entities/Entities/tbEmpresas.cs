@@ -25,6 +25,7 @@ namespace sistema_aduana.Entities.Entities
         public string Creacion { get; set; }
         [NotMapped]
         public string Modifica { get; set; }
+
         public virtual tbUsuarios Empr_CreacionNavigation { get; set; }
         public virtual tbUsuarios Empr_ModificaNavigation { get; set; }
         public virtual ICollection<tbEmpleados> tbEmpleados { get; set; }

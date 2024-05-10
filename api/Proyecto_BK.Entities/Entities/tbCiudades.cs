@@ -9,6 +9,14 @@ namespace sistema_aduana.Entities.Entities
 {
     public partial class tbCiudades
     {
+        public tbCiudades()
+        {
+            tbAduanas = new HashSet<tbAduanas>();
+            tbComerciantesIndividuales = new HashSet<tbComerciantesIndividuales>();
+            tbPersonasJuridicas = new HashSet<tbPersonasJuridicas>();
+            tbPersonasNaturales = new HashSet<tbPersonasNaturales>();
+        }
+
         public int Ciud_Id { get; set; }
         public string Ciud_Descripcion { get; set; }
         public int Esta_Id { get; set; }
@@ -27,5 +35,9 @@ namespace sistema_aduana.Entities.Entities
         public virtual tbUsuarios Ciud_CreacionNavigation { get; set; }
         public virtual tbUsuarios Ciud_ModificaNavigation { get; set; }
         public virtual tbEstados Esta { get; set; }
+        public virtual ICollection<tbAduanas> tbAduanas { get; set; }
+        public virtual ICollection<tbComerciantesIndividuales> tbComerciantesIndividuales { get; set; }
+        public virtual ICollection<tbPersonasJuridicas> tbPersonasJuridicas { get; set; }
+        public virtual ICollection<tbPersonasNaturales> tbPersonasNaturales { get; set; }
     }
 }

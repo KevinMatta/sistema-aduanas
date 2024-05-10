@@ -12,29 +12,32 @@ namespace sistema_aduana.API.Controllers
 {
     [ApiController]
     [Route("/API/[controller]")]
-    public class PersonaNaturalController : Controller
+    public class PersonaJuridicaController : Controller
     {
-        private readonly GralService   _gralService;
+        private readonly GralService _gralService;
         private readonly IMapper _mapper;
-        public PersonaNaturalController(GralService gralService, IMapper mapper)
+        public PersonaJuridicaController(GralService gralService, IMapper mapper)
         {
             _gralService = gralService;
             _mapper = mapper;
         }
+
+
         [HttpPost("Crear")]
-        public IActionResult Crear(PersonaNaturalViewModel item)
+        public IActionResult Crear(PersonaJuridicaViewModel item)
         {
             try
             {
-                var Pnat = _mapper.Map<tbPersonasNaturales>(item);
-                var result = _gralService.PersonasNaturalesCrear(Pnat);
+
+                var aduana = _mapper.Map<tbPersonasJuridicas>(item);
+                var result = _gralService.PersonasJuridicasCrear(aduana);
                 return Ok(result);
+
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
     }
 }

@@ -18,6 +18,7 @@ namespace Proyecto_BK.BusinessLogic.Services
             service.AddScoped<UsuarioRepository>();
             service.AddScoped<RolRepository>();
             service.AddScoped<PantallaRepository>();
+            service.AddScoped<PantallasPorRolRepository>();
             service.AddScoped<PaisRepository>();
             service.AddScoped<EstadoRepository>();
             service.AddScoped<CiudadRepository>();
@@ -25,6 +26,12 @@ namespace Proyecto_BK.BusinessLogic.Services
             service.AddScoped<EmpleadoRepository>();
             service.AddScoped<EstadoCivilRepository>();
             service.AddScoped<AduanaRepository>();
+            service.AddScoped<PersonaNaturalRepository>();
+            service.AddScoped<ComercianteIndividualRepository>();
+            service.AddScoped<PersonaJuridicaRepository>();
+            service.AddScoped<ProfesionesRepository>();
+            service.AddScoped<OficinasRepository>();
+
 
             sistema_aduanaContext.BuildConnectionString(conn);
         }

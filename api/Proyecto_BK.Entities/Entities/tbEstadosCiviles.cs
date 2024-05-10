@@ -11,7 +11,10 @@ namespace sistema_aduana.Entities.Entities
     {
         public tbEstadosCiviles()
         {
+            tbComerciantesIndividuales = new HashSet<tbComerciantesIndividuales>();
             tbEmpleados = new HashSet<tbEmpleados>();
+            tbPersonasJuridicas = new HashSet<tbPersonasJuridicas>();
+            tbPersonasNaturales = new HashSet<tbPersonasNaturales>();
         }
 
         public int EsCi_Id { get; set; }
@@ -28,6 +31,9 @@ namespace sistema_aduana.Entities.Entities
 
         public virtual tbUsuarios EsCi_CreacionNavigation { get; set; }
         public virtual tbUsuarios EsCi_ModificaNavigation { get; set; }
+        public virtual ICollection<tbComerciantesIndividuales> tbComerciantesIndividuales { get; set; }
         public virtual ICollection<tbEmpleados> tbEmpleados { get; set; }
+        public virtual ICollection<tbPersonasJuridicas> tbPersonasJuridicas { get; set; }
+        public virtual ICollection<tbPersonasNaturales> tbPersonasNaturales { get; set; }
     }
 }

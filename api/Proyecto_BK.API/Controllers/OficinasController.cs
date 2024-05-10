@@ -12,36 +12,37 @@ namespace sistema_aduana.API.Controllers
 {
     [ApiController]
     [Route("/API/[controller]")]
-    public class EmpleadoController : Controller
+    public class OficinasController : Controller
     {
         private readonly GralService _gralService;
         private readonly IMapper _mapper;
-        public EmpleadoController(GralService gralService, IMapper mapper)
+        public OficinasController(GralService gralService, IMapper mapper)
         {
             _gralService = gralService;
             _mapper = mapper;
         }
+
         [HttpGet("List")]
         public IActionResult Index()
         {
-            var list = _gralService.EmpleadoListar();
+            var list = _gralService.OficinasListar();
             return Ok(list);
         }
 
         [HttpGet("Buscar/{id}")]
         public IActionResult Buscar(int id)
         {
-            var result = _gralService.EmpleadoBuscar(id);
+            var result = _gralService.OficinasBuscar(id);
             return Ok(result);
         }
 
         [HttpPost("Crear")]
-        public IActionResult Crear(EmpleadoViewModel item)
+        public IActionResult Crear(OficinasViewModel item)
         {
             try
             {
-                var empleado = _mapper.Map<tbEmpleados>(item);
-                var result = _gralService.EmpleadoCrear(empleado);
+                var oficina = _mapper.Map<tbOficinas>(item);
+                var result = _gralService.OficinasCrear(oficina);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -51,12 +52,12 @@ namespace sistema_aduana.API.Controllers
         }
 
         [HttpPut("Actualizar")]
-        public IActionResult Actualizar(EmpleadoViewModel item)
+        public IActionResult Actualizar(OficinasViewModel item)
         {
             try
             {
-                var empleado = _mapper.Map<tbEmpleados>(item);
-                var result = _gralService.EmpleadoActualizar(empleado);
+                var oficina = _mapper.Map<tbOficinas>(item);
+                var result = _gralService.OficinasActualizar(oficina);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -70,7 +71,7 @@ namespace sistema_aduana.API.Controllers
         {
             try
             {
-                var result = _gralService.EmpleadoEliminar(id, usuario, DateTime.Now);
+                var result = _gralService.OficinasEliminar(id, usuario, DateTime.Now);
                 return Ok(result);
             }
             catch (Exception ex)
