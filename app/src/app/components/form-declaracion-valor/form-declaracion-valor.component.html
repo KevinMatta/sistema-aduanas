@@ -164,7 +164,7 @@
                         *ngFor="let pais of ciudades"
                         type="button"
                         class="dropdown-item"
-                        (click)="aduSelectIn(pais.Id, pais.Ciudad)"
+                        (click)="ciudadSelec(pais.Id, pais.Ciudad)"
                       >
                         {{ pais.Ciudad }}
                       </button>
@@ -225,18 +225,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                    {{nivelselected}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Distribuidor
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Mayorista
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Mayorista
-                      </button>
+                      <button
+                      *ngFor="let coso of nivelcomercial"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="nivelSelec(coso)"
+                    >
+                      {{ coso }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -266,15 +265,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                     {{paisselectInfoGeneral}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of paises"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="paisInfoGeneralSelec(pais.Id, pais.Pais)"
+                    >
+                      {{ pais.Pais }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -291,15 +292,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{EstadoSelctInfoGen}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of estados"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="EstaInfoGeneralSelec(pais.Id, pais.Estado)"
+                    >
+                      {{ pais.Estado }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -314,15 +317,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{ciuSelctInfoGen}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of ciudades"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="ciuInfoGeneralSelec(pais.Id, pais.Ciudad)"
+                    >
+                      {{ pais.Ciudad }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -379,15 +384,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{siruacioncomselected}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of situacioncomercial"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="siruacionselec( pais)"
+                    >
+                      {{ pais }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -417,15 +424,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                     {{paisselectInterme}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of paises"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="paisselecInterm(pais.Id, pais.Pais)"
+                    >
+                      {{ pais.Pais }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -442,15 +451,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{EstadoSelctInterm}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of estados"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="estselecInterm(pais.Id, pais.Estado)"
+                    >
+                      {{ pais.Estado }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -465,15 +476,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{ciuSelctInterm}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of ciudades"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="CiuselecInterm(pais.Id, pais.Ciudad)"
+                    >
+                      {{ pais.Ciudad }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -520,7 +533,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6">
+              <!-- <div class="col-md-6">
                 <div class="form-group">
                   <label>14. Tipo Intermediario</label>
                   <div ngbDropdown class="d-block">
@@ -542,7 +555,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Otro Tipo Intermediario</label>
@@ -562,15 +575,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{paisselectCARC}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of paises"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="paisSelectCarac(pais.Id, pais.Pais)"
+                    >
+                      {{ pais.Pais }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -607,15 +622,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{FormaEnvioSelect}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of FormaEnvio"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="FormaEnvioS(pais)"
+                    >
+                      {{ pais }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -638,15 +655,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{pagoefecSel}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of SiNo"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="PagoEfecS(pais)"
+                    >
+                      {{ pais }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -661,15 +680,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{FormaPago}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of FormaP"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="FormaPagoS(pais)"
+                    >
+                      {{ pais }}
+                    </button>
                     </div>
                   </div>
                 </div>

@@ -66,7 +66,7 @@ namespace sistema_aduana.DataAccess.Repository
                 parameter.Add("@PeNa_DNIurlPdf", item.PeNa_DNIurlPdf);
                 parameter.Add("@PeNa_NumReciboPublico", item.PeNa_NumReciboPublico);
                 parameter.Add("@PeNa_NumReciboPublicoUrlPdf", item.PeNa_NumReciboPublicoUrlPdf);
-                parameter.Add("@Ofic_Id", item.Ofic_Id);
+                parameter.Add("@Adua_Id", item.Ofic_Id);
                 parameter.Add("@EsCi_Id", item.EsCi_Id);
                 parameter.Add("@Prof_Id", item.Prof_Id);
                 parameter.Add("@Ciud_Id", item.Ciud_Id);

@@ -20,8 +20,25 @@ export class FormDeclaracionValorComponent implements OnInit {
   display:any ="false";
   aduanas:Aduana[];
   paises: Pais[];
+  paisselectInfoGeneral:string;
+  paisselectInterme:string;
+  paisselectCARC:string;
+  FormaEnvioSelect:string;
+  EstadoSelctInfoGen:string;
+  EstadoSelctInterm:string;
+  ciuSelctInfoGen:string;
+  ciuSelctInterm:string;
   estados: Estado[];
   ciudades:Ciudad[];
+  nivelcomercial: string[] = ["Distribuidor", "Minorista", "Mayorista", "Otro"];
+  SiNo: string[] = ["Si", "No"];
+  FormaP: string[] = ["Cheque Bancario/Personal", "Carta Credito", "Efectivo", "Giro Bancario", "Pago Anticipado", "Pago Electronico", "Transferencia Bancaria"];
+  pagoefecSel:string;
+  FormaPago:string;
+  situacioncomercial: string[] = ["Distribuidor", "Mayorista", "Fabricante","Productor", "Revendedor", "Otro"];
+  FormaEnvio: string[] = ["Fraccionado", "Total", "Parcial","Fraccionado",  "Otro"];
+  siruacioncomselected:string;
+  nivelselected:string;
   paiselect:string;
   estadoselec:string;
   aduselect:string;
@@ -38,9 +55,21 @@ export class FormDeclaracionValorComponent implements OnInit {
   ngOnInit() {
     this.paiselect = "- Seleccionar -";
     this.aduselect = "- Seleccionar -";
-    this.aduseling="- Seleccionar -";
-    this.estadoselec="- Seleccionar -";
-    this.ciuselec="- Seleccionar -";
+    this.aduseling ="- Seleccionar -";
+    this.estadoselec ="- Seleccionar -";
+    this.ciuselec ="- Seleccionar -";
+    this.nivelselected ="- Seleccionar -";
+    this.paisselectInfoGeneral ="- Seleccionar -";
+    this.EstadoSelctInfoGen ="- Seleccionar -";
+    this.ciuSelctInfoGen = "- Seleccionar -";
+    this.siruacioncomselected= "- Seleccionar -";
+    this.paisselectInterme= "- Seleccionar -";
+    this.EstadoSelctInterm= "- Seleccionar -";
+    this.ciuSelctInterm = "- Seleccionar -";
+    this.paisselectCARC = "- Seleccionar -";
+    this.FormaEnvioSelect = "- Seleccionar -";
+    this.pagoefecSel= "- Seleccionar -";
+    this.FormaPago= "- Seleccionar -";
     this.paisesService.getData().subscribe(
       (data: Pais[]) => {
         this.paises = data;
@@ -49,6 +78,9 @@ export class FormDeclaracionValorComponent implements OnInit {
         console.log(error);
       }
     );
+   
+
+    
     this.ciudadesService.getData().subscribe(
       (data: Ciudad[]) => {
         this.ciudades = data;
@@ -84,6 +116,9 @@ export class FormDeclaracionValorComponent implements OnInit {
       }
     );
   }
+
+
+
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -107,7 +142,43 @@ export class FormDeclaracionValorComponent implements OnInit {
   ciudadSelec(idc: number, ciu: string) {
     this.ciuselec = ciu;
   }
-  private getDismissReason(reason: any): string {
+  nivelSelec( ciu: string) {
+    this.nivelselected = ciu;
+  }
+  paisInfoGeneralSelec( paisId: number, pais: string) {
+    this.paisselectInfoGeneral = pais;
+  }
+  EstaInfoGeneralSelec( paisId: number, pais: string) {
+    this.EstadoSelctInfoGen = pais;
+  }
+  ciuInfoGeneralSelec(PaisID:number, pais:string){ 
+    this.ciuSelctInfoGen =pais; 
+  }
+  siruacionselec(pais:string){
+    this.siruacioncomselected =pais;
+  }
+  paisselecInterm(PaisID:number,pais:string){
+    this.paisselectInterme =pais;
+  }
+  estselecInterm(PaisID:number,pais:string){
+    this.EstadoSelctInterm =pais;
+  }
+  CiuselecInterm(PaisID:number,pais:string){
+    this.ciuSelctInterm =pais;
+  }
+  paisSelectCarac(paisId: number, pais: string) {
+    this.paisselectCARC = pais;
+  }
+  FormaEnvioS( pais: string) {
+    this.FormaEnvioSelect = pais;
+  }
+  PagoEfecS( pais: string) {
+    this.pagoefecSel = pais;
+  }
+  FormaPagoS(pai:string){
+    this.FormaPago = pai;
+  }
+  private getDismissReason(reason: any): string {   
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
