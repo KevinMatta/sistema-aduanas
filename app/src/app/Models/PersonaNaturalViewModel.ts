@@ -4,6 +4,8 @@ export class PersonaNatural {
     RtnSolicitanteUrl: string;
     DNI: string;
     DNIUrl: string;
+    Nombre: string;
+    Apellido: string;
     NumReciboPublico: string;
     NumReciboPublicoUrl: string;
     Estado:string;

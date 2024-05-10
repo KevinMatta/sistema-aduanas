@@ -42,4 +42,5 @@ export class ComercianteIndividual {
   DniUrl_RepresentanteLegal: string;
 
   Declaracion: string;
+  DeclaracionUrl: string;
 }

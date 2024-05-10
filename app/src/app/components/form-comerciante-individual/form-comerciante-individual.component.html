@@ -15,28 +15,17 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>RTN Solicitante</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="05012005042021"
-                  maxlength="20"
-                  [value]="comercianteIndividual.RtnSolicitante"
-                  (change)="RtnSolicitanteOnChange($event)"
-                />
+                <input type="text" class="form-control" placeholder="05012005042021" maxlength="20"
+                  [value]="comercianteIndividual.RtnSolicitante" (change)="RtnSolicitanteOnChange($event)" />
               </div>
             </div>
           </div>
           <h6>Datos a Informar</h6>
-          <small
-            >- Todos los datos marcados con un
-            <span style="color: red">*</span> son requeridos.</small
-          >
+          <small>- Todos los datos marcados con un
+            <span style="color: red">*</span> son requeridos.</small>
           <div class="tble-container" style="overflow-x: auto">
             <table class="table table-bordered">
-              <thead
-                class="text-primary"
-                style="background-color: rgba(0, 0, 0, 0.02)"
-              >
+              <thead class="text-primary" style="background-color: rgba(0, 0, 0, 0.02)">
                 <th>Dato</th>
                 <th>Descripcion</th>
               </thead>
@@ -44,26 +33,17 @@
                 <tr>
                   <td>
                     <div ngbDropdown class="d-inline-block">
-                      <button
-                        class="btn btn-primary"
-                        id="dropdownMenu1"
-                        ngbDropdownToggle
-                      >
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
                         {{ comercianteIndividual.esCi }}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button
-                          *ngFor="let esCi of estadosCiviles"
-                          type="button"
-                          class="dropdown-item"
-                          (click)="
+                        <button *ngFor="let esCi of estadosCiviles" type="button" class="dropdown-item" (click)="
                             estadoCivilSelect(
                               esCi.Id,
                               esCi['Estado Civil'],
                               false
                             )
-                          "
-                        >
+                          ">
                           {{ esCi["Estado Civil"] }}
                         </button>
                       </div>
@@ -77,22 +57,13 @@
                 <tr>
                   <td>
                     <div ngbDropdown class="d-inline-block">
-                      <button
-                        class="btn btn-primary"
-                        id="dropdownMenu1"
-                        ngbDropdownToggle
-                      >
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
                         {{ comercianteIndividual.Profesion }}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button
-                          *ngFor="let prof of profesiones"
-                          type="button"
-                          class="dropdown-item"
-                          (click)="
+                        <button *ngFor="let prof of profesiones" type="button" class="dropdown-item" (click)="
                             profesionSelect(prof.Id, prof.Profesion, false)
-                          "
-                        >
+                          ">
                           {{ prof.Profesion }}
                         </button>
                       </div>
@@ -107,28 +78,18 @@
                 <tr>
                   <td>
                     <div ngbDropdown class="d-inline-block">
-                      <button
-                        class="btn btn-primary"
-                        id="dropdownMenu1"
-                        ngbDropdownToggle
-                      >
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
                         {{
-                          comercianteIndividual.foRe
-                            ? "BAJO UN REPRESENTANTE LEGAL"
-                            : "CONDICION PROPIA"
+                        comercianteIndividual.foRe
+                        ? "BAJO UN REPRESENTANTE LEGAL"
+                        : "CONDICION PROPIA"
                         }}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button
-                          class="dropdown-item"
-                          (click)="foReOnChange(false)"
-                        >
+                        <button class="dropdown-item" (click)="foReOnChange(false)">
                           CONDICION PROPIA
                         </button>
-                        <button
-                          class="dropdown-item"
-                          (click)="foReOnChange(true)"
-                        >
+                        <button class="dropdown-item" (click)="foReOnChange(true)">
                           BAJO UN REPRESENTANTE LEGAL
                         </button>
                       </div>
@@ -142,27 +103,18 @@
                 <tr>
                   <td>
                     <div ngbDropdown class="d-inline-block">
-                      <button
-                        class="btn btn-primary"
-                        id="dropdownMenu1"
-                        ngbDropdownToggle
-                        [disabled]="!comercianteIndividual.foRe"
-                      >
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle
+                        [disabled]="!comercianteIndividual.foRe">
                         {{ comercianteIndividual.esCi_RepresentanteLegal }}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button
-                          *ngFor="let esCi of estadosCiviles"
-                          type="button"
-                          class="dropdown-item"
-                          (click)="
+                        <button *ngFor="let esCi of estadosCiviles" type="button" class="dropdown-item" (click)="
                             estadoCivilSelect(
                               esCi.Id,
                               esCi['Estado Civil'],
                               true
                             )
-                          "
-                        >
+                          ">
                           {{ esCi["Estado Civil"] }}
                         </button>
                       </div>
@@ -177,23 +129,14 @@
                 <tr>
                   <td>
                     <div ngbDropdown class="d-inline-block">
-                      <button
-                        class="btn btn-primary"
-                        id="dropdownMenu1"
-                        ngbDropdownToggle
-                        [disabled]="!comercianteIndividual.foRe"
-                      >
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle
+                        [disabled]="!comercianteIndividual.foRe">
                         {{ comercianteIndividual.Profesion }}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button
-                          *ngFor="let prof of profesiones"
-                          type="button"
-                          class="dropdown-item"
-                          (click)="
+                        <button *ngFor="let prof of profesiones" type="button" class="dropdown-item" (click)="
                             profesionSelect(prof.Id, prof.Profesion, true)
-                          "
-                        >
+                          ">
                           {{ prof.Profesion }}
                         </button>
                       </div>
@@ -206,11 +149,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <td
-                    colspan="2"
-                    class="text-primary"
-                    style="background-color: rgba(0, 0, 0, 0.02)"
-                  >
+                  <td colspan="2" class="text-primary" style="background-color: rgba(0, 0, 0, 0.02)">
                     DOMICILIO DEL COMERCIANTE (PARA EFECTO DE UBICACION, EN EL
                     CONTRATO DE ADHESION SE MOSTRARA EL DOMICILIO FISCAL
                     REGISTRADO EN LA ADMINISTRACION TRIBUTARIA)
@@ -220,22 +159,13 @@
                 <tr>
                   <td>
                     <div ngbDropdown class="d-inline-block">
-                      <button
-                        class="btn btn-primary"
-                        id="dropdownMenu1"
-                        ngbDropdownToggle
-                      >
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
                         {{ comercianteIndividual.Estado }}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button
-                          *ngFor="let estado of estados"
-                          type="button"
-                          class="dropdown-item"
-                          (click)="
+                        <button *ngFor="let estado of estados" type="button" class="dropdown-item" (click)="
                             estadoSelect(estado.Id, estado.Estado, false)
-                          "
-                        >
+                          ">
                           {{ estado.Estado }}
                         </button>
                       </div>
@@ -249,22 +179,13 @@
                 <tr>
                   <td>
                     <div ngbDropdown class="d-inline-block">
-                      <button
-                        class="btn btn-primary"
-                        id="dropdownMenu1"
-                        ngbDropdownToggle
-                      >
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
                         {{ comercianteIndividual.Ciudad }}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button
-                          *ngFor="let ciudad of ciudadesFiltradas"
-                          type="button"
-                          class="dropdown-item"
-                          (click)="
+                        <button *ngFor="let ciudad of ciudadesFiltradas" type="button" class="dropdown-item" (click)="
                             ciudadSelect(ciudad.Id, ciudad.Ciudad, false)
-                          "
-                        >
+                          ">
                           {{ ciudad.Ciudad }}
                         </button>
                       </div>
@@ -277,13 +198,8 @@
                 </tr>
                 <tr>
                   <td>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Aldea El Carmen"
-                      (change)="DireccionOnChange($event, false)"
-                      [value]="comercianteIndividual.DireccionCompleta"
-                    />
+                    <input type="text" class="form-control" placeholder="Aldea El Carmen"
+                      (change)="DireccionOnChange($event, false)" [value]="comercianteIndividual.DireccionCompleta" />
                   </td>
                   <td>
                     SD007 - DIRECCIÓN COMPLETA (INCLUYA SEGÚN APLIQUE: ALDEA,
@@ -292,11 +208,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <td
-                    colspan="2"
-                    class="text-primary"
-                    style="background-color: rgba(0, 0, 0, 0.02)"
-                  >
+                  <td colspan="2" class="text-primary" style="background-color: rgba(0, 0, 0, 0.02)">
                     DOMICILIO DEL REPRESENTANTE LEGAL (SI HUBIESE INFORMADO
                     REPRESENTACION BAJO UN REPRESENTANTE LEGAL)
                     <!-- {{ titulo }} -->
@@ -305,23 +217,14 @@
                 <tr>
                   <td>
                     <div ngbDropdown class="d-inline-block">
-                      <button
-                        class="btn btn-primary"
-                        id="dropdownMenu1"
-                        ngbDropdownToggle
-                        [disabled]="!comercianteIndividual.foRe"
-                      >
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle
+                        [disabled]="!comercianteIndividual.foRe">
                         {{ comercianteIndividual.Estado_RepresentanteLegal }}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button
-                          *ngFor="let estadoo of estados"
-                          type="button"
-                          class="dropdown-item"
-                          (click)="
+                        <button *ngFor="let estadoo of estados" type="button" class="dropdown-item" (click)="
                             estadoSelect(estadoo.Id, estadoo.Estado, true)
-                          "
-                        >
+                          ">
                           {{ estadoo.Estado }}
                         </button>
                       </div>
@@ -335,25 +238,16 @@
                 <tr>
                   <td>
                     <div ngbDropdown class="d-inline-block">
-                      <button
-                        class="btn btn-primary"
-                        id="dropdownMenu1"
-                        ngbDropdownToggle
-                        [disabled]="!comercianteIndividual.foRe"
-                      >
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle
+                        [disabled]="!comercianteIndividual.foRe">
                         {{ comercianteIndividual.Ciudad_RepresentanteLegal }}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button
-                          *ngFor="
+                        <button *ngFor="
                             let ciudadd of ciudadesFiltradas_RepresentanteLegal
-                          "
-                          type="button"
-                          class="dropdown-item"
-                          (click)="
+                          " type="button" class="dropdown-item" (click)="
                             ciudadSelect(ciudadd.Id, ciudadd.Ciudad, true)
-                          "
-                        >
+                          ">
                           {{ ciudadd.Ciudad }}
                         </button>
                       </div>
@@ -366,16 +260,10 @@
                 </tr>
                 <tr>
                   <td>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Aldea El Carmen"
-                      [disabled]="!comercianteIndividual.foRe"
-                      (change)="DireccionOnChange($event, true)"
-                      [value]="
+                    <input type="text" class="form-control" placeholder="Aldea El Carmen"
+                      [disabled]="!comercianteIndividual.foRe" (change)="DireccionOnChange($event, true)" [value]="
                         comercianteIndividual.DireccionCompleta_RepresentanteLegal
-                      "
-                    />
+                      " />
                   </td>
                   <td>
                     SD007 - DIRECCIÓN COMPLETA (INCLUYA SEGÚN APLIQUE: ALDEA,
@@ -395,31 +283,19 @@
                     'DOMICILIO DEL REPRESENTANTE LEGAL (SI HUBIESE INFORMADO REPRESENTACION BAJO UN REPRESENTANTE LEGAL)'
                   "
                 ></app-form-ubicacion> -->
-                <app-form-contacto
-                  [entidad]="'DEL COMERCIANTE'"
-                  style="display: contents"
-                  (telefonoFijo)="onTelefonoFijoChange($event)"
-                  (telefonoCelular)="onTelefonoCelularChange($event)"
+                <app-form-contacto [entidad]="'DEL COMERCIANTE'" style="display: contents"
+                  (telefonoFijo)="onTelefonoFijoChange($event)" (telefonoCelular)="onTelefonoCelularChange($event)"
                   (correo)="onCorreoChange($event)"
-                  (correoAlternativo)="onCorreoAlternativoChange($event)"
-                ></app-form-contacto>
+                  (correoAlternativo)="onCorreoAlternativoChange($event)"></app-form-contacto>
                 <tr>
                   <td>
                     <div ngbDropdown class="d-inline-block">
-                      <button
-                        class="btn btn-primary"
-                        id="dropdownMenu1"
-                        ngbDropdownToggle
-                      >
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
                         {{ comercianteIndividual.Aduana }}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button
-                          *ngFor="let aduana of aduanasFiltradas"
-                          type="button"
-                          class="dropdown-item"
-                          (click)="aduanaSelect(aduana.Id, aduana.Aduana)"
-                        >
+                        <button *ngFor="let aduana of aduanas" type="button" class="dropdown-item"
+                          (click)="aduanaSelect(aduana.Id, aduana.Aduana)">
                           {{ aduana.Aduana }}
                         </button>
                       </div>
@@ -435,16 +311,11 @@
             </table>
           </div>
           <h6>Datos a Informar</h6>
-          <small
-            >- Todos los datos marcados con un
-            <span style="color: red">*</span> son requeridos.</small
-          >
+          <small>- Todos los datos marcados con un
+            <span style="color: red">*</span> son requeridos.</small>
           <div class="" style="overflow-x: auto">
             <table class="table table-bordered">
-              <thead
-                class="text-primary"
-                style="background-color: rgba(0, 0, 0, 0.02)"
-              >
+              <thead class="text-primary" style="background-color: rgba(0, 0, 0, 0.02)">
                 <th>
                   <p style="margin-bottom: 0">Dato</p>
                   <small style="font-weight: 600">
@@ -459,7 +330,8 @@
               <tbody>
                 <tr>
                   <td>
-                    <input type="text" class="form-control" />
+                    <input type="text" class="form-control" placeholder="05012005042021"
+                      (change)="RtnOnChange($event, false)" />
                   </td>
                   <td>
                     SS100 - REGISTRO TRIBUTARIO NACIONAL (RTN) DEL COMERCIANTE
@@ -469,7 +341,18 @@
                 </tr>
                 <tr>
                   <td>
-                    <input type="text" class="form-control" />
+                    <input type="file" class="form-control" (change)="subirRtn($event, false)" />
+                  </td>
+                  <td>
+                    SS000 - ARCHIVO DEL REGISTRO TRIBUTARIO NACIONAL (RTN) DEL COMERCIANTE
+                    INDIVIDUAL
+                    <span style="color: red">*</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="text" class="form-control" placeholder="0501200504202"
+                      (change)="DNIOnChange($event, false)" />
                   </td>
                   <td>
                     SS017 - DOCUMENTO O TARJETA DE IDENTIDAD DEL COMERCIANTE
@@ -479,7 +362,18 @@
                 </tr>
                 <tr>
                   <td>
-                    <input type="text" class="form-control" />
+                    <input type="file" class="form-control" (change)="subirDni($event, false)" />
+                  </td>
+                  <td>
+                    SS000 - ARCHIVO DEL DOCUMENTO O TARJETA DE IDENTIDAD DEL COMERCIANTE
+                    INDIVIDUAL
+                    <span style="color: red">*</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="text" class="form-control" placeholder="05012005042021"
+                      (change)="RtnOnChange($event, true)" />
                   </td>
                   <td>
                     SS128 - REGISTRO TRIBUTARIO NACIONAL (RTN) DEL REPRESENTANTE
@@ -489,7 +383,17 @@
                 </tr>
                 <tr>
                   <td>
-                    <input type="text" class="form-control" />
+                    <input type="file" class="form-control" (change)="subirRtn($event, true)" />
+                  </td>
+                  <td>
+                    SS000 - ARCHIVO DEL REGISTRO TRIBUTARIO NACIONAL (RTN) DEL REPRESENTANTE
+                    LEGAL (SI HA INFORMADO REPRESENTACION BAJO REPRESENTANTE
+                    LEGAL)
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="text" class="form-control" placeholder="0501200504202" (change)="DNIOnChange($event, true)"/>
                   </td>
                   <td>
                     SS018 - DOCUMENTO O TARJETA DE IDENTIDAD DEL REPRESENTANTE
@@ -499,16 +403,39 @@
                 </tr>
                 <tr>
                   <td>
-                    <input type="text" class="form-control" />
+                    <input type="file" class="form-control" (change)="subirDni($event, true)" />
                   </td>
                   <td>
-                    SS090 - DECLARACIÓN DE COMERCIANTE INDIVIDUAL Y SUS
-                    MODIFICACIONES SI LAS HUBIERA
+                    SS000 - ARCHIVO DEL DOCUMENTO O TARJETA DE IDENTIDAD DEL REPRESENTANTE
+                    LEGAL (SI HA INFORMADO REPRESENTACION BAJO REPRESENTANTE
+                    LEGAL)
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="text" class="form-control" placeholder="05050505" (change)="DeclaracionOnChange($event)"/>
+                  </td>
+                  <td>
+                    SS090 - DECLARACIÓN DE COMERCIANTE INDIVIDUAL
+                    <span style="color: red">*</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="file" class="form-control" (change)="subirDeclaracion($event)"/>
+                  </td>
+                  <td>
+                    SS000 - ARCHIVO DE LA DECLARACIÓN DE COMERCIANTE INDIVIDUAL
                     <span style="color: red">*</span>
                   </td>
                 </tr>
               </tbody>
             </table>
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-primary" (click)="guardar()">
+                Registrarse
+              </button>
+            </div>
           </div>
         </div>
       </div>

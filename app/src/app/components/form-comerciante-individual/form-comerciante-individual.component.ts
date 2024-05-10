@@ -13,6 +13,7 @@ import { AduanasService } from "../../Services/aduanas.service";
 import { EstadosCivilesService } from "../../Services/estados-civiles.service";
 import { ProfesionesService } from "../../Services/profesiones.service";
 import { Profesion } from "../../Models/ProfesionesViewModel";
+import { ComercianteIndividualService } from "../../Services/comercianteIndividual.service";
 
 @Component({
   selector: "app-form-comerciante-individual",
@@ -31,6 +32,7 @@ export class FormComercianteIndividualComponent implements OnInit {
   profesiones: Profesion[];
 
   endpointSubirRTN = "/API/comercianteIndividual/SubirRTNsolicitante";
+  endpointSubirDNI = "/API/comercianteIndividual/SubirRTNsolicitante";
 
   comercianteIndividual: ComercianteIndividual = new ComercianteIndividual();
 
@@ -44,8 +46,9 @@ export class FormComercianteIndividualComponent implements OnInit {
     private aduanasService: AduanasService,
     private estadosCivilesService: EstadosCivilesService,
     private profesionesService: ProfesionesService,
+    private comercianteIndividualService: ComercianteIndividualService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   isLoading = true;
   ngOnInit() {
@@ -190,24 +193,14 @@ export class FormComercianteIndividualComponent implements OnInit {
     this.comercianteIndividual.foRe = val;
   }
 
-  DNIOnChange(event: any) {
-    const val = event.target.value;
-    this.comercianteIndividual.Dni = val;
-  }
-
-  DeclaracionOnChange(event: any) {
-    const val = event.target.value;
-    this.comercianteIndividual.Declaracion = val;
-  }
-
   filtrarCiudades(esta_Id: number, EsRepresentanteLegal: boolean) {
     EsRepresentanteLegal
       ? (this.ciudadesFiltradas_RepresentanteLegal = this.ciudades.filter(
-          (estado) => estado.esta_Id === esta_Id
-        ))
+        (estado) => estado.esta_Id === esta_Id
+      ))
       : (this.ciudadesFiltradas = this.ciudades.filter(
-          (estado) => estado.esta_Id === esta_Id
-        ));
+        (estado) => estado.esta_Id === esta_Id
+      ));
   }
 
   estadoSelect(
@@ -274,19 +267,29 @@ export class FormComercianteIndividualComponent implements OnInit {
     this.comercianteIndividual.CorreoAlternativo = correoAlternativo;
   }
 
-  async subirArchivo(event: any) {
-    if (this.comercianteIndividual.RtnSolicitante == "") {
-      this.toastr.warning(
-        '<span class="now-ui-icons ui-1_bell-53"></span> Por favor ingrese el RTN del solicitante.',
-        "",
-        {
-          timeOut: 3000,
-          closeButton: true,
-          enableHtml: true,
-          toastClass: "alert alert-warning alert-with-icon",
-          positionClass: "toast-bottom-right",
-        }
-      );
+  RtnOnChange(event: any, EsRepresentanteLegal: boolean) {
+    const val = event.target.value;
+
+    EsRepresentanteLegal ? this.comercianteIndividual.Rtn_RepresentanteLegal = val :
+      this.comercianteIndividual.Rtn = val;
+  }
+
+  DNIOnChange(event: any, EsRepresentanteLegal: boolean) {
+    const val = event.target.value;
+
+    EsRepresentanteLegal ? this.comercianteIndividual.Dni_RepresentanteLegal = val :
+      this.comercianteIndividual.Dni = val;
+  }
+
+  DeclaracionOnChange(event: any) {
+    const val = event.target.value;
+
+    this.comercianteIndividual.Declaracion = val;
+  }
+
+  async subirRtn(event: any, EsRepresentanteLegal: boolean) {
+    if (EsRepresentanteLegal ? this.comercianteIndividual.Rtn_RepresentanteLegal === "" : this.comercianteIndividual.Rtn === "") {
+      this.mostrarWarning(`Por favor ingrese el RTN del ${EsRepresentanteLegal ? "Representante Legal" : "comerciante individual"}.`);
       event.target.value = null;
       return;
     }
@@ -295,33 +298,254 @@ export class FormComercianteIndividualComponent implements OnInit {
       const pdf = event.target.files[0];
       const formData = new FormData();
       formData.append("pdf", pdf);
-      const keyName =
-        this.comercianteIndividual.RtnSolicitante + "_RTNsolicitante_PeNa.pdf";
+      const keyName = EsRepresentanteLegal ? this.comercianteIndividual.Rtn_RepresentanteLegal + "_RTN_Representante_CoIn.pdf" :
+        this.comercianteIndividual.Rtn + "_RTN_CoIn.pdf";
       formData.append("keyName", keyName);
       const res = await this.utilitariosService.subirArchivo(
         this.endpointSubirRTN,
         formData
       );
-      console.log(res);
 
       if (res) {
-        this.comercianteIndividual.RtnUrl =
+        EsRepresentanteLegal ? this.comercianteIndividual.RtnUrl_RepresentanteLegal =
+          "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName :
+          this.comercianteIndividual.RtnUrl =
           "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
-        this.sanitizarUrl(this.comercianteIndividual.RtnUrl);
-        console.log(this.trustedUrl, "trustedUrl");
-
-        this.toastr.success(
-          '<span class="now-ui-icons ui-1_bell-53"></span> RTN guardado con éxito.',
-          "",
-          {
-            timeOut: 3000,
-            closeButton: true,
-            enableHtml: true,
-            toastClass: "alert alert-success alert-with-icon",
-            positionClass: "toast-bottom-right",
-          }
-        );
+        this.sanitizarUrl(EsRepresentanteLegal ? this.comercianteIndividual.RtnUrl_RepresentanteLegal : this.comercianteIndividual.RtnUrl);
+        this.mostrarSuccess("PDF RTN guardado con éxito.");
       }
     }
+  }
+
+  async subirDni(event: any, EsRepresentanteLegal: boolean) {
+    if (EsRepresentanteLegal ? this.comercianteIndividual.Dni_RepresentanteLegal === "" : this.comercianteIndividual.Dni === "") {
+      this.mostrarWarning(`Por favor ingrese el DNI del ${EsRepresentanteLegal ? "Representante Legal" : "comerciante individual"}.`);
+      event.target.value = null;
+      return;
+    }
+
+    if (event.target.files.length > 0) {
+      const pdf = event.target.files[0];
+      const formData = new FormData();
+      formData.append("pdf", pdf);
+      const keyName = EsRepresentanteLegal ? this.comercianteIndividual.Dni_RepresentanteLegal + "_DNI_Representante_PeNa.pdf" : this.comercianteIndividual.Dni + "_DNI_PeNa.pdf";
+      formData.append("keyName", keyName);
+      const res = await this.utilitariosService.subirArchivo(
+        this.endpointSubirDNI,
+        formData
+      );
+
+      if (res) {
+        EsRepresentanteLegal ? this.comercianteIndividual.DniUrl_RepresentanteLegal =
+          "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName : this.comercianteIndividual.DniUrl =
+        "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
+        this.sanitizarUrl(EsRepresentanteLegal ? this.comercianteIndividual.DniUrl_RepresentanteLegal : this.comercianteIndividual.DniUrl);
+        this.mostrarSuccess("PDF DNI guardado con éxito.");
+      }
+    }
+  }
+
+  async subirDeclaracion(event: any) {
+    if (this.comercianteIndividual.Declaracion === "") {
+      this.mostrarWarning("Por favor ingrese el número de Declaración de Comerciante Individual.");
+      event.target.value = null;
+      return;
+    }
+
+    if (event.target.files.length > 0) {
+      const pdf = event.target.files[0];
+      const formData = new FormData();
+      formData.append("pdf", pdf);
+      const keyName = this.comercianteIndividual.Declaracion + "_DNI_PeNa.pdf";
+      formData.append("keyName", keyName);
+      const res = await this.utilitariosService.subirArchivo(
+        this.endpointSubirDNI,
+        formData
+      );
+
+      if (res) {
+        this.comercianteIndividual.Declaracion =
+          "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
+        this.sanitizarUrl(this.comercianteIndividual.Declaracion);
+        this.mostrarSuccess("Recibo público guardado con éxito.");
+      }
+    }
+  }
+
+  async guardar() {
+    if (!this.comercianteIndividual.RtnSolicitante) {
+      this.mostrarWarning("Por favor ingrese el RTN del solicitante.");
+      return;
+    }
+    if (!this.comercianteIndividual.esCi_Id) {
+      this.mostrarWarning(
+        "Por favor seleccione el estado civil del Comerciante individual."
+      );
+      return;
+    }
+    if (!this.comercianteIndividual.prof_Id) {
+      this.mostrarWarning("Por favor seleccione la profesión del Comerciante individual.");
+      return;
+    }
+    if (!this.comercianteIndividual.esta_Id) {
+      this.mostrarWarning("Por favor seleccione un Estado.");
+      return;
+    }
+    if (!this.comercianteIndividual.ciud_Id) {
+      this.mostrarWarning("Por favor seleccione una ciudad.");
+      return;
+    }
+    if (!this.comercianteIndividual.DireccionCompleta) {
+      this.mostrarWarning(
+        "Por favor ingrese la dirección completa del Comerciante individual."
+      );
+      return;
+    }
+
+    if (!this.comercianteIndividual.TelefonoFijo) {
+      this.mostrarWarning("Por favor ingrese el teléfono fijo del Comerciante individual.");
+      return;
+    }
+    if (!this.comercianteIndividual.TelefonoCelular) {
+      this.mostrarWarning(
+        "Por favor ingrese el teléfono celular del Comerciante individual."
+      );
+      return;
+    }
+    if (!this.comercianteIndividual.Correo) {
+      this.mostrarWarning("Por favor el correo del Comerciante individual.");
+      return;
+    }
+    if (!this.comercianteIndividual.CorreoAlternativo) {
+      this.mostrarWarning("Por favor un correo alternativo del Comerciante individual.");
+      return;
+    }
+    if (!this.comercianteIndividual.adua_Id) {
+      this.mostrarWarning(
+        "Por favor seleccione la oficina regional de aduana más cercana al Comerciante individual."
+      );
+      return;
+    }
+
+    if (!this.comercianteIndividual.Rtn) {
+      this.mostrarWarning("Por favor ingrese el RTN del Comerciante Individual.");
+      return;
+    }
+    if (!this.comercianteIndividual.RtnUrl) {
+      this.mostrarWarning("Por favor adjunte el PDF del RTN del Comerciante Individual.");
+      return;
+    }
+    if (!this.comercianteIndividual.Dni) {
+      this.mostrarWarning("Por favor ingrese el DNI del Comerciante Individual.");
+      return;
+    }
+    if (!this.comercianteIndividual.DniUrl) {
+      this.mostrarWarning("Por favor adjunte el PDF del DNI del Comerciante Individual.");
+      return;
+    }
+    if (!this.comercianteIndividual.Declaracion) {
+      this.mostrarWarning("Por favor ingrese el número de Declaración de Comerciante Individual.");
+      return;
+    }
+    if (!this.comercianteIndividual.DeclaracionUrl) {
+      this.mostrarWarning("Por favor adjunte el PDF de la Declaración de Comerciante Individual.");
+      return;
+    }
+    if (this.comercianteIndividual.foRe) {
+      if (!this.comercianteIndividual.esCi_Id_RepresentanteLegal) {
+        this.mostrarWarning(
+          "Por favor seleccione el estado civil del representante legal."
+        );
+        return;
+      }
+      if (!this.comercianteIndividual.prof_Id_RepresentanteLegal) {
+        this.mostrarWarning("Por favor seleccione la profesión del representante legal.");
+        return;
+      }
+      if (!this.comercianteIndividual.esta_Id_RepresentanteLegal) {
+        this.mostrarWarning("Por favor seleccione el Estado del representante legal.");
+        return;
+      }
+      if (!this.comercianteIndividual.ciud_Id_RepresentanteLegal) {
+        this.mostrarWarning("Por favor seleccione la ciudad del representante legal.");
+        return;
+      }
+      if (!this.comercianteIndividual.DireccionCompleta_RepresentanteLegal) {
+        this.mostrarWarning(
+          "Por favor ingrese la dirección completa del representante legal."
+        );
+        return;
+      }
+      if (!this.comercianteIndividual.Rtn_RepresentanteLegal) {
+        this.mostrarWarning("Por favor ingrese el RTN del Representante Legal.");
+        return;
+      }
+      if (!this.comercianteIndividual.RtnUrl_RepresentanteLegal) {
+        this.mostrarWarning("Por favor adjunte el PDF del RTN del Representante Legal.");
+        return;
+      }
+      if (!this.comercianteIndividual.Dni_RepresentanteLegal) {
+        this.mostrarWarning("Por favor ingrese el DNI del Representante Legal.");
+        return;
+      }
+      if (!this.comercianteIndividual.DniUrl_RepresentanteLegal) {
+        this.mostrarWarning("Por favor adjunte el PDF del DNI del Representante Legal.");
+        return;
+      }
+    }
+
+    await this.comercianteIndividualService.Crear(this.comercianteIndividual).subscribe(
+      (data: any) => {
+        if (data.code >= 200 && data.code <= 300) {
+          this.mostrarSuccess("Comerciante individual registrado con éxito.");
+        } else {
+          this.mostrarError("Ya existe este Comerciante individual.");
+        }
+      },
+      (error) => {
+        this.mostrarError("Error al registrar el Comerciante individual.");
+        console.log(error);
+        this.isLoading = false;
+      }
+    );
+  }
+  mostrarSuccess(mensaje: string) {
+    this.toastr.success(
+      `<span class="now-ui-icons ui-1_bell-53"></span> ${mensaje}`,
+      "",
+      {
+        timeOut: 3000,
+        closeButton: true,
+        enableHtml: true,
+        toastClass: "alert alert-success alert-with-icon",
+        positionClass: "toast-bottom-right",
+      }
+    );
+  }
+  mostrarWarning(mensaje: string) {
+    this.toastr.warning(
+      `<span class="now-ui-icons ui-1_bell-53"></span> ${mensaje}`,
+      "",
+      {
+        timeOut: 3000,
+        closeButton: true,
+        enableHtml: true,
+        toastClass: "alert alert-warning alert-with-icon",
+        positionClass: "toast-bottom-right",
+      }
+    );
+  }
+  mostrarError(mensaje: string) {
+    this.toastr.error(
+      `<span class="now-ui-icons ui-1_bell-53"></span> ${mensaje}`,
+      "",
+      {
+        timeOut: 3000,
+        closeButton: true,
+        enableHtml: true,
+        toastClass: "alert alert-error alert-with-icon",
+        positionClass: "toast-bottom-right",
+      }
+    );
   }
 }

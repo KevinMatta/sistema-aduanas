@@ -14,6 +14,8 @@ import { EstadosCivilesService } from "../../Services/estados-civiles.service";
 import { ProfesionesService } from "../../Services/profesiones.service";
 import { Profesion } from "../../Models/ProfesionesViewModel";
 import { PersonaNaturalService } from "../../Services/personaNatural.service";
+import { ModalPdfComponent } from "../modal-pdf/modal-pdf.component";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 // import * as html2pdf from "html2pdf.js";
 
 @Component({
@@ -22,7 +24,6 @@ import { PersonaNaturalService } from "../../Services/personaNatural.service";
   styleUrls: ["./form-persona-natural.component.css"],
 })
 export class FormPersonaNaturalComponent implements OnInit {
-  @Input() objetoParaEditar: PersonaNatural;
   estados: Estado[];
   ciudades: Ciudad[];
   ciudadesFiltradas: Ciudad[];
@@ -37,8 +38,6 @@ export class FormPersonaNaturalComponent implements OnInit {
 
   personaNatural: PersonaNatural = new PersonaNatural();
 
-  trustedUrl: SafeResourceUrl;
-
   constructor(
     private sanitizer: DomSanitizer,
     private utilitariosService: UtilitariosService,
@@ -47,43 +46,18 @@ export class FormPersonaNaturalComponent implements OnInit {
     private aduanasService: AduanasService,
     private estadosCivilesService: EstadosCivilesService,
     private profesionesService: ProfesionesService,
+    private modalService: NgbModal,
     private personaNaturalService: PersonaNaturalService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   isLoading = true;
   ngOnInit() {
-    console.log(this.objetoParaEditar, "Persona natural");
-
-    if (this.objetoParaEditar) {
-      this.personaNatural.Id = this.objetoParaEditar.Id;
-      this.personaNatural.RtnSolicitante = this.objetoParaEditar.RtnSolicitante;
-      this.personaNatural.DNI = this.objetoParaEditar.DNI;
-      this.personaNatural.NumReciboPublico =
-        this.objetoParaEditar.NumReciboPublico;
-      this.personaNatural.Estado =
-        this.objetoParaEditar.Estado ?? "- Seleccionar -";
-      this.personaNatural.Ciudad =
-        this.objetoParaEditar.Ciudad ?? "- Seleccionar -";
-      this.personaNatural.DireccionCompleta =
-        this.objetoParaEditar.DireccionCompleta;
-      this.personaNatural.Aduana =
-        this.objetoParaEditar.Aduana ?? "- Seleccionar -";
-      this.personaNatural["Estado Civil"] =
-        this.objetoParaEditar["Estado Civil"] ?? "- Seleccionar -";
-      this.personaNatural.Profesion =
-        this.objetoParaEditar.Profesion ?? "- Seleccionar -";
-    } else {
-      this.personaNatural.RtnSolicitante = "";
-      this.personaNatural.DNI = "";
-      this.personaNatural.NumReciboPublico = "";
-      this.personaNatural.Estado = "- Seleccionar -";
-      this.personaNatural.Ciudad = "- Seleccionar -";
-      this.personaNatural.DireccionCompleta = "";
-      this.personaNatural.Aduana = "- Seleccionar -";
-      this.personaNatural["Estado Civil"] = "- Seleccionar -";
-      this.personaNatural.Profesion = "- Seleccionar -";
-    }
+    this.personaNatural.Estado = "- Seleccionar -";
+    this.personaNatural.Ciudad = "- Seleccionar -";
+    this.personaNatural.Aduana = "- Seleccionar -";
+    this.personaNatural["Estado Civil"] = "- Seleccionar -";
+    this.personaNatural.Profesion = "- Seleccionar -";
 
     this.estadosService.getData().subscribe(
       (data: Estado[]) => {
@@ -136,8 +110,8 @@ export class FormPersonaNaturalComponent implements OnInit {
     );
   }
 
-  sanitizarUrl(url: string) {
-    this.trustedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+  sanitizarUrl(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(
       this.sanitizer.sanitize(SecurityContext.URL, url)
     );
   }
@@ -150,6 +124,14 @@ export class FormPersonaNaturalComponent implements OnInit {
   DNIOnChange(event: any) {
     const val = event.target.value;
     this.personaNatural.DNI = val;
+  }
+  NombreOnChange(event: any) {
+    const val = event.target.value;
+    this.personaNatural.Nombre = val;
+  }
+  ApellidoOnChange(event: any) {
+    const val = event.target.value;
+    this.personaNatural.Apellido = val;
   }
 
   ReciboPublicoOnChange(event: any) {
@@ -261,10 +243,11 @@ export class FormPersonaNaturalComponent implements OnInit {
         formData
       );
 
+      console.log(res, 'res');
       if (res) {
         this.personaNatural.DNIUrl =
-          "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
-        this.sanitizarUrl(this.personaNatural.DNIUrl);
+        "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
+        console.log(this.personaNatural.DNIUrl, 'DNIUrl');
         this.mostrarSuccess("PDF DNI guardado con éxito.");
       }
     }
@@ -297,6 +280,11 @@ export class FormPersonaNaturalComponent implements OnInit {
     }
   }
 
+  verPdf(prop: string) {
+    let modalRef = this.modalService.open(ModalPdfComponent, {size: 'lg'});
+    modalRef.componentInstance.pdfUrl = this.sanitizarUrl(this.personaNatural[prop]);
+  }
+
   async guardar() {
     if (!this.personaNatural.RtnSolicitante) {
       this.mostrarWarning("Por favor ingrese el RTN del solicitante.");
@@ -312,6 +300,14 @@ export class FormPersonaNaturalComponent implements OnInit {
     }
     if (!this.personaNatural.DNIUrl) {
       this.mostrarWarning("Por favor adjunte el PDF del DNI de la persona.");
+      return;
+    }
+    if (!this.personaNatural.Nombre) {
+      this.mostrarWarning("Por favor ingrese el nombre de la persona.");
+      return;
+    }
+    if (!this.personaNatural.Apellido) {
+      this.mostrarWarning("Por favor ingrese el apellido de la persona.");
       return;
     }
     if (!this.personaNatural.NumReciboPublico) {

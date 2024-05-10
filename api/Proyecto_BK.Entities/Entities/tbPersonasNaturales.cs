@@ -22,7 +22,7 @@ namespace sistema_aduana.Entities.Entities
         public string PeNa_DNIurlPdf { get; set; }
         public string PeNa_NumReciboPublico { get; set; }
         public string PeNa_NumReciboPublicoUrlPdf { get; set; }
-        public int Ofic_Id { get; set; }
+        public int? Ofic_Id { get; set; }
         public int EsCi_Id { get; set; }
         public int Prof_Id { get; set; }
         public int Ciud_Id { get; set; }
