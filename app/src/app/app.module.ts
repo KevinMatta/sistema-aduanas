@@ -18,6 +18,9 @@ import { BrowserModule } from "@angular/platform-browser";
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import { MAT_DIALOG_DEFAULT_OPTIONS } from "@angular/material/dialog";
 import { FormUsuariosComponent } from "./components/form-usuarios/form-usuarios.component";
+import { FormFacturaitemComponent } from "./components/items-Factura/factura-item.component";
+import { FormFacturaEncabezadoComponent } from "./components/factura-encabezado/factura-encabezado.component";
+import { FormDeclaracionValorComponent } from "./components/form-declaracion-valor/form-declaracion-valor.component";
 
 @NgModule({
   imports: [
@@ -33,13 +36,15 @@ import { FormUsuariosComponent } from "./components/form-usuarios/form-usuarios.
     BrowserModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
+
+
   ],
   providers: [
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } },
     { provide: "DataService", useClass: UsuariosService },
   ],
-  declarations: [AppComponent, AdminLayoutComponent, FormUsuariosComponent],
-  entryComponents: [FormUsuariosComponent],
+  declarations: [AppComponent, AdminLayoutComponent, FormUsuariosComponent,FormFacturaitemComponent,FormFacturaEncabezadoComponent,FormDeclaracionValorComponent],
+  entryComponents: [FormUsuariosComponent,FormFacturaitemComponent,FormFacturaEncabezadoComponent,FormDeclaracionValorComponent],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent],
 })

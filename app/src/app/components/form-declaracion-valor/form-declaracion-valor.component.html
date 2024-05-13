@@ -7,7 +7,7 @@
           <h5 class="title">Registro de Declaración de Valor</h5>
         </div>
         <div class="card-body">
-          <form>
+          <form [formGroup]="declaracionDeValorForm" (ngSubmit)="GuardarDeva()">
             <h6>I. Información General</h6>
             <h6>A. Información General de la Aduana</h6>
             <div class="row">
@@ -71,6 +71,7 @@
                     type="text"
                     class="form-control"
                     placeholder="Empresa Los Riques S.A."
+                    
                   />
                 </div>
               </div>
@@ -80,6 +81,9 @@
                   <input
                     type="text"
                     class="form-control"
+                    formControlName="DeVa_RtnImportador"
+                    id="DeVa_RtnImportador"
+                    name="DeVa_RtnImportador"
                     placeholder="05019001042021"
                   />
                 </div>
@@ -720,14 +724,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{EmbarSelecAduana}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
+
+                    <button
+                        *ngFor="let pais of aduanas"
+                        type="button"
+                        class="dropdown-item"
+                        (click)="Embaraduasel(pais.Id, pais.Aduana)"
+                      >
+                        {{ pais.Aduana }}
                       </button>
                     </div>
                   </div>
@@ -848,7 +855,7 @@
               </div>
             </ng-template>
             <h6>Facturas</h6>
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center" >
               <small
                 >- Mostrando un total de:
                 <span style="color: aquamarine"></span> Facturas</small
@@ -857,7 +864,7 @@
                 type="button"
                 type="button"
                 class="btn btn-outline-primary"
-                (click)="open(content)"
+                (click)="open()"
               >
                 <i
                   class="now-ui-icons ui-1_simple-add"
@@ -871,14 +878,18 @@
                 <thead class="text-primary">
                   <th>Nro. Factura</th>
                   <th>Fecha</th>
-                  <th>Operaciones</th>
+                  <th>Total</th>
                 </thead>
                 <tbody>
+                  <tr *ngFor="let item of dedService.Encabezado">
+                    <td>{{ item.Fact_NumeroFactura }}</td>
+                    <td>{{item.Fact_Fecha }}</td>
+                    <td></td>
+                  </tr>
                   <tr>
                     <td></td>
                     <td></td>
-                    <td></td>
-                  </tr>
+                    <td >{{ this.dedService.subtotal}}</td></tr>
                 </tbody>
               </table>
             </div>
@@ -1241,7 +1252,7 @@
                     <td>39</td>
                     <td>Precio según factura</td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" />
+                      <input type="text" class="form-control" [value]="this.dedService.subtotal" />
                     </td>
                   </tr>
                   <tr>
@@ -1491,6 +1502,16 @@
               indicar el número y fecha de estas, así como el número de la
               casilla/s a la que corresponde.</small
             >
+          
+          <div class="card-footer">
+            <button
+              type="submit"
+              class="btn btn-primary"
+            > 
+              Guardar
+               
+            </button>
+          </div>
           </form>
         </div>
       </div>

@@ -16,6 +16,7 @@ import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { BrowserModule } from "@angular/platform-browser";
 import { FormContactoComponent } from "./form-contacto/form-contacto.component";
 import { FormDeclaracionValorComponent } from "./form-declaracion-valor/form-declaracion-valor.component";
+
 // import { FormUsuariosComponent } from "./form-usuarios/form-usuarios.component";
 import { RolesPorPantallaComponent } from "./roles-por-pantalla/roles-por-pantalla.component";
 import { MensajesComponent } from "./mensajes/mensajes.component";
@@ -40,7 +41,7 @@ import { MensajesComponent } from "./mensajes/mensajes.component";
     FormPersonaNaturalComponent,
     FormComercianteIndividualComponent,
     FormPersonaJuridicaComponent,
-    FormDeclaracionValorComponent,
+    // FormDeclaracionValorComponent,
     IndexListaComponent,
     MensajesComponent,
     LoginComponent,
@@ -55,7 +56,7 @@ import { MensajesComponent } from "./mensajes/mensajes.component";
     FormPersonaNaturalComponent,
     FormComercianteIndividualComponent,
     FormPersonaJuridicaComponent,
-    FormDeclaracionValorComponent,
+    // FormDeclaracionValorComponent,
     IndexListaComponent,
     MensajesComponent,
     LoginComponent,

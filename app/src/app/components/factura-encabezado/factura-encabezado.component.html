@@ -1,0 +1,127 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Facturas</h4>
+  <button
+    type="button"
+    class="btn btn-sm btn-outline-primary"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <i class="now-ui-icons ui-1_simple-remove"></i>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="title text-center">Agregar Factura</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="FactEnc">
+        <h6>FACTURA</h6>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="Fact_NumeroFactura">16. Número de Factura</label>
+              <input
+                type="text"
+                class="form-control"
+                maxlength="20"
+                formControlName="Fact_NumeroFactura" id="Fact_NumeroFactura" name="Fact_NumeroFactura"
+              
+                />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Fecha</label>
+              <div class="input-group d-flex align-items-center">
+                <!-- [(ngModel)]="model" -->
+                <input
+                  class="form-control"
+                  placeholder="yyyy-mm-dd"
+                  name="dp"
+                  ngbDatepicker
+                  #d="ngbDatepicker"
+                  style="height: 34px"
+                  (dateSelect)="onDateSelect($event)"
+                />
+                <button
+                  class="btn btn-outline-secondary calendar"
+                  (click)="d.toggle()"
+                  type="button"
+                >
+                  <i
+                    class="now-ui-icons ui-1_calendar-60"
+                    style="margin-right: 5px"
+                  ></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h6>Facturas</h6>
+        <div class="d-flex justify-content-between align-items-center">
+          <small
+            >- Mostrando un total de:
+            <span style="color: aquamarine"></span> Facturas</small
+          >
+          <button
+            type="button"
+            type="button"
+            class="btn btn-outline-primary"
+            (click)="openItem()"
+          >
+            <i
+              class="now-ui-icons ui-1_simple-add"
+              style="margin-right: 5px"
+            ></i>
+            Agregar Item
+          </button>
+        </div>
+        <div class="" style="overflow-x: auto">
+          <table class="table table-bordered">
+            <thead class="text-primary">
+              <th>Cantidad</th>
+              <th>Total</th>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let mar of dedService.Items">
+                <tr *ngIf="mar.Fact_NumeroFactura === this.dedService.numFactura">
+                  <td>{{ mar.FaDe_Cantidad }}</td>
+                  <td>{{ mar.FaDe_TotalFactura }}</td>
+                </tr>
+             </ng-container>
+            </tbody>
+          </table>
+          
+          <!-- <table class="table table-bordered">
+            <thead class="text-primary">
+              <th>Cantidad</th>
+              <th>Total</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let mar of Item; let i = index">
+                <td>{{ mar.FaDe_Cantidad }}</td>
+                <td>{{ mar.FaDe_TotalFactura }}</td>
+              </tr>
+            </tbody>
+          </table> -->
+        </div>
+      </form>
+    </div>
+  </div>
+ 
+</div>
+<div class="modal-footer" style="gap: 5px">
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    (click)="activeModal.close('Save click')"
+  >
+    <i class="now-ui-icons ui-1_simple-remove" style="margin-right: 5px"></i>
+    Cancelar
+  </button>
+  <button class="btn btn-primary" >
+    <i class="now-ui-icons ui-1_check" style="margin-right: 5px"></i>
+    Guardar
+  </button>
+</div>

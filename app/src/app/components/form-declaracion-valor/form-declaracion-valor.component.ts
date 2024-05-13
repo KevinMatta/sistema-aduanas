@@ -10,21 +10,30 @@ import { Aduana } from "../../Models/AduanasViewModel";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Estado } from '../../Models/EstadosViewModel';
 import { Ciudad } from '../../Models/CiudadesViewModel';
+import { FormFacturaEncabezadoComponent } from '../factura-encabezado/factura-encabezado.component';
+import { FormFacturaitemComponent } from '../items-Factura/factura-item.component';
+import { DEDService } from "../../Services/DeVa-Enc-Item.service";
+import { Factura } from "../../Models/FacEncViewModel";
+import { DeclaracionDeValor } from "../../Models/DeVaViewModel";
+
 @Component({
   selector: 'app-form-declaracion-valor',
   templateUrl: './form-declaracion-valor.component.html',
   styleUrls: ['./form-declaracion-valor.component.css']
 })
 export class FormDeclaracionValorComponent implements OnInit {
-
+  declaracionDeValorForm:FormGroup;
   display:any ="false";
   aduanas:Aduana[];
   paises: Pais[];
+  factura:Factura[]=[];
+  Deva:DeclaracionDeValor[];
   paisselectInfoGeneral:string;
   paisselectInterme:string;
   paisselectCARC:string;
   FormaEnvioSelect:string;
   EstadoSelctInfoGen:string;
+  EmbarSelecAduana:string;
   EstadoSelctInterm:string;
   ciuSelctInfoGen:string;
   ciuSelctInterm:string;
@@ -49,14 +58,22 @@ export class FormDeclaracionValorComponent implements OnInit {
   aduseling:string;
   ciuselec:string;
   closeResult = '';
-  formDeva: FormGroup;
+  // formDeva: FormGroup;
 
   constructor(private modalService: NgbModal, private paisesService: PaisesService,
      private aduanasService: AduanasService, private estadosService: EstadosService
-     , private fb:FormBuilder, private ciudadesService:CiudadesService
+     , 
+     private fb:FormBuilder,
+      private ciudadesService:CiudadesService,
+     public dedService: DEDService
     ) {}
      
   ngOnInit() {
+    
+    
+    this.factura = this.dedService.Encabezado;
+
+
     this.paiselect = "- Seleccionar -";
     this.aduselect = "- Seleccionar -";
     this.aduseling ="- Seleccionar -";
@@ -64,6 +81,7 @@ export class FormDeclaracionValorComponent implements OnInit {
     this.ciuselec ="- Seleccionar -";
     this.nivelselected ="- Seleccionar -";
     this.MonedaSel="- Seleccionar -";
+    this.EmbarSelecAduana="- Seleccionar -";
     this.paisselectInfoGeneral ="- Seleccionar -";
     this.EstadoSelctInfoGen ="- Seleccionar -";
     this.ciuSelctInfoGen = "- Seleccionar -";
@@ -76,6 +94,7 @@ export class FormDeclaracionValorComponent implements OnInit {
     this.pagoefecSel= "- Seleccionar -";
     this.paiselecttrans= "- Seleccionar -";
     this.FormaPago= "- Seleccionar -";
+    
     this.paisesService.getData().subscribe(
       (data: Pais[]) => {
         this.paises = data;
@@ -97,10 +116,10 @@ export class FormDeclaracionValorComponent implements OnInit {
     );
     
     //formgroup 
-      this.formDeva = this.fb.group({
+      // this.formDeva = this.fb.group({
 
 
-      })
+      // })
 
     //---endformgroup
 
@@ -121,15 +140,94 @@ export class FormDeclaracionValorComponent implements OnInit {
         console.log(error);
       }
     );
+    this.declaracionDeValorForm = this.fb.group({
+      DeVa_AduanaIngreso: ['', ],
+      DeVa_AduanaDespacho: ['', ],
+      DeVa_FechaAceptacion: [''],
+      DeVa_RtnImportador: ['', Validators.required ],
+      DeVa_LugarEntrega: ['' ],
+      DeVa_PaisEntrega: ['' ],
+      DeVa_NumeroContrado: ['' ],
+      DeVa_FechaContrado: ['' ],
+      DeVa_PaisEmbarque: ['' ],
+      Deva_LugarEmbarque: ['' ],
+      DeVa_PaisExportacion: ['' ],
+      DeVa_FechaExportacion: ['' ],
+      DeVa_Restricciones: [''],
+      DeVa_CondicionContraprestacion: [''],
+      DeVa_MontoReversion: [''],
+      DeVa_TipoVinculacion: [''],
+      DeVa_InfluenciaPrecio: [''],
+      DeVa_PagosIndirectosDescuentos: [''],
+      DeVa_CanonDerechosLicencia: [''],
+      DeVa_PrecioFactura: [''],
+      DeVa_PagosIndirectosDescuentosRetroactivos: [''],
+      DeVa_PrecioRealPagado: [''],
+      DeVa_MontoCondicionContraprestacion: [''],
+      DeVa_MontoReversionCasilla: [''],
+      DeVa_GastosComisiones: [''],
+      DeVa_GastosEnvasesEmbalajes: [''],
+      DeVa_ValorMaterialesConsumidos: [''],
+      DeVa_ValorHerramientas: [''],
+      DeVa_ValorMaterialesConsumidos2: [''],
+      DeVa_ValorIngenieriaCreacion: [''],
+      DeVa_ValorCanoDerechosLicencia: [''],
+      DeVa_GastosTransporteMercaderia: [''],
+      DeVa_GastosCargaDescarga: [''],
+      DeVa_CostosSeguro: [''],
+      DeVa_TotalAjustes: [''],
+      DeVa_GastosConstruccionArmado: [''],
+      DeVa_CostosTransportePosterior: [''],
+      DeVa_DerechosImpuestos: [''],
+      DeVa_MontoIntereses: [''],
+      DeVa_OtrasDeducciones: [''],
+      DeVa_TotalDeducciones: [''],
+      DeVa_ValorAduana: [''],
+      DeVa_Estado: [true],
+      DeVa_Creacion: ['' ],
+      DeVa_FechaCreacion: ['' ],
+      DeVa_Modifica: [''],
+      DeVa_FechaModifica: ['']
+    });
   }
 
 
 
-  open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  open() {
+    
+    let modalRef = this.modalService.open(FormFacturaEncabezadoComponent, { size: 'lg' });
+    modalRef.result.then((data) => {
+      this.factura = this.dedService.Encabezado;
+        console.log(this.factura);
+
+      console.log(data);
+    });
+  }
+
+
+
+  GuardarDeva() {
+    if (this.declaracionDeValorForm.valid) {
+      let nuevoDeva: DeclaracionDeValor = {
+        DeVa_RtnImportador: this.declaracionDeValorForm.get('DeVa_RtnImportador').value,
+        
+        
+      
+      }
+      console.log(nuevoDeva);
+      window.location.reload();
+    }
+    else {
+      // Si el FormGroup no está lleno, muestra un mensaje de error o toma la acción correspondiente
+      console.log('El formulario no está completo');
+      // Puedes mostrar un mensaje de error, deshabilitar el botón de abrir modal, etc.
+    }
+    
+  }
+  openItem() {
+    let modalRef = this.modalService.open(FormFacturaitemComponent);
+    modalRef.result.then((data) => {
+      console.log(data);
     });
   }
 
@@ -234,6 +332,9 @@ export class FormDeclaracionValorComponent implements OnInit {
 
   input29change(event:any) {
     this.input29 = event.target.value;
+  }
+  Embaraduasel(adus: number, adu: string) {
+    this.EmbarSelecAduana = adu;
   }
 }
 
