@@ -80,6 +80,29 @@ namespace sistema_aduana.DataAccess.Repository
                 parameter.Add("@CoIn_Creacion", item.CoIn_Creacion);
                 parameter.Add("@CoIn_FechaCreacion", item.CoIn_FechaCreacion);
 
+                parameter.Add("@EsCi_Id", item.EsCi_Id);
+                parameter.Add("@Prof_Id", item.Prof_Id);
+                parameter.Add("@Ciud_Id", item.Ciud_Id);
+                parameter.Add("@Adua_Id", item.Adua_Id);
+                parameter.Add("@CoIn_Direccion", item.CoIn_Direccion);
+                parameter.Add("@CoIn_DireccionRepresentanteLegal", item.CoIn_DireccionRepresentanteLegal);
+
+                parameter.Add("@CoIn_TelefonoFijo", item.CoIn_TelefonoFijo);
+                parameter.Add("@CoIn_TelefonoCelular", item.CoIn_TelefonoCelular);
+
+                parameter.Add("@CoIn_Correo", item.CoIn_Correo);
+                parameter.Add("@CoIn_CorreoAlternativo", item.CoIn_CorreoAlternativo);
+
+                parameter.Add("@CoIn_Rtn", item.CoIn_Rtn);
+                parameter.Add("@CoIn_DNI", item.CoIn_DNI);
+
+                parameter.Add("@CoIn_RtnUrl", item.CoIn_RtnUrl);
+                parameter.Add("@CoIn_RtnRepresentanteLegalUrl", item.CoIn_RtnRepresentanteLegalUrl);
+                parameter.Add("@CoIn_DNIUrl", item.CoIn_DNIUrl);
+                parameter.Add("@CoIn_DNIRepresentanteLegalUrl", item.CoIn_DNIRepresentanteLegalUrl);
+                parameter.Add("@CoIn_DeclaracionUrl", item.CoIn_DeclaracionUrl);
+
+
                 var result = db.Execute(sql, parameter, commandType: CommandType.StoredProcedure);
                 string mensaje = (result == 1) ? "exito" : "error";
                 return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };

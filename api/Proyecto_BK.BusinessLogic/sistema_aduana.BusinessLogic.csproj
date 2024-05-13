@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AWSSDK.S3" Version="3.7.307.31" />
+    <PackageReference Include="MailKit" Version="3.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Proyecto_BK.Common\sistema_aduana.Common.csproj" />
     <ProjectReference Include="..\Proyecto_BK.DataAccess\sistema_aduana.DataAccess.csproj" />
   </ItemGroup>
 

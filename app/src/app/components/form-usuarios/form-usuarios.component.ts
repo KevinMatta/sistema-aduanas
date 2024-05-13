@@ -13,7 +13,7 @@ import { UsuariosService } from "../../Services/usuarios.service";
   styleUrls: ["./form-usuarios.component.css"],
 })
 export class FormUsuariosComponent implements OnInit {
-  @Input() usuarioParaEditar: Usuario;
+  @Input() objetoParaEditar: Usuario;
   roles: Rol[];
 
   usuario: Usuario = new Usuario();
@@ -23,19 +23,18 @@ export class FormUsuariosComponent implements OnInit {
     public activeModal: NgbActiveModal,
     private rolesService: RolesService,
     private toastr: ToastrService,
-    private usuariosService: UsuariosService,
-    // private mensajesService:MensajesService
+    private usuariosService: UsuariosService
   ) { }
 
   isLoading = true;
   ngOnInit(): void {
-    console.log(this.usuarioParaEditar);
+    console.log(this.objetoParaEditar, 'OBJETO PARA EDITAR');
 
-    if (this.usuarioParaEditar) {
-      this.usuario.Id = this.usuarioParaEditar.Id;
-      this.usuario.Usuario = this.usuarioParaEditar.Usuario;
-      this.usuario.Rol = this.usuarioParaEditar.Rol ?? "- Seleccionar -";
-      this.usuario.EsAdmin = this.usuarioParaEditar.Admin === 'SI';
+    if (this.objetoParaEditar) {
+      this.usuario.Id = this.objetoParaEditar.Id;
+      this.usuario.Usuario = this.objetoParaEditar.Usuario;
+      this.usuario.Rol = this.objetoParaEditar.Rol ?? "- Seleccionar -";
+      this.usuario.EsAdmin = this.objetoParaEditar.Admin === 'SI';
       console.log(this.usuario.EsAdmin, "ESADMIN");
 
     } else {
@@ -85,7 +84,7 @@ export class FormUsuariosComponent implements OnInit {
         return;
       }
     }
-    if (!this.usuarioParaEditar) {
+    if (!this.objetoParaEditar) {
       if (!this.usuario.Clave) {
         this.mostrarWarning('Por favor ingrese su contraseña.');
         return;
@@ -100,8 +99,7 @@ export class FormUsuariosComponent implements OnInit {
             this.mostrarSuccess('Usuario creado con éxito.')
             this.activeModal.close(true);
           } else {
-            this.activeModal.close(false);
-            this.mostrarError('Error al crear el usuario.');
+            this.mostrarError('Ya existe ese usuario.');
           }
         },
         (error) => {

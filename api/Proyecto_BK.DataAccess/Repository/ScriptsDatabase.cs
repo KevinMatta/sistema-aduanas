@@ -12,7 +12,10 @@ namespace SistemaMedico.DataAcces.Repository
         #region Usuarios
         public static string UsuariosListar = "[Acce].[sp_Usuarios_listar]";
         public static string UsuariosBuscar = "[Acce].[sp_Usuarios_buscar]";
+        public static string UsuariosBuscarPorUsername = "[Acce].[sp_Usuarios_buscarPorUsuario]";
         public static string UsuariosCrear = "[Acce].[sp_Usuarios_crear]";
+        public static string UsuariosPIN = "[Acce].[sp_Usuarios_pin]";
+        public static string UsuariosReestablecer = "[Acce].[sp_Usuarios_reestablecer]";
         public static string UsuariosActualizar = "[Acce].[sp_Usuarios_actualizar]";
         public static string UsuariosEliminar = "[Acce].[sp_Usuarios_eliminar]";
         #endregion
@@ -108,6 +111,7 @@ namespace SistemaMedico.DataAcces.Repository
         public static string PersonasNaturalesListar = "Gral.sp_PersonasNaturales_listar";
         public static string PersonasNaturalesBuscar = "Gral.sp_PersonasNaturales_buscar";
         public static string PersonasNaturalesCrear = "Gral.sp_PersonasNaturales_crear";
+        public static string PersonasNaturalesPIN = "[Acce].[sp_PersonasNaturales_pin]";
         public static string PersonasNaturalesActualizar = "Gral.sp_PersonasNaturales_actualizar";
         public static string PersonasNaturalesEliminar = "Gral.sp_PersonasNaturales_eliminar";
         #endregion

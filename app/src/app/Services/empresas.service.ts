@@ -38,8 +38,9 @@ export class EmpresasService implements DataService {
   private mapResponse(data: any[]): Empresa[] {
     return data.map((item) => {
       const model: Empresa = {
-        Id: item.adua_Id,
+        Id: item.empr_Id,
         Empresa: item.empr_Descripcion,
+        Estado: item.esta_Descripcion,
         Ciudad: item.ciud_Descripcion,
       };
       return model;

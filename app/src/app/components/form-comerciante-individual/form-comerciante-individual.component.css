@@ -1,11 +1,23 @@
-.form-control:focus{
-    background-color: transparent;
+.form-control:focus {
+  background-color: transparent;
 }
 
-.form-control{
-    color: #61c3db;
+.form-control {
+  color: #61c3db;
 }
 
-.card{
-    top: -1%;
+.card {
+  top: -1%;
+}
+
+.tble-container::-webkit-scrollbar {
+  width: 0.5rem;
+}
+.tble-container::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  border-radius: 5px;
+}
+.tble-container::-webkit-scrollbar-track {
+  background-color: rgb(0, 0, 0);
+  border-radius: 5px;
 }

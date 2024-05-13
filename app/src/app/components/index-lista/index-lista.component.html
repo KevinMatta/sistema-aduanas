@@ -15,7 +15,7 @@
         </div>
         <div
           class="card-body"
-          style="overflow-y: auto; overflow-x: auto; max-height: 80%"
+          
         >
           <div class="d-flex justify-content-between" style="gap: 10px">
             <a
@@ -59,7 +59,7 @@
             class="material table"
             [columnMode]="ColumnMode.force"
             rowHeight="auto"
-            [limit]="9"
+            [limit]="7"
             [scrollbarH]="true"
             [messages]="{ emptyMessage: 'No se encontraron registros' }"
           >
@@ -68,6 +68,7 @@
               name="{{ column.name }}"
               prop="{{ column.prop }}"
               [flexGrow]="1"
+              [maxWidth]="column.name === 'Id' || column.name === 'Admin' || column.name === 'Sexo' ? 90 : column.name === 'Empresa' ? 300 : 'auto'"
             >
             </ngx-datatable-column>
             <ngx-datatable-column
@@ -75,7 +76,7 @@
               prop="name"
               style="display: flex; gap: 5px"
               [flexGrow]="1"
-              [minWidth]="380"
+              [minWidth]="300"
             >
               <ng-template
                 ngx-datatable-cell-template
@@ -83,12 +84,13 @@
                 let-row="row"
                 style="display: flex; gap: 5px"
               >
-                <div style="display: flex; min-width: 400px; gap: 5px">
+                <div style="display: flex; min-width: 300px; gap: 5px">
                   <button
                     *ngIf="!path"
                     type="button"
                     class="btn btn-sm btn-primary btn-outline-primary btn-round"
                     (click)="open(row.Id)"
+                    style="font-size: 12px; padding: 2px 15px;"
                   >
                     <i class="now-ui-icons design-2_ruler-pencil"></i>
                     Editar
@@ -96,12 +98,18 @@
                   <button
                     type="button"
                     class="btn btn-sm btn-primary btn-outline-primary btn-round"
+                    style="font-size: 12px; padding: 2px 15px;"
                     (click)="VerDetalle(row.Id)"
                   >
                     <i class="now-ui-icons ui-1_zoom-bold"></i>
-                    Ver detalles
+                    Detalle
                   </button>
-                  <button type="button" class="btn btn-sm btn-primary btn-outline-primary btn-round" (click)="confirmDeleteModal(row)">
+                  <button 
+                    type="button" 
+                    class="btn btn-sm btn-primary btn-outline-primary btn-round" 
+                    (click)="confirmDeleteModal(row)"
+                    style="font-size: 12px; padding: 2px 15px;"
+                    >
                     <i class="now-ui-icons ui-1_simple-remove"></i>
                     Eliminar
                   </button>

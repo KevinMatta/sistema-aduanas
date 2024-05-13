@@ -40,7 +40,7 @@ export class EmpleadosService implements DataService {
       const model: Empleado = {
         Id: item.empl_Id,
         Rtn: item.empl_Rtn,
-        Empleado: item.empl_PrimerNombre + item.empl_PrimerApellido,
+        Empleado: item.empl_PrimerNombre + " " + item.empl_PrimerApellido,
         Sexo: item.empl_Sexo,
         Usuario: item.usua_Usuario,
         ["Estado Civil"]: item.esCi_Descripcion,
