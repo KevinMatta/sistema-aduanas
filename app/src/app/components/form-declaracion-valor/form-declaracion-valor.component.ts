@@ -146,6 +146,7 @@ export class FormDeclaracionValorComponent implements OnInit {
       DeVa_RtnImportador: ['', Validators.required ],
       DeVa_LugarEntrega: ['' ],
       DeVa_PaisEntrega: ['' ],
+      
       DeVa_NumeroContrado: ['' ],
       DeVa_FechaContrado: ['' ],
       DeVa_PaisEmbarque: ['' ],
@@ -231,6 +232,7 @@ export class FormDeclaracionValorComponent implements OnInit {
         DeVa_RtnImportador: this.declaracionDeValorForm.get('DeVa_RtnImportador').value,
         DeVa_AduanaIngreso: parseInt(this.aduseling),
         DeVa_AduanaDespacho: parseInt(this.aduseling),
+        DeVa_LugarEntrega: this.declaracionDeValorForm.get('DeVa_LugarEntrega').value,
 
         
       
