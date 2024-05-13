@@ -104,7 +104,6 @@ export class FormDeclaracionValorComponent implements OnInit {
       }
     );
    
-
     
     this.ciudadesService.getData().subscribe(
       (data: Ciudad[]) => {
@@ -161,9 +160,11 @@ export class FormDeclaracionValorComponent implements OnInit {
       DeVa_PagosIndirectosDescuentos: [''],
       DeVa_CanonDerechosLicencia: [''],
       DeVa_PrecioFactura: [''],
-      DeVa_PagosIndirectosDescuentosRetroactivos: [''],
-      DeVa_PrecioRealPagado: [''],
+      DeVa_PagosIndirectosDescuentosRetroactivos: ['', Validators.required],
+      DeVa_PrecioRealPagado: ['', Validators.required],
+      //
       DeVa_MontoCondicionContraprestacion: [''],
+
       DeVa_MontoReversionCasilla: [''],
       DeVa_GastosComisiones: [''],
       DeVa_GastosEnvasesEmbalajes: [''],
@@ -172,9 +173,12 @@ export class FormDeclaracionValorComponent implements OnInit {
       DeVa_ValorMaterialesConsumidos2: [''],
       DeVa_ValorIngenieriaCreacion: [''],
       DeVa_ValorCanoDerechosLicencia: [''],
+      //conttttttttttt
       DeVa_GastosTransporteMercaderia: [''],
       DeVa_GastosCargaDescarga: [''],
+
       DeVa_CostosSeguro: [''],
+
       DeVa_TotalAjustes: [''],
       DeVa_GastosConstruccionArmado: [''],
       DeVa_CostosTransportePosterior: [''],
@@ -189,8 +193,23 @@ export class FormDeclaracionValorComponent implements OnInit {
       DeVa_Modifica: [''],
       DeVa_FechaModifica: ['']
     });
-  }
 
+    this.declaracionDeValorForm.get('DeVa_PagosIndirectosDescuentosRetroactivos').valueChanges.subscribe(() => {
+      this.calcularTotalFactura();
+    });
+    
+  }
+  calcularTotalFactura() {
+    const precioFac = this.dedService.subtotal;
+    const Pagos = parseFloat(this.declaracionDeValorForm.get('DeVa_PagosIndirectosDescuentosRetroactivos').value);
+    
+    const totalFactura = precioFac + Pagos;
+    
+    // Usar interpolación de cadenas para convertir el valor numérico a cadena de texto
+    this.declaracionDeValorForm.get('DeVa_PrecioRealPagado').setValue(`${totalFactura}`);
+
+    this.declaracionDeValorForm.get('DeVa_PrecioRealPagado').setValue(totalFactura);
+  }
 
 
   open() {
@@ -210,7 +229,9 @@ export class FormDeclaracionValorComponent implements OnInit {
     if (this.declaracionDeValorForm.valid) {
       let nuevoDeva: DeclaracionDeValor = {
         DeVa_RtnImportador: this.declaracionDeValorForm.get('DeVa_RtnImportador').value,
-        
+        DeVa_AduanaIngreso: parseInt(this.aduseling),
+        DeVa_AduanaDespacho: parseInt(this.aduseling),
+
         
       
       }
@@ -232,13 +253,13 @@ export class FormDeclaracionValorComponent implements OnInit {
   }
 
   paisSelect(paisId: number, pais: string) {
-    this.paiselect = pais;
+    this.paiselect = paisId.toString();
   }
   aduSelect(adus: number, adu: string) {
-    this.aduselect = adu;
+    this.aduselect = adus.toString();
   }
   aduSelectIn(adus: number, adu: string) {
-    this.aduseling = adu;
+    this.aduseling = adus.toString();
   }
   estadoSelec(esID: number, esd: string) {
     this.estadoselec = esd;
