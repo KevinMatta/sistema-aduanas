@@ -16,7 +16,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: "layout/index-usuarios",
     title: "Acce.Usuarios",
-    icon: "text_caps-small",
+    icon: "users_circle-08",
     class: "",
   },
   // {
@@ -28,55 +28,55 @@ export const ROUTES: RouteInfo[] = [
   {
     path: "layout/index-roles",
     title: "Acce.Roles",
-    icon: "text_caps-small",
+    icon: "ui-1_lock-circle-open",
     class: "",
   },
   {
     path: "layout/index-aduanas",
     title: "Adua.Aduanas",
-    icon: "text_caps-small",
+    icon: "shopping_box",
     class: "",
   },
   {
     path: "layout/index-profesiones",
     title: "Gral.Profesiones",
-    icon: "text_caps-small",
+    icon: "ui-2_settings-90",
     class: "",
   },
   {
     path: "layout/index-empleados",
     title: "Gral.Empleados",
-    icon: "text_caps-small",
+    icon: "business_badge",
     class: "",
   },
   {
     path: "layout/index-paises",
     title: "Gral.Paises",
-    icon: "text_caps-small",
+    icon: "location_world",
     class: "",
   },
   {
     path: "layout/index-estados",
     title: "Gral.Estados",
-    icon: "text_caps-small",
+    icon: "location_world",
     class: "",
   },
   {
     path: "layout/index-ciudades",
     title: "Gral.Ciudades",
-    icon: "text_caps-small",
+    icon: "location_world",
     class: "",
   },
   {
     path: "layout/index-empresas",
     title: "Adua.Empresas",
-    icon: "text_caps-small",
+    icon: "shopping_shop",
     class: "",
   },
   {
     path: "layout/index-estados-civiles",
     title: "Gral.Estados Civiles",
-    icon: "text_caps-small",
+    icon: "travel_info",
     class: "",
   },
   { path: "layout/icons", title: "Icons", icon: "education_atom", class: "" },
@@ -141,7 +141,7 @@ export class SidebarComponent implements OnInit {
   // public isGeneralCollapsed = true;
   // public isAduanaCollapsed = true;
 
-  esquemasMap:Map<string, string> = new Map<string, string>();
+  esquemasMap: Map<string, string> = new Map<string, string>();
 
   toggleCollapse(schema: string) {
     this.isCollapsed[schema] = !this.isCollapsed[schema];
@@ -151,22 +151,16 @@ export class SidebarComponent implements OnInit {
     return menuItem.title.includes(schema);
   }
 
-  belongsToAnySchema(menuItem: RouteInfo): boolean {
-    return !["Acce", "Gral", "Adua"].some((schema) => {
-      // console.log(this.belongsToSchema(menuItem, schema), menuItem, schema);
-      return this.belongsToSchema(menuItem, schema);
-    });
-  }
-
   menuItems: any[];
 
   constructor() {}
 
   ngOnInit() {
-    this.esquemasMap.set('Acce', "Acceso");
-    this.esquemasMap.set('Gral', "General");
-    this.esquemasMap.set('Adua', "Aduana");
+    this.esquemasMap.set("Acce", "Acceso.ui-1_lock-circle-open");
+    this.esquemasMap.set("Gral", "General.ui-1_settings-gear-63");
+    this.esquemasMap.set("Adua", "Aduana.shopping_box");
     this.menuItems = ROUTES.filter((menuItem) => menuItem);
+    console.log(this.menuItems, "this.menuItems");
   }
   isMobileMenu() {
     if (window.innerWidth > 991) {

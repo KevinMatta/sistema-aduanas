@@ -22,17 +22,32 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>RTN Solicitante</label>
-                <input type="text" class="form-control" placeholder="05012005042021" maxlength="20"
-                  (blur)="RtnSolicitanteOnChange($event)" />
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="05012005042021"
+                  maxlength="20"
+                  (blur)="RtnSolicitanteOnChange($event)"
+                />
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="archivoRTN">Archivo de RTN Solicitante</label>
                 <div class="d-flex">
-                  <input type="file" class="form-control" (change)="subirRtnSolicitanteArchivo($event)" />
-                  <button type="button" class="ml-2 btn btn-primary btn-outline-primary btn-round"
-                    style="font-size: 12px; padding: 2px 15px;" (click)="verPdf('RtnSolicitanteUrl')">
+                  <input
+                    type="file"
+                    class="form-control"
+                    [disabled]="!personaNatural.RtnSolicitante"
+                    (change)="subirRtnSolicitanteArchivo($event)"
+                  />
+                  <button
+                    type="button"
+                    class="ml-2 btn btn-primary btn-outline-primary btn-round"
+                    style="font-size: 12px; padding: 2px 15px"
+                    [disabled]="!personaNatural['RtnSolicitanteUrl']"
+                    (click)="verPdf('RtnSolicitanteUrl')"
+                  >
                     <i class="now-ui-icons ui-1_zoom-bold"></i>
                   </button>
                 </div>
@@ -43,18 +58,34 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Documento Nacional de Identificación (DNI)</label>
-                <input type="text" class="form-control" placeholder="0501200504202" maxlength="20"
-                  (change)="DNIOnChange($event)" />
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="0501200504202"
+                  maxlength="20"
+                  (change)="DNIOnChange($event)"
+                />
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="archivoRTN">Archivo de Documento Nacional de Identificación (DNI)
+                <label for="archivoRTN"
+                  >Archivo de Documento Nacional de Identificación (DNI)
                 </label>
                 <div class="d-flex">
-                  <input type="file" class="form-control" (change)="subirDni($event)" />
-                  <button type="button" class="ml-2 btn btn-primary btn-outline-primary btn-round"
-                    style="font-size: 12px; padding: 2px 15px;" (click)="verPdf('DNIUrl')">
+                  <input
+                    type="file"
+                    class="form-control"
+                    [disabled]="!personaNatural.DNI"
+                    (change)="subirDni($event)"
+                  />
+                  <button
+                    type="button"
+                    class="ml-2 btn btn-primary btn-outline-primary btn-round"
+                    style="font-size: 12px; padding: 2px 15px"
+                    [disabled]="!personaNatural['DNIUrl']"
+                    (click)="verPdf('DNIUrl')"
+                  >
                     <i class="now-ui-icons ui-1_zoom-bold"></i>
                   </button>
                 </div>
@@ -64,20 +95,37 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label>Número Recibo de Servicio Público (ENEE, SANAA, etc.)
+                <label
+                  >Número Recibo de Servicio Público (ENEE, SANAA, etc.)
                 </label>
-                <input type="text" class="form-control" maxlength="20" placeholder="333333"
-                  (change)="ReciboPublicoOnChange($event)" />
+                <input
+                  type="text"
+                  class="form-control"
+                  maxlength="20"
+                  placeholder="333333"
+                  (change)="ReciboPublicoOnChange($event)"
+                />
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="archivoRTN">Archivo del Recibo Servicio Público
+                <label for="archivoRTN"
+                  >Archivo del Recibo Servicio Público
                 </label>
                 <div class="d-flex">
-                  <input type="file" class="form-control" (change)="subirReciboPublico($event)" />
-                  <button type="button" class="ml-2 btn btn-primary btn-outline-primary btn-round"
-                    style="font-size: 12px; padding: 2px 15px;" (click)="verPdf('aaa')">
+                  <input
+                    type="file"
+                    class="form-control"
+                    [disabled]="!personaNatural.NumReciboPublico"
+                    (change)="subirReciboPublico($event)"
+                  />
+                  <button
+                    type="button"
+                    class="ml-2 btn btn-primary btn-outline-primary btn-round"
+                    style="font-size: 12px; padding: 2px 15px"
+                    [disabled]="!personaNatural['NumReciboPublicoUrl']"
+                    (click)="verPdf('NumReciboPublicoUrl')"
+                  >
                     <i class="now-ui-icons ui-1_zoom-bold"></i>
                   </button>
                 </div>
@@ -87,23 +135,32 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label>Nombre
-                </label>
-                <input type="text" class="form-control" placeholder="Jafeth Emilio" (change)="NombreOnChange($event)" />
+                <label>Nombre </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Jafeth Emilio"
+                  (change)="NombreOnChange($event)"
+                />
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="archivoRTN">Apellido
-                </label>
-                <input type="text" class="form-control" placeholder="Rodriguez Gutierrez"
-                  (change)="ApellidoOnChange($event)" />
+                <label for="archivoRTN">Apellido </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Rodriguez Gutierrez"
+                  (change)="ApellidoOnChange($event)"
+                />
               </div>
             </div>
           </div>
           <h6>Datos a Informar</h6>
-          <small>- Todos los datos marcados con un
-            <span style="color: red">*</span> son requeridos.</small>
+          <small
+            >- Todos los datos marcados con un
+            <span style="color: red">*</span> son requeridos.</small
+          >
           <div class="" style="overflow-x: auto">
             <table class="table table-bordered">
               <thead class="text-primary">
@@ -112,91 +169,24 @@
               </thead>
               <tbody>
                 <tr>
-                  <td colspan="2" class="text-primary" style="background-color: rgba(0, 0, 0, 0.02)">
-                    DOMICILIO DE LA PERSONA (PARA EFECTO DE UBICACIÓN, EN EL
-                    CONTRATO DE ADHESIÓN SE MOSTRARÁ EL DOMICILIO FISCAL
-                    REGISTRADO EN LA ADMINISTRACION TRIBUTARIA)
-                  </td>
-                </tr>
-                <tr>
                   <td>
                     <div ngbDropdown class="d-inline-block">
-                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
-                        {{ personaNatural.Estado }}
-                      </button>
-                      <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button *ngFor="let estado of estados" type="button" class="dropdown-item"
-                          (click)="estadoSelect(estado.Id, estado.Estado)">
-                          {{ estado.Estado }}
-                        </button>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    SD006 - ESTADO
-                    <span style="color: red">*</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div ngbDropdown class="d-inline-block">
-                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
-                        {{ personaNatural.Ciudad }}
-                      </button>
-                      <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button *ngFor="let ciudad of ciudadesFiltradas" type="button" class="dropdown-item"
-                          (click)="ciudadSelect(ciudad.Id, ciudad.Ciudad)">
-                          {{ ciudad.Ciudad }}
-                        </button>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    SD006 - CIUDAD
-                    <span style="color: red">*</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="text" class="form-control" (change)="DireccionOnChange($event)"
-                      placeholder="13 calle 9 avenida junto a pollos lenca" />
-                  </td>
-                  <td>
-                    SD007 - DIRECCIÓN COMPLETA (INCLUYA SEGÚN APLIQUE: ALDEA,
-                    CALLE Y AVENIDA, BARRIO O COLONIA, EDIFICIO O NÚMERO DE
-                    LOCAL, APARTAMENTO, Y PUNTOS DE REFERENCIA)
-                    <span style="color: red">*</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div ngbDropdown class="d-inline-block">
-                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
-                        {{ personaNatural.Aduana }}
-                      </button>
-                      <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button *ngFor="let aduana of aduanas" type="button" class="dropdown-item"
-                          (click)="aduanaSelect(aduana.Id, aduana.Aduana)">
-                          {{ aduana.Aduana }}
-                        </button>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    SD001 - OFICINA REGIONAL DE ADUANAS MÁS CERCANA
-                    <span style="color: red">*</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div ngbDropdown class="d-inline-block">
-                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
+                      <button
+                        class="btn btn-primary"
+                        id="dropdownMenu1"
+                        ngbDropdownToggle
+                      >
                         {{ personaNatural["Estado Civil"] }}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button *ngFor="let esCi of estadosCiviles" type="button" class="dropdown-item" (click)="
+                        <button
+                          *ngFor="let esCi of estadosCiviles"
+                          type="button"
+                          class="dropdown-item"
+                          (click)="
                             estadoCivilSelect(esCi.Id, esCi['Estado Civil'])
-                          ">
+                          "
+                        >
                           {{ esCi["Estado Civil"] }}
                         </button>
                       </div>
@@ -210,12 +200,20 @@
                 <tr>
                   <td>
                     <div ngbDropdown class="d-inline-block">
-                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
+                      <button
+                        class="btn btn-primary"
+                        id="dropdownMenu1"
+                        ngbDropdownToggle
+                      >
                         {{ personaNatural.Profesion }}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button *ngFor="let prof of profesiones" type="button" class="dropdown-item"
-                          (click)="profesionSelect(prof.Id, prof.Profesion)">
+                        <button
+                          *ngFor="let prof of profesiones"
+                          type="button"
+                          class="dropdown-item"
+                          (click)="profesionSelect(prof.Id, prof.Profesion)"
+                        >
                           {{ prof.Profesion }}
                         </button>
                       </div>
@@ -227,10 +225,124 @@
                     <span style="color: red">*</span>
                   </td>
                 </tr>
-                <app-form-contacto style="display: contents" [entidad]="'DE LA PERSONA'"
-                  (telefonoFijo)="onTelefonoFijoChange($event)" (telefonoCelular)="onTelefonoCelularChange($event)"
+                <tr>
+                  <td
+                    colspan="2"
+                    class="text-primary"
+                    style="background-color: rgba(0, 0, 0, 0.02)"
+                  >
+                    DOMICILIO DE LA PERSONA (PARA EFECTO DE UBICACIÓN, EN EL
+                    CONTRATO DE ADHESIÓN SE MOSTRARÁ EL DOMICILIO FISCAL
+                    REGISTRADO EN LA ADMINISTRACION TRIBUTARIA)
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div ngbDropdown class="d-inline-block">
+                      <button
+                        class="btn btn-primary"
+                        id="dropdownMenu1"
+                        ngbDropdownToggle
+                      >
+                        {{ personaNatural.Estado }}
+                      </button>
+                      <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                        <button
+                          *ngFor="let estado of estados"
+                          type="button"
+                          class="dropdown-item"
+                          (click)="estadoSelect(estado.Id, estado.Estado)"
+                        >
+                          {{ estado.Estado }}
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    SD006 - ESTADO
+                    <span style="color: red">*</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div ngbDropdown class="d-inline-block">
+                      <button
+                        class="btn btn-primary"
+                        id="dropdownMenu1"
+                        ngbDropdownToggle
+                        [disabled]="!personaNatural.esta_Id"
+                      >
+                        {{ personaNatural.Ciudad }}
+                      </button>
+                      <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                        <button
+                          *ngFor="let ciudad of ciudadesFiltradas"
+                          type="button"
+                          class="dropdown-item"
+                          (click)="ciudadSelect(ciudad.Id, ciudad.Ciudad)"
+                        >
+                          {{ ciudad.Ciudad }}
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    SD006 - CIUDAD
+                    <span style="color: red">*</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      (change)="DireccionOnChange($event)"
+                      placeholder="13 calle 9 avenida junto a pollos lenca"
+                    />
+                  </td>
+                  <td>
+                    SD007 - DIRECCIÓN COMPLETA (INCLUYA SEGÚN APLIQUE: ALDEA,
+                    CALLE Y AVENIDA, BARRIO O COLONIA, EDIFICIO O NÚMERO DE
+                    LOCAL, APARTAMENTO, Y PUNTOS DE REFERENCIA)
+                    <span style="color: red">*</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div ngbDropdown class="d-inline-block">
+                      <button
+                        class="btn btn-primary"
+                        id="dropdownMenu1"
+                        ngbDropdownToggle
+                        [disabled]="!personaNatural.ciud_Id"
+                      >
+                        {{ personaNatural.Aduana }}
+                      </button>
+                      <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                        <button
+                          *ngFor="let aduana of aduanas"
+                          type="button"
+                          class="dropdown-item"
+                          (click)="aduanaSelect(aduana.Id, aduana.Aduana)"
+                        >
+                          {{ aduana.Aduana }}
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    SD001 - OFICINA REGIONAL DE ADUANAS MÁS CERCANA
+                    <span style="color: red">*</span>
+                  </td>
+                </tr>
+                <app-form-contacto
+                  style="display: contents"
+                  [entidad]="'DE LA PERSONA'"
+                  (telefonoFijo)="onTelefonoFijoChange($event)"
+                  (telefonoCelular)="onTelefonoCelularChange($event)"
                   (correo)="onCorreoChange($event)"
-                  (correoAlternativo)="onCorreoAlternativoChange($event)"></app-form-contacto>
+                  (correoAlternativo)="onCorreoAlternativoChange($event)"
+                ></app-form-contacto>
               </tbody>
             </table>
             <div class="d-flex justify-content-end">

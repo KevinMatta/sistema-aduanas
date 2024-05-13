@@ -7,7 +7,6 @@ import { Ciudad } from "../../Models/CiudadesViewModel";
 import { CiudadesService } from "../../Services/ciudades.service";
 import { Empresa } from "../../Models/EmpresasViewModel";
 import { EmpresasService } from "../../Services/empresas.service";
-import { MensajesService, } from "../../Services/mensajes.service";
 
 @Component({
   selector: "app-form-empresas",
@@ -28,8 +27,7 @@ export class FormEmpresasComponent implements OnInit {
     private estadosService: EstadosService,
     private toastr: ToastrService,
     private ciudadesService: CiudadesService,
-    private empresasService: EmpresasService,
-    private MensajesService: MensajesService
+    private empresasService: EmpresasService
   ) {}
 
   isLoading = true;
@@ -46,7 +44,7 @@ export class FormEmpresasComponent implements OnInit {
       this.empresa.Estado = "- Seleccionar -";
       this.empresa.Ciudad = "- Seleccionar -";
     }
-  
+
     this.estadosService.getData().subscribe(
       (data: Estado[]) => {
         this.estados = data;

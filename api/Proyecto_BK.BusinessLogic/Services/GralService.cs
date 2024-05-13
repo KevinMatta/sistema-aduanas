@@ -1,7 +1,16 @@
-﻿using Proyecto_BK.BusinessLogic;
+﻿using Amazon;
+using Amazon.S3;
+using Amazon.S3.Transfer;
+using Microsoft.Extensions.Configuration;
+using Proyecto_BK.BusinessLogic;
 using sistema_aduana.DataAccess.Repository;
 using sistema_aduana.Entities.Entities;
 using System;
+using MimeKit;
+using MailKit.Net.Smtp;
+using System.IO;
+using Microsoft.Extensions.Options;
+using sistema_aduana.Common.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +20,8 @@ namespace sistema_aduana.BusinessLogic.Services
 {
     public class GralService
     {
+        private readonly MailSettings _mailSettings;
+        private readonly IConfiguration _configuration;
         private readonly CiudadRepository _ciudadRepository;
         private readonly EstadoRepository _estadoRepository;
         private readonly PaisRepository _paisRepository;
@@ -22,7 +33,7 @@ namespace sistema_aduana.BusinessLogic.Services
         private readonly PersonaNaturalRepository _personaNaturalRepository;
         private readonly ComercianteIndividualRepository _comercianteIndividualRepository;
         private readonly PersonaJuridicaRepository _personaJuridicaRepository;
-        public GralService(CiudadRepository ciudadRepository, EstadoRepository estadoRepository, EstadoCivilRepository estadoCivilRepository, PaisRepository paisRepository, EmpresaRepository empresaRepository, EmpleadoRepository empleadoRepository, OficinasRepository oficinasRepository, ProfesionesRepository profesionesRepository, PersonaNaturalRepository personaNaturalRepository, ComercianteIndividualRepository comercianteIndividualRepository, PersonaJuridicaRepository personaJuridicaRepository)
+        public GralService(CiudadRepository ciudadRepository, EstadoRepository estadoRepository, EstadoCivilRepository estadoCivilRepository, PaisRepository paisRepository, EmpresaRepository empresaRepository, EmpleadoRepository empleadoRepository, OficinasRepository oficinasRepository, ProfesionesRepository profesionesRepository, PersonaNaturalRepository personaNaturalRepository, ComercianteIndividualRepository comercianteIndividualRepository, PersonaJuridicaRepository personaJuridicaRepository, IConfiguration configuration, IOptions<MailSettings> mailSettingsOptions)
         {
             _ciudadRepository = ciudadRepository;
             _estadoRepository = estadoRepository;
@@ -35,7 +46,75 @@ namespace sistema_aduana.BusinessLogic.Services
             _personaNaturalRepository = personaNaturalRepository;
             _comercianteIndividualRepository = comercianteIndividualRepository;
             _personaJuridicaRepository = personaJuridicaRepository;
+            _configuration = configuration;
+            _mailSettings = mailSettingsOptions.Value;
         }
+
+        #region Utilitarios
+
+        public ServiceResult SendMail(MailData mailData)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                using (MimeMessage emailMessage = new MimeMessage())
+                {
+                    MailboxAddress emailFrom = new MailboxAddress(_mailSettings.SenderName, _mailSettings.SenderEmail);
+                    emailMessage.From.Add(emailFrom);
+                    MailboxAddress emailTo = new MailboxAddress(mailData.EmailToName, mailData.EmailToId);
+                    emailMessage.To.Add(emailTo);
+
+                    emailMessage.Subject = "Codigo de registro";
+
+                    BodyBuilder emailBodyBuilder = new BodyBuilder();
+                    emailBodyBuilder.TextBody = mailData.EmailBody;
+
+                    emailMessage.Body = emailBodyBuilder.ToMessageBody();
+                    using (SmtpClient mailClient = new SmtpClient())
+                    {
+                        mailClient.Connect(_mailSettings.Server, _mailSettings.Port, MailKit.Security.SecureSocketOptions.StartTls);
+                        mailClient.Authenticate(_mailSettings.UserName, _mailSettings.Password);
+                        mailClient.Send(emailMessage);
+                        mailClient.Disconnect(true);
+                    }
+                }
+                return result.Ok("Correo enviado");
+            }
+            catch (Exception ex)
+            {
+                return result.Error("Error al enviar el correo");
+            }
+        }
+
+        public async Task<ServiceResult> SubirArchivoAsync(Stream pdf, string keyName)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                string bucketKey = _configuration["BucketKeys:bucketKey"];
+                string bucketSecret = _configuration["BucketKeys:bucketSecret"];
+                string bucketName = _configuration["BucketKeys:bucketName"];
+
+                using (var client = new AmazonS3Client(bucketKey, bucketSecret, RegionEndpoint.USEast2))
+                {
+                    using (var newMemoryStream = new MemoryStream())
+                    {
+                        await pdf.CopyToAsync(newMemoryStream);
+                        newMemoryStream.Position = 0;
+
+                        var fileTransferUtility = new TransferUtility(client);
+                        await fileTransferUtility.UploadAsync(newMemoryStream, bucketName, keyName);
+                    }
+                }
+                return result.Ok();
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        #endregion
 
         #region Pais
         public ServiceResult PaisListar()

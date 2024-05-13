@@ -57,6 +57,16 @@
 </tr>
 <tr>
   <td>
+    <button
+      type="button"
+      class="btn btn-primary mb-1 d-flex justify-content-center align-items-center w-100"
+      style="font-size: x-small; color: black; padding: 0 0.25rem"
+      [disabled]="!correoTemp"
+      (click)="enviarCorreo(false)"
+    >
+      <div style="max-width: 90px">Enviar código de verficación</div>
+      <i class="now-ui-icons ui-1_email-85 ml-1" style="font-size: large"></i>
+    </button>
     <input
       type="email"
       class="form-control"
@@ -74,6 +84,18 @@
 </tr>
 <tr>
   <td>
+    <button
+      type="button"
+      class="btn btn-primary mb-1 d-flex justify-content-center align-items-center w-100"
+      style="font-size: x-small; color: black; padding: 0 0.25rem"
+      [disabled]="
+        !correoAlternativoTemp || correoTemp === correoAlternativoTemp
+      "
+      (click)="enviarCorreo(true)"
+    >
+      <div style="max-width: 90px">Enviar código de verficación</div>
+      <i class="now-ui-icons ui-1_email-85 ml-1" style="font-size: large"></i>
+    </button>
     <input
       type="email"
       class="form-control"

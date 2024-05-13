@@ -49,7 +49,7 @@ export class FormPersonaNaturalComponent implements OnInit {
     private modalService: NgbModal,
     private personaNaturalService: PersonaNaturalService,
     private toastr: ToastrService
-  ) { }
+  ) {}
 
   isLoading = true;
   ngOnInit() {
@@ -160,7 +160,7 @@ export class FormPersonaNaturalComponent implements OnInit {
   ciudadSelect(ciudId: number, ciudad: string) {
     this.personaNatural.ciud_Id = ciudId;
     this.personaNatural.Ciudad = ciudad;
-    // this.filtrarAduanas(this.personaNatural.ciud_Id);
+    this.filtrarAduanas(this.personaNatural.ciud_Id);
   }
 
   DireccionOnChange(event: any) {
@@ -243,11 +243,11 @@ export class FormPersonaNaturalComponent implements OnInit {
         formData
       );
 
-      console.log(res, 'res');
+      console.log(res, "res");
       if (res) {
         this.personaNatural.DNIUrl =
-        "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
-        console.log(this.personaNatural.DNIUrl, 'DNIUrl');
+          "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
+        console.log(this.personaNatural.DNIUrl, "DNIUrl");
         this.mostrarSuccess("PDF DNI guardado con éxito.");
       }
     }
@@ -281,8 +281,10 @@ export class FormPersonaNaturalComponent implements OnInit {
   }
 
   verPdf(prop: string) {
-    let modalRef = this.modalService.open(ModalPdfComponent, {size: 'lg'});
-    modalRef.componentInstance.pdfUrl = this.sanitizarUrl(this.personaNatural[prop]);
+    let modalRef = this.modalService.open(ModalPdfComponent, { size: "lg" });
+    modalRef.componentInstance.pdfUrl = this.sanitizarUrl(
+      this.personaNatural[prop]
+    );
   }
 
   async guardar() {
@@ -364,11 +366,13 @@ export class FormPersonaNaturalComponent implements OnInit {
       return;
     }
     if (!this.personaNatural.Correo) {
-      this.mostrarWarning("Por favor el correo de la persona.");
+      this.mostrarWarning("Por favor ingrese el correo de la persona.");
       return;
     }
     if (!this.personaNatural.CorreoAlternativo) {
-      this.mostrarWarning("Por favor un correo alternativo de la persona.");
+      this.mostrarWarning(
+        "Por favor ingrese un correo alternativo de la persona."
+      );
       return;
     }
 

@@ -136,6 +136,22 @@ namespace sistema_aduana.DataAccess.Repository
 
             }
         }
+        public RequestStatus ActualizarCodigoVerificacion(string PeNa_Id, string codigo)
+        {
+            using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("PeNa_Id", PeNa_Id);
+                parametro.Add("PeNa_CodigoVerificacion", codigo);
+
+                var result = db.QueryFirst(ScriptsDatabase.PersonasNaturalesPIN,
+                    parametro,
+                     commandType: CommandType.StoredProcedure
+                    );
+
+                return new RequestStatus { CodeStatus = result.Resultado };
+            }
+        }
 
     }
 }

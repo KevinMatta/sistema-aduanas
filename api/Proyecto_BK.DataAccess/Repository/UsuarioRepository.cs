@@ -37,6 +37,20 @@ namespace sistema_aduana.DataAccess.Repository
             };
         }
 
+        public tbUsuarios Find(string? Usua_Usuario)
+        {
+            string sql = ScriptsDatabase.UsuariosBuscarPorUsername;
+
+            tbUsuarios result = new tbUsuarios();
+
+            using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
+            {
+                var parameters = new { Usua_Usuario };
+                result = db.QueryFirstOrDefault<tbUsuarios>(sql, parameters, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+        }
+
         public tbUsuarios Find(int? Usua_Id)
         {
             string sql = ScriptsDatabase.UsuariosBuscar;
@@ -105,5 +119,55 @@ namespace sistema_aduana.DataAccess.Repository
 
             }
         }
+        public IEnumerable<tbUsuarios> Login(string usuario, string contra)
+        {
+            string sql = "EXEC [Acce].[SP_Usuarios_InicioSesion] @Usuario  , @Contra  ;";
+
+            List<tbUsuarios> result = new List<tbUsuarios>();
+            using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
+            {
+
+                result = db.Query<tbUsuarios>(sql, new { Usuario = usuario, Contra = contra }, commandType: CommandType.Text).ToList();
+                return result;
+            }
+        }
+
+        public RequestStatus ActualizarCodigoVerificacion(string Usua_Id, string codigo)
+        {
+            using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("Usua_Id", Usua_Id);
+                parametro.Add("Usua_CodigoVerificacion", codigo);
+
+                var result = db.QueryFirst(ScriptsDatabase.UsuariosPIN,
+                    parametro,
+                     commandType: CommandType.StoredProcedure
+                    );
+
+                return new RequestStatus { CodeStatus = result.Resultado };
+            }
+        }
+
+        public RequestStatus RestablecerContra(tbUsuarios item)
+        {
+            using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("Usua_Id", item.Usua_Id);
+                parametro.Add("Usua_Contra", item.Usua_Clave);
+                parametro.Add("Usua_Usua_Modifica", 1);
+                parametro.Add("Usua_Fecha_Modifica", DateTime.Now);
+
+                var result = db.Execute(ScriptsDatabase.UsuariosReestablecer,
+                    parametro,
+                     commandType: CommandType.StoredProcedure
+                    );
+
+                string mensaje = (result == 1) ? "Exito" : "Error";
+                return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+            }
+        }
+
     }
 }
