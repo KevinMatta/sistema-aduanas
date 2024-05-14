@@ -1,7 +1,7 @@
 import { Component, OnInit, SecurityContext, Input } from "@angular/core";
 import { UtilitariosService } from "../../Services/utilitarios.service";
 import { ToastrService } from "ngx-toastr";
-import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
+import { DomSanitizer } from "@angular/platform-browser";
 import { PersonaNatural } from "../../Models/PersonaNaturalViewModel";
 import { Estado } from "../../Models/EstadosViewModel";
 import { Ciudad } from "../../Models/CiudadesViewModel";
@@ -37,7 +37,6 @@ export class FormPersonaNaturalComponent implements OnInit {
   personaNatural: PersonaNatural = new PersonaNatural();
 
   constructor(
-    private sanitizer: DomSanitizer,
     private utilitariosService: UtilitariosService,
     private estadosService: EstadosService,
     private ciudadesService: CiudadesService,
@@ -105,12 +104,6 @@ export class FormPersonaNaturalComponent implements OnInit {
         console.log(error);
         this.isLoading = false;
       }
-    );
-  }
-
-  sanitizarUrl(url: string): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(
-      this.sanitizer.sanitize(SecurityContext.URL, url)
     );
   }
 
@@ -216,7 +209,6 @@ export class FormPersonaNaturalComponent implements OnInit {
             console.log(data, "data subir rtn solicitante");
             this.personaNatural.RtnSolicitanteUrl =
               "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
-            this.sanitizarUrl(this.personaNatural.RtnSolicitanteUrl);
             this.mostrarSuccess("PDF RTN guardado con éxito.");
           },
           (error) => {
@@ -276,7 +268,6 @@ export class FormPersonaNaturalComponent implements OnInit {
             console.log(data, "data subir recibo publico");
             this.personaNatural.NumReciboPublicoUrl =
               "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
-            this.sanitizarUrl(this.personaNatural.NumReciboPublicoUrl);
             this.mostrarSuccess("Recibo público guardado con éxito.");
           },
           (error) => {
@@ -289,7 +280,7 @@ export class FormPersonaNaturalComponent implements OnInit {
 
   verPdf(prop: string) {
     let modalRef = this.modalService.open(ModalPdfComponent, { size: "lg" });
-    modalRef.componentInstance.pdfUrl = this.sanitizarUrl(
+    modalRef.componentInstance.pdfUrl = this.utilitariosService.sanitizarUrl(
       this.personaNatural[prop]
     );
   }

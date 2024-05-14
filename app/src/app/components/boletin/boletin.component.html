@@ -1,15 +1,12 @@
 <div class="panel-header panel-header-sm"></div>
-<div id="boletin" class="main-content">
+<div class="main-content">
   <div class="row">
     <div class="col">
-      <div class="card">
+      <div id="boletin" class="card">
         <div class="card-header">
           <div class="row">
             <div class="col">
-              <img
-                src="./assets/img/logo_aduanas_blanco.png"
-                alt="Logo Aduana"
-              />
+              <img src="./assets/img/logo_aduanas_blanco.png" alt="Logo Aduana" />
             </div>
             <div class="col">
               <h6 class="title">ADMINISTRACION ADUANERA DE HONDURAS</h6>
@@ -18,10 +15,8 @@
             </div>
             <div class="col">
               <div class="row">
-                <small
-                  >- confirme la validez de este boletín mediante la lectura de
-                  este código QR-</small
-                >
+                <small>- confirme la validez de este boletín mediante la lectura de
+                  este código QR-</small>
               </div>
               <div class="row">QR</div>
             </div>
@@ -31,7 +26,7 @@
           <form>
             <div class="row">
               <div class="col mb-4">
-                <table class="table-bordered w-100">
+                <table id="tabla1" class="table-bordered w-100">
                   <tbody>
                     <tr>
                       <td colspan="2">
@@ -74,7 +69,7 @@
             </div>
             <div class="row">
               <div class="col">
-                <table class="table-bordered w-100">
+                <table id="tabla2" class="table-bordered w-100">
                   <tbody>
                     <tr>
                       <td>Boletín No.</td>
@@ -148,24 +143,15 @@
                 </table>
               </div>
             </div>
-            <div class="d-flex justify-content-end">
-              <button
-                type="button"
-                class="btn btn-primary"
-                (click)="convertHtml2Pdf()"
-              >
-                Registrarse
-              </button>
-            </div>
-            <object
-              width="100%"
-              height="450px"
-              [data]="blobUrl"
-              type="application/pdf"
-            ></object>
           </form>
         </div>
       </div>
     </div>
+    <object width="100%" height="450px" [data]="blobUrl" type="application/pdf"></object>
+  </div>
+  <div class="d-flex justify-content-end">
+    <button type="button" class="btn btn-primary" (click)="descargar()">
+      Registrarse
+    </button>
   </div>
 </div>
