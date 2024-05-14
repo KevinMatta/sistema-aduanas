@@ -1,0 +1,155 @@
+<div class="row">
+  <div class="col">
+    <div id="impresion" class="card">
+      <div class="card-header">
+        <h5 class="title">
+          SP009 - SOLICITUD DE CONTRATO DE ADHESION PARA PERSONA NATURAL
+        </h5>
+      </div>
+      <div class="card-body">
+        <h6>Datos generales</h6>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>RTN Solicitante</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="05012005042021"
+                maxlength="20"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Documento Nacional de Identificación (DNI)</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="0501200504202"
+                maxlength="20"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label
+                >Número Recibo de Servicio Público (ENEE, SANAA, etc.)
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                maxlength="20"
+                placeholder="333333"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Nombre completo</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Jafeth Emilio"
+              />
+            </div>
+          </div>
+        </div>
+        <h6>Datos a Informar</h6>
+        <small
+          >- Todos los datos marcados con un
+          <span style="color: red">*</span> son requeridos.</small
+        >
+        <div class="" style="overflow-x: auto">
+          <table class="table table-bordered">
+            <thead class="text-primary">
+              <th style="width: 40%;">Dato</th>
+              <th>Descripcion</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <!-- {{ personaNatural["Estado Civil"] }} -->
+                </td>
+                <td>
+                  SD106 - ESTADO CIVIL DE LA PERSONA
+                  <span style="color: red">*</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <!-- {{ personaNatural.Profesion }} -->
+                </td>
+                <td>
+                  SD108 - PROFESIÓN U OFICIO DE LA PERSONA (SEGUN CLASIFICADOR
+                  NACIONAL DE OCUPACIONES DE HONDURAS, CNOH-2018)
+                  <span style="color: red">*</span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  colspan="2"
+                  class="text-primary"
+                  style="background-color: rgba(0, 0, 0, 0.02)"
+                >
+                  DOMICILIO DE LA PERSONA (PARA EFECTO DE UBICACIÓN, EN EL
+                  CONTRATO DE ADHESIÓN SE MOSTRARÁ EL DOMICILIO FISCAL
+                  REGISTRADO EN LA ADMINISTRACION TRIBUTARIA)
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <!-- {{ personaNatural.Estado }} -->
+                </td>
+                <td>
+                  SD006 - ESTADO
+                  <span style="color: red">*</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <!-- {{ personaNatural.Ciudad }} -->
+                </td>
+                <td>
+                  SD006 - CIUDAD
+                  <span style="color: red">*</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="13 calle 9 avenida junto a pollos lenca"
+                  />
+                </td>
+                <td>
+                  SD007 - DIRECCIÓN COMPLETA (INCLUYA SEGÚN APLIQUE: ALDEA,
+                  CALLE Y AVENIDA, BARRIO O COLONIA, EDIFICIO O NÚMERO DE
+                  LOCAL, APARTAMENTO, Y PUNTOS DE REFERENCIA)
+                  <span style="color: red">*</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <!-- {{ personaNatural.Aduana }} -->
+                </td>
+                <td>
+                  SD001 - OFICINA REGIONAL DE ADUANAS MÁS CERCANA
+                  <span style="color: red">*</span>
+                </td>
+              </tr>
+              <!-- <app-form-contacto
+                style="display: contents"
+                [entidad]="'DE LA PERSONA'"
+              ></app-form-contacto> -->
+            </tbody>
+          </table>
+          <object *ngIf="blobUrl" width="100%" height="450px" [data]="blobUrl" type="application/pdf"></object>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

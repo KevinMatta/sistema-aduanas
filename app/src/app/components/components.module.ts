@@ -19,6 +19,7 @@ import { FormDeclaracionValorComponent } from "./form-declaracion-valor/form-dec
 // import { FormUsuariosComponent } from "./form-usuarios/form-usuarios.component";
 import { RolesPorPantallaComponent } from "./roles-por-pantalla/roles-por-pantalla.component";
 import { MensajesComponent } from "./mensajes/mensajes.component";
+import { PdfPersonaNaturalComponent } from "./pdf-persona-natural/pdf-persona-natural.component";
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { MensajesComponent } from "./mensajes/mensajes.component";
     FormContactoComponent,
     RolesPorPantallaComponent,
     FormPersonaNaturalComponent,
+    PdfPersonaNaturalComponent,
     FormComercianteIndividualComponent,
     FormPersonaJuridicaComponent,
     FormDeclaracionValorComponent,
@@ -51,6 +53,7 @@ import { MensajesComponent } from "./mensajes/mensajes.component";
     FormUbicacionComponent,
     FormContactoComponent,
     FormPersonaNaturalComponent,
+    PdfPersonaNaturalComponent,
     FormComercianteIndividualComponent,
     FormPersonaJuridicaComponent,
     FormDeclaracionValorComponent,

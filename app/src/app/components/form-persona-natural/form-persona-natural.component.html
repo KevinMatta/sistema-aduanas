@@ -1,12 +1,4 @@
 <div class="panel-header panel-header-sm"></div>
-<style>
-  @media (min-width: 576px) {
-    .modal-dialog {
-      max-width: 80%;
-      margin: 1.75rem auto;
-    }
-  }
-</style>
 <div id="boletin" class="main-content">
   <div class="row">
     <div class="col">
@@ -350,9 +342,11 @@
                 Registrarse
               </button>
             </div>
+            <object *ngIf="blobUrl" width="100%" height="450px" [data]="blobUrl" type="application/pdf"></object>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <app-pdf-persona-natural *ngIf="blobUrl"></app-pdf-persona-natural>
 </div>

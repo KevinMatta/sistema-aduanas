@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import {jsPDF} from "jspdf";
 import { UtilitariosService } from "../../Services/utilitarios.service";
 import { SafeResourceUrl } from "@angular/platform-browser";
+import {jsPDF} from "jspdf";
 import html2PDF from 'jspdf-html2canvas';
 
 @Component({

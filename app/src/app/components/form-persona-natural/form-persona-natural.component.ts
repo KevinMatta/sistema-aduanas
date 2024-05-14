@@ -1,7 +1,6 @@
 import { Component, OnInit, SecurityContext, Input } from "@angular/core";
 import { UtilitariosService } from "../../Services/utilitarios.service";
 import { ToastrService } from "ngx-toastr";
-import { DomSanitizer } from "@angular/platform-browser";
 import { PersonaNatural } from "../../Models/PersonaNaturalViewModel";
 import { Estado } from "../../Models/EstadosViewModel";
 import { Ciudad } from "../../Models/CiudadesViewModel";
@@ -16,6 +15,9 @@ import { Profesion } from "../../Models/ProfesionesViewModel";
 import { PersonaNaturalService } from "../../Services/personaNatural.service";
 import { ModalPdfComponent } from "../modal-pdf/modal-pdf.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { SafeResourceUrl } from "@angular/platform-browser";
+import {jsPDF} from "jspdf";
+import html2PDF from 'jspdf-html2canvas';
 // import * as html2pdf from "html2pdf.js";
 
 @Component({
@@ -24,6 +26,9 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
   styleUrls: ["./form-persona-natural.component.css"],
 })
 export class FormPersonaNaturalComponent implements OnInit {
+
+  blobUrl:SafeResourceUrl = "fef";
+
   estados: Estado[];
   ciudades: Ciudad[];
   ciudadesFiltradas: Ciudad[];
@@ -286,6 +291,30 @@ export class FormPersonaNaturalComponent implements OnInit {
   }
 
   async guardar() {
+
+    const impresion = document.getElementById("impresion")
+
+    const dateObj = new Date();
+    const month   = dateObj.getUTCMonth() + 1; 
+    const day     = dateObj.getUTCDate();
+    const year    = dateObj.getUTCFullYear();
+
+    const newDate = `${year}/${month}/${day}`;
+
+    const pdf = await html2PDF(impresion, {
+      jsPDF: {
+        format: 'a4',
+      },
+      imageType: 'image/jpeg',
+      output: `./pdf/${newDate}-formulario-persona-natural.pdf`
+    });
+
+    pdf.setFillColor(13,13,13);
+    pdf.rect(0, 495, 800, 350, "F");
+
+    this.blobUrl = this.utilitariosService.sanitizarBlobURl(URL.createObjectURL(pdf.output("blob")));
+
+
     if (!this.personaNatural.RtnSolicitante) {
       this.mostrarWarning("Por favor ingrese el RTN del solicitante.");
       return;
@@ -375,9 +404,30 @@ export class FormPersonaNaturalComponent implements OnInit {
     }
 
     await this.personaNaturalService.Crear(this.personaNatural).subscribe(
-      (data: any) => {
+      async (data: any) => {
         if (data.code >= 200 && data.code <= 300) {
           this.mostrarSuccess("Persona natural registrada con éxito.");
+          const impresion = document.getElementById("impresion")
+
+          const dateObj = new Date();
+          const month   = dateObj.getUTCMonth() + 1; 
+          const day     = dateObj.getUTCDate();
+          const year    = dateObj.getUTCFullYear();
+
+          const newDate = `${year}/${month}/${day}`;
+
+          const pdf = await html2PDF(impresion, {
+            jsPDF: {
+              format: 'a4',
+            },
+            imageType: 'image/jpeg',
+            output: `./pdf/${newDate}-formulario-persona-natural.pdf`
+          });
+      
+          pdf.setFillColor(13,13,13);
+          pdf.rect(0, 495, 800, 350, "F");
+      
+          this.blobUrl = this.utilitariosService.sanitizarBlobURl(URL.createObjectURL(pdf.output("blob")));
         } else {
           this.mostrarError("Ya existe esta persona natural.");
         }
