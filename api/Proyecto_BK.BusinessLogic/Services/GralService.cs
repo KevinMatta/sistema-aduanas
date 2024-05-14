@@ -67,7 +67,11 @@ namespace sistema_aduana.BusinessLogic.Services
                     emailMessage.Subject = "Codigo de registro";
 
                     BodyBuilder emailBodyBuilder = new BodyBuilder();
-                    emailBodyBuilder.TextBody = mailData.EmailBody;
+                    string html = "<header><h1 style='text-align: center;'>Verifica tu correo electrónico</h1>"+
+                        "<p style='text-align: center;'>Ingresa este código de verificación en nuestro sitio web en el formulario de registro</p></header>" +
+                        $"<main><div style='background-color: #E3E3E3; width: 100px; max-width: 100px; margin: 20px auto; font-size: 18px; padding: 20px; border-radius: 10px; text-align: center;'>{mailData.EmailBody}</div>" +
+                        "<footer style='text-align: center;'>Si tu no solicitaste este correo de confirmación puedes ignorarlo.</footer></main>";
+                    emailBodyBuilder.HtmlBody = html;
 
                     emailMessage.Body = emailBodyBuilder.ToMessageBody();
                     using (SmtpClient mailClient = new SmtpClient())
@@ -710,6 +714,19 @@ namespace sistema_aduana.BusinessLogic.Services
             try
             {
                 var item = _personaNaturalRepository.Find(id);
+                return result.Ok(item);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+        public ServiceResult PersonasNaturalesBuscarPorDNI(string DNI)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var item = _personaNaturalRepository.Find(DNI);
                 return result.Ok(item);
             }
             catch (Exception ex)

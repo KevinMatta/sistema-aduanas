@@ -35,47 +35,13 @@ namespace sistema_aduana.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost("SubirRTNsolicitante")]
-        public async Task<IActionResult> SubirRTNsolicitante()
+        [HttpGet("Buscar/{dni}")]
+        public IActionResult Buscar(string dni)
         {
-            try
-            {
-                var pdf = Request.Form.Files[0];
-                var keyName = Request.Form["keyName"];
-
-                using (var stream = pdf.OpenReadStream())
-                {
-                    var response = await _gralService.SubirArchivoAsync(stream, keyName);
-                }
-
-                return Ok();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
+            var result = _gralService.PersonasNaturalesBuscarPorDNI(dni);
+            return Ok(result);
         }
-        [HttpPost("SubirDNI")]
-        public async Task<IActionResult> SubirDNI()
-        {
-            try
-            {
-                var pdf = Request.Form.Files[0];
-                var keyName = Request.Form["keyName"];
-
-                using (var stream = pdf.OpenReadStream())
-                {
-                    var response = await _gralService.SubirArchivoAsync(stream, keyName);
-                }
-
-                return Ok();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
-        [HttpPost("SubirReciboPublico")]
+        [HttpPost("SubirArchivo")]
         public async Task<IActionResult> SubirReciboPublico()
         {
             try

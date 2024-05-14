@@ -110,6 +110,7 @@ namespace SistemaMedico.DataAcces.Repository
         #region PersonasNaturales
         public static string PersonasNaturalesListar = "Gral.sp_PersonasNaturales_listar";
         public static string PersonasNaturalesBuscar = "Gral.sp_PersonasNaturales_buscar";
+        public static string PersonasNaturalesBuscarPorDNI = "Gral.sp_PersonasNaturales_buscarPorDNI";
         public static string PersonasNaturalesCrear = "Gral.sp_PersonasNaturales_crear";
         public static string PersonasNaturalesPIN = "[Acce].[sp_PersonasNaturales_pin]";
         public static string PersonasNaturalesActualizar = "Gral.sp_PersonasNaturales_actualizar";

@@ -10,7 +10,7 @@ import { ToastrService } from "ngx-toastr";
 export class ModalVerificacionPINComponent implements OnInit {
   @Input() codigo: string;
 
-  input: string;
+  inputArr = ["-", "-", "-", "-", "-", "-"];
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -18,12 +18,26 @@ export class ModalVerificacionPINComponent implements OnInit {
   ) {}
   ngOnInit(): void {}
 
-  pinOnChange(event: any): void {
-    this.input = event.target.value;
+  digitInput(event: any, index: number): void {
+    const nextInput = event.target.nextElementSibling;
+    const previousInput = event.target.previousElementSibling;
+
+    if (!event.target.value) {
+      if (previousInput) {
+        previousInput.focus();
+        this.inputArr[index] = "-";
+      }
+    } else if (nextInput) {
+      this.inputArr[index] = event.target.value;
+      nextInput.focus();
+    } else {
+      this.inputArr[index] = event.target.value;
+    }
+    console.log(this.inputArr, "inputArr");
   }
 
   verificar() {
-    if (this.input === this.codigo) {
+    if (this.inputArr.join("") === this.codigo) {
       this.activeModal.close(true);
     } else {
       this.toastr.error(

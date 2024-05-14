@@ -32,9 +32,7 @@ export class FormPersonaNaturalComponent implements OnInit {
   estadosCiviles: EstadoCivil[];
   profesiones: Profesion[];
 
-  endpointSubirRTN = "/API/PersonaNatural/SubirRTNsolicitante";
-  endpointSubirDNI = "/API/PersonaNatural/SubirDNI";
-  endpointSubirReciboPublico = "/API/PersonaNatural/SubirReciboPublico";
+  endpointSubirArchivo = "/API/PersonaNatural/SubirRTNsolicitante";
 
   personaNatural: PersonaNatural = new PersonaNatural();
 
@@ -197,7 +195,7 @@ export class FormPersonaNaturalComponent implements OnInit {
     this.personaNatural.CorreoAlternativo = correoAlternativo;
   }
 
-  async subirRtnSolicitanteArchivo(event: any) {
+  subirRtnSolicitanteArchivo(event: any) {
     if (this.personaNatural.RtnSolicitante === "") {
       this.mostrarWarning("Por favor ingrese el RTN del solicitante.");
       event.target.value = null;
@@ -211,21 +209,24 @@ export class FormPersonaNaturalComponent implements OnInit {
       const keyName =
         this.personaNatural.RtnSolicitante + "_RTNsolicitante_PeNa.pdf";
       formData.append("keyName", keyName);
-      const res = await this.utilitariosService.subirArchivo(
-        this.endpointSubirRTN,
-        formData
-      );
-
-      if (res) {
-        this.personaNatural.RtnSolicitanteUrl =
-          "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
-        this.sanitizarUrl(this.personaNatural.RtnSolicitanteUrl);
-        this.mostrarSuccess("PDF RTN guardado con éxito.");
-      }
+      this.utilitariosService
+        .subirArchivo(this.endpointSubirArchivo, formData)
+        .subscribe(
+          (data: any[]) => {
+            console.log(data, "data subir rtn solicitante");
+            this.personaNatural.RtnSolicitanteUrl =
+              "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
+            this.sanitizarUrl(this.personaNatural.RtnSolicitanteUrl);
+            this.mostrarSuccess("PDF RTN guardado con éxito.");
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
     }
   }
 
-  async subirDni(event: any) {
+  subirDni(event: any) {
     if (this.personaNatural.DNI === "") {
       this.mostrarWarning("Por favor ingrese el DNI de la persona.");
       event.target.value = null;
@@ -238,22 +239,24 @@ export class FormPersonaNaturalComponent implements OnInit {
       formData.append("pdf", pdf);
       const keyName = this.personaNatural.DNI + "_DNI_PeNa.pdf";
       formData.append("keyName", keyName);
-      const res = await this.utilitariosService.subirArchivo(
-        this.endpointSubirDNI,
-        formData
-      );
-
-      console.log(res, "res");
-      if (res) {
-        this.personaNatural.DNIUrl =
-          "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
-        console.log(this.personaNatural.DNIUrl, "DNIUrl");
-        this.mostrarSuccess("PDF DNI guardado con éxito.");
-      }
+      this.utilitariosService
+        .subirArchivo(this.endpointSubirArchivo, formData)
+        .subscribe(
+          (data: any[]) => {
+            console.log(data, "data subir DNI");
+            this.personaNatural.DNIUrl =
+              "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
+            console.log(this.personaNatural.DNIUrl, "DNIUrl");
+            this.mostrarSuccess("PDF DNI guardado con éxito.");
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
     }
   }
 
-  async subirReciboPublico(event: any) {
+  subirReciboPublico(event: any) {
     if (this.personaNatural.NumReciboPublico === "") {
       this.mostrarWarning("Por favor ingrese el DNI de la persona.");
       event.target.value = null;
@@ -266,17 +269,21 @@ export class FormPersonaNaturalComponent implements OnInit {
       formData.append("pdf", pdf);
       const keyName = this.personaNatural.NumReciboPublico + "_DNI_PeNa.pdf";
       formData.append("keyName", keyName);
-      const res = await this.utilitariosService.subirArchivo(
-        this.endpointSubirReciboPublico,
-        formData
-      );
-
-      if (res) {
-        this.personaNatural.NumReciboPublicoUrl =
-          "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
-        this.sanitizarUrl(this.personaNatural.NumReciboPublicoUrl);
-        this.mostrarSuccess("Recibo público guardado con éxito.");
-      }
+      this.utilitariosService
+        .subirArchivo(this.endpointSubirArchivo, formData)
+        .subscribe(
+          (data: any[]) => {
+            console.log(data, "data subir recibo publico");
+            this.personaNatural.NumReciboPublicoUrl =
+              "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
+            this.sanitizarUrl(this.personaNatural.NumReciboPublicoUrl);
+            this.mostrarSuccess("Recibo público guardado con éxito.");
+          },
+          (error) => {
+            console.log(error);
+            this.isLoading = false;
+          }
+        );
     }
   }
 

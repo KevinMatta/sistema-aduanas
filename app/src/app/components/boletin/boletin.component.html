@@ -157,12 +157,12 @@
                 Registrarse
               </button>
             </div>
-            <iframe
-              [src]="blobUrl"
+            <object
               width="100%"
-              height="500px"
-              frameborder="0"
-            ></iframe>
+              height="450px"
+              [data]="blobUrl"
+              type="application/pdf"
+            ></object>
           </form>
         </div>
       </div>
