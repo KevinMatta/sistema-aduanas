@@ -2,7 +2,7 @@
 <div id="boletin" class="main-content">
   <div class="row">
     <div class="col">
-      <div class="card">
+      <div *ngIf="!verPreview" class="card">
         <div class="card-header">
           <h5 class="title">
             SP009 - SOLICITUD DE CONTRATO DE ADHESION PARA PERSONA NATURAL
@@ -14,32 +14,19 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>RTN Solicitante</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="05012005042021"
-                  maxlength="20"
-                  (blur)="RtnSolicitanteOnChange($event)"
-                />
+                <input type="text" class="form-control" placeholder="05012005042021" maxlength="20"
+                  (blur)="RtnSolicitanteOnChange($event)" />
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="archivoRTN">Archivo de RTN Solicitante</label>
                 <div class="d-flex">
-                  <input
-                    type="file"
-                    class="form-control"
-                    [disabled]="!personaNatural.RtnSolicitante"
-                    (change)="subirRtnSolicitanteArchivo($event)"
-                  />
-                  <button
-                    type="button"
-                    class="ml-2 btn btn-primary btn-outline-primary btn-round"
-                    style="font-size: 12px; padding: 2px 15px"
-                    [disabled]="!personaNatural['RtnSolicitanteUrl']"
-                    (click)="verPdf('RtnSolicitanteUrl')"
-                  >
+                  <input type="file" class="form-control" [disabled]="!personaNatural.RtnSolicitante"
+                    (change)="subirRtnSolicitanteArchivo($event)" />
+                  <button type="button" class="ml-2 btn btn-primary btn-outline-primary btn-round"
+                    style="font-size: 12px; padding: 2px 15px" [disabled]="!personaNatural['RtnSolicitanteUrl']"
+                    (click)="verPdf('RtnSolicitanteUrl')">
                     <i class="now-ui-icons ui-1_zoom-bold"></i>
                   </button>
                 </div>
@@ -50,34 +37,20 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Documento Nacional de Identificación (DNI)</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="0501200504202"
-                  maxlength="20"
-                  (change)="DNIOnChange($event)"
-                />
+                <input type="text" class="form-control" placeholder="0501200504202" maxlength="20"
+                  (change)="DNIOnChange($event)" />
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="archivoRTN"
-                  >Archivo de Documento Nacional de Identificación (DNI)
+                <label for="archivoRTN">Archivo de Documento Nacional de Identificación (DNI)
                 </label>
                 <div class="d-flex">
-                  <input
-                    type="file"
-                    class="form-control"
-                    [disabled]="!personaNatural.DNI"
-                    (change)="subirDni($event)"
-                  />
-                  <button
-                    type="button"
-                    class="ml-2 btn btn-primary btn-outline-primary btn-round"
-                    style="font-size: 12px; padding: 2px 15px"
-                    [disabled]="!personaNatural['DNIUrl']"
-                    (click)="verPdf('DNIUrl')"
-                  >
+                  <input type="file" class="form-control" [disabled]="!personaNatural.DNI"
+                    (change)="subirDni($event)" />
+                  <button type="button" class="ml-2 btn btn-primary btn-outline-primary btn-round"
+                    style="font-size: 12px; padding: 2px 15px" [disabled]="!personaNatural['DNIUrl']"
+                    (click)="verPdf('DNIUrl')">
                     <i class="now-ui-icons ui-1_zoom-bold"></i>
                   </button>
                 </div>
@@ -87,37 +60,22 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label
-                  >Número Recibo de Servicio Público (ENEE, SANAA, etc.)
+                <label>Número Recibo de Servicio Público (ENEE, SANAA, etc.)
                 </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  maxlength="20"
-                  placeholder="333333"
-                  (change)="ReciboPublicoOnChange($event)"
-                />
+                <input type="text" class="form-control" maxlength="20" placeholder="333333"
+                  (change)="ReciboPublicoOnChange($event)" />
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="archivoRTN"
-                  >Archivo del Recibo Servicio Público
+                <label for="archivoRTN">Archivo del Recibo Servicio Público
                 </label>
                 <div class="d-flex">
-                  <input
-                    type="file"
-                    class="form-control"
-                    [disabled]="!personaNatural.NumReciboPublico"
-                    (change)="subirReciboPublico($event)"
-                  />
-                  <button
-                    type="button"
-                    class="ml-2 btn btn-primary btn-outline-primary btn-round"
-                    style="font-size: 12px; padding: 2px 15px"
-                    [disabled]="!personaNatural['NumReciboPublicoUrl']"
-                    (click)="verPdf('NumReciboPublicoUrl')"
-                  >
+                  <input type="file" class="form-control" [disabled]="!personaNatural.NumReciboPublico"
+                    (change)="subirReciboPublico($event)" />
+                  <button type="button" class="ml-2 btn btn-primary btn-outline-primary btn-round"
+                    style="font-size: 12px; padding: 2px 15px" [disabled]="!personaNatural['NumReciboPublicoUrl']"
+                    (click)="verPdf('NumReciboPublicoUrl')">
                     <i class="now-ui-icons ui-1_zoom-bold"></i>
                   </button>
                 </div>
@@ -128,31 +86,20 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Nombre </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Jafeth Emilio"
-                  (change)="NombreOnChange($event)"
-                />
+                <input type="text" class="form-control" placeholder="Jafeth Emilio" (change)="NombreOnChange($event)" />
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="archivoRTN">Apellido </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Rodriguez Gutierrez"
-                  (change)="ApellidoOnChange($event)"
-                />
+                <input type="text" class="form-control" placeholder="Rodriguez Gutierrez"
+                  (change)="ApellidoOnChange($event)" />
               </div>
             </div>
           </div>
           <h6>Datos a Informar</h6>
-          <small
-            >- Todos los datos marcados con un
-            <span style="color: red">*</span> son requeridos.</small
-          >
+          <small>- Todos los datos marcados con un
+            <span style="color: red">*</span> son requeridos.</small>
           <div class="" style="overflow-x: auto">
             <table class="table table-bordered">
               <thead class="text-primary">
@@ -163,22 +110,13 @@
                 <tr>
                   <td>
                     <div ngbDropdown class="d-inline-block">
-                      <button
-                        class="btn btn-primary"
-                        id="dropdownMenu1"
-                        ngbDropdownToggle
-                      >
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
                         {{ personaNatural["Estado Civil"] }}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button
-                          *ngFor="let esCi of estadosCiviles"
-                          type="button"
-                          class="dropdown-item"
-                          (click)="
+                        <button *ngFor="let esCi of estadosCiviles" type="button" class="dropdown-item" (click)="
                             estadoCivilSelect(esCi.Id, esCi['Estado Civil'])
-                          "
-                        >
+                          ">
                           {{ esCi["Estado Civil"] }}
                         </button>
                       </div>
@@ -192,20 +130,12 @@
                 <tr>
                   <td>
                     <div ngbDropdown class="d-inline-block">
-                      <button
-                        class="btn btn-primary"
-                        id="dropdownMenu1"
-                        ngbDropdownToggle
-                      >
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
                         {{ personaNatural.Profesion }}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button
-                          *ngFor="let prof of profesiones"
-                          type="button"
-                          class="dropdown-item"
-                          (click)="profesionSelect(prof.Id, prof.Profesion)"
-                        >
+                        <button *ngFor="let prof of profesiones" type="button" class="dropdown-item"
+                          (click)="profesionSelect(prof.Id, prof.Profesion)">
                           {{ prof.Profesion }}
                         </button>
                       </div>
@@ -218,11 +148,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <td
-                    colspan="2"
-                    class="text-primary"
-                    style="background-color: rgba(0, 0, 0, 0.02)"
-                  >
+                  <td colspan="2" class="text-primary" style="background-color: rgba(0, 0, 0, 0.02)">
                     DOMICILIO DE LA PERSONA (PARA EFECTO DE UBICACIÓN, EN EL
                     CONTRATO DE ADHESIÓN SE MOSTRARÁ EL DOMICILIO FISCAL
                     REGISTRADO EN LA ADMINISTRACION TRIBUTARIA)
@@ -231,20 +157,12 @@
                 <tr>
                   <td>
                     <div ngbDropdown class="d-inline-block">
-                      <button
-                        class="btn btn-primary"
-                        id="dropdownMenu1"
-                        ngbDropdownToggle
-                      >
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle>
                         {{ personaNatural.Estado }}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button
-                          *ngFor="let estado of estados"
-                          type="button"
-                          class="dropdown-item"
-                          (click)="estadoSelect(estado.Id, estado.Estado)"
-                        >
+                        <button *ngFor="let estado of estados" type="button" class="dropdown-item"
+                          (click)="estadoSelect(estado.Id, estado.Estado)">
                           {{ estado.Estado }}
                         </button>
                       </div>
@@ -258,21 +176,13 @@
                 <tr>
                   <td>
                     <div ngbDropdown class="d-inline-block">
-                      <button
-                        class="btn btn-primary"
-                        id="dropdownMenu1"
-                        ngbDropdownToggle
-                        [disabled]="!personaNatural.esta_Id"
-                      >
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle
+                        [disabled]="!personaNatural.esta_Id">
                         {{ personaNatural.Ciudad }}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button
-                          *ngFor="let ciudad of ciudadesFiltradas"
-                          type="button"
-                          class="dropdown-item"
-                          (click)="ciudadSelect(ciudad.Id, ciudad.Ciudad)"
-                        >
+                        <button *ngFor="let ciudad of ciudadesFiltradas" type="button" class="dropdown-item"
+                          (click)="ciudadSelect(ciudad.Id, ciudad.Ciudad)">
                           {{ ciudad.Ciudad }}
                         </button>
                       </div>
@@ -285,12 +195,8 @@
                 </tr>
                 <tr>
                   <td>
-                    <input
-                      type="text"
-                      class="form-control"
-                      (change)="DireccionOnChange($event)"
-                      placeholder="13 calle 9 avenida junto a pollos lenca"
-                    />
+                    <input type="text" class="form-control" (change)="DireccionOnChange($event)"
+                      placeholder="13 calle 9 avenida junto a pollos lenca" />
                   </td>
                   <td>
                     SD007 - DIRECCIÓN COMPLETA (INCLUYA SEGÚN APLIQUE: ALDEA,
@@ -302,21 +208,13 @@
                 <tr>
                   <td>
                     <div ngbDropdown class="d-inline-block">
-                      <button
-                        class="btn btn-primary"
-                        id="dropdownMenu1"
-                        ngbDropdownToggle
-                        [disabled]="!personaNatural.ciud_Id"
-                      >
+                      <button class="btn btn-primary" id="dropdownMenu1" ngbDropdownToggle
+                        [disabled]="!personaNatural.ciud_Id">
                         {{ personaNatural.Aduana }}
                       </button>
                       <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                        <button
-                          *ngFor="let aduana of aduanas"
-                          type="button"
-                          class="dropdown-item"
-                          (click)="aduanaSelect(aduana.Id, aduana.Aduana)"
-                        >
+                        <button *ngFor="let aduana of aduanas" type="button" class="dropdown-item"
+                          (click)="aduanaSelect(aduana.Id, aduana.Aduana)">
                           {{ aduana.Aduana }}
                         </button>
                       </div>
@@ -327,14 +225,10 @@
                     <span style="color: red">*</span>
                   </td>
                 </tr>
-                <app-form-contacto
-                  style="display: contents"
-                  [entidad]="'DE LA PERSONA'"
-                  (telefonoFijo)="onTelefonoFijoChange($event)"
-                  (telefonoCelular)="onTelefonoCelularChange($event)"
+                <app-form-contacto style="display: contents" [entidad]="'DE LA PERSONA'"
+                  (telefonoFijo)="onTelefonoFijoChange($event)" (telefonoCelular)="onTelefonoCelularChange($event)"
                   (correo)="onCorreoChange($event)"
-                  (correoAlternativo)="onCorreoAlternativoChange($event)"
-                ></app-form-contacto>
+                  (correoAlternativo)="onCorreoAlternativoChange($event)"></app-form-contacto>
               </tbody>
             </table>
             <div class="d-flex justify-content-end">
@@ -342,11 +236,20 @@
                 Registrarse
               </button>
             </div>
-            <object *ngIf="blobUrl" width="100%" height="450px" [data]="blobUrl" type="application/pdf"></object>
           </div>
         </div>
       </div>
+      <!-- <div *ngIf="blobUrl" class="card">
+        <div class="card-header">
+          <h5 class="title">
+            SP009 - SOLICITUD DE CONTRATO DE ADHESION PARA PERSONA NATURAL
+          </h5>
+        </div>
+        <div class="card-body">
+          <object width="100%" height="450px" [data]="blobUrl" type="application/pdf"></object>
+        </div>
+      </div> -->
     </div>
   </div>
-  <app-pdf-persona-natural *ngIf="blobUrl"></app-pdf-persona-natural>
+  <app-pdf-persona-natural *ngIf="verPreview" [personaNatural]="personaNatural"></app-pdf-persona-natural>
 </div>

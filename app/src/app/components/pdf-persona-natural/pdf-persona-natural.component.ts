@@ -25,8 +25,31 @@ import html2PDF from 'jspdf-html2canvas';
 })
 export class PdfPersonaNaturalComponent implements OnInit {
   @Input() personaNatural:PersonaNatural;
-  blobUrl:SafeResourceUrl;
+  constructor(
+  ){}
   ngOnInit(): void {
-    
+    console.log(this.personaNatural, 'this.personaNatural');
+  }
+  async imprimir(){
+    const impresion = document.getElementById("impresion")
+
+    impresion.style.background = '#3E3E3E';
+
+    const dateObj = new Date();
+    const month   = dateObj.getUTCMonth() + 1; 
+    const day     = dateObj.getUTCDate();
+    const year    = dateObj.getUTCFullYear();
+
+    const newDate = `${year}-${month}-${day}`;
+
+    const pdf = await html2PDF(impresion, {
+      jsPDF: {
+        format: 'letter',
+      },
+      imageType: 'image/jpeg',
+      output: `./${newDate}-formulario-persona-natural.pdf`
+    });
+
+    impresion.style.background = 'transparent';
   }
 }

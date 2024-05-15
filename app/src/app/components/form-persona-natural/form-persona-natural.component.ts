@@ -27,7 +27,7 @@ import html2PDF from 'jspdf-html2canvas';
 })
 export class FormPersonaNaturalComponent implements OnInit {
 
-  blobUrl:SafeResourceUrl = "fef";
+  verPreview = false;
 
   estados: Estado[];
   ciudades: Ciudad[];
@@ -292,29 +292,6 @@ export class FormPersonaNaturalComponent implements OnInit {
 
   async guardar() {
 
-    const impresion = document.getElementById("impresion")
-
-    const dateObj = new Date();
-    const month   = dateObj.getUTCMonth() + 1; 
-    const day     = dateObj.getUTCDate();
-    const year    = dateObj.getUTCFullYear();
-
-    const newDate = `${year}/${month}/${day}`;
-
-    const pdf = await html2PDF(impresion, {
-      jsPDF: {
-        format: 'a4',
-      },
-      imageType: 'image/jpeg',
-      output: `./pdf/${newDate}-formulario-persona-natural.pdf`
-    });
-
-    pdf.setFillColor(13,13,13);
-    pdf.rect(0, 495, 800, 350, "F");
-
-    this.blobUrl = this.utilitariosService.sanitizarBlobURl(URL.createObjectURL(pdf.output("blob")));
-
-
     if (!this.personaNatural.RtnSolicitante) {
       this.mostrarWarning("Por favor ingrese el RTN del solicitante.");
       return;
@@ -407,27 +384,7 @@ export class FormPersonaNaturalComponent implements OnInit {
       async (data: any) => {
         if (data.code >= 200 && data.code <= 300) {
           this.mostrarSuccess("Persona natural registrada con éxito.");
-          const impresion = document.getElementById("impresion")
-
-          const dateObj = new Date();
-          const month   = dateObj.getUTCMonth() + 1; 
-          const day     = dateObj.getUTCDate();
-          const year    = dateObj.getUTCFullYear();
-
-          const newDate = `${year}/${month}/${day}`;
-
-          const pdf = await html2PDF(impresion, {
-            jsPDF: {
-              format: 'a4',
-            },
-            imageType: 'image/jpeg',
-            output: `./pdf/${newDate}-formulario-persona-natural.pdf`
-          });
-      
-          pdf.setFillColor(13,13,13);
-          pdf.rect(0, 495, 800, 350, "F");
-      
-          this.blobUrl = this.utilitariosService.sanitizarBlobURl(URL.createObjectURL(pdf.output("blob")));
+          this.verPreview = true;
         } else {
           this.mostrarError("Ya existe esta persona natural.");
         }
