@@ -211,10 +211,8 @@ export class FormPersonaNaturalComponent implements OnInit {
         .subirArchivo(this.endpointSubirArchivo, formData)
         .subscribe(
           (data: any[]) => {
-            console.log(data, "data subir rtn solicitante");
             this.personaNatural.RtnSolicitanteUrl =
               "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
-            this.mostrarSuccess("PDF RTN guardado con éxito.");
           },
           (error) => {
             console.log(error);
@@ -240,11 +238,9 @@ export class FormPersonaNaturalComponent implements OnInit {
         .subirArchivo(this.endpointSubirArchivo, formData)
         .subscribe(
           (data: any[]) => {
-            console.log(data, "data subir DNI");
             this.personaNatural.DNIUrl =
               "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
             console.log(this.personaNatural.DNIUrl, "DNIUrl");
-            this.mostrarSuccess("PDF DNI guardado con éxito.");
           },
           (error) => {
             console.log(error);
@@ -270,10 +266,8 @@ export class FormPersonaNaturalComponent implements OnInit {
         .subirArchivo(this.endpointSubirArchivo, formData)
         .subscribe(
           (data: any[]) => {
-            console.log(data, "data subir recibo publico");
             this.personaNatural.NumReciboPublicoUrl =
               "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
-            this.mostrarSuccess("Recibo público guardado con éxito.");
           },
           (error) => {
             console.log(error);
@@ -291,6 +285,8 @@ export class FormPersonaNaturalComponent implements OnInit {
   }
 
   async guardar() {
+
+    this.verPreview = true;
 
     if (!this.personaNatural.RtnSolicitante) {
       this.mostrarWarning("Por favor ingrese el RTN del solicitante.");
@@ -380,7 +376,7 @@ export class FormPersonaNaturalComponent implements OnInit {
       return;
     }
 
-    await this.personaNaturalService.Crear(this.personaNatural).subscribe(
+    this.personaNaturalService.Crear(this.personaNatural).subscribe(
       async (data: any) => {
         if (data.code >= 200 && data.code <= 300) {
           this.mostrarSuccess("Persona natural registrada con éxito.");

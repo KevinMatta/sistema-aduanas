@@ -24,6 +24,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 })
 export class FormComercianteIndividualComponent implements OnInit {
   // @Input() objetoParaEditar: ComercianteIndividual;
+  verPreview = false;
   estados: Estado[];
   ciudades: Ciudad[];
   ciudadesFiltradas: Ciudad[];
@@ -302,7 +303,7 @@ export class FormComercianteIndividualComponent implements OnInit {
     this.comercianteIndividual.Declaracion = val;
   }
 
-  async subirRtn(event: any, EsRepresentanteLegal: boolean) {
+  subirRtn(event: any, EsRepresentanteLegal: boolean) {
     if (
       EsRepresentanteLegal
         ? this.comercianteIndividual.Rtn_RepresentanteLegal === ""
@@ -328,28 +329,30 @@ export class FormComercianteIndividualComponent implements OnInit {
           "_RTN_Representante_CoIn.pdf"
         : this.comercianteIndividual.Rtn + "_RTN_CoIn.pdf";
       formData.append("keyName", keyName);
-      const res = await this.utilitariosService.subirArchivo(
+      this.utilitariosService.subirArchivo(
         this.endpointSubirArchivo,
         formData
-      );
-
-      if (res) {
-        EsRepresentanteLegal
-          ? (this.comercianteIndividual.RtnUrl_RepresentanteLegal =
-              "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName)
-          : (this.comercianteIndividual.RtnUrl =
-              "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName);
-        this.sanitizarUrl(
+      ).subscribe(
+        (data: any[]) => {
           EsRepresentanteLegal
-            ? this.comercianteIndividual.RtnUrl_RepresentanteLegal
-            : this.comercianteIndividual.RtnUrl
-        );
-        this.mostrarSuccess("PDF RTN guardado con éxito.");
-      }
+            ? (this.comercianteIndividual.RtnUrl_RepresentanteLegal =
+                "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName)
+            : (this.comercianteIndividual.RtnUrl =
+                "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName);
+          this.sanitizarUrl(
+            EsRepresentanteLegal
+              ? this.comercianteIndividual.RtnUrl_RepresentanteLegal
+              : this.comercianteIndividual.RtnUrl
+          );
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 
-  async subirDni(event: any, EsRepresentanteLegal: boolean) {
+  subirDni(event: any, EsRepresentanteLegal: boolean) {
     if (
       EsRepresentanteLegal
         ? this.comercianteIndividual.Dni_RepresentanteLegal === ""
@@ -375,28 +378,30 @@ export class FormComercianteIndividualComponent implements OnInit {
           "_DNI_Representante_CoIn.pdf"
         : this.comercianteIndividual.Dni + "_DNI_CoIn.pdf";
       formData.append("keyName", keyName);
-      const res = await this.utilitariosService.subirArchivo(
+      this.utilitariosService.subirArchivo(
         this.endpointSubirArchivo,
         formData
-      );
-
-      if (res) {
-        EsRepresentanteLegal
-          ? (this.comercianteIndividual.DniUrl_RepresentanteLegal =
-              "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName)
-          : (this.comercianteIndividual.DniUrl =
-              "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName);
-        this.sanitizarUrl(
+      ).subscribe(
+        (data: any[]) => {
           EsRepresentanteLegal
-            ? this.comercianteIndividual.DniUrl_RepresentanteLegal
-            : this.comercianteIndividual.DniUrl
-        );
-        this.mostrarSuccess("PDF DNI guardado con éxito.");
-      }
+            ? (this.comercianteIndividual.DniUrl_RepresentanteLegal =
+                "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName)
+            : (this.comercianteIndividual.DniUrl =
+                "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName);
+          this.sanitizarUrl(
+            EsRepresentanteLegal
+              ? this.comercianteIndividual.DniUrl_RepresentanteLegal
+              : this.comercianteIndividual.DniUrl
+          );
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 
-  async subirDeclaracion(event: any) {
+  subirDeclaracion(event: any) {
     if (this.comercianteIndividual.Declaracion === "") {
       this.mostrarWarning(
         "Por favor ingrese el número de Declaración de Comerciante Individual."
@@ -412,21 +417,25 @@ export class FormComercianteIndividualComponent implements OnInit {
       const keyName =
         this.comercianteIndividual.Declaracion + "_Declaracion_CoIn.pdf";
       formData.append("keyName", keyName);
-      const res = await this.utilitariosService.subirArchivo(
+      this.utilitariosService.subirArchivo(
         this.endpointSubirArchivo,
         formData
+      ).subscribe(
+        (data: any[]) => {
+          this.comercianteIndividual.DeclaracionUrl =
+            "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
+          this.sanitizarUrl(this.comercianteIndividual.DeclaracionUrl);
+        },
+        (error) => {
+          console.log(error);
+        }
       );
-
-      if (res) {
-        this.comercianteIndividual.DeclaracionUrl =
-          "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
-        this.sanitizarUrl(this.comercianteIndividual.DeclaracionUrl);
-        this.mostrarSuccess("Declaración de comerciante guardada con éxito.");
-      }
     }
   }
 
   async guardar() {
+    this.verPreview = true;
+
     if (!this.comercianteIndividual.RtnSolicitante) {
       this.mostrarWarning("Por favor ingrese el RTN del solicitante.");
       return;
@@ -582,11 +591,12 @@ export class FormComercianteIndividualComponent implements OnInit {
       }
     }
 
-    await this.comercianteIndividualService
+    this.comercianteIndividualService
       .Crear(this.comercianteIndividual)
       .subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
+            this.verPreview = true;
             this.mostrarSuccess("Comerciante individual registrado con éxito.");
           } else {
             this.mostrarError("Ya existe este Comerciante individual.");

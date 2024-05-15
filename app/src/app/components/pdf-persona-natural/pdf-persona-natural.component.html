@@ -2,7 +2,7 @@
   <div class="col">
     <div class="card">
       <div id="impresion" class="card-body">
-        <div class="d-flex justify-content-center align-items-center" style="margin: 30px auto 50px auto;">
+        <div class="d-flex justify-content-center align-items-center" style="margin: 30px auto 60px auto;">
           <div class="d-flex justify-content-center align-items-center flex-grow-1" style="width: 30%;">
             <img src="./assets/img/logo_aduanas_blanco.png" alt="Logo Aduana" />
           </div>
@@ -11,7 +11,7 @@
               SP009 - SOLICITUD DE CONTRATO DE ADHESION PARA PERSONA NATURAL
             </h5>
           </div>
-          <div class="d-flex justify-content-center align-items-center flex-grow-1" style="width: 30%;">QR</div>
+          <div class="d-flex justify-content-center align-items-center flex-grow-1" style="width: 30%; height: 100px;">QR</div>
         </div>
         <h6>Datos generales</h6>
         <div class="row">
@@ -43,13 +43,11 @@
             </div>
           </div>
         </div>
-        <h6>Datos a Informar</h6>
-        <small>- Todos los datos marcados con un
-          <span style="color: red">*</span> son requeridos.</small>
+        <h6 style="margin-top: 60px;">Datos a Informar</h6>
         <div class="" style="overflow-x: auto">
           <table class="table table-bordered">
             <thead class="text-primary">
-              <th style="width: 40%;">Dato</th>
+              <th style="width: 37%;">Dato</th>
               <th>Descripcion</th>
             </thead>
             <tbody>
@@ -160,6 +158,7 @@
             </tbody>
           </table>
         </div>
+        <div class="d-flex justify-content-between" style="margin-top: 100px;"><span>Página 1 de 1</span> <span>{{fecha}}</span></div>
       </div>
       <div class="d-flex justify-content-end mr-3">
         <button class="btn btn-primary" (click)="imprimir()">
