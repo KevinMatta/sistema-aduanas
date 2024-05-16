@@ -1,6 +1,8 @@
 import { Component} from '@angular/core';
 import { FormUsuariosComponent } from './components/form-usuarios/form-usuarios.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Usuario } from './Models/UsuariosViewModel';
+import { AuthenticationService } from './Services/auth.service';
 
 
 @Component({
@@ -9,17 +11,17 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  user: Usuario;
 
-  // constructor(public modalService: NgbModal) { }
-  // openModal() {
-  //   //ModalComponent is component name where modal is declare
-  //   const modalRef = this.modalService.open(FormUsuariosComponent);
-  //   modalRef.result.then((result) => {
-  //     console.log(result);
-  //   }).catch((error) => {
-  //     console.log(error);
-  //   });
-  // }
-  // ngOnInit(): void {
-  // }
+    constructor(private authenticationService: AuthenticationService) {
+        this.authenticationService.user.subscribe(x => this.user = x);
+    }
+
+    get isAdmin() {
+        return this.user && this.user.Rol === 'Admin';
+    }
+
+    logout() {
+        this.authenticationService.logout();
+    }
 }

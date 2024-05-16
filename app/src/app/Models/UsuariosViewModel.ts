@@ -13,4 +13,5 @@ export class Usuario {
   usua_FechaModifica?: string;
   Creacion?: string;
   Modifica?: string;
+  token?:string;
 }

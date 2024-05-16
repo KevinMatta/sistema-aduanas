@@ -1,7 +1,7 @@
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NO_ERRORS_SCHEMA, NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { NgbDatepickerModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrModule } from "ngx-toastr";
@@ -20,6 +20,8 @@ import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import { FormUsuariosComponent } from "./components/form-usuarios/form-usuarios.component";
 import { FormEstadosComponent } from "./components/form-estados/form-estados.component";
 import { FormCiudadesComponent } from "./components/form-ciudades/form-ciudades.component";
+import { JwtInterceptor } from "./helpers/jwt.interceptor";
+import { ErrorInterceptor } from "./helpers/error.interceptor";
 
 @NgModule({
   imports: [
@@ -33,10 +35,13 @@ import { FormCiudadesComponent } from "./components/form-ciudades/form-ciudades.
     NgxDatatableModule,
     NgbDatepickerModule,
     BrowserModule,
+    ReactiveFormsModule,
     ToastrModule.forRoot(),
   ],
   providers: [
     // { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: "DataService", useClass: UsuariosService },
   ],
   declarations: [
@@ -54,6 +59,6 @@ import { FormCiudadesComponent } from "./components/form-ciudades/form-ciudades.
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
 
 platformBrowserDynamic().bootstrapModule(AppModule);

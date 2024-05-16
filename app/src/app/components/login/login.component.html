@@ -9,7 +9,8 @@
           <span style="color: #555555">simplificando aduanas.</span>
         </h1>
         <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 95%)">
-          Bienvenido al Sistema PECH de Honduras, tu puerta de entrada al comercio internacional. Simplificando procesos aduaneros para un intercambio fluido de mercancías en el corazón de América Central.
+          Bienvenido al Sistema PECH de Honduras, tu puerta de entrada al comercio internacional. Simplificando procesos
+          aduaneros para un intercambio fluido de mercancías en el corazón de América Central.
         </p>
       </div>
 
@@ -21,40 +22,51 @@
           <div class="card-body px-4 py-5 px-md-5">
 
             <div class="text-center mb-4">
-               <div style="display: flex; align-items: center;">
-                    <div style="display: inline-block;">
-                        <img src="../../../assets/img/PECHlogoSolo.png" alt="Logo" style="max-width: 150px; margin-right: 10px;" />
-                    </div>
-                    <div style="display: inline-block; font-size: 24px; font-weight: bold; margin-left: 10px; color: #555555; ">PECH</div>
+              <div style="display: flex; align-items: center;">
+                <div style="display: inline-block;">
+                  <img src="../../../assets/img/PECHlogoSolo.png" alt="Logo"
+                    style="max-width: 150px; margin-right: 10px;" />
                 </div>
+                <div
+                  style="display: inline-block; font-size: 24px; font-weight: bold; margin-left: 10px; color: #555555; ">
+                  PECH</div>
+              </div>
             </div>
 
-            <form (submit)="login($event)">
+            <!-- <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"> -->
 
               <!-- Email input -->
-              <div class="form-outline mb-4">
-                <label class="form-label" for="form3Example3" style="color: #555555; font-size: 16px; ">Correo</label>
-                <input type="email" id="form3Example3" class="form-control" />
+              <div class="form-outline mb-4 form-group">
+                <label class="form-label" for="form3Example3" style="color: #555555; font-size: 16px; ">Usuario</label>
+                <input type="text" class="form-control" (change)="usuarioOnChange($event)" />
+                <div [style]="{ 'display': usuarioError ? 'block' :'none' }" class="invalid-feedback">
+                  <div>El nombre de usuario es requerido.</div>
+                </div>
               </div>
 
               <!-- Password input -->
-              <div class="form-outline mb-4">
-                <label class="form-label" for="form3Example4" style="color: #555555; font-size: 16px;">Contraseña</label>
-                <input type="password" id="form3Example4" class="form-control" />
+              <div class="form-outline mb-4 form-group">
+                <label class="form-label" for="form3Example4"
+                  style="color: #555555; font-size: 16px;">Contraseña</label>
+                <input type="password" class="form-control" (change)="claveOnChange($event)"/>
+                <div [style]="{ 'display': claveError ? 'block' :'none' }" class="invalid-feedback">
+                  <div>La contraseña es requerida.</div>
+                </div>
               </div>
 
               <!-- Checkbox -->
               <div class="form-outline mb-4">
-                <a onmouseover="this.style.color='#61C3DB'" onmouseout="this.style.color='#555555'"style="color: #555555" href="#"> Olvidate tu Contraseña?
+                <a onmouseover="this.style.color='#61C3DB'" onmouseout="this.style.color='#555555'"
+                  style="color: #555555; text-align: end; display: block; width: 100%;" href="#"> Olvidé mi contraseña
                 </a>
               </div>
 
               <!-- Submit button -->
-              <button type="submit" class="btn btn-primary btn-block mb-4">
+              <button (click)="login()" [disabled]="loading" class="btn btn-primary btn-block mb-4">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                 Iniciar Sesion
               </button>
-
-            </form>
+            <!-- </form> -->
           </div>
         </div>
       </div>
