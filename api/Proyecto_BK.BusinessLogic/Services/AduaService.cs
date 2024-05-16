@@ -12,8 +12,10 @@ namespace sistema_aduana.BusinessLogic.Services
     public class AduaService
     {
         private readonly AduanaRepository _aduaRepository;
-        public AduaService(AduanaRepository aduanaRepository)
+        private readonly ArancelRepository _arancelRepository;
+        public AduaService(AduanaRepository aduanaRepository, ArancelRepository arancelRepository)
         {
+            _arancelRepository = arancelRepository;
             _aduaRepository = aduanaRepository;
         }
 
@@ -87,6 +89,37 @@ namespace sistema_aduana.BusinessLogic.Services
                 return result.Error(ex.Message);
             }
         }
+        #endregion
+
+        #region Aranceles
+        public ServiceResult ArancelCrear(tbAranceles item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var createdItem = _arancelRepository.Insert(item);
+                return createdItem.CodeStatus > 0 ? result.Ok(createdItem) : result.Error(createdItem);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult ArancelActualizar(tbAranceles item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var updatedItem = _arancelRepository.Update(item);
+                return updatedItem.CodeStatus > 0 ? result.Ok(updatedItem) : result.Error(updatedItem);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
         #endregion
     }
 }

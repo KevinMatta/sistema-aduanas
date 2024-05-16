@@ -22,9 +22,17 @@ namespace sistema_aduana.BusinessLogic.Services
         private readonly PersonaNaturalRepository _personaNaturalRepository;
         private readonly ComercianteIndividualRepository _comercianteIndividualRepository;
         private readonly PersonaJuridicaRepository _personaJuridicaRepository;
-        public GralService(CiudadRepository ciudadRepository, EstadoRepository estadoRepository, EstadoCivilRepository estadoCivilRepository, PaisRepository paisRepository, EmpresaRepository empresaRepository, EmpleadoRepository empleadoRepository, OficinasRepository oficinasRepository, ProfesionesRepository profesionesRepository, PersonaNaturalRepository personaNaturalRepository, ComercianteIndividualRepository comercianteIndividualRepository, PersonaJuridicaRepository personaJuridicaRepository)
+        private readonly ItemRepository _itemRepository;
+        private readonly CategoriaRepository _categoriaRepository;
+
+        public GralService(CiudadRepository ciudadRepository, EstadoRepository estadoRepository,
+            EstadoCivilRepository estadoCivilRepository, PaisRepository paisRepository, EmpresaRepository empresaRepository, 
+            EmpleadoRepository empleadoRepository, OficinasRepository oficinasRepository, ProfesionesRepository profesionesRepository,
+            PersonaNaturalRepository personaNaturalRepository, ComercianteIndividualRepository comercianteIndividualRepository, 
+            PersonaJuridicaRepository personaJuridicaRepository, ItemRepository itemRepository, CategoriaRepository categoriaRepository)
         {
             _ciudadRepository = ciudadRepository;
+            _categoriaRepository = categoriaRepository;
             _estadoRepository = estadoRepository;
             _estadoCivilRepository = estadoCivilRepository;
             _paisRepository = paisRepository;
@@ -35,6 +43,7 @@ namespace sistema_aduana.BusinessLogic.Services
             _personaNaturalRepository = personaNaturalRepository;
             _comercianteIndividualRepository = comercianteIndividualRepository;
             _personaJuridicaRepository = personaJuridicaRepository;
+            _itemRepository = itemRepository;
         }
 
         #region Pais
@@ -826,6 +835,66 @@ namespace sistema_aduana.BusinessLogic.Services
                 return result.Error(ex.Message);
             }
         }
+
+        #endregion
+        #region item
+        public ServiceResult ItemCrear(tbItems item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var createdItem = _itemRepository.Insert(item);
+                return createdItem.CodeStatus > 0 ? result.Ok(createdItem) : result.Error(createdItem);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult ItemActualizar(tbItems item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var updatedItem = _itemRepository.Update(item);
+                return updatedItem.CodeStatus > 0 ? result.Ok(updatedItem) : result.Error(updatedItem);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        #endregion
+        public ServiceResult CategoriasCrear(tbCategorias item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var createdItem = _categoriaRepository.Insert(item);
+                return createdItem.CodeStatus > 0 ? result.Ok(createdItem) : result.Error(createdItem);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult CategoriasActualizar(tbCategorias item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var updatedItem = _categoriaRepository.Update(item);
+                return updatedItem.CodeStatus > 0 ? result.Ok(updatedItem) : result.Error(updatedItem);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+        #region
 
         #endregion
     }
