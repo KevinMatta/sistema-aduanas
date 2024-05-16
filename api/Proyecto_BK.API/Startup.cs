@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Proyecto_BK.BusinessLogic.Services;
+using sistema_aduana.DataAccess.Repository;
 using Sistema_Turnos.API.Extensions;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ namespace Proyecto_BK.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
 
             services.DataAccess(Configuration.GetConnectionString("sistema_aduana"));
             services.BusinessLogic();

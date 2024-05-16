@@ -91,6 +91,19 @@ namespace sistema_aduana.BusinessLogic.Services
         }
         #endregion
 
+        public ServiceResult ArancelListar(tbAranceles item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _arancelRepository.List();
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
         #region Aranceles
         public ServiceResult ArancelCrear(tbAranceles item)
         {

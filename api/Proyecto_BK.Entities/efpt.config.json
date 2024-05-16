@@ -110,7 +110,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "vb600.dbAduana",
+   "UiHint": "vb600.",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,
