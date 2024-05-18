@@ -21,6 +21,7 @@ import { RolesPorPantallaComponent } from "./roles-por-pantalla/roles-por-pantal
 import { MensajesComponent } from "./mensajes/mensajes.component";
 import { PdfPersonaNaturalComponent } from "./pdf-persona-natural/pdf-persona-natural.component";
 import { PdfComercianteIndividualComponent } from "./pdf-comerciante-individual/pdf-comerciante-individual.component";
+import { FormUsuariosComponent } from "./form-usuarios/form-usuarios.component";
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { PdfComercianteIndividualComponent } from "./pdf-comerciante-individual/
     SidebarComponent,
     FormUbicacionComponent,
     FormContactoComponent,
+    FormUsuariosComponent,
     RolesPorPantallaComponent,
     FormPersonaNaturalComponent,
     PdfPersonaNaturalComponent,
@@ -50,6 +52,7 @@ import { PdfComercianteIndividualComponent } from "./pdf-comerciante-individual/
   exports: [
     FooterComponent,
     NavbarComponent,
+    FormUsuariosComponent,
     RolesPorPantallaComponent,
     SidebarComponent,
     FormUbicacionComponent,

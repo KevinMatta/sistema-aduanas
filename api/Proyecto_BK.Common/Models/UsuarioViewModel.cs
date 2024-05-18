@@ -14,7 +14,7 @@ namespace sistema_aduana.Common.Models
         public string Usua_Clave { get; set; }
         public int? Rol_Id { get; set; }
         public bool? Usua_IsAdmin { get; set; }
-        public string? Usua_Email { get; set; }
+        public int? Empl_Id { get; set; }
 
         public bool? Usua_Estado { get; set; }
         public int Usua_Creacion { get; set; }
@@ -27,5 +27,7 @@ namespace sistema_aduana.Common.Models
         public string Creacion { get; set; }
         [NotMapped]
         public string Modifica { get; set; }
+        [NotMapped]
+        public string Empl_NombreCompleto { get; set; }
     }
 }

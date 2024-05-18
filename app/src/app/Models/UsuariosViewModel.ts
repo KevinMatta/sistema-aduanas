@@ -4,6 +4,8 @@ export class Usuario {
   Clave?: string;
   rol_Id?: number;
   Rol?: string;
+  DNI?: string;
+  Empleado?: string;
   EsAdmin?: boolean;
   Admin: string;
   Actions?: string;
@@ -13,5 +15,5 @@ export class Usuario {
   usua_FechaModifica?: string;
   Creacion?: string;
   Modifica?: string;
-  token?:string;
+  token?: string;
 }

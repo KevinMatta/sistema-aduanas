@@ -1,807 +1,140 @@
-<!-- FORM FACTURAS -->
-<!-- <div class="panel-header panel-header-sm"></div>
+<div class="panel-header panel-header-sm"></div>
 <div id="boletin" class="main-content">
   <div class="row">
     <div class="col">
       <div class="card">
         <div class="card-header">
-          <h5 class="title text-center">Agregar Factura</h5>
+          <h5 class="title">
+            {{ !objetoParaEditar ? "Nuevo" : "Editar" }} Usuario
+          </h5>
         </div>
         <div class="card-body">
-          <form>
-            <h6>FACTURA</h6>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>16. Número de Factura</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Aduana de Tocontín"
-                    maxlength="20"
-                  />
-                </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Usuario</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="SuperStar003"
+                  maxlength="20"
+                  (change)="usuarioOnChange($event)"
+                  [value]="usuario.Usuario"
+                />
               </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Fecha</label>
-                  <div class="input-group d-flex align-items-center">
-                    <input
-                      class="form-control"
-                      placeholder="yyyy-mm-dd"
-                      name="dp"
-                      [(ngModel)]="model"
-                      ngbDatepicker
-                      #d="ngbDatepicker"
-                      style="height: 38px"
-                    />
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Rol</label>
+                <div ngbDropdown class="d-block">
+                  <button
+                    type="button"
+                    class="btn btn-primary m-0"
+                    id="dropdownMenu1"
+                    ngbDropdownToggle
+                    [disabled]="usuario.EsAdmin"
+                  >
+                    {{ usuario.Rol }}
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
                     <button
-                      class="btn btn-outline-secondary calendar"
-                      (click)="d.toggle()"
+                      *ngFor="let rol of roles"
                       type="button"
+                      class="dropdown-item"
+                      (click)="rolSelect(rol.Id, rol.Rol)"
                     >
-                      <i
-                        class="now-ui-icons ui-1_calendar-60"
-                        style="margin-right: 5px"
-                      ></i>
+                      {{ rol.Rol }}
                     </button>
                   </div>
                 </div>
               </div>
             </div>
-            <h6>Facturas</h6>
-            <div class="d-flex justify-content-between align-items-center">
-              <small
-                >- Mostrando un total de:
-                <span style="color: aquamarine"></span> Facturas</small
-              >
-              <button
-                type="button"
-                type="button"
-                class="btn btn-outline-primary"
-              >
-                <i
-                  class="now-ui-icons ui-1_simple-add"
-                  style="margin-right: 5px"
-                ></i>
-                Agregar Item
-              </button>
-            </div>
-            <div class="" style="overflow-x: auto">
-              <table class="table table-bordered">
-                <thead class="text-primary">
-                  <th>Nro. Item</th>
-                  <th>Cantidad</th>
-                  <th>Posición</th>
-                  <th>Operaciones</th>
-                  <th>Operaciones</th>
-                  <th>Operaciones</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="row w-100">
-              <div class="d-flex justify-content-end flex-grow-1">
-                <button type="button" class="btn btn-outline-primary">
-                  <i
-                    class="now-ui-icons ui-1_simple-remove"
-                    style="margin-right: 5px"
-                  ></i>
-                  Cancelar
-                </button>
-                <button class="btn btn-primary">
-                  <i
-                    class="now-ui-icons ui-1_check"
-                    style="margin-right: 5px"
-                  ></i>
-                  Guardar
-                </button>
+          </div>
+          <!-- <p>{{objetoParaEditar.Usuario}}</p> -->
+          <!-- <p>{{objetoParaEditar.toString()}}</p> -->
+          <div *ngIf="!objetoParaEditar" class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Contraseña</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="*******"
+                  minlength="6"
+                  (change)="contraOnChange($event)"
+                />
               </div>
             </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<!-- FORM CIUDAD -->
-<!-- <div class="panel-header panel-header-sm"></div>
-<div id="boletin" class="main-content">
-  <div class="row">
-    <div class="col">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="title">Nueva Ciudad</h5>
-        </div>
-        <div class="card-body">
-          <form>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>País</label>
-                  <div ngbDropdown class="d-block">
-                    <button
-                      type="button"
-                      class="btn btn-primary m-0 m-0"
-                      id="dropdownMenu1"
-                      ngbDropdownToggle
-                    >
-                      - Seleccionar -
-                    </button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Estado</label>
-                  <div ngbDropdown class="d-block">
-                    <button
-                      type="button"
-                      class="btn btn-primary m-0 m-0"
-                      id="dropdownMenu1"
-                      ngbDropdownToggle
-                    >
-                      - Seleccionar -
-                    </button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
-                    </div>
-                  </div>
-                </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Confirmar Contraseña</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="*******"
+                  minlength="6"
+                  (change)="confirmarContraOnChange($event)"
+                />
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Nombre</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="San Pedro Sula"
-                    maxlength="20"
-                  />
-                </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Empleado DNI</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="0501200504202"
+                  (change)="DNIOnChange($event)"
+                />
               </div>
             </div>
-            <div class="row w-100">
-              <div class="d-flex justify-content-end flex-grow-1">
-                <button type="button" class="btn btn-outline-primary">
-                  <i
-                    class="now-ui-icons ui-1_simple-remove"
-                    style="margin-right: 5px"
-                  ></i>
-                  Cancelar
-                </button>
-                <button class="btn btn-primary">
-                  <i
-                    class="now-ui-icons ui-1_check"
-                    style="margin-right: 5px"
-                  ></i>
-                  Guardar
-                </button>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Empleado {{ objetoParaEditar.Empleado }}</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [value]="objetoParaEditar.Empleado"
+                  disabled
+                />
               </div>
             </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<!-- FORM ESTADOS -->
-<!-- <div class="panel-header panel-header-sm"></div>
-<div id="boletin" class="main-content">
-  <div class="row">
-    <div class="col">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="title">Nuevo Estado</h5>
-        </div>
-        <div class="card-body">
-          <form>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>País</label>
-                  <div ngbDropdown class="d-block">
-                    <button
-                      type="button"
-                      class="btn btn-primary m-0 m-0"
-                      id="dropdownMenu1"
-                      ngbDropdownToggle
-                    >
-                      - Seleccionar -
-                    </button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Nombre</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Cortés"
-                    maxlength="20"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="row w-100">
-              <div class="d-flex justify-content-end flex-grow-1">
-                <button type="button" class="btn btn-outline-primary">
-                  <i
-                    class="now-ui-icons ui-1_simple-remove"
-                    style="margin-right: 5px"
-                  ></i>
-                  Cancelar
-                </button>
-                <button class="btn btn-primary">
-                  <i
-                    class="now-ui-icons ui-1_check"
-                    style="margin-right: 5px"
-                  ></i>
-                  Guardar
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<!-- PAISES -->
-<!-- <div class="panel-header panel-header-sm"></div>
-<div id="boletin" class="main-content">
-  <div class="row">
-    <div class="col">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="title">Nuevo País</h5>
-        </div>
-        <div class="card-body">
-          <form>
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-                  <label>Nombre</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Soltero"
-                    style="max-width: 150px"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="row w-100">
-              <div class="d-flex justify-content-end flex-grow-1">
-                <button type="button" class="btn btn-outline-primary">
-                  <i
-                    class="now-ui-icons ui-1_simple-remove"
-                    style="margin-right: 5px"
-                  ></i>
-                  Cancelar
-                </button>
-                <button class="btn btn-primary">
-                  <i
-                    class="now-ui-icons ui-1_check"
-                    style="margin-right: 5px"
-                  ></i>
-                  Guardar
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<!-- Profesiones -->
-<!-- <div class="panel-header panel-header-sm"></div>
-<div id="boletin" class="main-content">
-  <div class="row">
-    <div class="col">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="title">Nueva Profesión</h5>
-        </div>
-        <div class="card-body">
-          <form>
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-                  <label>Profesión</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Soltero"
-                    style="max-width: 150px"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="row w-100">
-              <div class="d-flex justify-content-end flex-grow-1">
-                <button type="button" class="btn btn-outline-primary">
-                  <i
-                    class="now-ui-icons ui-1_simple-remove"
-                    style="margin-right: 5px"
-                  ></i>
-                  Cancelar
-                </button>
-                <button class="btn btn-primary">
-                  <i
-                    class="now-ui-icons ui-1_check"
-                    style="margin-right: 5px"
-                  ></i>
-                  Guardar
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<!-- ESTADOS CIVILES -->
-<!-- <div class="panel-header panel-header-sm"></div>
-<div id="boletin" class="main-content">
-  <div class="row">
-    <div class="col">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="title">Nuevo Estado Civil</h5>
-        </div>
-        <div class="card-body">
-          <form>
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-                  <label>Estado Civil</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Soltero"
-                    style="max-width: 150px"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="row w-100">
-              <div class="d-flex justify-content-end flex-grow-1">
-                <button type="button" class="btn btn-outline-primary">
-                  <i
-                    class="now-ui-icons ui-1_simple-remove"
-                    style="margin-right: 5px"
-                  ></i>
-                  Cancelar
-                </button>
-                <button class="btn btn-primary">
-                  <i
-                    class="now-ui-icons ui-1_check"
-                    style="margin-right: 5px"
-                  ></i>
-                  Guardar
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<!-- FORM Empresas -->
-<!-- <div class="panel-header panel-header-sm"></div>
-<div id="boletin" class="main-content">
-  <div class="row">
-    <div class="col">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="title">Nueva Empresa</h5>
-        </div>
-        <div class="card-body">
-          <form>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Nombre</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="KM & ASOCIADOS S.A."
-                    maxlength="20"
-                  />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>País</label>
-                  <div ngbDropdown class="d-block">
-                    <button
-                      type="button"
-                      class="btn btn-primary m-0 m-0"
-                      id="dropdownMenu1"
-                      ngbDropdownToggle
-                    >
-                      - Seleccionar -
-                    </button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Estado</label>
-                  <div ngbDropdown class="d-block">
-                    <button
-                      type="button"
-                      class="btn btn-primary m-0 m-0"
-                      id="dropdownMenu1"
-                      ngbDropdownToggle
-                    >
-                      - Seleccionar -
-                    </button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Ciudad</label>
-                  <div ngbDropdown class="d-block">
-                    <button
-                      type="button"
-                      class="btn btn-primary m-0 m-0"
-                      id="dropdownMenu1"
-                      ngbDropdownToggle
-                    >
-                      - Seleccionar -
-                    </button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row w-100">
-              <div class="d-flex justify-content-end flex-grow-1">
-                <button type="button" class="btn btn-outline-primary">
-                  <i
-                    class="now-ui-icons ui-1_simple-remove"
-                    style="margin-right: 5px"
-                  ></i>
-                  Cancelar
-                </button>
-                <button class="btn btn-primary">
-                  <i
-                    class="now-ui-icons ui-1_check"
-                    style="margin-right: 5px"
-                  ></i>
-                  Guardar
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<!-- FORM ADUANAS -->
-<!-- <div class="panel-header panel-header-sm"></div>
-<div id="boletin" class="main-content">
-  <div class="row">
-    <div class="col">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="title">Nueva Aduana</h5>
-        </div>
-        <div class="card-body">
-          <form>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Nombre</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Aduana de Tocontín"
-                    maxlength="20"
-                  />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>País</label>
-                  <div ngbDropdown class="d-block">
-                    <button
-                      type="button"
-                      class="btn btn-primary m-0 m-0"
-                      id="dropdownMenu1"
-                      ngbDropdownToggle
-                    >
-                      - Seleccionar -
-                    </button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Estado</label>
-                  <div ngbDropdown class="d-block">
-                    <button
-                      type="button"
-                      class="btn btn-primary m-0 m-0"
-                      id="dropdownMenu1"
-                      ngbDropdownToggle
-                    >
-                      - Seleccionar -
-                    </button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Ciudad</label>
-                  <div ngbDropdown class="d-block">
-                    <button
-                      type="button"
-                      class="btn btn-primary m-0 m-0"
-                      id="dropdownMenu1"
-                      ngbDropdownToggle
-                    >
-                      - Seleccionar -
-                    </button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row w-100">
-              <div class="d-flex justify-content-end flex-grow-1">
-                <button type="button" class="btn btn-outline-primary">
-                  <i
-                    class="now-ui-icons ui-1_simple-remove"
-                    style="margin-right: 5px"
-                  ></i>
-                  Cancelar
-                </button>
-                <button class="btn btn-primary">
-                  <i
-                    class="now-ui-icons ui-1_check"
-                    style="margin-right: 5px"
-                  ></i>
-                  Guardar
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-<!-- <div class="modal-header">
-  <h4 class="modal-title">Hi there!</h4>
-</div>
-<div class="modal-body">
-  <p>Hello</p>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-outline-dark" (click)="closeModal()">
-    Close
-  </button>
-</div> -->
-
-<div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title"> {{!objetoParaEditar ? "Nuevo" : "Editar"}} Usuario</h4>
-  <button
-    type="button"
-    class="btn btn-sm btn-outline-primary"
-    aria-label="Close"
-    (click)="activeModal.dismiss('Cross click')"
-  >
-    <i class="now-ui-icons ui-1_simple-remove"></i>
-  </button>
-</div>
-<div class="modal-body">
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Usuario</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="SuperStar003"
-          maxlength="20"
-          (change)="usuarioOnChange($event)"
-          [value]="usuario.Usuario"
-        />
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Rol</label>
-        <div ngbDropdown class="d-block">
-          <button
-            type="button"
-            class="btn btn-primary m-0"
-            id="dropdownMenu1"
-            ngbDropdownToggle
-            [disabled]="usuario.EsAdmin"
-          >
-            {{ usuario.Rol }}
-          </button>
-          <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-            <button
-              *ngFor="let rol of roles"
-              type="button"
-              class="dropdown-item"
-              (click)="rolSelect(rol.Id, rol.Rol)"
+          </div>
+          <div class="row">
+            <div
+              class="col d-flex justify-content-center"
+              style="min-height: 80px"
             >
-              {{ rol.Rol }}
-            </button>
+              <div class="form-group">
+                <label for="">Administrador</label>
+                <input
+                  class="switch-input"
+                  type="radio"
+                  name="rdo"
+                  id="si"
+                  (click)="adminToggle()"
+                  [checked]="usuario.EsAdmin"
+                />
+                <input
+                  class="switch-input"
+                  type="radio"
+                  name="rdo"
+                  id="no"
+                  (click)="adminToggle()"
+                  [checked]="!usuario.EsAdmin"
+                />
+                <div class="switch">
+                  <label for="si">Sí</label>
+                  <label for="no">No</label>
+                  <span></span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- <p>{{objetoParaEditar.Usuario}}</p> -->
-  <!-- <p>{{objetoParaEditar.toString()}}</p> -->
-  <div *ngIf="!objetoParaEditar" class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Contraseña</label>
-        <input
-          type="password"
-          class="form-control"
-          placeholder="*******"
-          minlength="6"
-          (change)="contraOnChange($event)"
-        />
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Confirmar Contraseña</label>
-        <input
-          type="password"
-          class="form-control"
-          placeholder="*******"
-          minlength="6"
-          (change)="confirmarContraOnChange($event)"
-        />
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col d-flex justify-content-center" style="min-height: 80px;">
-      <div class="form-group">
-        <label for="">Administrador</label>
-        <input
-          class="switch-input"
-          type="radio"
-          name="rdo"
-          id="si"
-          (click)="adminToggle()"
-          [checked]="usuario.EsAdmin"
-        />
-        <input
-          class="switch-input"
-          type="radio"
-          name="rdo"
-          id="no"
-          (click)="adminToggle()"
-          [checked]="!usuario.EsAdmin"
-        />
-        <div class="switch">
-          <label for="si">Sí</label>
-          <label for="no">No</label>
-          <span></span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal-footer" style="gap: 5px">
-  <button
-    type="button"
-    class="btn btn-outline-primary"
-    (click)="activeModal.close('Save click')"
-  >
-    <i class="now-ui-icons ui-1_simple-remove" style="margin-right: 5px"></i>
-    Cancelar
-  </button>
-  <button class="btn btn-primary" (click)="guardar()">
-    <i class="now-ui-icons ui-1_check" style="margin-right: 5px"></i>
-    Guardar
-  </button>
 </div>

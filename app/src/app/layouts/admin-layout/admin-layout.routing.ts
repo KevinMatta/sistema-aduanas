@@ -25,6 +25,10 @@ export const AdminLayoutRoutes: Routes = [
     component: IndexListaComponent,
     data: { titulo: "Usuarios" },
   },
+  {
+    path: "layout/form-usuarios",
+    component: FormUsuariosComponent,
+  },
   // { path: "layout/form-usuarios", component: FormUsuariosComponent },
   {
     path: "layout/index-roles",

@@ -37,6 +37,19 @@ namespace sistema_aduana.DataAccess.Repository
             };
         }
 
+        public tbUsuarios Find(tbUsuarios item)
+        {
+            tbUsuarios result = new tbUsuarios();
+            using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
+            {
+                var parameter = new DynamicParameters();
+                parameter.Add("Usuario", item.Usua_Usuario);
+                parameter.Add("Contrasena", item.Usua_Clave);
+                result = db.QueryFirst<tbUsuarios>(ScriptsDatabase.UsuariosLogin, parameter, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+        }
+
         public tbUsuarios Find(string? Usua_Usuario)
         {
             string sql = ScriptsDatabase.UsuariosBuscarPorUsername;

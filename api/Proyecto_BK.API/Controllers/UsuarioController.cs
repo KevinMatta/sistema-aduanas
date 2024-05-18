@@ -22,6 +22,30 @@ namespace sistema_aduana.API.Controllers
             _mapper = mapper;
         }
 
+        [HttpPost("IniciarSesion")]
+        public IActionResult IniciarSesion(UsuarioViewModel item)
+        {
+            var modelo = _mapper.Map<tbUsuarios>(item);
+            var response = _acceService.IniciarSesion(modelo);
+            return Ok(response);
+        }
+
+        [HttpPost("EnviarCodigo")]
+        public IActionResult EnviarCodigo(string usuario)
+        {
+            tbUsuarios usuarioEncontrado = _acceService.UsuariosBuscarPorUsername(usuario);
+            if (usuarioEncontrado == null)
+            {
+                return BadRequest("Este usuario no existe");
+            }
+            MailData mailData = new MailData();
+            mailData.EmailToId = usuarioEncontrado.Empl_Email;
+            mailData.EmailToName = "Estimado Usuario";
+            mailData.EmailSubject = usuarioEncontrado.Empl_Email;
+            mailData.EmailBody = "";
+            var enviarCorreo = _acceService.SendMail(mailData);
+            return Ok(enviarCorreo);
+        }
 
         [HttpGet("List")]
         public IActionResult Index()
@@ -65,21 +89,6 @@ namespace sistema_aduana.API.Controllers
         {
             bool validado = false;//_acceService.ValidarPin(PIN);
             return validado ? Ok(PIN) : BadRequest("Código de verificación incorrecto");
-        }
-        [HttpPost("EnviarCodigo")]
-        public IActionResult EnviarCodigo(string Usuario)
-        {
-            tbUsuarios usuario = _acceService.UsuariosBuscarPorUsername(Usuario);
-            if (usuario.Usua_Id == 0)
-            {
-                return BadRequest("No existe ese usuario");
-            }
-            MailData mailData = new MailData();
-            mailData.EmailToId = usuario.Usua_Email;
-            mailData.EmailToName = "Estimado Usuario";
-            mailData.EmailSubject = usuario.Usua_Id.ToString();
-            var enviarCorreo = _acceService.SendMail(mailData);
-            return Ok(enviarCorreo);
         }
         [HttpPut("restablecer/{PIN}")]
         public IActionResult restablecer(string PIN, UsuarioViewModel item)

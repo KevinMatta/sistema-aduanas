@@ -1,71 +1,277 @@
 <!-- Section: Design Block -->
 <section class="background-radial-gradient overflow-hidden vh-100">
-
   <div class="container px-4 py-5 px-md-5 text-lg-start my-5">
     <div class="row gx-lg-5 align-items-center mb-5">
       <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
-        <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+        <h1
+          class="my-5 display-5 fw-bold ls-tight"
+          style="color: hsl(218, 81%, 95%)"
+        >
           Conectando fronteras, <br />
           <span style="color: #555555">simplificando aduanas.</span>
         </h1>
         <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 95%)">
-          Bienvenido al Sistema PECH de Honduras, tu puerta de entrada al comercio internacional. Simplificando procesos
-          aduaneros para un intercambio fluido de mercancías en el corazón de América Central.
+          Bienvenido al Sistema PECH de Honduras, tu puerta de entrada al
+          comercio internacional. Simplificando procesos aduaneros para un
+          intercambio fluido de mercancías en el corazón de América Central.
         </p>
       </div>
 
       <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
-        <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
-        <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+        <div
+          id="radius-shape-1"
+          class="position-absolute rounded-circle shadow-5-strong"
+        ></div>
+        <div
+          id="radius-shape-2"
+          class="position-absolute shadow-5-strong"
+        ></div>
 
-        <div class="card bg-glass">
+        <div *ngIf="!mostrarReestablecerForm" class="card bg-glass">
           <div class="card-body px-4 py-5 px-md-5">
-
             <div class="text-center mb-4">
-              <div style="display: flex; align-items: center;">
-                <div style="display: inline-block;">
-                  <img src="../../../assets/img/PECHlogoSolo.png" alt="Logo"
-                    style="max-width: 150px; margin-right: 10px;" />
+              <div style="display: flex; align-items: center">
+                <div style="display: inline-block">
+                  <img
+                    src="../../../assets/img/PECHlogoSolo.png"
+                    alt="Logo"
+                    style="max-width: 150px; margin-right: 10px"
+                  />
                 </div>
                 <div
-                  style="display: inline-block; font-size: 24px; font-weight: bold; margin-left: 10px; color: #555555; ">
-                  PECH</div>
+                  style="
+                    display: inline-block;
+                    font-size: 24px;
+                    font-weight: bold;
+                    margin-left: 10px;
+                    color: #555555;
+                  "
+                >
+                  PECH
+                </div>
               </div>
             </div>
 
-            <!-- <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"> -->
-
-              <!-- Email input -->
-              <div class="form-outline mb-4 form-group">
-                <label class="form-label" for="form3Example3" style="color: #555555; font-size: 16px; ">Usuario</label>
-                <input type="text" class="form-control" (change)="usuarioOnChange($event)" />
-                <div [style]="{ 'display': usuarioError ? 'block' :'none' }" class="invalid-feedback">
-                  <div>El nombre de usuario es requerido.</div>
-                </div>
+            <div class="form-outline mb-4 form-group">
+              <label
+                class="form-label"
+                for="form3Example3"
+                style="color: #555555; font-size: 16px"
+                >Usuario</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                (change)="usuarioOnChange($event)"
+              />
+              <div
+                [style]="{ display: usuarioError ? 'block' : 'none' }"
+                class="invalid-feedback"
+              >
+                <div>El nombre de usuario es requerido.</div>
               </div>
+            </div>
 
-              <!-- Password input -->
-              <div class="form-outline mb-4 form-group">
-                <label class="form-label" for="form3Example4"
-                  style="color: #555555; font-size: 16px;">Contraseña</label>
-                <input type="password" class="form-control" (change)="claveOnChange($event)"/>
-                <div [style]="{ 'display': claveError ? 'block' :'none' }" class="invalid-feedback">
-                  <div>La contraseña es requerida.</div>
-                </div>
+            <!-- Password input -->
+            <div class="form-outline mb-4 form-group">
+              <label
+                class="form-label"
+                for="form3Example4"
+                style="color: #555555; font-size: 16px"
+                >Contraseña</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                (change)="claveOnChange($event)"
+              />
+              <div
+                [style]="{ display: claveError ? 'block' : 'none' }"
+                class="invalid-feedback"
+              >
+                <div>La contraseña es requerida.</div>
               </div>
+            </div>
 
-              <!-- Checkbox -->
-              <div class="form-outline mb-4">
-                <a onmouseover="this.style.color='#61C3DB'" onmouseout="this.style.color='#555555'"
-                  style="color: #555555; text-align: end; display: block; width: 100%;" href="#"> Olvidé mi contraseña
-                </a>
-              </div>
-
-              <!-- Submit button -->
-              <button (click)="login()" [disabled]="loading" class="btn btn-primary btn-block mb-4">
-                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                Iniciar Sesion
+            <!-- Checkbox -->
+            <div class="form-outline mb-4">
+              <button
+                onmouseover="this.style.color='#61C3DB'"
+                onmouseout="this.style.color='#555555'"
+                style="
+                  color: #555555;
+                  text-align: end;
+                  display: block;
+                  width: 100%;
+                  border: 0;
+                  background: 0;
+                  text-decoration: underline;
+                "
+                (click)="enviarPin()"
+              >
+                Olvidé mi contraseña
               </button>
+            </div>
+
+            <!-- Submit button -->
+            <button
+              (click)="login()"
+              [disabled]="loading"
+              class="btn btn-primary btn-block mb-4"
+            >
+              <span
+                *ngIf="loading"
+                class="spinner-border spinner-border-sm mr-1"
+              ></span>
+              Iniciar Sesion
+            </button>
+            <!-- </form> -->
+          </div>
+        </div>
+
+        <div *ngIf="mostrarReestablecerForm" class="card bg-glass">
+          <div class="card-body px-4 py-5 px-md-5">
+            <div class="text-center mb-4">
+              <div style="display: flex; align-items: center">
+                <div style="display: inline-block">
+                  <img
+                    src="../../../assets/img/PECHlogoSolo.png"
+                    alt="Logo"
+                    style="max-width: 150px; margin-right: 10px"
+                  />
+                </div>
+                <div
+                  style="
+                    display: inline-block;
+                    font-size: 24px;
+                    font-weight: bold;
+                    margin-left: 10px;
+                    color: #555555;
+                  "
+                >
+                  PECH
+                </div>
+              </div>
+            </div>
+
+            <div class="form-outline mb-4 form-group">
+              <label
+                class="form-label"
+                for="form3Example3"
+                style="color: #555555; font-size: 16px"
+                >PIN</label
+              >
+              <div class="d-flex" style="gap: 5px">
+                <input
+                  type="text"
+                  class="form-control rounded"
+                  placeholder="-"
+                  maxlength="1"
+                  style="max-width: 45px"
+                  (input)="digitInput($event, 0)"
+                />
+                <input
+                  type="text"
+                  class="form-control rounded"
+                  placeholder="-"
+                  maxlength="1"
+                  style="max-width: 45px"
+                  (input)="digitInput($event, 1)"
+                />
+                <input
+                  type="text"
+                  class="form-control rounded"
+                  placeholder="-"
+                  maxlength="1"
+                  style="max-width: 45px"
+                  (input)="digitInput($event, 2)"
+                />
+                <input
+                  type="text"
+                  class="form-control rounded"
+                  placeholder="-"
+                  maxlength="1"
+                  style="max-width: 45px"
+                  (input)="digitInput($event, 3)"
+                />
+                <input
+                  type="text"
+                  class="form-control rounded"
+                  placeholder="-"
+                  maxlength="1"
+                  style="max-width: 45px"
+                  (input)="digitInput($event, 4)"
+                />
+                <input
+                  type="text"
+                  class="form-control rounded"
+                  placeholder="-"
+                  maxlength="1"
+                  style="max-width: 45px"
+                  (input)="digitInput($event, 5)"
+                />
+              </div>
+              <div
+                [style]="{ display: usuarioError ? 'block' : 'none' }"
+                class="invalid-feedback"
+              >
+                <div>El pin es requerido.</div>
+              </div>
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4 form-group">
+              <label
+                class="form-label"
+                for="form3Example4"
+                style="color: #555555; font-size: 16px"
+                >Nueva contraseña</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                (change)="claveOnChange($event)"
+              />
+              <div
+                [style]="{ display: claveError ? 'block' : 'none' }"
+                class="invalid-feedback"
+              >
+                <div>La nueva contraseña es requerida.</div>
+              </div>
+            </div>
+
+            <div class="form-outline mb-4 form-group">
+              <label
+                class="form-label"
+                for="form3Example4"
+                style="color: #555555; font-size: 16px"
+                >Confirmar nueva contraseña</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                (change)="claveOnChange($event)"
+              />
+              <div
+                [style]="{ display: claveError ? 'block' : 'none' }"
+                class="invalid-feedback"
+              >
+                <div>Las contraseñas no coinciden.</div>
+              </div>
+            </div>
+
+            <!-- Submit button -->
+            <button
+              (click)="reestablecerClave()"
+              [disabled]="loading"
+              class="btn btn-primary btn-block mb-4"
+            >
+              <span
+                *ngIf="loading"
+                class="spinner-border spinner-border-sm mr-1"
+              ></span>
+              Reestablecer contraseña
+            </button>
             <!-- </form> -->
           </div>
         </div>

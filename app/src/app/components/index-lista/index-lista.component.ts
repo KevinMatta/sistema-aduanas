@@ -160,11 +160,10 @@ export class IndexListaComponent implements OnInit {
   private getService(type: string): DataService {
     switch (type) {
       case "Usuarios":
-        this.modal = FormUsuariosComponent;
+        this.path = "/layout/layout/form-usuarios";
         return this.usuariosService;
       case "Roles":
         this.path = "/layout/layout/roles-por-pantalla";
-        console.log(this.path, "path");
         return this.rolesService;
       case "Aduanas":
         this.modal = FormAduanasComponent;
@@ -216,8 +215,8 @@ export class IndexListaComponent implements OnInit {
     this.table.offset = 0;
   }
 
-  confirmDeleteModal(row) {
-    console.log(row);
+  confirmDeleteModal(row: any) {
+    console.log(row, "row");
     this.itemToDelete = row;
     const modalRef = this.modalService.open(NgbdDeleteConfirmationModal);
     modalRef.result

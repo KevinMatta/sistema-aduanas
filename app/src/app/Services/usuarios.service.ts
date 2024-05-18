@@ -88,6 +88,8 @@ export class UsuariosService implements DataService {
         Id: item.usua_Id,
         Usuario: item.usua_Usuario,
         Rol: item.rol_Descripcion,
+        Empleado: item.Empl_NombreCompleto,
+        DNI: item.Empl_NombreCompleto,
         Admin: item.usua_IsAdmin ? "SI" : "NO",
       };
       return model;

@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
 import { DataService } from "./data.service";
 import { APIResponse } from "../Models/APIResponseViewModel";
 import { environment } from "../../environments/environment";
-import { map } from "rxjs/operators";
+import { first, map } from "rxjs/operators";
 import { Estado } from "../Models/EstadosViewModel";
 import { Empleado } from "../Models/EmpleadosViewModel";
 
@@ -14,7 +14,7 @@ import { Empleado } from "../Models/EmpleadosViewModel";
 export class EmpleadosService implements DataService {
   constructor(private http: HttpClient) {}
 
-  Url = environment.urlAPI + "/API/Empleado/List";
+  BaseUrl = environment.urlAPI + "/API/Empleado/";
 
   getData(): Observable<any[]> {
     return this.getEmpleados();
@@ -22,8 +22,14 @@ export class EmpleadosService implements DataService {
 
   getEmpleados(): Observable<Empleado[]> {
     return this.http
-      .get<APIResponse<Empleado[]>>(this.Url)
+      .get<APIResponse<Empleado[]>>(this.BaseUrl + "List")
       .pipe(map((response) => this.mapResponse(response.data)));
+  }
+
+  BuscarPorDNI(DNI: string): Observable<string | APIResponse<string>> {
+    return this.http
+      .get<APIResponse<string>>(this.BaseUrl + "BuscarPorDNI")
+      .pipe(first());
   }
 
   Eliminar(val: any): Observable<any> {

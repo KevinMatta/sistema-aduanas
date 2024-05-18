@@ -13,10 +13,7 @@
             Lista de {{ titulo }}
           </h5>
         </div>
-        <div
-          class="card-body"
-          
-        >
+        <div class="card-body">
           <div class="d-flex justify-content-between" style="gap: 10px">
             <a
               *ngIf="path"
@@ -68,7 +65,15 @@
               name="{{ column.name }}"
               prop="{{ column.prop }}"
               [flexGrow]="1"
-              [maxWidth]="column.name === 'Id' || column.name === 'Admin' || column.name === 'Sexo' ? 90 : column.name === 'Empresa' ? 300 : 'auto'"
+              [maxWidth]="
+                column.name === 'Id' ||
+                column.name === 'Admin' ||
+                column.name === 'Sexo'
+                  ? 90
+                  : column.name === 'Empresa'
+                  ? 305
+                  : 'auto'
+              "
             >
             </ngx-datatable-column>
             <ngx-datatable-column
@@ -76,7 +81,7 @@
               prop="name"
               style="display: flex; gap: 5px"
               [flexGrow]="1"
-              [minWidth]="300"
+              [minWidth]="325"
             >
               <ng-template
                 ngx-datatable-cell-template
@@ -84,13 +89,13 @@
                 let-row="row"
                 style="display: flex; gap: 5px"
               >
-                <div style="display: flex; min-width: 300px; gap: 5px">
+                <div style="display: flex; min-width: 305px; gap: 5px">
                   <button
                     *ngIf="!path"
                     type="button"
                     class="btn btn-sm btn-primary btn-outline-primary btn-round"
                     (click)="open(row.Id)"
-                    style="font-size: 12px; padding: 2px 15px;"
+                    style="font-size: 12px; padding: 2px 15px"
                   >
                     <i class="now-ui-icons design-2_ruler-pencil"></i>
                     Editar
@@ -98,18 +103,30 @@
                   <button
                     type="button"
                     class="btn btn-sm btn-primary btn-outline-primary btn-round"
-                    style="font-size: 12px; padding: 2px 15px;"
+                    style="font-size: 12px; padding: 2px 15px"
                     (click)="VerDetalle(row.Id)"
                   >
                     <i class="now-ui-icons ui-1_zoom-bold"></i>
                     Detalle
                   </button>
-                  <button 
-                    type="button" 
-                    class="btn btn-sm btn-primary btn-outline-primary btn-round" 
+
+                  <button
+                    *ngIf="titulo === 'Usuarios'"
+                    type="button"
+                    class="btn btn-sm btn-primary btn-outline-primary btn-round"
                     (click)="confirmDeleteModal(row)"
-                    style="font-size: 12px; padding: 2px 15px;"
-                    >
+                    style="font-size: 12px; padding: 2px 15px"
+                  >
+                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                    Deshabilitar
+                  </button>
+                  <button
+                    *ngIf="titulo !== 'Usuarios'"
+                    type="button"
+                    class="btn btn-sm btn-primary btn-outline-primary btn-round"
+                    (click)="confirmDeleteModal(row)"
+                    style="font-size: 12px; padding: 2px 15px"
+                  >
                     <i class="now-ui-icons ui-1_simple-remove"></i>
                     Eliminar
                   </button>

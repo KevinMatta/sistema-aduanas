@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { first, map } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
 import { Usuario } from "../Models/UsuariosViewModel";
+import { APIResponse } from "../Models/APIResponseViewModel";
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
@@ -23,23 +24,49 @@ export class AuthenticationService {
     return this.userSubject.value;
   }
 
-  login(username: string, password: string) {
+  enviarPin(usuario: string): Observable<any> {
     return this.http
-      .post<any>(`${environment.urlAPI}API/Usuario/Login`, {
-        username,
-        password,
+      .post<APIResponse<any>>(
+        `${environment.urlAPI}/API/Usuario/EnviarCodigo?usuario=${usuario}`,
+        usuario
+      )
+      .pipe(first());
+  }
+
+  login(username: string, password: string) {
+    const json = {
+      Usua_Id: 0,
+      Usua_Usuario: username,
+      Usua_Clave: password,
+      Rol_Id: 1,
+      Usua_IsAdmin: false,
+      Usua_Estado: true,
+      Usua_Creacion: 1,
+      Usua_FechaCreacion: new Date().toISOString(),
+      Usua_Modifica: 1,
+      Usua_FechaModifica: new Date().toISOString(),
+      Rol_Descripcion: "string",
+      Creacion: "string",
+      Modifica: "string",
+    };
+    return this.http
+      .post<any>(`${environment.urlAPI}/API/Usuario/IniciarSesion`, json, {
+        headers: new HttpHeaders({ "Content-Type": "application/json" }),
       })
       .pipe(
-        map((user) => {
-          localStorage.setItem("user", JSON.stringify(user));
-          this.userSubject.next(user);
-          return user;
+        map((response) => {
+          if (response.code >= 200 && response.code < 300) {
+            response.data["expiry"] = new Date().getTime() + 8 * 60 * 60 * 1000;
+            localStorage.setItem("user", JSON.stringify(response.data));
+            this.userSubject.next(response.data);
+            return response.data;
+          }
+          return null;
         })
       );
   }
 
   logout() {
-    // remove user from local storage to log user out
     localStorage.removeItem("user");
     this.userSubject.next(null);
     this.router.navigate(["/login"]);

@@ -47,18 +47,13 @@ import { ErrorInterceptor } from "./helpers/error.interceptor";
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    FormUsuariosComponent,
     FormEstadosComponent,
     FormCiudadesComponent,
   ],
-  entryComponents: [
-    FormUsuariosComponent,
-    FormEstadosComponent,
-    FormCiudadesComponent,
-  ],
+  entryComponents: [FormEstadosComponent, FormCiudadesComponent],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
 
 platformBrowserDynamic().bootstrapModule(AppModule);

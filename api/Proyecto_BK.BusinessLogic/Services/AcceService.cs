@@ -43,14 +43,18 @@ namespace sistema_aduana.BusinessLogic.Services
                     MailboxAddress emailTo = new MailboxAddress(mailData.EmailToName, mailData.EmailToId);
                     emailMessage.To.Add(emailTo);
 
-                    emailMessage.Subject = "Codigo de registro";
+                    emailMessage.Subject = "Codigo para reestablecer contraseña";
 
                     BodyBuilder emailBodyBuilder = new BodyBuilder();
 
                     Random generator = new Random();
                     var codigo = generator.Next(0, 1000000).ToString("D6");
                     _usuarioRepository.ActualizarCodigoVerificacion(mailData.EmailSubject, codigo);
-                    emailBodyBuilder.TextBody = codigo;
+                    string html = "<header><h1 style='text-align: center;'>Codigo para reestablecer contraseña</h1>" +
+                        "<p style='text-align: center;'>Ingresa este código de verificación para reestablecer tu contraseña</p></header>" +
+                        $"<main><div style='background-color: #E3E3E3; width: 100px; max-width: 100px; margin: 20px auto; font-size: 18px; padding: 20px; border-radius: 10px; text-align: center;'>{codigo}</div>" +
+                        "<footer style='text-align: center;'>Si tu no solicitaste este correo de confirmación puedes ignorarlo.</footer></main>";
+                    emailBodyBuilder.HtmlBody = html;
 
                     emailMessage.Body = emailBodyBuilder.ToMessageBody();
                     using (SmtpClient mailClient = new SmtpClient())
@@ -71,6 +75,21 @@ namespace sistema_aduana.BusinessLogic.Services
         #endregion
 
         #region Usuarios
+
+        public ServiceResult IniciarSesion(tbUsuarios item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _usuarioRepository.Find(item);
+
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error("Usuario o contraseña incorrectos");
+            }
+        }
         public ServiceResult UsuariosListar()
         {
             var result = new ServiceResult();

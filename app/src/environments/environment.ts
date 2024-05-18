@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  // urlAPI: "https://localhost:44332",
-  urlAPI: "http://api-aduana.somee.com",
+  urlAPI: "https://localhost:44332",
+  // urlAPI: "http://api-aduana.somee.com",
 };

@@ -13,6 +13,7 @@ namespace SistemaMedico.DataAcces.Repository
         public static string UsuariosListar = "[Acce].[sp_Usuarios_listar]";
         public static string UsuariosBuscar = "[Acce].[sp_Usuarios_buscar]";
         public static string UsuariosBuscarPorUsername = "[Acce].[sp_Usuarios_buscarPorUsuario]";
+        public static string UsuariosLogin = "[Acce].[SP_Usuarios_Login]";
         public static string UsuariosCrear = "[Acce].[sp_Usuarios_crear]";
         public static string UsuariosPIN = "[Acce].[sp_Usuarios_pin]";
         public static string UsuariosReestablecer = "[Acce].[sp_Usuarios_reestablecer]";
