@@ -22,6 +22,7 @@ import { FormEstadosComponent } from "./components/form-estados/form-estados.com
 import { FormCiudadesComponent } from "./components/form-ciudades/form-ciudades.component";
 import { JwtInterceptor } from "./helpers/jwt.interceptor";
 import { ErrorInterceptor } from "./helpers/error.interceptor";
+import { FormUsuariosModalComponent } from "./components/form-usuarios-modal/form-usuarios-modal.component";
 
 @NgModule({
   imports: [
@@ -47,10 +48,17 @@ import { ErrorInterceptor } from "./helpers/error.interceptor";
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    FormUsuariosComponent,
+    FormUsuariosModalComponent,
     FormEstadosComponent,
     FormCiudadesComponent,
   ],
-  entryComponents: [FormEstadosComponent, FormCiudadesComponent],
+  entryComponents: [
+    FormEstadosComponent,
+    FormUsuariosComponent,
+    FormUsuariosModalComponent,
+    FormCiudadesComponent,
+  ],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent],
 })

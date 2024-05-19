@@ -28,7 +28,7 @@ export class EmpleadosService implements DataService {
 
   BuscarPorDNI(DNI: string): Observable<string | APIResponse<string>> {
     return this.http
-      .get<APIResponse<string>>(this.BaseUrl + "BuscarPorDNI")
+      .get<APIResponse<string>>(this.BaseUrl + "BuscarPorDNI/" + DNI)
       .pipe(first());
   }
 

@@ -7,13 +7,15 @@ import { ToastrService } from "ngx-toastr";
 import { UsuariosService } from "../../Services/usuarios.service";
 import { APIResponse } from "../../Models/APIResponseViewModel";
 import { EmpleadosService } from "../../Services/empleados.service";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-  selector: "app-modal-content",
-  templateUrl: "./form-usuarios.component.html",
-  styleUrls: ["./form-usuarios.component.css"],
+  selector: "app-form-usuarios-modal",
+  templateUrl: "./form-usuarios-modal.component.html",
+  styleUrls: ["./form-usuarios-modal.component.css"],
 })
-export class FormUsuariosComponent implements OnInit {
+export class FormUsuariosModalComponent implements OnInit {
+  @Input() objetoParaEditar: Usuario;
   roles: Rol[];
 
   usuario: Usuario = new Usuario();
@@ -23,8 +25,9 @@ export class FormUsuariosComponent implements OnInit {
     private rolesService: RolesService,
     private toastr: ToastrService,
     private empleadosService: EmpleadosService,
+    private usuariosService: UsuariosService,
     private location: Location,
-    private usuariosService: UsuariosService
+    public modalService: NgbActiveModal
   ) {}
 
   isLoading = true;
@@ -34,6 +37,15 @@ export class FormUsuariosComponent implements OnInit {
     this.usuario.DNI = "";
     this.usuario.Empleado = "";
     this.usuario.EsAdmin = false;
+    if (this.objetoParaEditar) {
+      this.usuario.Id = this.objetoParaEditar.Id;
+      this.usuario.Usuario = this.objetoParaEditar.Usuario;
+      this.usuario.empl_Id = this.objetoParaEditar.empl_Id;
+      this.usuario.DNI = this.objetoParaEditar.DNI ?? "";
+      this.usuario.Empleado = this.objetoParaEditar.Empleado ?? "";
+      this.usuario.Rol = this.objetoParaEditar.Rol ?? "- Seleccionar -";
+      this.usuario.EsAdmin = this.objetoParaEditar.Admin === "SI";
+    }
 
     this.rolesService.getData().subscribe(
       (data: Rol[]) => {
@@ -78,7 +90,7 @@ export class FormUsuariosComponent implements OnInit {
         },
         (error) => {
           this.mostrarError("Error al buscar al empleado por el DNI.");
-          console.log(error, "Error al buscar al empleado por el DNI");
+          console.log(error);
           this.isLoading = false;
         }
       );
@@ -105,33 +117,52 @@ export class FormUsuariosComponent implements OnInit {
         return;
       }
     }
-    if (!this.usuario.Clave) {
-      this.mostrarWarning("Por favor ingrese su contraseña.");
-      return;
-    }
-    if (this.usuario.Clave !== this.confirmarClave) {
-      this.mostrarWarning("Las contraseñas no coinciden.");
-      return;
-    }
-    if (!this.usuario.empl_Id) {
-      this.mostrarWarning("Por favor ingrese un empleado.");
-      return;
-    }
-    await this.usuariosService.Crear(this.usuario).subscribe(
-      (data: any) => {
-        if (data.code >= 200 && data.code <= 300) {
-          this.mostrarSuccess("Usuario creado con éxito.");
-          this.location.back();
-        } else {
-          this.mostrarError("Ya existe ese usuario.");
-        }
-      },
-      (error) => {
-        this.mostrarError("Error al crear el usuario.");
-        console.log(error);
-        this.isLoading = false;
+    if (!this.objetoParaEditar) {
+      if (!this.usuario.Clave) {
+        this.mostrarWarning("Por favor ingrese su contraseña.");
+        return;
       }
-    );
+      if (this.usuario.Clave !== this.confirmarClave) {
+        this.mostrarWarning("Las contraseñas no coinciden.");
+        return;
+      }
+      await this.usuariosService.Crear(this.usuario).subscribe(
+        (data: any) => {
+          if (data.code >= 200 && data.code <= 300) {
+            this.mostrarSuccess("Usuario creado con éxito.");
+          } else {
+            this.mostrarError("Ya existe ese usuario.");
+          }
+        },
+        (error) => {
+          this.mostrarError("Error al crear el usuario.");
+          console.log(error);
+          this.isLoading = false;
+        }
+      );
+    } else {
+      if (!this.usuario.empl_Id) {
+        this.mostrarWarning("Por favor ingrese un empleado.");
+        return;
+      }
+      await this.usuariosService.Editar(this.usuario).subscribe(
+        (data: any) => {
+          if (data.code >= 200 && data.code <= 300) {
+            this.mostrarSuccess("Usuario editado con éxito.");
+            if (this.objetoParaEditar) {
+              this.modalService.close(true);
+            }
+          } else {
+            this.mostrarError("Error al editar el usuario.");
+          }
+        },
+        (error) => {
+          this.mostrarError("Error al editar el usuario.");
+          console.log(error);
+          this.isLoading = false;
+        }
+      );
+    }
   }
   mostrarSuccess(mensaje: string) {
     this.toastr.success(

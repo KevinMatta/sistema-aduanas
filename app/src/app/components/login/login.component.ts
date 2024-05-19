@@ -1,18 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  Validators,
-} from "@angular/forms";
+import { Router } from "@angular/router";
 import { first } from "rxjs/operators";
 
 import { AuthenticationService } from "../../Services/auth.service";
-import { Usuario } from "../../Models/UsuariosViewModel";
 import { ToastrService } from "ngx-toastr";
+import { APIResponse } from "../../Models/APIResponseViewModel";
 
 @Component({
   selector: "app-login",
@@ -24,12 +16,17 @@ export class LoginComponent implements OnInit {
   usuario: string;
   usuarioError = false;
   clave: string;
+  nuevaClave: string;
+  nuevaClaveError = false;
+  confirmarNuevaClave: string;
+  confirmarNuevaClaveError = false;
   claveError = false;
+  loadingPIN = false;
 
   mostrarReestablecerForm = false;
   inputArr = ["-", "-", "-", "-", "-", "-"];
+  pinError = false;
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService,
     private authenticationService: AuthenticationService
@@ -39,16 +36,38 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.usuario = "";
+  }
 
+  mostrarLoginForm() {
+    this.mostrarReestablecerForm = false;
+  }
   enviarPin() {
     if (!this.usuario) {
       this.usuarioError = true;
       return;
+    } else {
+      this.usuarioError = false;
     }
+    this.loadingPIN = true;
     this.authenticationService.enviarPin(this.usuario).subscribe(
       (data: any) => {
-        console.log(data, "data enviar pin");
+        if (data.code >= 200 && data.code < 300) {
+          this.toastr.success(
+            `<span class="now-ui-icons ui-1_bell-53"></span> PIN enviado al correo del usuario.`,
+            "",
+            {
+              timeOut: 3000,
+              closeButton: true,
+              enableHtml: true,
+              toastClass: "alert alert-success alert-with-icon",
+              positionClass: "toast-bottom-right",
+            }
+          );
+          this.mostrarReestablecerForm = true;
+          this.loadingPIN = false;
+        }
       },
       (error) => {
         this.toastr.warning(
@@ -62,7 +81,7 @@ export class LoginComponent implements OnInit {
             positionClass: "toast-bottom-right",
           }
         );
-        console.log(error, "Error enviar pin");
+        this.loadingPIN = false;
       }
     );
   }
@@ -82,22 +101,86 @@ export class LoginComponent implements OnInit {
     } else {
       this.inputArr[index] = event.target.value;
     }
-    console.log(this.inputArr, "inputArr");
+  }
+
+  nuevaClaveOnChange(event: any) {
+    this.nuevaClave = event.target.value;
+  }
+
+  confirmarNuevaClaveOnChange(event: any) {
+    this.confirmarNuevaClave = event.target.value;
   }
 
   reestablecerClave(): void {
-    this.toastr.success(
-      `<span class="now-ui-icons ui-1_bell-53"></span> Contraseña reestablecida!`,
-      "",
-      {
-        timeOut: 3000,
-        closeButton: true,
-        enableHtml: true,
-        toastClass: "alert alert-success alert-with-icon",
-        positionClass: "toast-bottom-right",
-      }
-    );
-    this.mostrarReestablecerForm = false;
+    if (this.inputArr.includes("-")) {
+      this.pinError = true;
+      return;
+    } else {
+      this.pinError = false;
+    }
+    if (!this.nuevaClave) {
+      this.nuevaClaveError = true;
+      return;
+    } else {
+      this.nuevaClaveError = false;
+    }
+
+    if (
+      !this.confirmarNuevaClave ||
+      this.confirmarNuevaClave !== this.nuevaClave
+    ) {
+      this.confirmarNuevaClaveError = true;
+      return;
+    } else {
+      this.confirmarNuevaClaveError = false;
+    }
+
+    this.authenticationService
+      .RestablecerClave(this.inputArr.join(""), this.nuevaClave)
+      .subscribe(
+        (response: APIResponse<any>) => {
+          if (response.code >= 200 && response.code < 300) {
+            this.mostrarReestablecerForm = false;
+            this.toastr.success(
+              `<span class="now-ui-icons ui-1_bell-53"></span> Contraseña reestablecida`,
+              ``,
+              {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+                toastClass: "alert alert-success alert-with-icon",
+                positionClass: "toast-top-right",
+              }
+            );
+            this.mostrarReestablecerForm = false;
+          } else {
+            this.toastr.error(
+              `<span class="now-ui-icons ui-1_bell-53"></span> PIN INCORRECTO`,
+              "Error",
+              {
+                timeOut: 3000,
+                closeButton: true,
+                enableHtml: true,
+                toastClass: "alert alert-error alert-with-icon",
+                positionClass: "toast-top-right",
+              }
+            );
+          }
+        },
+        (error) => {
+          this.toastr.error(
+            `<span class="now-ui-icons ui-1_bell-53"></span> PIN INCORRECTO`,
+            "Error",
+            {
+              timeOut: 3000,
+              closeButton: true,
+              enableHtml: true,
+              toastClass: "alert alert-error alert-with-icon",
+              positionClass: "toast-top-right",
+            }
+          );
+        }
+      );
   }
 
   usuarioOnChange(event: any) {
@@ -116,7 +199,9 @@ export class LoginComponent implements OnInit {
       if (new Date().getTime() > item.expiry) {
         localStorage.removeItem("user");
       } else {
-        this.router.navigateByUrl("/layout/layout/dashboard");
+        item.usua_Usuario.toLowerCase() === this.usuario.toLowerCase()
+          ? this.router.navigateByUrl("/layout/layout/dashboard")
+          : localStorage.removeItem("user");
       }
     }
     if (!this.usuario) {
@@ -151,7 +236,21 @@ export class LoginComponent implements OnInit {
               }
             );
           } else {
-            this.router.navigateByUrl("/layout/layout/dashboard");
+            if (data.usua_Estado) {
+              this.router.navigateByUrl("/layout/layout/dashboard");
+            } else {
+              this.toastr.warning(
+                `<span class="now-ui-icons ui-1_bell-53"></span> Su usuario está inhabilitado`,
+                "",
+                {
+                  timeOut: 3000,
+                  closeButton: true,
+                  enableHtml: true,
+                  toastClass: "alert alert-warning alert-with-icon",
+                  positionClass: "toast-bottom-right",
+                }
+              );
+            }
           }
           this.loading = false;
         },

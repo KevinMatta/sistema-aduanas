@@ -50,6 +50,20 @@ namespace sistema_aduana.DataAccess.Repository
             }
         }
 
+        public tbEmpleados Find(string Empl_DNI)
+        {
+            string sql = ScriptsDatabase.EmpleadosBuscarPorDNI;
+
+            tbEmpleados result = new tbEmpleados();
+
+            using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
+            {
+                var parameters = new { Empl_DNI };
+                result = db.QueryFirstOrDefault<tbEmpleados>(sql, parameters, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+        }
+
         public RequestStatus Insert(tbEmpleados item)
         {
             string sql = ScriptsDatabase.EmpleadosCrear;

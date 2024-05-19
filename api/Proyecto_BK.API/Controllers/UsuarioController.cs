@@ -42,7 +42,7 @@ namespace sistema_aduana.API.Controllers
             mailData.EmailToId = usuarioEncontrado.Empl_Email;
             mailData.EmailToName = "Estimado Usuario";
             mailData.EmailSubject = usuarioEncontrado.Empl_Email;
-            mailData.EmailBody = "";
+            mailData.EmailBody = usuarioEncontrado.Usua_Id.ToString();
             var enviarCorreo = _acceService.SendMail(mailData);
             return Ok(enviarCorreo);
         }
@@ -77,31 +77,24 @@ namespace sistema_aduana.API.Controllers
             return Ok(list);
         }
 
-        [HttpDelete("Eliminar")]
-        public IActionResult eliminar(int Usua_Id, int Usua_Modifica)
+        [HttpPut("ToggleEstado")]
+        public IActionResult ToggleEstado(int Usua_Id, int Usua_Modifica, bool estado)
         {
-            var list = _acceService.UsuariosEliminar(Usua_Id, Usua_Modifica, DateTime.Now);
-            return Ok(list);
+            var response = _acceService.UsuariosToggleEstado(Usua_Id, estado, Usua_Modifica, DateTime.Now);
+            return Ok(response);
         }
 
         [HttpPost("ValidarPin")]
         public IActionResult ValidarPin(string PIN)
         {
-            bool validado = false;//_acceService.ValidarPin(PIN);
+            bool validado = false;
             return validado ? Ok(PIN) : BadRequest("Código de verificación incorrecto");
         }
-        [HttpPut("restablecer/{PIN}")]
-        public IActionResult restablecer(string PIN, UsuarioViewModel item)
+        [HttpPut("ReestablecerClave")]
+        public IActionResult restablecer(string PIN, string clave)
         {
-            //var model = _mapper.Map<tbUsuarios>(item);
-            var modelo = new tbUsuarios()
-            {
-                //Usua_PIN = PIN,
-                Usua_Clave = item.Usua_Clave,
-            };
-
-            var result = true;// _acceService.restablecer(modelo);
-            return Ok(result);
+            var response = _acceService.UsuariosActualizarClave(PIN, clave);
+            return Ok(response);
         }
     }
 }

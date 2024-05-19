@@ -28,8 +28,6 @@ export class FormEstadosCivilesComponent implements OnInit {
 
   isLoading = true;
   ngOnInit(): void {
-    console.log(this.objetoParaEditar);
-
     if (this.objetoParaEditar) {
       this.estadoCivil.Id = this.objetoParaEditar.Id;
       this.estadoCivil["Estado Civil"] = this.objetoParaEditar["Estado Civil"];

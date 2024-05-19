@@ -60,79 +60,120 @@
             [scrollbarH]="true"
             [messages]="{ emptyMessage: 'No se encontraron registros' }"
           >
-            <ngx-datatable-column
-              *ngFor="let column of columns; let i = index"
-              name="{{ column.name }}"
-              prop="{{ column.prop }}"
-              [flexGrow]="1"
-              [maxWidth]="
-                column.name === 'Id' ||
-                column.name === 'Admin' ||
-                column.name === 'Sexo'
-                  ? 90
-                  : column.name === 'Empresa'
-                  ? 305
-                  : 'auto'
-              "
-            >
-            </ngx-datatable-column>
-            <ngx-datatable-column
-              name="Actions"
-              prop="name"
-              style="display: flex; gap: 5px"
-              [flexGrow]="1"
-              [minWidth]="325"
-            >
-              <ng-template
-                ngx-datatable-cell-template
-                let-rowIndex="rowIndex"
-                let-row="row"
-                style="display: flex; gap: 5px"
+            <ng-container *ngFor="let column of columns">
+              <ngx-datatable-column
+                *ngIf="!column.name.includes('_')"
+                name="{{ column.name }}"
+                prop="{{ column.prop }}"
+                [flexGrow]="1"
+                [maxWidth]="
+                  column.name === 'Id' ||
+                  column.name === 'Admin' ||
+                  column.name === 'Sexo'
+                    ? 90
+                    : column.name === 'Empresa'
+                    ? 305
+                    : 'auto'
+                "
               >
-                <div style="display: flex; min-width: 305px; gap: 5px">
-                  <button
-                    *ngIf="!path"
-                    type="button"
-                    class="btn btn-sm btn-primary btn-outline-primary btn-round"
-                    (click)="open(row.Id)"
-                    style="font-size: 12px; padding: 2px 15px"
-                  >
-                    <i class="now-ui-icons design-2_ruler-pencil"></i>
-                    Editar
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-primary btn-outline-primary btn-round"
-                    style="font-size: 12px; padding: 2px 15px"
-                    (click)="VerDetalle(row.Id)"
-                  >
-                    <i class="now-ui-icons ui-1_zoom-bold"></i>
-                    Detalle
-                  </button>
-
-                  <button
-                    *ngIf="titulo === 'Usuarios'"
-                    type="button"
-                    class="btn btn-sm btn-primary btn-outline-primary btn-round"
-                    (click)="confirmDeleteModal(row)"
-                    style="font-size: 12px; padding: 2px 15px"
-                  >
-                    <i class="now-ui-icons ui-1_simple-remove"></i>
-                    Deshabilitar
-                  </button>
-                  <button
-                    *ngIf="titulo !== 'Usuarios'"
-                    type="button"
-                    class="btn btn-sm btn-primary btn-outline-primary btn-round"
-                    (click)="confirmDeleteModal(row)"
-                    style="font-size: 12px; padding: 2px 15px"
-                  >
-                    <i class="now-ui-icons ui-1_simple-remove"></i>
-                    Eliminar
-                  </button>
-                </div>
-              </ng-template>
-            </ngx-datatable-column>
+              </ngx-datatable-column>
+              <ngx-datatable-column
+                *ngIf="column.name === '_Activo'"
+                name="Acciones"
+                prop="{{ column.prop }}"
+                style="display: flex; gap: 5px"
+                [flexGrow]="1"
+                [minWidth]="325"
+              >
+                <ng-template
+                  ngx-datatable-cell-template
+                  let-rowIndex="rowIndex"
+                  let-row="row"
+                  style="display: flex; gap: 5px"
+                >
+                  <div style="display: flex; min-width: 305px; gap: 5px">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-primary btn-outline-primary btn-round"
+                      (click)="open(row.Id)"
+                      style="font-size: 12px; padding: 2px 15px"
+                    >
+                      <i class="now-ui-icons design-2_ruler-pencil"></i>
+                      Editar
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-primary btn-outline-primary btn-round"
+                      style="font-size: 12px; padding: 2px 15px"
+                      (click)="VerDetalle(row.Id)"
+                    >
+                      <i class="now-ui-icons ui-1_zoom-bold"></i>
+                      Detalle
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-primary btn-outline-primary btn-round"
+                      (click)="confirmDeleteModal(row, row._Activo)"
+                      style="font-size: 12px; padding: 2px 15px; width: 39.5%"
+                    >
+                      <i
+                        [ngClass]="
+                          row._Activo
+                            ? 'now-ui-icons ui-1_simple-remove'
+                            : 'now-ui-icons ui-1_check'
+                        "
+                      ></i>
+                      {{ row._Activo ? "Deshabilitar" : "Habilitar" }}
+                    </button>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column
+                *ngIf="column.name === '_Estado'"
+                name="Acciones"
+                prop="{{ column.prop }}"
+                style="display: flex; gap: 5px"
+                [flexGrow]="1"
+                [minWidth]="325"
+              >
+                <ng-template
+                  ngx-datatable-cell-template
+                  let-rowIndex="rowIndex"
+                  let-row="row"
+                  style="display: flex; gap: 5px"
+                >
+                  <div style="display: flex; min-width: 305px; gap: 5px">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-primary btn-outline-primary btn-round"
+                      (click)="open(row.Id)"
+                      style="font-size: 12px; padding: 2px 15px"
+                    >
+                      <i class="now-ui-icons design-2_ruler-pencil"></i>
+                      Editar
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-primary btn-outline-primary btn-round"
+                      style="font-size: 12px; padding: 2px 15px"
+                      (click)="VerDetalle(row.Id)"
+                    >
+                      <i class="now-ui-icons ui-1_zoom-bold"></i>
+                      Detalle
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-primary btn-outline-primary btn-round"
+                      (click)="confirmDeleteModal(row)"
+                      style="font-size: 12px; padding: 2px 15px"
+                    >
+                      <i class="now-ui-icons ui-1_simple-remove"></i>
+                      Eliminar
+                    </button>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+            </ng-container>
           </ngx-datatable>
         </div>
       </div>

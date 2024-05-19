@@ -49,7 +49,7 @@ namespace sistema_aduana.BusinessLogic.Services
 
                     Random generator = new Random();
                     var codigo = generator.Next(0, 1000000).ToString("D6");
-                    _usuarioRepository.ActualizarCodigoVerificacion(mailData.EmailSubject, codigo);
+                    _usuarioRepository.ActualizarCodigoVerificacion(mailData.EmailBody, codigo);
                     string html = "<header><h1 style='text-align: center;'>Codigo para reestablecer contraseña</h1>" +
                         "<p style='text-align: center;'>Ingresa este código de verificación para reestablecer tu contraseña</p></header>" +
                         $"<main><div style='background-color: #E3E3E3; width: 100px; max-width: 100px; margin: 20px auto; font-size: 18px; padding: 20px; border-radius: 10px; text-align: center;'>{codigo}</div>" +
@@ -161,12 +161,26 @@ namespace sistema_aduana.BusinessLogic.Services
             }
         }
 
-        public ServiceResult UsuariosEliminar(int id, int usuario, DateTime fecha)
+        public ServiceResult UsuariosActualizarClave(string PIN, string clave)
         {
             var result = new ServiceResult();
             try
             {
-                var list = _usuarioRepository.Delete(id, usuario, fecha);
+                var list = _usuarioRepository.Update(PIN, clave);
+                return list.CodeStatus > 0 ? result.Ok(list) : result.Error(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult UsuariosToggleEstado(int id, bool estado, int usuario, DateTime fecha)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _usuarioRepository.ToggleEstado(id, estado, usuario, fecha);
                 return list.CodeStatus > 0 ? result.Ok(list) : result.Error(list);
             }
             catch (Exception ex)

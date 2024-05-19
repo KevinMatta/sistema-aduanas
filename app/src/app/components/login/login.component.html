@@ -62,6 +62,7 @@
               <input
                 type="text"
                 class="form-control"
+                [value]="usuario"
                 (change)="usuarioOnChange($event)"
               />
               <div
@@ -107,6 +108,7 @@
                   background: 0;
                   text-decoration: underline;
                 "
+                [disabled]="loadingPIN"
                 (click)="enviarPin()"
               >
                 Olvidé mi contraseña
@@ -212,7 +214,7 @@
                 />
               </div>
               <div
-                [style]="{ display: usuarioError ? 'block' : 'none' }"
+                [style]="{ display: pinError ? 'block' : 'none' }"
                 class="invalid-feedback"
               >
                 <div>El pin es requerido.</div>
@@ -230,10 +232,10 @@
               <input
                 type="password"
                 class="form-control"
-                (change)="claveOnChange($event)"
+                (change)="nuevaClaveOnChange($event)"
               />
               <div
-                [style]="{ display: claveError ? 'block' : 'none' }"
+                [style]="{ display: nuevaClaveError ? 'block' : 'none' }"
                 class="invalid-feedback"
               >
                 <div>La nueva contraseña es requerida.</div>
@@ -250,10 +252,12 @@
               <input
                 type="password"
                 class="form-control"
-                (change)="claveOnChange($event)"
+                (change)="confirmarNuevaClaveOnChange($event)"
               />
               <div
-                [style]="{ display: claveError ? 'block' : 'none' }"
+                [style]="{
+                  display: confirmarNuevaClaveError ? 'block' : 'none'
+                }"
                 class="invalid-feedback"
               >
                 <div>Las contraseñas no coinciden.</div>
@@ -261,17 +265,29 @@
             </div>
 
             <!-- Submit button -->
-            <button
-              (click)="reestablecerClave()"
-              [disabled]="loading"
-              class="btn btn-primary btn-block mb-4"
+            <div
+              class="d-flex justify-content-end align-items-center"
+              style="gap: 5px"
             >
-              <span
-                *ngIf="loading"
-                class="spinner-border spinner-border-sm mr-1"
-              ></span>
-              Reestablecer contraseña
-            </button>
+              <button
+                (click)="mostrarLoginForm()"
+                class="btn btn-primary d-flex justify-content-center align-items-center mb-4"
+              >
+                <i class="now-ui-icons ui-1_simple-remove mr-1"></i>
+                Cancelar
+              </button>
+              <button
+                (click)="reestablecerClave()"
+                [disabled]="loading"
+                class="btn btn-primary btn-block mb-4"
+              >
+                <span
+                  *ngIf="loading"
+                  class="spinner-border spinner-border-sm mr-1"
+                ></span>
+                Reestablecer contraseña
+              </button>
+            </div>
             <!-- </form> -->
           </div>
         </div>

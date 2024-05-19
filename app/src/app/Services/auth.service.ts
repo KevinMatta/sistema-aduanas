@@ -24,6 +24,13 @@ export class AuthenticationService {
     return this.userSubject.value;
   }
 
+  RestablecerClave(PIN: string, clave): Observable<any> {
+    return this.http.put<APIResponse<any>>(
+      `${environment.urlAPI}/API/Usuario/ReestablecerClave?PIN=${PIN}&clave=${clave}`,
+      { observe: "response" }
+    );
+  }
+
   enviarPin(usuario: string): Observable<any> {
     return this.http
       .post<APIResponse<any>>(
@@ -56,9 +63,12 @@ export class AuthenticationService {
       .pipe(
         map((response) => {
           if (response.code >= 200 && response.code < 300) {
-            response.data["expiry"] = new Date().getTime() + 8 * 60 * 60 * 1000;
-            localStorage.setItem("user", JSON.stringify(response.data));
-            this.userSubject.next(response.data);
+            if (response.data.usua_Estado) {
+              response.data["expiry"] =
+                new Date().getTime() + 8 * 60 * 60 * 1000;
+              localStorage.setItem("user", JSON.stringify(response.data));
+              this.userSubject.next(response.data);
+            }
             return response.data;
           }
           return null;

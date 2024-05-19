@@ -33,7 +33,6 @@ export class ModalVerificacionPINComponent implements OnInit {
     } else {
       this.inputArr[index] = event.target.value;
     }
-    console.log(this.inputArr, "inputArr");
   }
 
   verificar() {

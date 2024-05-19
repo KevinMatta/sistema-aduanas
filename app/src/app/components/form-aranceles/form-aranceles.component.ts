@@ -30,15 +30,13 @@ export class FormArancelesComponent implements OnInit {
 
   isLoading = true;
   ngOnInit(): void {
-    console.log(this.objetoParaEditar);
-
     if (this.objetoParaEditar) {
       this.arancel.Id = this.objetoParaEditar.Id;
       this.arancel.Arancel = this.objetoParaEditar.Arancel;
       this.arancel.Porcentaje = this.objetoParaEditar.Porcentaje;
     } else {
       this.arancel.Arancel = "";
-      this.arancel.Porcentaje = 0.00;
+      this.arancel.Porcentaje = 0.0;
     }
 
     this.paisesService.getData().subscribe(

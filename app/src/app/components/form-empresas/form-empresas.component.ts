@@ -32,8 +32,6 @@ export class FormEmpresasComponent implements OnInit {
 
   isLoading = true;
   ngOnInit(): void {
-    console.log(this.objetoParaEditar);
-
     if (this.objetoParaEditar) {
       this.empresa.Id = this.objetoParaEditar.Id;
       this.empresa.Empresa = this.objetoParaEditar.Empresa;

@@ -37,7 +37,6 @@ import { FormUsuariosComponent } from "./form-usuarios/form-usuarios.component";
     SidebarComponent,
     FormUbicacionComponent,
     FormContactoComponent,
-    FormUsuariosComponent,
     RolesPorPantallaComponent,
     FormPersonaNaturalComponent,
     PdfPersonaNaturalComponent,
@@ -52,7 +51,6 @@ import { FormUsuariosComponent } from "./form-usuarios/form-usuarios.component";
   exports: [
     FooterComponent,
     NavbarComponent,
-    FormUsuariosComponent,
     RolesPorPantallaComponent,
     SidebarComponent,
     FormUbicacionComponent,

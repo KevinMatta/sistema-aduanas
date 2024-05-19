@@ -433,6 +433,20 @@ namespace sistema_aduana.BusinessLogic.Services
             }
         }
 
+        public ServiceResult EmpleadoBuscar(string DNI)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var item = _empleadoRepository.Find(DNI);
+                return result.Ok(item);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
         public ServiceResult EmpleadoCrear(tbEmpleados item)
         {
             var result = new ServiceResult();

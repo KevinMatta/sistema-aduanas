@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import { DataService } from "./data.service";
 import { APIResponse } from "../Models/APIResponseViewModel";
@@ -15,6 +15,17 @@ import { FormUsuariosComponent } from "../components/form-usuarios/form-usuarios
 export class UsuariosService implements DataService {
   constructor(private http: HttpClient) {}
 
+  // private objetoParaEditar = new BehaviorSubject<any>(null);
+  // data$ = this.objetoParaEditar.asObservable();
+
+  // setObjetoParaEditar(data: any) {
+  //   this.objetoParaEditar.next(data);
+  // }
+
+  // getObjetoParaEditar() {
+  //   return this.objetoParaEditar.value;
+  // }
+
   BaseUrl = environment.urlAPI + "/API/Usuario/";
 
   getData(): Observable<any[]> {
@@ -27,16 +38,17 @@ export class UsuariosService implements DataService {
       .pipe(map((response) => this.mapResponse(response.data)));
   }
 
-  Eliminar(val: any): Observable<any> {
-    console.log(val + "Para Eliminar");
-    return this.http.delete<any>(
-      `${this.BaseUrl + "Eliminar/"}?Usua_Id=${val}&Usua_Modifica=1
+  ToggleEstado(id: number, estado: boolean): Observable<any> {
+    return this.http.put<any>(
+      `${
+        this.BaseUrl + "ToggleEstado/"
+      }?Usua_Id=${id}&Usua_Modifica=1&estado=${estado}
       `,
       { observe: "response" }
     );
   }
 
-  Editar(usuario: any): Observable<any> {
+  Editar(usuario: Usuario): Observable<any> {
     const json = {
       Usua_Id: usuario.Id,
       Usua_Usuario: usuario.Usuario,
@@ -51,6 +63,8 @@ export class UsuariosService implements DataService {
       Rol_Descripcion: "string",
       Creacion: "string",
       Modifica: "string",
+      empl_Id: usuario.empl_Id,
+      empl_NombreCompleto: "string",
     };
     return this.http
       .put<any>(this.BaseUrl + "Actualizar", json, {
@@ -59,7 +73,7 @@ export class UsuariosService implements DataService {
       .pipe(map((response) => response));
   }
 
-  Crear(usuario: any): Observable<any> {
+  Crear(usuario: Usuario): Observable<any> {
     const json = {
       Usua_Id: 0,
       Usua_Usuario: usuario.Usuario,
@@ -74,6 +88,8 @@ export class UsuariosService implements DataService {
       Rol_Descripcion: "string",
       Creacion: "string",
       Modifica: "string",
+      empl_Id: usuario.empl_Id,
+      empl_NombreCompleto: "string",
     };
     return this.http
       .post<any>(this.BaseUrl + "Crear", json, {
@@ -88,9 +104,11 @@ export class UsuariosService implements DataService {
         Id: item.usua_Id,
         Usuario: item.usua_Usuario,
         Rol: item.rol_Descripcion,
-        Empleado: item.Empl_NombreCompleto,
-        DNI: item.Empl_NombreCompleto,
+        DNI: item.empl_DNI,
+        empl_Id: item.empl_Id,
+        Empleado: item.empl_NombreCompleto,
         Admin: item.usua_IsAdmin ? "SI" : "NO",
+        _Activo: item.usua_Estado,
       };
       return model;
     });
