@@ -34,6 +34,15 @@
 That's all.
 */
 @import 'swimlane/ngx-datatable/assets/icons.css';
+.datatable-header-cell-template-wrap {
+  text-align: center;
+}
+
+.datatable-body-cell-label {
+  text-align: center;
+  max-width: 280px;
+}
+
 .ngx-datatable.material {
   background: transparent;
   box-shadow: none;
@@ -279,7 +288,7 @@ That's all.
   margin: 6px 3px;
   text-align: center;
   vertical-align: top;
-  color: rgba(0, 0, 0, 0.54);
+  color: #61c3db;
   text-decoration: none;
   vertical-align: bottom;
 }

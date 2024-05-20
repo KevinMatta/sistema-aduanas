@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import { DataService } from "./data.service";
@@ -13,7 +13,7 @@ import { EstadoCivil } from "../Models/EstadosCivilesViewModel";
 export class EstadosCivilesService implements DataService {
   constructor(private http: HttpClient) {}
 
-  Url = environment.urlAPI + "/API/EstadoCivil/List";
+  BaseUrl = environment.urlAPI + "/API/EstadoCivil/";
 
   getData(): Observable<any[]> {
     return this.getEstadosCiviles();
@@ -21,17 +21,54 @@ export class EstadosCivilesService implements DataService {
 
   getEstadosCiviles(): Observable<EstadoCivil[]> {
     return this.http
-      .get<APIResponse<EstadoCivil[]>>(this.Url)
+      .get<APIResponse<EstadoCivil[]>>(this.BaseUrl + "List/")
       .pipe(map((response) => this.mapResponse(response.data)));
   }
 
   Eliminar(val: any): Observable<any> {
     console.log(val + "Para Eliminar");
     return this.http.delete<any>(
-      `${environment.urlAPI}/API/EstadoCivil/Eliminar/?EsCi_Id=${val}&EsCi_Modifica=1
-        `,
+      `${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1`,
       { observe: "response" }
     );
+  }
+
+  Editar(esta: any): Observable<any> {
+    const json = {
+      esCi_Id: esta.Id,
+      esCi_Descripcion: esta['Estado Civil'],
+      esCi_Estado: true,
+      esCi_Creacion: 1,
+      esCi_FechaCreacion: new Date().toISOString(),
+      esCi_Modifica: 1,
+      esCi_FechaModifica: new Date().toISOString(),
+      Creacion: "string",
+      Modifica: "string",
+    };
+    return this.http
+      .put<any>(this.BaseUrl + "Actualizar", json, {
+        headers: new HttpHeaders({ "Content-Type": "application/json" }),
+      })
+      .pipe(map((response) => response));
+  }
+
+  Crear(esta: any): Observable<any> {
+    const json = {
+      esCi_Id: 0,
+      esCi_Descripcion: esta['Estado Civil'],
+      esCi_Estado: true,
+      esCi_Creacion: 1,
+      esCi_FechaCreacion: new Date().toISOString(),
+      esCi_Modifica: 1,
+      esCi_FechaModifica: new Date().toISOString(),
+      Creacion: "string",
+      Modifica: "string",
+    };
+    return this.http
+      .post<any>(this.BaseUrl + "Crear", json, {
+        headers: new HttpHeaders({ "Content-Type": "application/json" }),
+      })
+      .pipe(map((response) => response));
   }
 
   private mapResponse(data: any[]): EstadoCivil[] {

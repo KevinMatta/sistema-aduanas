@@ -30,7 +30,7 @@ export class UsuariosService implements DataService {
   Eliminar(val: any): Observable<any> {
     console.log(val + "Para Eliminar");
     return this.http.delete<any>(
-      `${environment.urlAPI}/API/Usuario/Eliminar/?Usua_Id=${val}&Usua_Modifica=1
+      `${this.BaseUrl + "Eliminar/"}?Usua_Id=${val}&Usua_Modifica=1
       `,
       { observe: "response" }
     );

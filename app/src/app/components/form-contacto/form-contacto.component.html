@@ -14,7 +14,8 @@
       type="text"
       class="form-control"
       placeholder="25055959"
-      maxlength="8"
+      maxlength="20"
+      (change)="telefonoFijoEmpresaOnChange($event)"
     />
   </td>
   <td>
@@ -25,10 +26,11 @@
 <tr>
   <td>
     <input
-      type="text"
+      type="tel"
       class="form-control"
       placeholder="25055959"
       maxlength="8"
+      (change)="telefonoFijoOnChange($event)"
     />
   </td>
   <td>
@@ -40,10 +42,11 @@
 <tr>
   <td>
     <input
-      type="text"
+      type="tel"
       class="form-control"
       placeholder="39055959"
       maxlength="8"
+      (change)="telefonoCelularOnChange($event)"
     />
   </td>
   <td>
@@ -54,7 +57,22 @@
 </tr>
 <tr>
   <td>
-    <input type="email" class="form-control" placeholder="johndoe@gmail.com" />
+    <button
+      type="button"
+      class="btn btn-primary mb-1 d-flex justify-content-center align-items-center w-100"
+      style="font-size: x-small; color: black; padding: 0 0.25rem"
+      [disabled]="!correoTemp"
+      (click)="enviarCorreo(false)"
+    >
+      <div style="max-width: 90px">Enviar código de verficación</div>
+      <i class="now-ui-icons ui-1_email-85 ml-1" style="font-size: large"></i>
+    </button>
+    <input
+      type="email"
+      class="form-control"
+      placeholder="johndoe@gmail.com"
+      (change)="correoOnChange($event)"
+    />
   </td>
   <td>
     SD042 - CORREO ELECTRÓNICO DONDE NOTIFICAR (PARA EFECTOS DE LA RECEPCIÓN O
@@ -66,7 +84,24 @@
 </tr>
 <tr>
   <td>
-    <input type="email" class="form-control" placeholder="johndoe@gmail.com" />
+    <button
+      type="button"
+      class="btn btn-primary mb-1 d-flex justify-content-center align-items-center w-100"
+      style="font-size: x-small; color: black; padding: 0 0.25rem"
+      [disabled]="
+        !correoAlternativoTemp || correoTemp === correoAlternativoTemp
+      "
+      (click)="enviarCorreo(true)"
+    >
+      <div style="max-width: 90px">Enviar código de verficación</div>
+      <i class="now-ui-icons ui-1_email-85 ml-1" style="font-size: large"></i>
+    </button>
+    <input
+      type="email"
+      class="form-control"
+      placeholder="johndoe@gmail.com"
+      (change)="correoAlternativoOnChange($event)"
+    />
   </td>
   <td>
     SD201 - CORREO ELECTRÓNICO ALTERNATIVO

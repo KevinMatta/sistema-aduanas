@@ -2,6 +2,11 @@
 using sistema_aduana.DataAccess.Repository;
 using sistema_aduana.Entities.Entities;
 using System;
+using MimeKit;
+using MailKit.Net.Smtp;
+using System.IO;
+using Microsoft.Extensions.Options;
+using sistema_aduana.Common.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,17 +16,59 @@ namespace sistema_aduana.BusinessLogic.Services
 {
     public class AcceService
     {
+        private readonly MailSettings _mailSettings;
         private readonly UsuarioRepository _usuarioRepository;
         private readonly RolRepository _rolRepository;
         private readonly PantallaRepository _pantallaRepository;
         private readonly PantallasPorRolRepository _pantallasPorRolRepository;
-        public AcceService(UsuarioRepository usuarioRepository, RolRepository rolRepository, PantallaRepository pantallaRepository, PantallasPorRolRepository pantallasPorRolRepository)
+        public AcceService(UsuarioRepository usuarioRepository, RolRepository rolRepository, PantallaRepository pantallaRepository, PantallasPorRolRepository pantallasPorRolRepository, IOptions<MailSettings> mailSettingsOptions)
         {
             _usuarioRepository = usuarioRepository;
             _rolRepository = rolRepository;
             _pantallaRepository = pantallaRepository;
             _pantallasPorRolRepository = pantallasPorRolRepository;
+            _mailSettings = mailSettingsOptions.Value;
         }
+
+        #region Utilitarios
+        public ServiceResult SendMail(MailData mailData)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                using (MimeMessage emailMessage = new MimeMessage())
+                {
+                    MailboxAddress emailFrom = new MailboxAddress(_mailSettings.SenderName, _mailSettings.SenderEmail);
+                    emailMessage.From.Add(emailFrom);
+                    MailboxAddress emailTo = new MailboxAddress(mailData.EmailToName, mailData.EmailToId);
+                    emailMessage.To.Add(emailTo);
+
+                    emailMessage.Subject = "Codigo de registro";
+
+                    BodyBuilder emailBodyBuilder = new BodyBuilder();
+
+                    Random generator = new Random();
+                    var codigo = generator.Next(0, 1000000).ToString("D6");
+                    _usuarioRepository.ActualizarCodigoVerificacion(mailData.EmailSubject, codigo);
+                    emailBodyBuilder.TextBody = codigo;
+
+                    emailMessage.Body = emailBodyBuilder.ToMessageBody();
+                    using (SmtpClient mailClient = new SmtpClient())
+                    {
+                        mailClient.Connect(_mailSettings.Server, _mailSettings.Port, MailKit.Security.SecureSocketOptions.StartTls);
+                        mailClient.Authenticate(_mailSettings.UserName, _mailSettings.Password);
+                        mailClient.Send(emailMessage);
+                        mailClient.Disconnect(true);
+                    }
+                }
+                return result.Ok("Correo enviado");
+            }
+            catch (Exception ex)
+            {
+                return result.Error("Error al enviar el correo");
+            }
+        }
+        #endregion
 
         #region Usuarios
         public ServiceResult UsuariosListar()
@@ -49,6 +96,21 @@ namespace sistema_aduana.BusinessLogic.Services
             catch (Exception ex)
             {
                 return result.Error(ex.Message);
+            }
+        }
+        public tbUsuarios UsuariosBuscarPorUsername(string usuario)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                return _usuarioRepository.Find(usuario);
+                //var list = _usuarioRepository.Find(usuario);
+                //return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return new tbUsuarios();
+                //return result.Error(ex.Message);
             }
         }
 

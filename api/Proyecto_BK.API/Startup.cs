@@ -8,7 +8,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Proyecto_BK.BusinessLogic.Services;
+
 using sistema_aduana.DataAccess.Repository;
+
+using sistema_aduana.BusinessLogic.Services;
+using sistema_aduana.Common.Models;
+
 using Sistema_Turnos.API.Extensions;
 using System;
 using System.Collections.Generic;
@@ -26,7 +31,6 @@ namespace Proyecto_BK.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             
@@ -40,11 +44,29 @@ namespace Proyecto_BK.API
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Proyecto_BK.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { 
+                    Title = "Proyecto_BK.API", 
+                    Version = "v1",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Example Contact",
+                        Email = "example@example.com",
+                        Url = new Uri("https://example.com/contact"),
+                    },
+                });
             });
 
+            services.AddAutoMapper(typeof(Startup));
+            services.AddHttpContextAccessor();
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
 
-            // Configuración de CORS
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", builder =>
@@ -54,13 +76,14 @@ namespace Proyecto_BK.API
                            .AllowAnyHeader();
                 });
             });
+
+            services.AddTransient<GralService>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Proyecto_BK.API v1"));
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Proyecto_BK.API v1"));
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -69,6 +92,8 @@ namespace Proyecto_BK.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseCors("AllowAll");
 

@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import { DataService } from "./data.service";
@@ -13,7 +13,7 @@ import { Pais } from "../Models/PaisesViewModel";
 export class PaisesService implements DataService {
   constructor(private http: HttpClient) {}
 
-  Url = environment.urlAPI + "/API/Pais/List";
+  BaseUrl = environment.urlAPI + "/API/Pais/";
 
   getData(): Observable<any[]> {
     return this.getPaises();
@@ -21,17 +21,55 @@ export class PaisesService implements DataService {
 
   getPaises(): Observable<Pais[]> {
     return this.http
-      .get<APIResponse<Pais[]>>(this.Url)
+      .get<APIResponse<Pais[]>>(this.BaseUrl + "List")
       .pipe(map((response) => this.mapResponse(response.data)));
   }
 
   Eliminar(val: any): Observable<any> {
     console.log(val + "Para Eliminar");
     return this.http.delete<any>(
-      `${environment.urlAPI}/API/Pais/Eliminar/?Pais_Id=${val}&Pais_Modifica=1
+      `${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1
         `,
       { observe: "response" }
     );
+  }
+
+  Editar(pais: any): Observable<any> {
+    const json = {
+      pais_Id: pais.Id,
+      pais_Descripcion: pais.Pais,
+      pais_Estado: true,
+      pais_Creacion: 1,
+      pais_FechaCreacion: new Date().toISOString(),
+      pais_Modifica: 1,
+      pais_FechaModifica: new Date().toISOString(),
+      Creacion: "string",
+      Modifica: "string",
+    };
+    return this.http
+      .put<any>(this.BaseUrl + "Actualizar", json, {
+        headers: new HttpHeaders({ "Content-Type": "application/json" }),
+      })
+      .pipe(map((response) => response));
+  }
+
+  Crear(pais: any): Observable<any> {
+    const json = {
+      pais_Id: 0,
+      pais_Descripcion: pais.Pais,
+      pais_Estado: true,
+      pais_Creacion: 1,
+      pais_FechaCreacion: new Date().toISOString(),
+      pais_Modifica: 1,
+      pais_FechaModifica: new Date().toISOString(),
+      Creacion: "string",
+      Modifica: "string",
+    };
+    return this.http
+      .post<any>(this.BaseUrl + "Crear", json, {
+        headers: new HttpHeaders({ "Content-Type": "application/json" }),
+      })
+      .pipe(map((response) => response));
   }
 
   private mapResponse(data: any[]): Pais[] {

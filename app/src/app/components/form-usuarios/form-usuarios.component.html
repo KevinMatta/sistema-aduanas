@@ -682,7 +682,7 @@
 </div> -->
 
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">Nuevo Usuario</h4>
+  <h4 class="modal-title" id="modal-basic-title"> {{!objetoParaEditar ? "Nuevo" : "Editar"}} Usuario</h4>
   <button
     type="button"
     class="btn btn-sm btn-outline-primary"
@@ -734,7 +734,9 @@
       </div>
     </div>
   </div>
-  <div *ngIf="!usuarioParaEditar" class="row">
+  <!-- <p>{{objetoParaEditar.Usuario}}</p> -->
+  <!-- <p>{{objetoParaEditar.toString()}}</p> -->
+  <div *ngIf="!objetoParaEditar" class="row">
     <div class="col-md-6">
       <div class="form-group">
         <label>Contraseña</label>

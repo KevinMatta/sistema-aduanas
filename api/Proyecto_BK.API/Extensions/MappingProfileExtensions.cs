@@ -24,12 +24,18 @@ namespace Sistema_Turnos.API.Extensions
             CreateMap<EmpresaViewModel, tbEmpresas>().ReverseMap();
 
             CreateMap<AduanaViewModel, tbAduanas>().ReverseMap();
+
             CreateMap<ArancelesViewModel, tbAranceles>().ReverseMap();
             CreateMap<CategoriaViewModel, tbCategorias>().ReverseMap();
             CreateMap<ItemsViewModel, tbItems>().ReverseMap();
             CreateMap<FacturaDetalleViewModel, tbFacturaDetalle>().ReverseMap();
             CreateMap<FacturaEncViewModel, tbFacturas>().ReverseMap();
             CreateMap<DeVaViewModel4, tbDeclaracionDeValor>().ReverseMap();
+
+
+            CreateMap<ComercianteIndividualViewModel, tbComerciantesIndividuales>().ReverseMap();
+            CreateMap<PersonaJuridicaViewModel, tbPersonasJuridicas>().ReverseMap();
+            CreateMap<PersonaNaturalViewModel, tbPersonasNaturales>().ReverseMap();
 
 
         }

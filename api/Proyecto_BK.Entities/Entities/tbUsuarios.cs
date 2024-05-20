@@ -66,6 +66,7 @@ namespace sistema_aduana.Entities.Entities
         public byte[] Usua_Clave { get; set; }
         public int? Rol_Id { get; set; }
         public bool? Usua_IsAdmin { get; set; }
+        public string? Usua_Email { get; set; }
         public bool? Usua_Estado { get; set; }
         public int Usua_Creacion { get; set; }
         public DateTime Usua_FechaCreacion { get; set; }

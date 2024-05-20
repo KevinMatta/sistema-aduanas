@@ -1,0 +1,34 @@
+export class PersonaNatural {
+    Id: number;
+    RtnSolicitante: string;
+    RtnSolicitanteUrl: string;
+    DNI: string;
+    DNIUrl: string;
+    Nombre: string;
+    Apellido: string;
+    NumReciboPublico: string;
+    NumReciboPublicoUrl: string;
+    Estado:string;
+    esta_Id: number;
+    Ciudad:string;
+    ciud_Id: number;
+    DireccionCompleta: string;
+    Aduana:string;
+    adua_Id: number;
+    ['Estado Civil']:string;
+    esCi_Id:number;
+    Profesion:string;
+    prof_Id: number;
+    TelefonoFijo: string;
+    TelefonoCelular: string;
+    Correo: string;
+    CorreoAlternativo: string;
+    Usuario: string;
+    Activo?: boolean;
+    peNa_Creacion?: number;
+    peNa_FechaCreacion?: string;
+    peNa_Modifica?: number;
+    peNa_FechaModifica?: string;
+    Creacion?: string;
+    Modifica?: string;
+}

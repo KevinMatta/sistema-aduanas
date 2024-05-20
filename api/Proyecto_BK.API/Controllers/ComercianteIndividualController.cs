@@ -35,5 +35,38 @@ namespace sistema_aduana.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("SubirArchivo")]
+        public async Task<IActionResult> SubirArchivo()
+        {
+            try
+            {
+                var pdf = Request.Form.Files[0];
+                var keyName = Request.Form["keyName"];
+
+                using (var stream = pdf.OpenReadStream())
+                {
+                    var response = await _gralService.SubirArchivoAsync(stream, keyName);
+                }
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("EnviarCodigo")]
+        public IActionResult EnviarCodigo(string correo, string codigo)
+        {
+            MailData mailData = new MailData();
+            mailData.EmailToId = correo;
+            mailData.EmailToName = "Estimado Usuario";
+            mailData.EmailSubject = correo;
+            mailData.EmailBody = codigo;
+            var enviarCorreo = _gralService.SendMail(mailData);
+            return Ok(enviarCorreo);
+        }
     }
 }

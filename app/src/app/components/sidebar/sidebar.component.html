@@ -1,97 +1,30 @@
-<!-- <div class="logo d-flex justify-content-center">
-  <img src="./assets/img/PECHlogo.png" />
-</div>
-<div class="sidebar-wrapper">
-  <ul class="nav">
-    <li class="nav-item" [ngClass]="{ active: !isAccesoCollapsed }">
-      <a
-        (click)="accesoCollapse.toggle()"
-        [attr.aria-expanded]="!isAccesoCollapsed"
-      >
-        <i class="now-ui-icons ui-1_lock-circle-open"></i>
-        Acceso
-      </a>
-      <ul class="nav pl-2">
-        <div #accesoCollapse="ngbCollapse" [(ngbCollapse)]="isAccesoCollapsed">
-          <li
-            routerLinkActive="active"
-            *ngFor="let menuItem of menuItems"
-            class="{{ menuItem.class }} nav-item"
-          >
-            <a [routerLink]="[menuItem.path]">
-              <i class="now-ui-icons {{ menuItem.icon }}"></i>
-              <p>{{ menuItem.title }}</p>
-            </a>
-          </li>
-        </div>
-      </ul>
-    </li>
-    <li class="nav-item" [ngClass]="{ active: !isGeneralCollapsed }">
-      <a
-        (click)="generalCollapse.toggle()"
-        [attr.aria-expanded]="!isGeneralCollapsed"
-      >
-        <i class="now-ui-icons loader_gear"></i>
-        General
-      </a>
-      <ul class="nav pl-2">
-        <div
-          #generalCollapse="ngbCollapse"
-          [(ngbCollapse)]="isGeneralCollapsed"
-        >
-          <li
-            routerLinkActive="active"
-            *ngFor="let menuItem of menuItems"
-            class="{{ menuItem.class }} nav-item"
-          >
-            <a [routerLink]="[menuItem.path]">
-              <i class="now-ui-icons {{ menuItem.icon }}"></i>
-              <p>{{ menuItem.title }}</p>
-            </a>
-          </li>
-        </div>
-      </ul>
-    </li>
-    <li class="nav-item" [ngClass]="{ active: !isAduanaCollapsed }">
-      <a
-        (click)="aduanaCollapse.toggle()"
-        [attr.aria-expanded]="!isAduanaCollapsed"
-      >
-        <i class="now-ui-icons education_paper"></i>
-        Aduana
-      </a>
-      <ul class="nav pl-2">
-        <div #aduanaCollapse="ngbCollapse" [(ngbCollapse)]="isAduanaCollapsed">
-          <li
-            routerLinkActive="active"
-            *ngFor="let menuItem of menuItems"
-            class="{{ menuItem.class }} nav-item"
-          >
-            <a [routerLink]="[menuItem.path]">
-              <i class="now-ui-icons {{ menuItem.icon }}"></i>
-              <p>{{ menuItem.title }}</p>
-            </a>
-          </li>
-        </div>
-      </ul>
-    </li>
-  </ul>
-</div> -->
-
 <div class="logo d-flex justify-content-center">
   <img src="./assets/img/PECHlogo.png" />
 </div>
 <div class="sidebar-wrapper">
   <ul class="nav">
-    <!-- Render nav-items for each schema -->
+    <ng-container *ngFor="let menuItem of menuItems">
+      <!-- <ul class="">
+      </ul> -->
+      <ng-container *ngIf="!menuItem.title.includes('.')">
+        <li routerLinkActive="active" class="nav-item">
+          <a [routerLink]="[menuItem.path]">
+            <i class="now-ui-icons {{ menuItem.icon }}"></i>
+            <p>{{ menuItem.title }}</p>
+          </a>
+        </li>
+      </ng-container>
+    </ng-container>
     <ng-container *ngFor="let schema of ['Acce', 'Gral', 'Adua']">
       <li class="nav-item" [ngClass]="{ active: !isCollapsed[schema] }">
         <a
           (click)="toggleCollapse(schema)"
           [attr.aria-expanded]="!isCollapsed[schema]"
         >
-          <i class="now-ui-icons ui-1_lock-circle-open"></i>
-          {{ schema }}
+          <i
+            class="now-ui-icons {{ esquemasMap.get(schema).split('.')[1] }}"
+          ></i>
+          {{ esquemasMap.get(schema).split(".")[0] }}
         </a>
         <ul class="nav pl-2">
           <div [ngbCollapse]="isCollapsed[schema]">
@@ -112,16 +45,5 @@
         </ul>
       </li>
     </ng-container>
-    <!-- Render nav-items not belonging to any schema -->
-    <!-- <ng-container *ngFor="let menuItem of menuItems">
-      <ng-container *ngIf="!belongsToAnySchema(menuItem)">
-        <li routerLinkActive="active" class="nav-item">
-          <a [routerLink]="[menuItem.path]">
-            <i class="now-ui-icons {{ menuItem.icon }}"></i>
-            <p>{{ menuItem.title }}</p>
-          </a>
-        </li>
-      </ng-container>
-    </ng-container> -->
   </ul>
 </div>

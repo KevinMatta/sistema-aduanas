@@ -11,7 +11,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   login(event: Event): void {
     event.preventDefault();
-    this.router.navigate(['/layout']);
+    this.router.navigate(['/layout/layout/dashboard']);
   }
 
   ngOnInit() {

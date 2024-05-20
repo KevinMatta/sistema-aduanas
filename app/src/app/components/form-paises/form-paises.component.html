@@ -1,0 +1,45 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">
+    {{ objetoParaEditar ? "Editar" : "Nuevo" }} País
+  </h4>
+  <button
+    type="button"
+    class="btn btn-sm btn-outline-primary"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <i class="now-ui-icons ui-1_simple-remove"></i>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col d-flex justify-content-center">
+      <div class="form-group">
+        <label>Estados</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Cortés"
+          maxlength="20"
+          (change)="paisOnChange($event)"
+          [value]="pais.Pais"
+          style="max-width: 150px"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer" style="gap: 5px">
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    (click)="activeModal.close('Save click')"
+  >
+    <i class="now-ui-icons ui-1_simple-remove" style="margin-right: 5px"></i>
+    Cancelar
+  </button>
+  <button class="btn btn-primary" (click)="guardar()">
+    <i class="now-ui-icons ui-1_check" style="margin-right: 5px"></i>
+    Guardar
+  </button>
+</div>
