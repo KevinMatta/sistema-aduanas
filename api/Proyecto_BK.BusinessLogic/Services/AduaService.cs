@@ -12,9 +12,17 @@ namespace sistema_aduana.BusinessLogic.Services
     public class AduaService
     {
         private readonly AduanaRepository _aduaRepository;
-        public AduaService(AduanaRepository aduanaRepository)
+        private readonly ArancelRepository _arancelRepository;
+        private readonly DeVaRepository _deVaRepository;
+        private readonly FacturaRepository _facturaRepository;
+        private readonly FactDetRepository _factDetRepository;
+        public AduaService(AduanaRepository aduanaRepository, ArancelRepository arancelRepository, DeVaRepository deVaRepository, FacturaRepository facturaRepository, FactDetRepository factDetRepository)
         {
+            _arancelRepository = arancelRepository;
             _aduaRepository = aduanaRepository;
+            _deVaRepository = deVaRepository;
+            _facturaRepository = facturaRepository;
+            _factDetRepository = factDetRepository;
         }
 
         #region Aduana
@@ -81,6 +89,96 @@ namespace sistema_aduana.BusinessLogic.Services
             {
                 var deletedItem = _aduaRepository.Delete(id, usuario, fecha);
                 return deletedItem.CodeStatus > 0 ? result.Ok(deletedItem) : result.Error(deletedItem);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+        #endregion
+
+        public ServiceResult ArancelListar(tbAranceles item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _arancelRepository.List();
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+        #region Aranceles
+        public ServiceResult ArancelCrear(tbAranceles item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var createdItem = _arancelRepository.Insert(item);
+                return createdItem.CodeStatus > 0 ? result.Ok(createdItem) : result.Error(createdItem);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult ArancelActualizar(tbAranceles item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var updatedItem = _arancelRepository.Update(item);
+                return updatedItem.CodeStatus > 0 ? result.Ok(updatedItem) : result.Error(updatedItem);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        #endregion
+        #region DEVA
+        public ServiceResult DeVaCreate(tbDeclaracionDeValor item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _deVaRepository.Insert(item);
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+        #endregion
+
+        #region FactEnc
+        public ServiceResult FactEncCreate(tbFacturas item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _facturaRepository.Insert(item);
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+        #endregion
+        #region FactDet
+        public ServiceResult FactDetCreate(tbFacturaDetalle item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _factDetRepository.Insert(item);
+                return result.Ok(list);
             }
             catch (Exception ex)
             {

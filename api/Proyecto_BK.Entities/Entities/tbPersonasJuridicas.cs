@@ -16,7 +16,6 @@ namespace sistema_aduana.Entities.Entities
         public string PeJu_EdificioYnum { get; set; }
         public string PeJu_PuntosDeReferencia { get; set; }
         public string PeJu_Escritura { get; set; }
-        public int PeNa_Id { get; set; }
         public int? EsCi_RepresentanteLegal { get; set; }
         public int? Prof_RepresentanteLegal { get; set; }
         public int? Ciud_RepresentanteLegal { get; set; }
@@ -32,12 +31,12 @@ namespace sistema_aduana.Entities.Entities
         public DateTime PeJu_FechaCreacion { get; set; }
         public int? PeJu_Modifica { get; set; }
         public DateTime? PeJu_FechaModifica { get; set; }
+        public int? PeNa_Id { get; set; }
 
         public virtual tbCiudades Ciud_RepresentanteLegalNavigation { get; set; }
         public virtual tbEstadosCiviles EsCi_RepresentanteLegalNavigation { get; set; }
         public virtual tbUsuarios PeJu_CreacionNavigation { get; set; }
         public virtual tbUsuarios PeJu_ModificaNavigation { get; set; }
-        public virtual tbPersonasNaturales PeNa { get; set; }
         public virtual tbProfesiones Prof_RepresentanteLegalNavigation { get; set; }
     }
 }

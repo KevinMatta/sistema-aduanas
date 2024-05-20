@@ -120,7 +120,9 @@
     <i class="now-ui-icons ui-1_simple-remove" style="margin-right: 5px"></i>
     Cancelar
   </button>
-  <button class="btn btn-primary" >
+  <button class="btn btn-primary" type="button"
+  (click)="activeModal.close('Save click')">
+    
     <i class="now-ui-icons ui-1_check" style="margin-right: 5px"></i>
     Guardar
   </button>

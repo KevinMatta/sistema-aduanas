@@ -39,7 +39,7 @@ export class FormFacturaEncabezadoComponent implements OnInit {
     public dedService: DEDService,
     private fb: FormBuilder,
     private usuariosService: UsuariosService,
-    // private mensajesService:MensajesService
+    
   ) { }
 
   isLoading = true;
@@ -64,9 +64,9 @@ export class FormFacturaEncabezadoComponent implements OnInit {
         Fact_NumeroFactura:this.FactEnc.get('Fact_NumeroFactura').value ,
         
         Fact_Fecha: this.fechafac,
-        Fact_Id: 0, // Puedes asignar un valor predeterminado o dejarlo en blanco según tu lógica
-        Deva_Id: 0, // Puedes asignar un valor predeterminado o dejarlo en blanco según tu lógica
-        Fact_Creacion: 0, // Puedes asignar la fecha actual u otro valor según tu lógica
+        Fact_Id: 0, 
+        Deva_Id: 0, 
+        Fact_Creacion: 0, 
         Fact_FechaCreacion: new Date().toISOString(), 
       };
       
@@ -79,9 +79,7 @@ export class FormFacturaEncabezadoComponent implements OnInit {
       
     });
   } else {
-    // Si el FormGroup no está lleno, muestra un mensaje de error o toma la acción correspondiente
     console.log('El formulario no está completo');
-    // Puedes mostrar un mensaje de error, deshabilitar el botón de abrir modal, etc.
   }
     
   }
@@ -105,6 +103,9 @@ export class FormFacturaEncabezadoComponent implements OnInit {
       console.error('FormControl Fact_Fecha is undefined or null');
     }
   }
+
+
+
    formatTwoDigits(num: number): string {
     return num < 10 ? '0' + num : num.toString();
   }
