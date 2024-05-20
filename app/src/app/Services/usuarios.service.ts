@@ -15,17 +15,6 @@ import { FormUsuariosComponent } from "../components/form-usuarios/form-usuarios
 export class UsuariosService implements DataService {
   constructor(private http: HttpClient) {}
 
-  // private objetoParaEditar = new BehaviorSubject<any>(null);
-  // data$ = this.objetoParaEditar.asObservable();
-
-  // setObjetoParaEditar(data: any) {
-  //   this.objetoParaEditar.next(data);
-  // }
-
-  // getObjetoParaEditar() {
-  //   return this.objetoParaEditar.value;
-  // }
-
   BaseUrl = environment.urlAPI + "/API/Usuario/";
 
   getData(): Observable<any[]> {

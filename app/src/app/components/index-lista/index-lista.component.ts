@@ -53,32 +53,30 @@ export class IndexListaComponent implements OnInit {
 
   modal: any;
   open(Id?: number | string) {
-    let modalRef = this.modalService.open(this.modal);
-    if (Id) {
-      const objetoEncontrado = this.rows.find((obj) => obj.Id === Id);
-      if (this.path && this.titulo !== "Usuarios") {
-        this.router.navigateByUrl(this.path);
-        this.service.setObjetoParaEditar(objetoEncontrado);
-      } else {
-        modalRef.componentInstance.objetoParaEditar = objetoEncontrado;
-        modalRef.result
-          .then((data) => {
-            if (data === true) {
-              this.service.getData().subscribe((data: any[]) => {
-                this.rows = this.formatFilas(data);
-                this.temp = [...this.rows];
-                if (this.rows.length > 0) {
-                  this.columns = this.formatColumnas(Object.keys(this.rows[0]));
-                }
-                // this.isLoading = false;
-              });
-            }
-          })
-          .catch((err) => {
-            // console.log(err);
-            // this.isLoading = false;
-          });
-      }
+    const objetoEncontrado = this.rows.find((obj) => obj.Id === Id);
+    if (this.path && this.titulo !== "Usuarios") {
+      this.router.navigateByUrl(this.path);
+      this.service.setObjetoParaEditar(objetoEncontrado);
+    } else {
+      let modalRef = this.modalService.open(this.modal);
+      modalRef.componentInstance.objetoParaEditar = objetoEncontrado;
+      modalRef.result
+        .then((data) => {
+          if (data === true) {
+            this.service.getData().subscribe((data: any[]) => {
+              this.rows = this.formatFilas(data);
+              this.temp = [...this.rows];
+              if (this.rows.length > 0) {
+                this.columns = this.formatColumnas(Object.keys(this.rows[0]));
+              }
+              // this.isLoading = false;
+            });
+          }
+        })
+        .catch((err) => {
+          // console.log(err);
+          // this.isLoading = false;
+        });
     }
   }
 
@@ -313,7 +311,7 @@ export class IndexListaComponent implements OnInit {
             } else {
               this.toastr.error(
                 `<span class="now-ui-icons ui-1_bell-53"></span> No se pudo ${
-                  activo ? "deshabilitaR" : "habilitar"
+                  activo ? "deshabilitar" : "habilitar"
                 } el elemento`,
                 "Error",
                 {
@@ -330,7 +328,7 @@ export class IndexListaComponent implements OnInit {
           (error) => {
             this.toastr.error(
               `<span class="now-ui-icons ui-1_bell-53"></span> No se pudo ${
-                activo ? "deshabilitaR" : "habilitar"
+                activo ? "deshabilitar" : "habilitar"
               } el elemento`,
               "Error",
               {

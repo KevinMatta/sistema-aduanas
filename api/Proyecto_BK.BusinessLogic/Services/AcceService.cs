@@ -247,12 +247,12 @@ namespace sistema_aduana.BusinessLogic.Services
             }
         }
 
-        public ServiceResult RolesEliminar(int id, int usuario, DateTime fecha)
+        public ServiceResult RolesToggleEstado(int id, bool estado, int usuario, DateTime fecha)
         {
             var result = new ServiceResult();
             try
             {
-                var list = _rolRepository.Delete(id, usuario, fecha);
+                var list = _rolRepository.ToggleEstado(id, estado, usuario, fecha);
                 return list.CodeStatus > 0 ? result.Ok(list) : result.Error(list);
             }
             catch (Exception ex)

@@ -27,14 +27,14 @@ namespace sistema_aduana.DataAccess.Repository
                 parametro.Add("@Usua_Modifica", usuario);
                 parametro.Add("@Usua_FechaModifica", fecha);
 
-                var result = db.Execute(
+                var result = db.QueryFirst(
                     sql, parametro,
                     commandType: CommandType.StoredProcedure
                 );
 
-                string mensaje = (result == 1) ? "exito" : "error";
+                string mensaje = (result.Resultado == 1) ? "exito" : "error";
 
-                return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+                return new RequestStatus { CodeStatus = result.Resultado, MessageStatus = mensaje };
 
             };
         }

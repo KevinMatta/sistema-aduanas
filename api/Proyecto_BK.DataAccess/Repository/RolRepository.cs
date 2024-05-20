@@ -15,24 +15,26 @@ namespace sistema_aduana.DataAccess.Repository
 {
     public class RolRepository : IRepository<tbRoles>
     {
-        public RequestStatus Delete(int? id, int usuario, DateTime fecha)
+        public RequestStatus ToggleEstado(int? id, bool estado, int usuario, DateTime fecha)
         {
-            string sql = ScriptsDatabase.RolesEliminar;
+            string sql = ScriptsDatabase.RolesToggleEstado;
             using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
                 parametro.Add("@Rol_Id", id);
+                parametro.Add("@Rol_Estado", estado);
                 parametro.Add("@Rol_Modifica", usuario);
                 parametro.Add("@Rol_FechaModifica", fecha);
 
-                var result = db.Execute(
+                var result = db.QueryFirst(
                     sql, parametro,
                     commandType: CommandType.StoredProcedure
                 );
 
-                string mensaje = (result == 1) ? "exito" : "error";
+                string mensaje = (result.Resultado == 1) ? "exito" : "error";
 
-                return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+                return new RequestStatus { CodeStatus = result.Resultado, MessageStatus = mensaje };
+
             };
         }
 
@@ -58,6 +60,7 @@ namespace sistema_aduana.DataAccess.Repository
             {
                 var parameter = new DynamicParameters();
                 parameter.Add("@Rol_Descripcion", item.Rol_Descripcion);
+                parameter.Add("@pantallas", CreateDataTable(item.pantallasPorAgregar).AsTableValuedParameter("tbPantallasIds"));
                 parameter.Add("@Rol_Creacion", item.Rol_Creacion);
                 parameter.Add("@Rol_FechaCreacion", item.Rol_FechaCreacion);
 
@@ -66,16 +69,46 @@ namespace sistema_aduana.DataAccess.Repository
                 return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
             }
         }
+        private DataTable CreateDataTable(List<int> list)
+        {
+            var table = new DataTable();
+            table.Columns.Add("Pant_Id", typeof(int));
+
+            foreach (var item in list)
+            {
+                table.Rows.Add(item);
+            }
+
+            return table;
+        }
 
         public IEnumerable<tbRoles> List()
         {
-            string sql = ScriptsDatabase.RolesListar;
+            string sqlRoles = ScriptsDatabase.RolesListar;
+            string sqlParos = ScriptsDatabase.PantallasPorRolesListar;
 
             List<tbRoles> result = new List<tbRoles>();
+            List<tbPantallasPorRoles> resultPARO = new List<tbPantallasPorRoles>();
+
 
             using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
             {
-                result = db.Query<tbRoles>(sql, commandType: CommandType.Text).ToList();
+                result = db.Query<tbRoles>(sqlRoles, commandType: CommandType.Text).ToList();
+
+
+                resultPARO = db.Query<tbPantallasPorRoles>(sqlParos, commandType: CommandType.Text).ToList();
+
+                foreach (var rol in result)
+                {
+                    rol.pantallasPorAgregar = new List<int>();
+                    foreach (var paro in resultPARO)
+                    {
+                        if (paro.Rol_Id == rol.Rol_Id)
+                        {
+                            rol.pantallasPorAgregar.Add(paro.Pant_Id);
+                        }
+                    }
+                }
 
                 return result;
             }
@@ -97,6 +130,11 @@ namespace sistema_aduana.DataAccess.Repository
                 string mensaje = (result == 1) ? "exito" : "error";
                 return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
             }
+        }
+
+        public RequestStatus Delete(int? id, int usuario, DateTime fecha)
+        {
+            throw new NotImplementedException();
         }
     }
 }

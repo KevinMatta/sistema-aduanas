@@ -63,11 +63,13 @@ export class AuthenticationService {
       .pipe(
         map((response) => {
           if (response.code >= 200 && response.code < 300) {
-            if (response.data.usua_Estado) {
-              response.data["expiry"] =
-                new Date().getTime() + 8 * 60 * 60 * 1000;
-              localStorage.setItem("user", JSON.stringify(response.data));
-              this.userSubject.next(response.data);
+            if (response.data.rol_Estado || response.data.usua_IsAdmin) {
+              if (response.data.usua_Estado) {
+                response.data["expiry"] =
+                  new Date().getTime() + 8 * 60 * 60 * 1000;
+                localStorage.setItem("user", JSON.stringify(response.data));
+                this.userSubject.next(response.data);
+              }
             }
             return response.data;
           }

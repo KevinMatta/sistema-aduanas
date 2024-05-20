@@ -25,7 +25,7 @@ namespace SistemaMedico.DataAcces.Repository
         public static string RolesBuscar = "[Acce].[sp_Roles_buscar]";
         public static string RolesCrear = "[Acce].[sp_Roles_crear]";
         public static string RolesActualizar = "[Acce].[sp_Roles_actualizar]";
-        public static string RolesEliminar = "[Acce].[sp_Roles_eliminar]";
+        public static string RolesToggleEstado = "[Acce].[sp_Roles_toggleEstado]";
         #endregion
         #region Pantallas
         public static string PantallasListar = "[Acce].[sp_Pantallas_listar]";
@@ -38,6 +38,7 @@ namespace SistemaMedico.DataAcces.Repository
         #region PantallasPorRoles
         public static string PantallasPorRolesCrear = "[Acce].[sp_PantallasPorRol_crear]";
         public static string PantallasPorRolesEliminar = "[Acce].[sp_PantallasPorRoles_eliminar]";
+        public static string PantallasPorRolesListar = "[Acce].[sp_PantallasPorRoles_listar]";
         #endregion
         #endregion
 

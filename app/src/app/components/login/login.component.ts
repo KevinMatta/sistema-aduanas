@@ -225,7 +225,7 @@ export class LoginComponent implements OnInit {
         next: (data) => {
           if (data === null) {
             this.toastr.error(
-              `<span class="now-ui-icons ui-1_bell-53"></span> Ha ocurrido un error en el servidor`,
+              `<span class="now-ui-icons ui-1_bell-53"></span> Credenciales incorrectas`,
               "",
               {
                 timeOut: 3000,
@@ -236,8 +236,22 @@ export class LoginComponent implements OnInit {
               }
             );
           } else {
-            if (data.usua_Estado) {
-              this.router.navigateByUrl("/layout/layout/dashboard");
+            if (data.rol_Estado || data.usua_IsAdmin) {
+              if (data.usua_Estado) {
+                this.router.navigateByUrl("/layout/layout/dashboard");
+              } else {
+                this.toastr.warning(
+                  `<span class="now-ui-icons ui-1_bell-53"></span> Su usuario está inhabilitado`,
+                  "",
+                  {
+                    timeOut: 3000,
+                    closeButton: true,
+                    enableHtml: true,
+                    toastClass: "alert alert-warning alert-with-icon",
+                    positionClass: "toast-bottom-right",
+                  }
+                );
+              }
             } else {
               this.toastr.warning(
                 `<span class="now-ui-icons ui-1_bell-53"></span> Su usuario está inhabilitado`,
