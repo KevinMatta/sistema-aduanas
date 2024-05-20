@@ -30,8 +30,6 @@ export class FormEstadosComponent implements OnInit {
 
   isLoading = true;
   ngOnInit(): void {
-    console.log(this.objetoParaEditar);
-
     if (this.objetoParaEditar) {
       this.estado.Id = this.objetoParaEditar.Id;
       this.estado.Estado = this.objetoParaEditar.Estado;

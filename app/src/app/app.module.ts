@@ -1,7 +1,9 @@
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NO_ERRORS_SCHEMA, NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+
 import { RouterModule } from "@angular/router";
 import { NgbDatepickerModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrModule } from "ngx-toastr";
@@ -18,9 +20,17 @@ import { BrowserModule } from "@angular/platform-browser";
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import { MAT_DIALOG_DEFAULT_OPTIONS } from "@angular/material/dialog";
 import { FormUsuariosComponent } from "./components/form-usuarios/form-usuarios.component";
+
+import { FormEstadosComponent } from "./components/form-estados/form-estados.component";
+import { FormCiudadesComponent } from "./components/form-ciudades/form-ciudades.component";
+import { JwtInterceptor } from "./helpers/jwt.interceptor";
+import { ErrorInterceptor } from "./helpers/error.interceptor";
+import { FormUsuariosModalComponent } from "./components/form-usuarios-modal/form-usuarios-modal.component";
+
 import { FormFacturaitemComponent } from "./components/items-Factura/factura-item.component";
 import { FormFacturaEncabezadoComponent } from "./components/factura-encabezado/factura-encabezado.component";
 import { FormDeclaracionValorComponent } from "./components/form-declaracion-valor/form-declaracion-valor.component";
+
 
 @NgModule({
   imports: [
@@ -40,11 +50,29 @@ import { FormDeclaracionValorComponent } from "./components/form-declaracion-val
 
   ],
   providers: [
-    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } },
+
+    // { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: "DataService", useClass: UsuariosService },
   ],
-  declarations: [AppComponent, AdminLayoutComponent, FormUsuariosComponent,FormFacturaitemComponent,FormFacturaEncabezadoComponent,FormDeclaracionValorComponent],
-  entryComponents: [FormUsuariosComponent,FormFacturaitemComponent,FormFacturaEncabezadoComponent,FormDeclaracionValorComponent],
+  declarations: [
+    AppComponent,
+    AdminLayoutComponent,
+    FormUsuariosComponent,
+    FormUsuariosModalComponent,
+    FormEstadosComponent,
+    FormCiudadesComponent,
+          FormFacturaitemComponent,FormFacturaEncabezadoComponent,FormDeclaracionValorComponent
+  ],
+  entryComponents: [
+    FormEstadosComponent,
+    FormUsuariosComponent,
+    FormUsuariosModalComponent,
+    FormCiudadesComponent,
+    FormFacturaitemComponent,FormFacturaEncabezadoComponent,FormDeclaracionValorComponent
+  ],
+
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent],
 })

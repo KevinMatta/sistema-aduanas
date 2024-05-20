@@ -1,0 +1,170 @@
+<div class="row">
+  <div class="col">
+    <div class="card">
+      <div id="impresion" class="card-body">
+        <div class="d-flex justify-content-center align-items-center" style="margin: 30px auto 60px auto;">
+          <div class="d-flex justify-content-center align-items-center flex-grow-1" style="width: 30%;">
+            <img src="./assets/img/logo_aduanas_blanco.png" alt="Logo Aduana" />
+          </div>
+          <div class="d-flex justify-content-center align-items-center flex-grow-1" style="width: 40%;">
+            <h5 class="title text-center">
+              SP009 - SOLICITUD DE CONTRATO DE ADHESION PARA PERSONA NATURAL
+            </h5>
+          </div>
+          <div class="d-flex justify-content-center align-items-center flex-grow-1" style="width: 30%; height: 100px;">QR</div>
+        </div>
+        <h6>Datos generales</h6>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>RTN Solicitante</label>
+              <input type="text" class="form-control" maxlength="20" [value]="personaNatural.RtnSolicitante" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Documento Nacional de Identificación (DNI)</label>
+              <input type="text" class="form-control" maxlength="20" [value]="personaNatural.DNI" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Número Recibo de Servicio Público (ENEE, SANAA, etc.)
+              </label>
+              <input type="text" class="form-control" maxlength="20" [value]="personaNatural.NumReciboPublico" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Nombre completo</label>
+              <input type="text" class="form-control" [value]="personaNatural.Nombre + ' ' + personaNatural.Apellido" />
+            </div>
+          </div>
+        </div>
+        <h6 style="margin-top: 60px;">Datos a Informar</h6>
+        <div class="" style="overflow-x: auto">
+          <table class="table table-bordered">
+            <thead class="text-primary">
+              <th style="width: 37%;">Dato</th>
+              <th>Descripcion</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  {{ personaNatural["Estado Civil"] }}
+                </td>
+                <td>
+                  SD106 - ESTADO CIVIL DE LA PERSONA
+                  <span style="color: red">*</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{ personaNatural.Profesion }}
+                </td>
+                <td>
+                  SD108 - PROFESIÓN U OFICIO DE LA PERSONA (SEGUN CLASIFICADOR
+                  NACIONAL DE OCUPACIONES DE HONDURAS, CNOH-2018)
+                  <span style="color: red">*</span>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-primary" style="background-color: rgba(0, 0, 0, 0.02)">
+                  DOMICILIO DE LA PERSONA (PARA EFECTO DE UBICACIÓN, EN EL
+                  CONTRATO DE ADHESIÓN SE MOSTRARÁ EL DOMICILIO FISCAL
+                  REGISTRADO EN LA ADMINISTRACION TRIBUTARIA)
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{ personaNatural.Estado }}
+                </td>
+                <td>
+                  SD006 - ESTADO
+                  <span style="color: red">*</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{ personaNatural.Ciudad }}
+                </td>
+                <td>
+                  SD006 - CIUDAD
+                  <span style="color: red">*</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{personaNatural.DireccionCompleta}}
+                </td>
+                <td>
+                  SD007 - DIRECCIÓN COMPLETA
+                  <span style="color: red">*</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{ personaNatural.Aduana }}
+                </td>
+                <td>
+                  SD001 - OFICINA REGIONAL DE ADUANAS MÁS CERCANA
+                  <span style="color: red">*</span>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-primary" style="background-color: rgba(0, 0, 0, 0.02)">
+                  INFORMACIÓN DE CONTACTO (EN EL CONTRATO DE ADHESIÓN SE MOSTRARÁ LOS NÚMEROS
+                  DE TELÉFONO REGISTRADOS EN LA ADMINISTRACION TRIBUTARIA)
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{personaNatural.TelefonoFijo}}
+                </td>
+                <td>
+                  SD004 - NUMERO DE TELÉFONO FIJO DE LA PERSONA
+                  <span style="color: red">*</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{personaNatural.TelefonoCelular}}
+                </td>
+                <td>
+                  SD065 - NUMERO DE TELÉFONO CELULAR DE LA PERSONA
+                  <span style="color: red">*</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{personaNatural.Correo}}
+                </td>
+                <td>
+                  SD042 - CORREO ELECTRÓNICO DONDE NOTIFICAR
+                  <span style="color: red">*</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{personaNatural.CorreoAlternativo}}
+                </td>
+                <td>
+                  SD201 - CORREO ELECTRÓNICO ALTERNATIVO
+                  <span style="color: red">*</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="d-flex justify-content-between" style="margin-top: 100px;"><span>Página 1 de 1</span> <span>{{fecha}}</span></div>
+      </div>
+      <div class="d-flex justify-content-end mr-3">
+        <button class="btn btn-primary" (click)="imprimir()">
+          Descargar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

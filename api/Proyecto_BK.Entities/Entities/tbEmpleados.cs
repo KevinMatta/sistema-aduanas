@@ -9,11 +9,10 @@ namespace sistema_aduana.Entities.Entities
     public partial class tbEmpleados
     {
         public int Empl_Id { get; set; }
-        public string Empl_Rtn { get; set; }
+        public string Empl_DNI { get; set; }
         public string Empl_PrimerNombre { get; set; }
         public string Empl_PrimerApellido { get; set; }
         public string Empl_Sexo { get; set; }
-        public int Usua_Id { get; set; }
         public int EsCi_Id { get; set; }
         public int Empr_Id { get; set; }
         public bool? Empl_Estado { get; set; }

@@ -20,6 +20,7 @@ namespace sistema_aduana.Common.Models
         public string Creacion { get; set; }
         [NotMapped]
         public string Modifica { get; set; }
-
+        [NotMapped]
+        public List<int> pantallasPorAgregar { get; set; }
     }
 }

@@ -15,26 +15,41 @@ namespace sistema_aduana.DataAccess.Repository
 {
     public class UsuarioRepository : IRepository<tbUsuarios>
     {
-        public RequestStatus Delete(int? id, int usuario, DateTime fecha)
+
+        public RequestStatus ToggleEstado(int? id, bool estado, int usuario, DateTime fecha)
         {
-            string sql = ScriptsDatabase.UsuariosEliminar;
+            string sql = ScriptsDatabase.UsuariosToggleEstado;
             using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
                 parametro.Add("@Usua_Id", id);
+                parametro.Add("@Usua_Estado", estado);
                 parametro.Add("@Usua_Modifica", usuario);
                 parametro.Add("@Usua_FechaModifica", fecha);
 
-                var result = db.Execute(
+                var result = db.QueryFirst(
                     sql, parametro,
                     commandType: CommandType.StoredProcedure
                 );
 
-                string mensaje = (result == 1) ? "exito" : "error";
+                string mensaje = (result.Resultado == 1) ? "exito" : "error";
 
-                return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+                return new RequestStatus { CodeStatus = result.Resultado, MessageStatus = mensaje };
 
             };
+        }
+
+        public tbUsuarios Find(tbUsuarios item)
+        {
+            tbUsuarios result = new tbUsuarios();
+            using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
+            {
+                var parameter = new DynamicParameters();
+                parameter.Add("Usuario", item.Usua_Usuario);
+                parameter.Add("Contrasena", item.Usua_Clave);
+                result = db.QueryFirst<tbUsuarios>(ScriptsDatabase.UsuariosLogin, parameter, commandType: CommandType.StoredProcedure);
+                return result;
+            }
         }
 
         public tbUsuarios Find(string? Usua_Usuario)
@@ -75,6 +90,7 @@ namespace sistema_aduana.DataAccess.Repository
                 parameter.Add("@Usua_Usuario", item.Usua_Usuario);
                 parameter.Add("@Usua_Clave", item.Usua_Clave);
                 parameter.Add("@Rol_Id", item.Rol_Id);
+                parameter.Add("@Empl_Id", item.Empl_Id);
                 parameter.Add("@Usua_IsAdmin", item.Usua_IsAdmin);
                 parameter.Add("@Usua_Creacion", item.Usua_Creacion);
                 parameter.Add("@Usua_FechaCreacion", item.Usua_FechaCreacion);
@@ -110,8 +126,26 @@ namespace sistema_aduana.DataAccess.Repository
                 parameter.Add("@Usua_Usuario", item.Usua_Usuario);
                 parameter.Add("@Usua_IsAdmin", item.Usua_IsAdmin);
                 parameter.Add("@Rol_Id", item.Rol_Id);
+                parameter.Add("@Empl_Id", item.Empl_Id);
                 parameter.Add("@Usua_Modifica", item.Usua_Modifica);
                 parameter.Add("@Usua_FechaModifica", item.Usua_FechaModifica);
+
+                var result = db.Execute(sql, parameter, commandType: CommandType.StoredProcedure);
+                string mensaje = (result == 1) ? "exito" : "error";
+                return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+
+            }
+        }
+
+        public RequestStatus Update(string PIN, string clave)
+        {
+            string sql = ScriptsDatabase.UsuariosReestablecer;
+
+            using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
+            {
+                var parameter = new DynamicParameters();
+                parameter.Add("@PIN", PIN);
+                parameter.Add("@Usua_Clave", clave);
 
                 var result = db.Execute(sql, parameter, commandType: CommandType.StoredProcedure);
                 string mensaje = (result == 1) ? "exito" : "error";
@@ -137,7 +171,7 @@ namespace sistema_aduana.DataAccess.Repository
             using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("Usua_Id", Usua_Id);
+                parametro.Add("Usua_Id", Convert.ToInt32(Usua_Id));
                 parametro.Add("Usua_CodigoVerificacion", codigo);
 
                 var result = db.QueryFirst(ScriptsDatabase.UsuariosPIN,
@@ -169,5 +203,9 @@ namespace sistema_aduana.DataAccess.Repository
             }
         }
 
+        public RequestStatus Delete(int? id, int usuario, DateTime fecha)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

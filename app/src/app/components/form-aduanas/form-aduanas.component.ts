@@ -28,13 +28,11 @@ export class FormAduanasComponent implements OnInit {
     private estadosService: EstadosService,
     private toastr: ToastrService,
     private ciudadesService: CiudadesService,
-    private aduanasService: AduanasService,
+    private aduanasService: AduanasService
   ) {}
 
   isLoading = true;
   ngOnInit(): void {
-    console.log(this.objetoParaEditar);
-
     if (this.objetoParaEditar) {
       this.aduana.Id = this.objetoParaEditar.Id;
       this.aduana.Aduana = this.objetoParaEditar.Aduana;

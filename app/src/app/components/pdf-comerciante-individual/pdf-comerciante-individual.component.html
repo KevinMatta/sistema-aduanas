@@ -1,0 +1,253 @@
+<div class="row">
+  <div class="col d-flex justify-content-center">
+    <div class="card" style="width: 747px; min-width: 747px; max-width: 747px; margin-left: auto; margin-right: auto;">
+      <div id="impresion" class="card-body">
+        <div class="d-flex justify-content-center align-items-center" style="margin: 30px auto 60px auto;">
+          <div class="d-flex justify-content-center align-items-center flex-grow-1" style="width: 30%;">
+            <img src="./assets/img/logo_aduanas_blanco.png" alt="Logo Aduana" />
+          </div>
+          <div class="d-flex justify-content-center align-items-center flex-grow-1" style="width: 40%;">
+            <h5 class="title text-center">
+              SP010 - SOLICITUD DE CONTRATO DE ADHESION PARA COMERCIANTE
+              INDIVIDUAL
+            </h5>
+          </div>
+          <div class="d-flex justify-content-center align-items-center flex-grow-1" style="width: 30%; height: 100px;">
+            QR</div>
+        </div>
+        <h6>Datos generales</h6>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>RTN Solicitante</label>
+              <input type="text" class="form-control" placeholder="05012005042021" maxlength="20"
+                [value]="comercianteIndividual.RtnSolicitante" />
+            </div>
+          </div>
+        </div>
+        <h6 style="margin-top: 40px;">Datos a Informar</h6>
+        <div class="tble-container" style="overflow-x: auto">
+          <table class="table table-bordered">
+            <thead class="text-primary" style="background-color: rgba(0, 0, 0, 0.02)">
+              <th style="width: 37%;">Dato</th>
+              <th>Descripcion</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+
+                </td>
+                <td>
+                  SD106 - ESTADO CIVIL DEL COMERCIANTE
+                </td>
+              </tr>
+              <tr>
+                <td>
+                </td>
+                <td>
+                  SD108 - PROFESION U OFICIO DEL COMERCIANTE (SEGUN
+                  CLASIFICADOR NACIONAL DE OCUPACIONES DE HONDURAS, CNOH-2018)
+                </td>
+              </tr>
+              <tr *ngIf="comercianteIndividual.esCi_Id_RepresentanteLegal">
+                <td>
+                  {{comercianteIndividual.esCi_RepresentanteLegal}}
+                </td>
+                <td>
+                  SD296 - ESTADO CIVIL DEL REPRESENTANTE LEGAL
+                </td>
+              </tr>
+              <tr *ngIf="comercianteIndividual.prof_Id_RepresentanteLegal">
+                <td>
+                  {{comercianteIndividual.Profesion_RepresentanteLegal}}
+                </td>
+                <td>
+                  SD298 - PROFESION U OFICIO DEL REPRESENTANTE LEGAL
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-primary" style="background-color: rgba(0, 0, 0, 0.02)">
+                  DOMICILIO DEL COMERCIANTE (PARA EFECTO DE UBICACION, EN EL
+                  CONTRATO DE ADHESION SE MOSTRARA EL DOMICILIO FISCAL
+                  REGISTRADO EN LA ADMINISTRACION TRIBUTARIA)
+                  <!-- {{ titulo }} -->
+                </td>
+              </tr>
+              <tr>
+                <td>
+                </td>
+                <td>
+                  SD000 - ESTADO
+                </td>
+              </tr>
+              <tr>
+                <td>
+
+                </td>
+                <td>
+                  SD006 - CIUDAD
+                </td>
+              </tr>
+              <tr>
+                <td>
+                </td>
+                <td>
+                  SD007 - DIRECCIÓN COMPLETA (INCLUYA SEGÚN APLIQUE: ALDEA, CALLE Y AVENIDA, BARRIO O COLONIA, EDIFICIO
+                  O NÚMERO DE LOCAL, APARTAMENTO, Y PUNTOS DE REFERENCIA)
+                </td>
+              </tr>
+              <tr *ngIf="comercianteIndividual.ciud_Id_RepresentanteLegal">
+                <td colspan="2" class="text-primary" style="background-color: rgba(0, 0, 0, 0.02)">
+                  DOMICILIO DEL REPRESENTANTE LEGAL (SI HUBIESE INFORMADO
+                  REPRESENTACION BAJO UN REPRESENTANTE LEGAL)
+                  <!-- {{ titulo }} -->
+                </td>
+              </tr>
+              <tr *ngIf="comercianteIndividual.ciud_Id_RepresentanteLegal">
+                <td>
+                </td>
+                <td>
+                  SD000 - ESTADO
+                </td>
+              </tr>
+              <tr *ngIf="comercianteIndividual.ciud_Id_RepresentanteLegal">
+                <td>
+                </td>
+                <td>
+                  SD006 - CIUDAD
+                </td>
+              </tr>
+              <tr *ngIf="comercianteIndividual.ciud_Id_RepresentanteLegal">
+                <td>
+                </td>
+                <td>
+                  SD007 - DIRECCIÓN COMPLETA (INCLUYA SEGÚN APLIQUE: ALDEA, CALLE Y AVENIDA, BARRIO O COLONIA, EDIFICIO
+                  O NÚMERO DE LOCAL, APARTAMENTO, Y PUNTOS DE REFERENCIA)
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-between" style="margin-top: 100px; margin-bottom: 60px;"><span>Página 1 de 2</span>
+            <span>{{fecha}}</span>
+          </div>
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <td colspan="2" class="text-primary" style="background-color: rgba(0, 0, 0, 0.02)">
+                  INFORMACIÓN DE CONTACTO (EN EL CONTRATO DE ADHESIÓN SE MOSTRARÁ LOS NÚMEROS
+                  DE TELÉFONO REGISTRADOS EN LA ADMINISTRACION TRIBUTARIA)
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 37%;">
+                  {{comercianteIndividual.TelefonoFijo}}
+                </td>
+                <td>
+                  SD004 - NUMERO DE TELÉFONO FIJO DEL COMERCIANTE INDIVIDUAL
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{comercianteIndividual.TelefonoCelular}}
+                </td>
+                <td>
+                  SD065 - NUMERO DE TELÉFONO CELULAR DEL COMERCIANTE INDIVIDUAL
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{comercianteIndividual.Correo}}
+                </td>
+                <td>
+                  SD042 - CORREO ELECTRÓNICO DONDE NOTIFICAR
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{comercianteIndividual.CorreoAlternativo}}
+                </td>
+                <td>
+                  SD201 - CORREO ELECTRÓNICO ALTERNATIVO
+                </td>
+              </tr>
+              <tr>
+                <td>
+                </td>
+                <td>
+                  SD001 - OFICINA DONDE PRESENTARA LA SOLICITUD Y
+                  DOCUMENTACION
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h6 style="margin-top: 40px;">Datos a Informar</h6>
+        <div class="" style="overflow-x: auto">
+          <table class="table table-bordered">
+            <thead class="text-primary" style="background-color: rgba(0, 0, 0, 0.02)">
+              <th style="width: 37%;">
+                <p style="margin-bottom: 0;">Dato</p>
+              </th>
+              <th class="d-flex align-items-start">
+                <div>Descripcion</div>
+              </th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  {{comercianteIndividual.Rtn}}
+                </td>
+                <td>
+                  SS100 - REGISTRO TRIBUTARIO NACIONAL (RTN) DEL COMERCIANTE
+                  INDIVIDUAL
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{comercianteIndividual.Dni}}
+                </td>
+                <td>
+                  SS017 - DOCUMENTO O TARJETA DE IDENTIDAD DEL COMERCIANTE
+                  INDIVIDUAL
+                </td>
+              </tr>
+              <tr *ngIf="comercianteIndividual.Rtn_RepresentanteLegal">
+                <td>
+                  {{comercianteIndividual.Rtn_RepresentanteLegal}}
+                </td>
+                <td>
+                  SS128 - REGISTRO TRIBUTARIO NACIONAL (RTN) DEL REPRESENTANTE
+                  LEGAL
+                </td>
+              </tr>
+              <tr *ngIf="comercianteIndividual.Dni_RepresentanteLegal">
+                <td>
+                  {{comercianteIndividual.Dni_RepresentanteLegal}}
+                </td>
+                <td>
+                  SS018 - DOCUMENTO O TARJETA DE IDENTIDAD DEL REPRESENTANTE
+                  LEGAL
+                </td>
+              </tr>
+              <tr>
+                <td>
+                </td>
+                <td>
+                  SS090 - DECLARACIÓN DE COMERCIANTE INDIVIDUAL
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="d-flex justify-content-between" style="margin-top: 280px;"><span>Página 2 de 2</span>
+          <span>{{fecha}}</span>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end mr-3">
+        <button class="btn btn-primary" (click)="imprimir()">
+          Descargar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

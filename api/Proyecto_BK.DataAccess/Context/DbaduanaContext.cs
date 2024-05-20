@@ -563,7 +563,7 @@ namespace sistema_aduana.DataAccess.Context
 
                 entity.ToTable("tbEmpleados", "Gral");
 
-                entity.HasIndex(e => e.Empl_Rtn, "UQ__tbEmplea__5F1C9620BBB9DF2F")
+                entity.HasIndex(e => e.Empl_DNI, "UQ__tbEmplea__5F1C9620BBB9DF2F")
                     .IsUnique();
 
                 entity.Property(e => e.Empl_Estado).HasDefaultValueSql("((1))");
@@ -582,7 +582,7 @@ namespace sistema_aduana.DataAccess.Context
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Empl_Rtn)
+                entity.Property(e => e.Empl_DNI)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -615,11 +615,11 @@ namespace sistema_aduana.DataAccess.Context
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__tbEmplead__EsCi___440B1D61");
 
-                entity.HasOne(d => d.Usua)
-                    .WithMany(p => p.tbEmpleadosUsua)
-                    .HasForeignKey(d => d.Usua_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tbEmplead__Usua___44FF419A");
+                //entity.HasOne(d => d.Usua)
+                //    .WithMany(p => p.tbEmpleadosUsua)
+                //    .HasForeignKey(d => d.Usua_Id)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK__tbEmplead__Usua___44FF419A");
             });
 
             modelBuilder.Entity<tbEmpresas>(entity =>

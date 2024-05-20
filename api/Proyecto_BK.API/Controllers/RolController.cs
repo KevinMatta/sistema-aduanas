@@ -65,18 +65,11 @@ namespace sistema_aduana.API.Controllers
             }
         }
 
-        [HttpDelete("Eliminar")]
-        public IActionResult EliminarRol(int id, int usuario)
+        [HttpPut("ToggleEstado")]
+        public IActionResult ToggleEstado(int Rol_Id, int Usua_Modifica, bool estado)
         {
-            try
-            {
-                var result = _acceService.RolesEliminar(id, usuario, DateTime.Now);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var response = _acceService.RolesToggleEstado(Rol_Id, estado, Usua_Modifica, DateTime.Now);
+            return Ok(response);
         }
     }
 }

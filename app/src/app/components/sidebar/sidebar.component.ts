@@ -9,7 +9,7 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
   {
     path: "dashboard",
-    title: "Dashboard",
+    title: "Gráficos",
     icon: "design_app",
     class: "",
   },
@@ -80,7 +80,12 @@ export const ROUTES: RouteInfo[] = [
     class: "",
   },
   { path: "layout/icons", title: "Icons", icon: "education_atom", class: "" },
-  { path: "layout/maps", title: "Maps", icon: "location_map-big", class: "" },
+  {
+    path: "layout/maps",
+    title: "Reportes",
+    icon: "location_map-big",
+    class: "",
+  },
   {
     path: "layout/notifications",
     title: "Notifications",
@@ -160,7 +165,6 @@ export class SidebarComponent implements OnInit {
     this.esquemasMap.set("Gral", "General.ui-1_settings-gear-63");
     this.esquemasMap.set("Adua", "Aduana.shopping_box");
     this.menuItems = ROUTES.filter((menuItem) => menuItem);
-    console.log(this.menuItems, "this.menuItems");
   }
   isMobileMenu() {
     if (window.innerWidth > 991) {

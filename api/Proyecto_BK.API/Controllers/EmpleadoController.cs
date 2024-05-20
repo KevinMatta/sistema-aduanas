@@ -35,6 +35,13 @@ namespace sistema_aduana.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet("BuscarPorDNI/{DNI}")]
+        public IActionResult BuscarDNI(string DNI)
+        {
+            var result = _gralService.EmpleadoBuscar(DNI);
+            return Ok(result);
+        }
+
         [HttpPost("Crear")]
         public IActionResult Crear(EmpleadoViewModel item)
         {

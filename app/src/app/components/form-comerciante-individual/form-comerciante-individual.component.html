@@ -2,7 +2,7 @@
 <div class="main-content">
   <div class="row">
     <div class="col">
-      <div class="card">
+      <div *ngIf="!verPreview" class="card">
         <div class="card-header">
           <h5 class="title">
             SP010 - SOLICITUD DE CONTRATO DE ADHESION PARA COMERCIANTE
@@ -684,4 +684,5 @@
       </div>
     </div>
   </div>
+  <app-pdf-comerciante-individual *ngIf="verPreview" [comercianteIndividual]="comercianteIndividual"></app-pdf-comerciante-individual>
 </div>

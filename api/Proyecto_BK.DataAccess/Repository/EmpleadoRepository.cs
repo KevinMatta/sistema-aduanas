@@ -50,6 +50,20 @@ namespace sistema_aduana.DataAccess.Repository
             }
         }
 
+        public tbEmpleados Find(string Empl_DNI)
+        {
+            string sql = ScriptsDatabase.EmpleadosBuscarPorDNI;
+
+            tbEmpleados result = new tbEmpleados();
+
+            using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
+            {
+                var parameters = new { Empl_DNI };
+                result = db.QueryFirstOrDefault<tbEmpleados>(sql, parameters, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+        }
+
         public RequestStatus Insert(tbEmpleados item)
         {
             string sql = ScriptsDatabase.EmpleadosCrear;
@@ -59,9 +73,8 @@ namespace sistema_aduana.DataAccess.Repository
                 var parameter = new DynamicParameters();
                 parameter.Add("@Empl_PrimerNombre", item.Empl_PrimerNombre);
                 parameter.Add("@Empl_PrimerApellido", item.Empl_PrimerApellido);
-                parameter.Add("@Empl_Rtn", item.Empl_Rtn);
+                parameter.Add("@Empl_DNI", item.Empl_DNI);
                 parameter.Add("@Empl_Sexo", item.Empl_Sexo);
-                parameter.Add("@Usua_Id", item.Usua_Id);
                 parameter.Add("@EsCi_Id", item.EsCi_Id);
                 parameter.Add("@Empr_Id", item.Empr_Id);
                 parameter.Add("@Empl_Creacion", item.Empl_Creacion);
@@ -97,9 +110,8 @@ namespace sistema_aduana.DataAccess.Repository
                 parameter.Add("@Empl_Id", item.Empl_Id);
                 parameter.Add("@Empl_PrimerNombre", item.Empl_PrimerNombre);
                 parameter.Add("@Empl_PrimerApellido", item.Empl_PrimerApellido);
-                parameter.Add("@Empl_Rtn", item.Empl_Rtn);
+                parameter.Add("@Empl_DNI", item.Empl_DNI);
                 parameter.Add("@Empl_Sexo", item.Empl_Sexo);
-                parameter.Add("@Usua_Id", item.Usua_Id);
                 parameter.Add("@EsCi_Id", item.EsCi_Id);
                 parameter.Add("@Empr_Id", item.Empr_Id);
                 parameter.Add("@Empl_Modifica", item.Empl_Modifica);

@@ -22,6 +22,30 @@ namespace sistema_aduana.API.Controllers
             _mapper = mapper;
         }
 
+        [HttpPost("IniciarSesion")]
+        public IActionResult IniciarSesion(UsuarioViewModel item)
+        {
+            var modelo = _mapper.Map<tbUsuarios>(item);
+            var response = _acceService.IniciarSesion(modelo);
+            return Ok(response);
+        }
+
+        [HttpPost("EnviarCodigo")]
+        public IActionResult EnviarCodigo(string usuario)
+        {
+            tbUsuarios usuarioEncontrado = _acceService.UsuariosBuscarPorUsername(usuario);
+            if (usuarioEncontrado == null)
+            {
+                return BadRequest("Este usuario no existe");
+            }
+            MailData mailData = new MailData();
+            mailData.EmailToId = usuarioEncontrado.Empl_Email;
+            mailData.EmailToName = "Estimado Usuario";
+            mailData.EmailSubject = usuarioEncontrado.Empl_Email;
+            mailData.EmailBody = usuarioEncontrado.Usua_Id.ToString();
+            var enviarCorreo = _acceService.SendMail(mailData);
+            return Ok(enviarCorreo);
+        }
 
         [HttpGet("List")]
         public IActionResult Index()
@@ -53,46 +77,24 @@ namespace sistema_aduana.API.Controllers
             return Ok(list);
         }
 
-        [HttpDelete("Eliminar")]
-        public IActionResult eliminar(int Usua_Id, int Usua_Modifica)
+        [HttpPut("ToggleEstado")]
+        public IActionResult ToggleEstado(int Usua_Id, int Usua_Modifica, bool estado)
         {
-            var list = _acceService.UsuariosEliminar(Usua_Id, Usua_Modifica, DateTime.Now);
-            return Ok(list);
+            var response = _acceService.UsuariosToggleEstado(Usua_Id, estado, Usua_Modifica, DateTime.Now);
+            return Ok(response);
         }
 
         [HttpPost("ValidarPin")]
         public IActionResult ValidarPin(string PIN)
         {
-            bool validado = false;//_acceService.ValidarPin(PIN);
+            bool validado = false;
             return validado ? Ok(PIN) : BadRequest("Código de verificación incorrecto");
         }
-        [HttpPost("EnviarCodigo")]
-        public IActionResult EnviarCodigo(string Usuario)
+        [HttpPut("ReestablecerClave")]
+        public IActionResult restablecer(string PIN, string clave)
         {
-            tbUsuarios usuario = _acceService.UsuariosBuscarPorUsername(Usuario);
-            if (usuario.Usua_Id == 0)
-            {
-                return BadRequest("No existe ese usuario");
-            }
-            MailData mailData = new MailData();
-            mailData.EmailToId = usuario.Usua_Email;
-            mailData.EmailToName = "Estimado Usuario";
-            mailData.EmailSubject = usuario.Usua_Id.ToString();
-            var enviarCorreo = _acceService.SendMail(mailData);
-            return Ok(enviarCorreo);
-        }
-        [HttpPut("restablecer/{PIN}")]
-        public IActionResult restablecer(string PIN, UsuarioViewModel item)
-        {
-            //var model = _mapper.Map<tbUsuarios>(item);
-            var modelo = new tbUsuarios()
-            {
-                //Usua_PIN = PIN,
-                Usua_Clave = item.Usua_Clave,
-            };
-
-            var result = true;// _acceService.restablecer(modelo);
-            return Ok(result);
+            var response = _acceService.UsuariosActualizarClave(PIN, clave);
+            return Ok(response);
         }
     }
 }

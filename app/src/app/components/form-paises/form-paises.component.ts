@@ -24,12 +24,10 @@ export class FormPaisesComponent implements OnInit {
     private rolesService: RolesService,
     private toastr: ToastrService,
     private paisService: PaisesService
-  ) { }
+  ) {}
 
   isLoading = true;
   ngOnInit(): void {
-    console.log(this.objetoParaEditar);
-
     if (this.objetoParaEditar) {
       this.pais.Id = this.objetoParaEditar.Id;
       this.pais.Pais = this.objetoParaEditar.Pais;
@@ -48,28 +46,27 @@ export class FormPaisesComponent implements OnInit {
     );
   }
 
-
   paisOnChange(event: any) {
     this.pais.Pais = event.target.value;
   }
 
   async guardar() {
     if (!this.pais.Pais) {
-      this.mostrarWarning('Por favor ingrese el nombre del país.');
+      this.mostrarWarning("Por favor ingrese el nombre del país.");
       return;
     }
     if (!this.objetoParaEditar) {
       await this.paisService.Crear(this.pais).subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
-            this.mostrarSuccess('País creado con éxito.')
+            this.mostrarSuccess("País creado con éxito.");
             this.activeModal.close(true);
           } else {
-            this.mostrarError('Ya existe ese país.');
+            this.mostrarError("Ya existe ese país.");
           }
         },
         (error) => {
-          this.mostrarError('Error al crear el pais.');
+          this.mostrarError("Error al crear el pais.");
           console.log(error);
           this.isLoading = false;
         }
@@ -78,15 +75,15 @@ export class FormPaisesComponent implements OnInit {
       await this.paisService.Editar(this.pais).subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
-            this.mostrarSuccess('País editado con éxito.');
+            this.mostrarSuccess("País editado con éxito.");
             this.activeModal.close(true);
           } else {
             this.activeModal.close(false);
-            this.mostrarError('Error al editar el país.');
+            this.mostrarError("Error al editar el país.");
           }
         },
         (error) => {
-          this.mostrarError('Error al editar el país.');
+          this.mostrarError("Error al editar el país.");
           console.log(error);
           this.isLoading = false;
         }
@@ -94,30 +91,42 @@ export class FormPaisesComponent implements OnInit {
     }
   }
   mostrarSuccess(mensaje: string) {
-    this.toastr.success(`<span class="now-ui-icons ui-1_bell-53"></span> ${mensaje}`, '', {
-      timeOut: 3000,
-      closeButton: true,
-      enableHtml: true,
-      toastClass: "alert alert-success alert-with-icon",
-      positionClass: 'toast-bottom-right'
-    });
+    this.toastr.success(
+      `<span class="now-ui-icons ui-1_bell-53"></span> ${mensaje}`,
+      "",
+      {
+        timeOut: 3000,
+        closeButton: true,
+        enableHtml: true,
+        toastClass: "alert alert-success alert-with-icon",
+        positionClass: "toast-bottom-right",
+      }
+    );
   }
   mostrarWarning(mensaje: string) {
-    this.toastr.warning(`<span class="now-ui-icons ui-1_bell-53"></span> ${mensaje}`, '', {
-      timeOut: 3000,
-      closeButton: true,
-      enableHtml: true,
-      toastClass: "alert alert-warning alert-with-icon",
-      positionClass: 'toast-bottom-right'
-    });
+    this.toastr.warning(
+      `<span class="now-ui-icons ui-1_bell-53"></span> ${mensaje}`,
+      "",
+      {
+        timeOut: 3000,
+        closeButton: true,
+        enableHtml: true,
+        toastClass: "alert alert-warning alert-with-icon",
+        positionClass: "toast-bottom-right",
+      }
+    );
   }
   mostrarError(mensaje: string) {
-    this.toastr.error(`<span class="now-ui-icons ui-1_bell-53"></span> ${mensaje}`, '', {
-      timeOut: 3000,
-      closeButton: true,
-      enableHtml: true,
-      toastClass: "alert alert-error alert-with-icon",
-      positionClass: 'toast-bottom-right'
-    });
+    this.toastr.error(
+      `<span class="now-ui-icons ui-1_bell-53"></span> ${mensaje}`,
+      "",
+      {
+        timeOut: 3000,
+        closeButton: true,
+        enableHtml: true,
+        toastClass: "alert alert-error alert-with-icon",
+        positionClass: "toast-bottom-right",
+      }
+    );
   }
 }

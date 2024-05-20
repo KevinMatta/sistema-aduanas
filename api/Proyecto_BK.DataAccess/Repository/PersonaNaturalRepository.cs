@@ -51,6 +51,20 @@ namespace sistema_aduana.DataAccess.Repository
             }
         }
 
+        public tbPersonasNaturales Find(string PeNa_DNI)
+        {
+            string sql = ScriptsDatabase.PersonasNaturalesBuscarPorDNI;
+
+            tbPersonasNaturales result = new tbPersonasNaturales();
+
+            using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
+            {
+                var parameters = new { PeNa_DNI };
+                result = db.QueryFirstOrDefault<tbPersonasNaturales>(sql, parameters, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+        }
+
         public RequestStatus Insert(tbPersonasNaturales item)
         {
             string sql = ScriptsDatabase.PersonasNaturalesCrear;

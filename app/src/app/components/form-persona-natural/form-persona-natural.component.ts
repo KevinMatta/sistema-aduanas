@@ -1,7 +1,6 @@
 import { Component, OnInit, SecurityContext, Input } from "@angular/core";
 import { UtilitariosService } from "../../Services/utilitarios.service";
 import { ToastrService } from "ngx-toastr";
-import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { PersonaNatural } from "../../Models/PersonaNaturalViewModel";
 import { Estado } from "../../Models/EstadosViewModel";
 import { Ciudad } from "../../Models/CiudadesViewModel";
@@ -16,6 +15,9 @@ import { Profesion } from "../../Models/ProfesionesViewModel";
 import { PersonaNaturalService } from "../../Services/personaNatural.service";
 import { ModalPdfComponent } from "../modal-pdf/modal-pdf.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { SafeResourceUrl } from "@angular/platform-browser";
+import {jsPDF} from "jspdf";
+import html2PDF from 'jspdf-html2canvas';
 // import * as html2pdf from "html2pdf.js";
 
 @Component({
@@ -24,6 +26,9 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
   styleUrls: ["./form-persona-natural.component.css"],
 })
 export class FormPersonaNaturalComponent implements OnInit {
+
+  verPreview = false;
+
   estados: Estado[];
   ciudades: Ciudad[];
   ciudadesFiltradas: Ciudad[];
@@ -32,14 +37,11 @@ export class FormPersonaNaturalComponent implements OnInit {
   estadosCiviles: EstadoCivil[];
   profesiones: Profesion[];
 
-  endpointSubirRTN = "/API/PersonaNatural/SubirRTNsolicitante";
-  endpointSubirDNI = "/API/PersonaNatural/SubirDNI";
-  endpointSubirReciboPublico = "/API/PersonaNatural/SubirReciboPublico";
+  endpointSubirArchivo = "/API/PersonaNatural/SubirRTNsolicitante";
 
   personaNatural: PersonaNatural = new PersonaNatural();
 
   constructor(
-    private sanitizer: DomSanitizer,
     private utilitariosService: UtilitariosService,
     private estadosService: EstadosService,
     private ciudadesService: CiudadesService,
@@ -107,12 +109,6 @@ export class FormPersonaNaturalComponent implements OnInit {
         console.log(error);
         this.isLoading = false;
       }
-    );
-  }
-
-  sanitizarUrl(url: string): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(
-      this.sanitizer.sanitize(SecurityContext.URL, url)
     );
   }
 
@@ -197,7 +193,7 @@ export class FormPersonaNaturalComponent implements OnInit {
     this.personaNatural.CorreoAlternativo = correoAlternativo;
   }
 
-  async subirRtnSolicitanteArchivo(event: any) {
+  subirRtnSolicitanteArchivo(event: any) {
     if (this.personaNatural.RtnSolicitante === "") {
       this.mostrarWarning("Por favor ingrese el RTN del solicitante.");
       event.target.value = null;
@@ -211,21 +207,21 @@ export class FormPersonaNaturalComponent implements OnInit {
       const keyName =
         this.personaNatural.RtnSolicitante + "_RTNsolicitante_PeNa.pdf";
       formData.append("keyName", keyName);
-      const res = await this.utilitariosService.subirArchivo(
-        this.endpointSubirRTN,
-        formData
-      );
-
-      if (res) {
-        this.personaNatural.RtnSolicitanteUrl =
-          "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
-        this.sanitizarUrl(this.personaNatural.RtnSolicitanteUrl);
-        this.mostrarSuccess("PDF RTN guardado con éxito.");
-      }
+      this.utilitariosService
+        .subirArchivo(this.endpointSubirArchivo, formData)
+        .subscribe(
+          (data: any[]) => {
+            this.personaNatural.RtnSolicitanteUrl =
+              "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
     }
   }
 
-  async subirDni(event: any) {
+  subirDni(event: any) {
     if (this.personaNatural.DNI === "") {
       this.mostrarWarning("Por favor ingrese el DNI de la persona.");
       event.target.value = null;
@@ -238,22 +234,22 @@ export class FormPersonaNaturalComponent implements OnInit {
       formData.append("pdf", pdf);
       const keyName = this.personaNatural.DNI + "_DNI_PeNa.pdf";
       formData.append("keyName", keyName);
-      const res = await this.utilitariosService.subirArchivo(
-        this.endpointSubirDNI,
-        formData
-      );
-
-      console.log(res, "res");
-      if (res) {
-        this.personaNatural.DNIUrl =
-          "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
-        console.log(this.personaNatural.DNIUrl, "DNIUrl");
-        this.mostrarSuccess("PDF DNI guardado con éxito.");
-      }
+      this.utilitariosService
+        .subirArchivo(this.endpointSubirArchivo, formData)
+        .subscribe(
+          (data: any[]) => {
+            this.personaNatural.DNIUrl =
+              "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
+            console.log(this.personaNatural.DNIUrl, "DNIUrl");
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
     }
   }
 
-  async subirReciboPublico(event: any) {
+  subirReciboPublico(event: any) {
     if (this.personaNatural.NumReciboPublico === "") {
       this.mostrarWarning("Por favor ingrese el DNI de la persona.");
       event.target.value = null;
@@ -266,28 +262,32 @@ export class FormPersonaNaturalComponent implements OnInit {
       formData.append("pdf", pdf);
       const keyName = this.personaNatural.NumReciboPublico + "_DNI_PeNa.pdf";
       formData.append("keyName", keyName);
-      const res = await this.utilitariosService.subirArchivo(
-        this.endpointSubirReciboPublico,
-        formData
-      );
-
-      if (res) {
-        this.personaNatural.NumReciboPublicoUrl =
-          "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
-        this.sanitizarUrl(this.personaNatural.NumReciboPublicoUrl);
-        this.mostrarSuccess("Recibo público guardado con éxito.");
-      }
+      this.utilitariosService
+        .subirArchivo(this.endpointSubirArchivo, formData)
+        .subscribe(
+          (data: any[]) => {
+            this.personaNatural.NumReciboPublicoUrl =
+              "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
+          },
+          (error) => {
+            console.log(error);
+            this.isLoading = false;
+          }
+        );
     }
   }
 
   verPdf(prop: string) {
     let modalRef = this.modalService.open(ModalPdfComponent, { size: "lg" });
-    modalRef.componentInstance.pdfUrl = this.sanitizarUrl(
+    modalRef.componentInstance.pdfUrl = this.utilitariosService.sanitizarUrl(
       this.personaNatural[prop]
     );
   }
 
   async guardar() {
+
+    this.verPreview = true;
+
     if (!this.personaNatural.RtnSolicitante) {
       this.mostrarWarning("Por favor ingrese el RTN del solicitante.");
       return;
@@ -376,10 +376,11 @@ export class FormPersonaNaturalComponent implements OnInit {
       return;
     }
 
-    await this.personaNaturalService.Crear(this.personaNatural).subscribe(
-      (data: any) => {
+    this.personaNaturalService.Crear(this.personaNatural).subscribe(
+      async (data: any) => {
         if (data.code >= 200 && data.code <= 300) {
           this.mostrarSuccess("Persona natural registrada con éxito.");
+          this.verPreview = true;
         } else {
           this.mostrarError("Ya existe esta persona natural.");
         }

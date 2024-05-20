@@ -13,18 +13,19 @@ namespace SistemaMedico.DataAcces.Repository
         public static string UsuariosListar = "[Acce].[sp_Usuarios_listar]";
         public static string UsuariosBuscar = "[Acce].[sp_Usuarios_buscar]";
         public static string UsuariosBuscarPorUsername = "[Acce].[sp_Usuarios_buscarPorUsuario]";
+        public static string UsuariosLogin = "[Acce].[SP_Usuarios_Login]";
         public static string UsuariosCrear = "[Acce].[sp_Usuarios_crear]";
         public static string UsuariosPIN = "[Acce].[sp_Usuarios_pin]";
         public static string UsuariosReestablecer = "[Acce].[sp_Usuarios_reestablecer]";
         public static string UsuariosActualizar = "[Acce].[sp_Usuarios_actualizar]";
-        public static string UsuariosEliminar = "[Acce].[sp_Usuarios_eliminar]";
+        public static string UsuariosToggleEstado = "[Acce].[sp_Usuarios_toggleEstado]";
         #endregion
         #region Roles
         public static string RolesListar = "[Acce].[sp_Roles_listar]";
         public static string RolesBuscar = "[Acce].[sp_Roles_buscar]";
         public static string RolesCrear = "[Acce].[sp_Roles_crear]";
         public static string RolesActualizar = "[Acce].[sp_Roles_actualizar]";
-        public static string RolesEliminar = "[Acce].[sp_Roles_eliminar]";
+        public static string RolesToggleEstado = "[Acce].[sp_Roles_toggleEstado]";
         #endregion
         #region Pantallas
         public static string PantallasListar = "[Acce].[sp_Pantallas_listar]";
@@ -37,6 +38,7 @@ namespace SistemaMedico.DataAcces.Repository
         #region PantallasPorRoles
         public static string PantallasPorRolesCrear = "[Acce].[sp_PantallasPorRol_crear]";
         public static string PantallasPorRolesEliminar = "[Acce].[sp_PantallasPorRoles_eliminar]";
+        public static string PantallasPorRolesListar = "[Acce].[sp_PantallasPorRoles_listar]";
         #endregion
         #endregion
 
@@ -85,6 +87,7 @@ namespace SistemaMedico.DataAcces.Repository
         #region Empleados
         public static string EmpleadosListar = "[Gral].[sp_Empleados_listar]";
         public static string EmpleadosBuscar = "[Gral].[sp_Empleados_buscar]";
+        public static string EmpleadosBuscarPorDNI = "[Gral].[sp_Empleados_buscarPorDNI]";
         public static string EmpleadosCrear = "[Gral].[sp_Empleados_crear]";
         public static string EmpleadosActualizar = "[Gral].[sp_Empleados_actualizar]";
         public static string EmpleadosEliminar = "[Gral].[sp_Empleados_eliminar]";
@@ -110,6 +113,7 @@ namespace SistemaMedico.DataAcces.Repository
         #region PersonasNaturales
         public static string PersonasNaturalesListar = "Gral.sp_PersonasNaturales_listar";
         public static string PersonasNaturalesBuscar = "Gral.sp_PersonasNaturales_buscar";
+        public static string PersonasNaturalesBuscarPorDNI = "Gral.sp_PersonasNaturales_buscarPorDNI";
         public static string PersonasNaturalesCrear = "Gral.sp_PersonasNaturales_crear";
         public static string PersonasNaturalesPIN = "[Acce].[sp_PersonasNaturales_pin]";
         public static string PersonasNaturalesActualizar = "Gral.sp_PersonasNaturales_actualizar";

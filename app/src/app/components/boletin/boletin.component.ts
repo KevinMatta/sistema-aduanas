@@ -1,29 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-// import * as html2pdf from "html2pdf.js";
+import { Component, OnInit } from "@angular/core";
+import { UtilitariosService } from "../../Services/utilitarios.service";
+import { SafeResourceUrl } from "@angular/platform-browser";
+import {jsPDF} from "jspdf";
+import html2PDF from 'jspdf-html2canvas';
 
 @Component({
-  selector: 'app-boletin',
-  templateUrl: './boletin.component.html',
-  styleUrls: ['./boletin.component.css']
+  selector: "app-boletin",
+  templateUrl: "./boletin.component.html",
+  styleUrls: ["./boletin.component.css"],
 })
 export class BoletinComponent implements OnInit {
-  blobUrl: string;
+  blobUrl: SafeResourceUrl;
 
+  constructor(private utilitariosService:UtilitariosService){}
+  doc = new jsPDF();
   ngOnInit() {
+    this.doc.text("Hello world!", 10, 10);
   }
+  
+  async descargar(){
+    const boletin = document.getElementById("boletin")
 
-  convertHtml2Pdf(){
-    const options = {
-      filename: 'boletin',
-      image: {type: 'jpeg'},
-      html2canvas: {},
-      jsPDF: {orientation: 'landscape'},
-    };
-    const content: Element = document.getElementById('boletin');
-    // html2pdf().from(content).set(options).toPdf().get('pdf').then((pdf) => {
-    //   const blob = new Blob([pdf.output('blob')], {type: 'application/pdf'});
-    //   this.blobUrl = URL.createObjectURL(blob);
-    //   console.log(this.blobUrl); 
-    // });
-  }
+    const pdf = await html2PDF(boletin, {
+      jsPDF: {
+        format: 'a4',
+      },
+      imageType: 'image/jpeg',
+      output: './pdf/generate.pdf'
+    });
+
+    pdf.setFillColor(13,13,13);
+    pdf.rect(0, 495, 800, 350, "F");
+
+    this.blobUrl = this.utilitariosService.sanitizarBlobURl(URL.createObjectURL(pdf.output("blob")));
+    console.log(this.blobUrl, 'blobUrl');
+    
+  };
 }

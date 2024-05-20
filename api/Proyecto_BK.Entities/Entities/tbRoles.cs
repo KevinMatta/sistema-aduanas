@@ -22,6 +22,13 @@ namespace sistema_aduana.Entities.Entities
         public int? Rol_Modifica { get; set; }
         public DateTime? Rol_FechaModifica { get; set; }
 
+        [NotMapped]
+        public string Creacion { get; set; }
+        [NotMapped]
+        public string Modifica { get; set; }
+        [NotMapped]
+        public List<int> pantallasPorAgregar { get; set; }
+
         public virtual tbUsuarios Rol_CreacionNavigation { get; set; }
         public virtual tbUsuarios Rol_ModificaNavigation { get; set; }
         public virtual ICollection<tbPantallasPorRoles> tbPantallasPorRoles { get; set; }

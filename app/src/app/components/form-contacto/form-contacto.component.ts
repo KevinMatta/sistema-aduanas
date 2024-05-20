@@ -19,6 +19,8 @@ export class FormContactoComponent implements OnInit {
 
   correoTemp: string;
   correoAlternativoTemp: string;
+  correoTempCambio = false;
+  correoAlternativoTempCambio = false;
   codigo: string;
   codigoAlternativo: string;
 
@@ -45,39 +47,41 @@ export class FormContactoComponent implements OnInit {
 
   correoOnChange(event: any) {
     this.correoTemp = event.target.value;
+    this.correoTempCambio = true;
   }
   correoAlternativoOnChange(event: any) {
     this.correoAlternativoTemp = event.target.value;
-    // this.correoAlternativo.emit(event.target.value);
+    this.correoAlternativoTempCambio = true;
   }
 
   open(EsCorreoAlternativo: boolean) {
-    let modalRef = this.modalService.open(ModalVerificacionPINComponent, {
-      size: "lg",
-    });
-    modalRef.componentInstance.codigo = EsCorreoAlternativo
-      ? this.codigoAlternativo
-      : this.codigo;
-    modalRef.result
-      .then((data) => {
-        console.log(data, "data");
-
-        if (data === true) {
-          this.mostrarSuccess(
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (
+      emailPattern.test(
+        EsCorreoAlternativo ? this.correoAlternativoTemp : this.correoTemp
+      )
+    ) {
+      let modalRef = this.modalService.open(ModalVerificacionPINComponent);
+      modalRef.componentInstance.codigo = EsCorreoAlternativo
+        ? this.codigoAlternativo
+        : this.codigo;
+      modalRef.result
+        .then((data) => {
+          if (data === true) {
+            this.mostrarSuccess(
+              EsCorreoAlternativo
+                ? "Correo alternativo validado"
+                : "Correo validado"
+            );
             EsCorreoAlternativo
-              ? "Correo alternativo validado"
-              : "Correo validado"
-          );
-
-          EsCorreoAlternativo
-            ? this.correo.emit(this.correoTemp)
-            : this.correoAlternativo.emit(this.correoAlternativoTemp);
-        }
-      })
-      .catch((err) => {
-        // console.log(err);
-        // this.isLoading = false;
-      });
+              ? this.correo.emit(this.correoTemp)
+              : this.correoAlternativo.emit(this.correoAlternativoTemp);
+          }
+        })
+        .catch((err) => {});
+    } else {
+      this.mostrarWarning("Por favor ingresa un correo válido.");
+    }
   }
 
   verificarCorreo(event: any) {
@@ -90,7 +94,7 @@ export class FormContactoComponent implements OnInit {
     const randomNumber = Math.floor(100000 + Math.random() * 900000);
 
     if (EsCorreoAlternativo) {
-      if (!this.codigoAlternativo) {
+      if (!this.codigoAlternativo || this.correoAlternativoTempCambio) {
         this.codigoAlternativo = randomNumber.toString();
 
         this.correosService
@@ -113,11 +117,12 @@ export class FormContactoComponent implements OnInit {
               console.log(error);
             }
           );
+        this.correoAlternativoTempCambio = false;
       } else {
         this.open(EsCorreoAlternativo);
       }
     } else {
-      if (!this.codigo) {
+      if (!this.codigo || this.correoTempCambio) {
         this.codigo = randomNumber.toString();
 
         this.correosService
@@ -136,6 +141,7 @@ export class FormContactoComponent implements OnInit {
               console.log(error);
             }
           );
+        this.correoTempCambio = false;
       } else {
         this.open(EsCorreoAlternativo);
       }

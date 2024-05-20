@@ -1,5 +1,5 @@
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { BehaviorSubject, Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import { DataService } from "./data.service";
 import { Rol } from "../Models/RolesViewModel";
@@ -13,7 +13,18 @@ import { map } from "rxjs/operators";
 export class RolesService implements DataService {
   constructor(private http: HttpClient) {}
 
-  Url = environment.urlAPI + "/API/Rol/List";
+  private objetoParaEditar = new BehaviorSubject<any>(null);
+  data$ = this.objetoParaEditar.asObservable();
+
+  setObjetoParaEditar(data: any) {
+    this.objetoParaEditar.next(data);
+  }
+
+  getObjetoParaEditar() {
+    return this.objetoParaEditar.value;
+  }
+
+  BaseUrl = environment.urlAPI + "/API/Rol/";
 
   getData(): Observable<any[]> {
     return this.getRoles();
@@ -21,17 +32,38 @@ export class RolesService implements DataService {
 
   getRoles(): Observable<Rol[]> {
     return this.http
-      .get<APIResponse<Rol[]>>(this.Url)
+      .get<APIResponse<Rol[]>>(this.BaseUrl + "List")
       .pipe(map((response) => this.mapResponse(response.data)));
   }
 
-  Eliminar(val: any): Observable<any> {
-    console.log(val + "Para Eliminar");
-    return this.http.delete<any>(
-      `${environment.urlAPI}/API/Rol/Eliminar/?Rol_Id=${val}&Rol_Modifica=1
-        `,
+  ToggleEstado(id: number, estado: boolean): Observable<any> {
+    return this.http.put<any>(
+      `${
+        this.BaseUrl + "ToggleEstado/"
+      }?Rol_Id=${id}&Usua_Modifica=1&estado=${estado}
+      `,
       { observe: "response" }
     );
+  }
+
+  Crear(
+    rol_Descripcion: string,
+    pantallasPorAgregar: number[]
+  ): Observable<any> {
+    const json = {
+      rol_Id: 0,
+      rol_Descripcion,
+      pantallasPorAgregar,
+      Rol_Creacion: 1,
+      Rol_FechaCreacion: new Date().toISOString(),
+      Rol_Modifica: 1,
+      Rol_FechaModifica: new Date().toISOString(),
+    };
+    return this.http
+      .post<any>(this.BaseUrl + "Crear", json, {
+        headers: new HttpHeaders({ "Content-Type": "application/json" }),
+      })
+      .pipe(map((response) => response));
   }
 
   private mapResponse(data: any[]): Rol[] {
@@ -39,6 +71,8 @@ export class RolesService implements DataService {
       const model: Rol = {
         Id: item.rol_Id,
         Rol: item.rol_Descripcion,
+        _Activo: item.rol_Estado,
+        _pantallas: item.pantallasPorAgregar,
       };
       return model;
     });

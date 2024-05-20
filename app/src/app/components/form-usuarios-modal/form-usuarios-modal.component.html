@@ -1,0 +1,121 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Editar Usuario</h4>
+  <button
+    type="button"
+    class="btn btn-sm btn-outline-primary"
+    aria-label="Close"
+    (click)="modalService.dismiss('Cross click')"
+  >
+    <i class="now-ui-icons ui-1_simple-remove"></i>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Usuario</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="SuperStar003"
+          maxlength="20"
+          (change)="usuarioOnChange($event)"
+          [value]="usuario.Usuario"
+        />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Rol</label>
+        <div ngbDropdown class="d-block">
+          <button
+            type="button"
+            class="btn btn-primary m-0"
+            id="dropdownMenu1"
+            ngbDropdownToggle
+            [disabled]="usuario.EsAdmin"
+          >
+            {{ usuario.Rol }}
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+            <button
+              *ngFor="let rol of roles"
+              type="button"
+              class="dropdown-item"
+              (click)="rolSelect(rol.Id, rol.Rol)"
+            >
+              {{ rol.Rol }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Empleado DNI</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="0501200504202"
+          [value]="usuario.DNI"
+          (change)="DNIOnChange($event)"
+        />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Empleado</label>
+        <input
+          type="text"
+          class="form-control"
+          [value]="usuario.Empleado"
+          disabled
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col d-flex justify-content-center" style="min-height: 80px">
+      <div class="form-group">
+        <label for="">Administrador {{ usuario.EsAdmin }}</label>
+        <input
+          class="switch-input"
+          type="radio"
+          name="rdo"
+          id="si"
+          (click)="adminToggle()"
+          [checked]="usuario.EsAdmin"
+        />
+        <input
+          class="switch-input"
+          type="radio"
+          name="rdo"
+          id="no"
+          (click)="adminToggle()"
+          [checked]="!usuario.EsAdmin"
+        />
+        <div class="switch">
+          <label for="si">Sí</label>
+          <label for="no">No</label>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer" style="gap: 5px">
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    (click)="modalService.close('Save click')"
+  >
+    <i class="now-ui-icons ui-1_simple-remove" style="margin-right: 5px"></i>
+    Cancelar
+  </button>
+  <button class="btn btn-primary" (click)="guardar()">
+    <i class="now-ui-icons ui-1_check" style="margin-right: 5px"></i>
+    Guardar
+  </button>
+</div>
