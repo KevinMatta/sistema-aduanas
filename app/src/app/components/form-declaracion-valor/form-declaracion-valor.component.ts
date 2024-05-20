@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { PaisesService } from "../../Services/paises.service";
 import { AduanasService } from "../../Services/aduanas.service";
 import { EstadosService } from "../../Services/estados.service";
@@ -22,81 +22,81 @@ import { DeclaracionDeValor } from "../../Models/DeVaViewModel";
   styleUrls: ['./form-declaracion-valor.component.css']
 })
 export class FormDeclaracionValorComponent implements OnInit {
-  aduin:number;
-  adudes:number;
-  declaracionDeValorForm:FormGroup;
-  display:any ="false";
-  aduanas:Aduana[];
+  aduin: number;
+  adudes: number;
+  declaracionDeValorForm: FormGroup;
+  display: any = "false";
+  aduanas: Aduana[];
   paises: Pais[];
-  factura:Factura[]=[];
-  Deva:DeclaracionDeValor[];
-  paisselectInfoGeneral:number;
-  paisselectInterme:string;
-  paisselectCARC:string;
-  FormaEnvioSelect:string;
-  EstadoSelctInfoGen:string;
-  EmbarSelecAduana:string;
-  EstadoSelctInterm:string;
-  ciuSelctInfoGen:string;
-  ciuSelctInterm:string;
+  factura: Factura[] = [];
+  Deva: DeclaracionDeValor[];
+  paisselectInfoGeneral: number;
+  paisselectInterme: string;
+  paisselectCARC: string;
+  FormaEnvioSelect: string;
+  EstadoSelctInfoGen: string;
+  EmbarSelecAduana: string;
+  EstadoSelctInterm: string;
+  ciuSelctInfoGen: string;
+  ciuSelctInterm: string;
   estados: Estado[];
-  ciudades:Ciudad[];
+  ciudades: Ciudad[];
   nivelcomercial: string[] = ["Distribuidor", "Minorista", "Mayorista", "Otro"];
   SiNo: string[] = ["Si", "No"];
   FormaP: string[] = ["Cheque Bancario/Personal", "Carta Credito", "Efectivo", "Giro Bancario", "Pago Anticipado", "Pago Electronico", "Transferencia Bancaria"];
-  pagoefecSel:string;
-  FormaPago:string;
-  situacioncomercial: string[] = ["Distribuidor", "Mayorista", "Fabricante","Productor", "Revendedor", "Otro"];
-  FormaEnvio: string[] = ["Fraccionado", "Total", "Parcial","Fraccionado",  "Otro"];
-  siruacioncomselected:string;
-  nivelselected:string;
-  paiselect:string;
-  paiselecttrans:string;
-  Monedas: string[] = ["Dolar", "Lempira", "Yuan","Rublos",  "Libras Esterlinas"];
-  MonedaSel:string;
+  pagoefecSel: string;
+  FormaPago: string;
+  situacioncomercial: string[] = ["Distribuidor", "Mayorista", "Fabricante", "Productor", "Revendedor", "Otro"];
+  FormaEnvio: string[] = ["Fraccionado", "Total", "Parcial", "Fraccionado", "Otro"];
+  siruacioncomselected: string;
+  nivelselected: string;
+  paiselect: string;
+  paiselecttrans: string;
+  Monedas: string[] = ["Dolar", "Lempira", "Yuan", "Rublos", "Libras Esterlinas"];
+  MonedaSel: string;
 
-  estadoselec:string;
-  aduselect:string;
-  aduseling:string;
-  ciuselec:string;
+  estadoselec: string;
+  aduselect: string;
+  aduseling: string;
+  ciuselec: string;
   closeResult = '';
   // formDeva: FormGroup;
 
   constructor(private modalService: NgbModal, private paisesService: PaisesService,
-     private aduanasService: AduanasService, private estadosService: EstadosService
-     , 
-     private fb:FormBuilder,
-      private ciudadesService:CiudadesService,
-     public dedService: DEDService
-    ) {}
-     
+    private aduanasService: AduanasService, private estadosService: EstadosService
+    ,
+    private fb: FormBuilder,
+    private ciudadesService: CiudadesService,
+    public dedService: DEDService
+  ) { }
+
   ngOnInit() {
-    
-    
+
+
     this.factura = this.dedService.Encabezado;
 
 
     this.paiselect = "- Seleccionar -";
     this.aduselect = "- Seleccionar -";
-    this.aduseling ="- Seleccionar -";
-    this.estadoselec ="- Seleccionar -";
-    this.ciuselec ="- Seleccionar -";
-    this.nivelselected ="- Seleccionar -";
-    this.MonedaSel="- Seleccionar -";
-    this.EmbarSelecAduana="- Seleccionar -";
-    this.paisselectInfoGeneral ;
-    this.EstadoSelctInfoGen ="- Seleccionar -";
+    this.aduseling = "- Seleccionar -";
+    this.estadoselec = "- Seleccionar -";
+    this.ciuselec = "- Seleccionar -";
+    this.nivelselected = "- Seleccionar -";
+    this.MonedaSel = "- Seleccionar -";
+    this.EmbarSelecAduana = "- Seleccionar -";
+    this.paisselectInfoGeneral;
+    this.EstadoSelctInfoGen = "- Seleccionar -";
     this.ciuSelctInfoGen = "- Seleccionar -";
-    this.siruacioncomselected= "- Seleccionar -";
-    this.paisselectInterme= "- Seleccionar -";
-    this.EstadoSelctInterm= "- Seleccionar -";
+    this.siruacioncomselected = "- Seleccionar -";
+    this.paisselectInterme = "- Seleccionar -";
+    this.EstadoSelctInterm = "- Seleccionar -";
     this.ciuSelctInterm = "- Seleccionar -";
     this.paisselectCARC = "- Seleccionar -";
     this.FormaEnvioSelect = "- Seleccionar -";
-    this.pagoefecSel= "- Seleccionar -";
-    this.paiselecttrans= "- Seleccionar -";
-    this.FormaPago= "- Seleccionar -";
-    
+    this.pagoefecSel = "- Seleccionar -";
+    this.paiselecttrans = "- Seleccionar -";
+    this.FormaPago = "- Seleccionar -";
+
     this.paisesService.getData().subscribe(
       (data: Pais[]) => {
         this.paises = data;
@@ -105,8 +105,8 @@ export class FormDeclaracionValorComponent implements OnInit {
         console.log(error);
       }
     );
-   
-    
+
+
     this.ciudadesService.getData().subscribe(
       (data: Ciudad[]) => {
         this.ciudades = data;
@@ -115,12 +115,12 @@ export class FormDeclaracionValorComponent implements OnInit {
         console.log(error);
       }
     );
-    
+
     //formgroup 
-      // this.formDeva = this.fb.group({
+    // this.formDeva = this.fb.group({
 
 
-      // })
+    // })
 
     //---endformgroup
 
@@ -142,19 +142,19 @@ export class FormDeclaracionValorComponent implements OnInit {
       }
     );
     this.declaracionDeValorForm = this.fb.group({
-      DeVa_AduanaIngreso: ['', ],
-      DeVa_AduanaDespacho: ['', ],
+      DeVa_AduanaIngreso: ['',],
+      DeVa_AduanaDespacho: ['',],
       DeVa_FechaAceptacion: [''],
-      DeVa_RtnImportador: ['', Validators.required ],
-      DeVa_LugarEntrega: ['' ],
-      DeVa_PaisEntrega: ['' ],
-      
-      DeVa_NumeroContrado: ['' ],
-      DeVa_FechaContrado: ['' ],
-      DeVa_PaisEmbarque: ['' ],
-      Deva_LugarEmbarque: ['' ],
-      DeVa_PaisExportacion: ['' ],
-      DeVa_FechaExportacion: ['' ],
+      DeVa_RtnImportador: ['', Validators.required],
+      DeVa_LugarEntrega: [''],
+      DeVa_PaisEntrega: [''],
+
+      DeVa_NumeroContrado: [''],
+      DeVa_FechaContrado: [''],
+      DeVa_PaisEmbarque: [''],
+      Deva_LugarEmbarque: [''],
+      DeVa_PaisExportacion: [''],
+      DeVa_FechaExportacion: [''],
       DeVa_Restricciones: [''],
       DeVa_CondicionContraprestacion: [''],
       DeVa_MontoReversion: [''],
@@ -191,8 +191,8 @@ export class FormDeclaracionValorComponent implements OnInit {
       DeVa_TotalDeducciones: [''],
       DeVa_ValorAduana: [''],
       DeVa_Estado: [true],
-      DeVa_Creacion: ['' ],
-      DeVa_FechaCreacion: ['' ],
+      DeVa_Creacion: [''],
+      DeVa_FechaCreacion: [''],
       DeVa_Modifica: [''],
       DeVa_FechaModifica: ['']
     });
@@ -200,14 +200,14 @@ export class FormDeclaracionValorComponent implements OnInit {
     this.declaracionDeValorForm.get('DeVa_PagosIndirectosDescuentosRetroactivos').valueChanges.subscribe(() => {
       this.calcularTotalFactura();
     });
-    
+
   }
   calcularTotalFactura() {
     const precioFac = this.dedService.subtotal;
     const Pagos = parseFloat(this.declaracionDeValorForm.get('DeVa_PagosIndirectosDescuentosRetroactivos').value);
-    
+
     const totalFactura = precioFac + Pagos;
-    
+
     // Usar interpolación de cadenas para convertir el valor numérico a cadena de texto
     this.declaracionDeValorForm.get('DeVa_PrecioRealPagado').setValue(`${totalFactura}`);
 
@@ -216,11 +216,11 @@ export class FormDeclaracionValorComponent implements OnInit {
 
 
   open() {
-    
+
     let modalRef = this.modalService.open(FormFacturaEncabezadoComponent, { size: 'lg' });
     modalRef.result.then((data) => {
       this.factura = this.dedService.Encabezado;
-        console.log(this.factura);
+      console.log(this.factura);
 
       console.log(data);
     });
@@ -242,7 +242,7 @@ export class FormDeclaracionValorComponent implements OnInit {
         DeVa_LugarEntrega: this.declaracionDeValorForm.get('DeVa_LugarEntrega').value,
 
         DeVa_PaisEntrega: parseInt(this.paiselect),
-        
+
         DeVa_NumeroContrado: this.declaracionDeValorForm.get('DeVa_NumeroContrado').value,
         DeVa_FechaContrado: this.declaracionDeValorForm.get('DeVa_FechaContrado').value,
 
@@ -288,19 +288,18 @@ export class FormDeclaracionValorComponent implements OnInit {
         DeVa_FechaCreacion: this.declaracionDeValorForm.get('DeVa_FechaCreacion').value,
         DeVa_Modifica: parseInt(this.declaracionDeValorForm.get('DeVa_Modifica').value),
         DeVa_FechaModifica: this.declaracionDeValorForm.get('DeVa_FechaModifica').value
-              
-      
+
+
       }
-      this.dedService.agregarDeva(nuevoDeva);
+      // this.dedService.agregarDeva(nuevoDeva);
       console.log(nuevoDeva);
+      this.dedService.agregarDeva(nuevoDeva)
       // window.location.reload();
     }
     else {
-      // Si el FormGroup no está lleno, muestra un mensaje de error o toma la acción correspondiente
       console.log('El formulario no está completo');
-      // Puedes mostrar un mensaje de error, deshabilitar el botón de abrir modal, etc.
     }
-    
+
   }
   openItem() {
     let modalRef = this.modalService.open(FormFacturaitemComponent);
@@ -315,7 +314,7 @@ export class FormDeclaracionValorComponent implements OnInit {
   aduSelect(adus: number, adu: string) {
     this.aduselect = adus.toString();
     this.adudes = adus;
-    
+
   }
   aduSelectIn(adus: number, adu: string) {
     this.aduseling = adus.toString();
@@ -328,49 +327,49 @@ export class FormDeclaracionValorComponent implements OnInit {
   ciudadSelec(idc: number, ciu: string) {
     this.ciuselec = ciu;
   }
-  nivelSelec( ciu: string) {
+  nivelSelec(ciu: string) {
     this.nivelselected = ciu;
   }
-  paisInfoGeneralSelec( PaisID: number, pais: string) {
+  paisInfoGeneralSelec(PaisID: number, pais: string) {
     this.paisselectInfoGeneral = PaisID;
   }
-  EstaInfoGeneralSelec( paisId: number, pais: string) {
+  EstaInfoGeneralSelec(paisId: number, pais: string) {
     this.EstadoSelctInfoGen = pais;
   }
-  ciuInfoGeneralSelec(PaisID:number, pais:string){ 
-    this.ciuSelctInfoGen =pais; 
+  ciuInfoGeneralSelec(PaisID: number, pais: string) {
+    this.ciuSelctInfoGen = pais;
   }
-  siruacionselec(pais:string){
-    this.siruacioncomselected =pais;
+  siruacionselec(pais: string) {
+    this.siruacioncomselected = pais;
   }
-  paisselecInterm(PaisID:number,pais:string){
-    this.paisselectInterme =pais;
+  paisselecInterm(PaisID: number, pais: string) {
+    this.paisselectInterme = pais;
   }
-  estselecInterm(PaisID:number,pais:string){
-    this.EstadoSelctInterm =pais;
+  estselecInterm(PaisID: number, pais: string) {
+    this.EstadoSelctInterm = pais;
   }
-  CiuselecInterm(PaisID:number,pais:string){
-    this.ciuSelctInterm =pais;
+  CiuselecInterm(PaisID: number, pais: string) {
+    this.ciuSelctInterm = pais;
   }
   paisSelectCarac(paisId: number, pais: string) {
     this.paisselectCARC = pais;
   }
-  FormaEnvioS( pais: string) {
+  FormaEnvioS(pais: string) {
     this.FormaEnvioSelect = pais;
   }
-  PagoEfecS( pais: string) {
+  PagoEfecS(pais: string) {
     this.pagoefecSel = pais;
   }
-  FormaPagoS(pai:string){
+  FormaPagoS(pai: string) {
     this.FormaPago = pai;
   }
-  PaisSelectrans(pIs:number, pai:string){
+  PaisSelectrans(pIs: number, pai: string) {
     this.paiselecttrans = pai;
   }
-  MonSl( pai:string){
+  MonSl(pai: string) {
     this.MonedaSel = pai;
   }
-  private getDismissReason(reason: any): string {   
+  private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
@@ -382,37 +381,37 @@ export class FormDeclaracionValorComponent implements OnInit {
 
   input24: string = "- SELECCIONE -";
 
-  input24change(event:any) {
+  input24change(event: any) {
     this.input24 = event.target.value;
   }
 
   input25: string = "- SELECCIONE -";
 
-  input25change(event:any) {
+  input25change(event: any) {
     this.input25 = event.target.value;
   }
 
   input26: string = "- SELECCIONE -";
 
-  input26change(event:any) {
+  input26change(event: any) {
     this.input26 = event.target.value;
   }
 
   input27: string = "- SELECCIONE -";
 
-  input27change(event:any) {
+  input27change(event: any) {
     this.input27 = event.target.value;
   }
 
   input28: string = "- SELECCIONE -";
 
-  input28change(event:any) {
+  input28change(event: any) {
     this.input28 = event.target.value;
   }
 
   input29: string = "- SELECCIONE -";
 
-  input29change(event:any) {
+  input29change(event: any) {
     this.input29 = event.target.value;
   }
   Embaraduasel(adus: number, adu: string) {

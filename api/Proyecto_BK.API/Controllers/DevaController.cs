@@ -41,15 +41,19 @@ namespace sistema_aduana.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
         public class CrearRequest
         {
             public DeVaViewModel4 DeVaViewModel { get; set; }
-            public FacturaEncViewModel FacturaEncViewModel { get; set; }
+            public List<FacturaEncViewModel> FacturaEncViewModel { get; set; }
             public FacturaDetalleViewModel FacturaDetalleViewModel { get; set; }
         }
+            
+
 
         [HttpPost("Crear")]
-        public IActionResult Crear([FromBody] CrearRequest request)
+        public IActionResult Crear(CrearRequest request)
         {
             try
             {
