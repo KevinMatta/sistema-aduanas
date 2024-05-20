@@ -32,8 +32,8 @@ export class RolesPorPantallaComponent implements OnInit, AfterViewInit {
 
   isLoading: boolean = true;
 
-  @ViewChild("checkboxSistemaElectoral") sistCkBox: ElementRef;
-  @ViewChildren("esquCkBox") esquCkBoxes: QueryList<ElementRef>;
+  @ViewChild("outer") outerDiv: ElementRef;
+  @ViewChildren("Esqu_CkBox") esquCkBoxes: QueryList<ElementRef>;
 
   constructor(
     private rolesService: RolesService,
@@ -79,31 +79,30 @@ export class RolesPorPantallaComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // Access the elements after the view has been initialized
-    console.log(this.sistCkBox, "sistCkBox");
-    console.log(this.esquCkBoxes, "this.esquCkBoxes");
-    const sistCkBoxElement = this.sistCkBox.nativeElement;
-    const esquCkBoxElements = this.esquCkBoxes
-      .toArray()
-      .map((el) => el.nativeElement);
+    if (this.outerDiv) {
+      const outerElement = this.outerDiv.nativeElement;
+      const esquCkBoxElements = outerElement.querySelectorAll(".Esqu_CkBox");
 
-    console.log(sistCkBoxElement, "sistCkBoxElement");
-    console.log(esquCkBoxElements, "esquCkBoxElements");
+      console.log(this.esquCkBoxes, 'this.esquCkBoxes');
+      
 
-    esquCkBoxElements.forEach((esquCkBox: any) => {
-      const pantCkBoxesDentroDeEsqu =
-        esquCkBox.parentElement.children[2].querySelectorAll(".Pant_CkBox");
-      if (
-        Array.from(pantCkBoxesDentroDeEsqu).every(
-          (esquCk: any) => esquCk.checked
-        )
-      ) {
-        esquCkBox.checked = true;
+      console.log(outerElement, "outerElement");
+      console.log(esquCkBoxElements, "esquCkBoxElements");
+  
+      esquCkBoxElements.forEach((esquCkBox: any) => {
+        const pantCkBoxesDentroDeEsqu =
+          esquCkBox.parentElement.children[2].querySelectorAll(".Pant_CkBox");
+        if (
+          Array.from(pantCkBoxesDentroDeEsqu).every(
+            (esquCk: any) => esquCk.checked
+          )
+        ) {
+          esquCkBox.checked = true;
+        }
+      });
+      if (esquCkBoxElements.every((esquCk: any) => esquCk.checked)) {
+        // outerElement.checked = true;
       }
-    });
-
-    if (esquCkBoxElements.every((esquCk: any) => esquCk.checked)) {
-      sistCkBoxElement.checked = true;
     }
   }
 
