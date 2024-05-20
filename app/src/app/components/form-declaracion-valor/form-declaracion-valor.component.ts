@@ -22,13 +22,15 @@ import { DeclaracionDeValor } from "../../Models/DeVaViewModel";
   styleUrls: ['./form-declaracion-valor.component.css']
 })
 export class FormDeclaracionValorComponent implements OnInit {
+  aduin:number;
+  adudes:number;
   declaracionDeValorForm:FormGroup;
   display:any ="false";
   aduanas:Aduana[];
   paises: Pais[];
   factura:Factura[]=[];
   Deva:DeclaracionDeValor[];
-  paisselectInfoGeneral:string;
+  paisselectInfoGeneral:number;
   paisselectInterme:string;
   paisselectCARC:string;
   FormaEnvioSelect:string;
@@ -82,7 +84,7 @@ export class FormDeclaracionValorComponent implements OnInit {
     this.nivelselected ="- Seleccionar -";
     this.MonedaSel="- Seleccionar -";
     this.EmbarSelecAduana="- Seleccionar -";
-    this.paisselectInfoGeneral ="- Seleccionar -";
+    this.paisselectInfoGeneral ;
     this.EstadoSelctInfoGen ="- Seleccionar -";
     this.ciuSelctInfoGen = "- Seleccionar -";
     this.siruacioncomselected= "- Seleccionar -";
@@ -229,16 +231,69 @@ export class FormDeclaracionValorComponent implements OnInit {
   GuardarDeva() {
     if (this.declaracionDeValorForm.valid) {
       let nuevoDeva: DeclaracionDeValor = {
+        // DeVa_RtnImportador: this.declaracionDeValorForm.get('DeVa_RtnImportador').value,
+        // DeVa_AduanaIngreso: parseInt(this.aduseling),
+        // DeVa_AduanaDespacho: parseInt(this.aduseling),
+        // DeVa_LugarEntrega: this.declaracionDeValorForm.get('DeVa_LugarEntrega').value,
+        DeVa_AduanaIngreso: this.aduin,
+        DeVa_AduanaDespacho: this.adudes,
+        DeVa_FechaAceptacion: this.declaracionDeValorForm.get('DeVa_FechaAceptacion').value,
         DeVa_RtnImportador: this.declaracionDeValorForm.get('DeVa_RtnImportador').value,
-        DeVa_AduanaIngreso: parseInt(this.aduseling),
-        DeVa_AduanaDespacho: parseInt(this.aduseling),
         DeVa_LugarEntrega: this.declaracionDeValorForm.get('DeVa_LugarEntrega').value,
 
+        DeVa_PaisEntrega: parseInt(this.paiselect),
         
+        DeVa_NumeroContrado: this.declaracionDeValorForm.get('DeVa_NumeroContrado').value,
+        DeVa_FechaContrado: this.declaracionDeValorForm.get('DeVa_FechaContrado').value,
+
+        DeVa_PaisEmbarque: parseInt(this.declaracionDeValorForm.get('DeVa_PaisEmbarque').value),
+
+        Deva_LugarEmbarque: parseInt(this.declaracionDeValorForm.get('Deva_LugarEmbarque').value),
+
+        DeVa_PaisExportacion: parseInt(this.declaracionDeValorForm.get('DeVa_PaisExportacion').value),
+
+        DeVa_FechaExportacion: this.declaracionDeValorForm.get('DeVa_FechaExportacion').value,
+        DeVa_Restricciones: this.declaracionDeValorForm.get('DeVa_Restricciones').value,
+        DeVa_CondicionContraprestacion: this.declaracionDeValorForm.get('DeVa_CondicionContraprestacion').value,
+        DeVa_MontoReversion: parseFloat(this.declaracionDeValorForm.get('DeVa_MontoReversion').value),
+        DeVa_TipoVinculacion: this.declaracionDeValorForm.get('DeVa_TipoVinculacion').value,
+        DeVa_InfluenciaPrecio: this.declaracionDeValorForm.get('DeVa_InfluenciaPrecio').value === 'true',
+        DeVa_PagosIndirectosDescuentos: this.declaracionDeValorForm.get('DeVa_PagosIndirectosDescuentos').value,
+        DeVa_CanonDerechosLicencia: this.declaracionDeValorForm.get('DeVa_CanonDerechosLicencia').value,
+        DeVa_PrecioFactura: parseFloat(this.declaracionDeValorForm.get('DeVa_PrecioFactura').value),
+        DeVa_PagosIndirectosDescuentosRetroactivos: parseFloat(this.declaracionDeValorForm.get('DeVa_PagosIndirectosDescuentosRetroactivos').value),
+        DeVa_PrecioRealPagado: parseFloat(this.declaracionDeValorForm.get('DeVa_PrecioRealPagado').value),
+        DeVa_MontoCondicionContraprestacion: parseFloat(this.declaracionDeValorForm.get('DeVa_MontoCondicionContraprestacion').value),
+        DeVa_MontoReversionCasilla: parseFloat(this.declaracionDeValorForm.get('DeVa_MontoReversionCasilla').value),
+        DeVa_GastosComisiones: parseFloat(this.declaracionDeValorForm.get('DeVa_GastosComisiones').value),
+        DeVa_GastosEnvasesEmbalajes: parseFloat(this.declaracionDeValorForm.get('DeVa_GastosEnvasesEmbalajes').value),
+        DeVa_ValorMaterialesConsumidos: parseFloat(this.declaracionDeValorForm.get('DeVa_ValorMaterialesConsumidos').value),
+        DeVa_ValorHerramientas: parseFloat(this.declaracionDeValorForm.get('DeVa_ValorHerramientas').value),
+        DeVa_ValorMaterialesConsumidos2: parseFloat(this.declaracionDeValorForm.get('DeVa_ValorMaterialesConsumidos2').value),
+        DeVa_ValorIngenieriaCreacion: parseFloat(this.declaracionDeValorForm.get('DeVa_ValorIngenieriaCreacion').value),
+        DeVa_ValorCanoDerechosLicencia: parseFloat(this.declaracionDeValorForm.get('DeVa_ValorCanoDerechosLicencia').value),
+        DeVa_GastosTransporteMercaderia: parseFloat(this.declaracionDeValorForm.get('DeVa_GastosTransporteMercaderia').value),
+        DeVa_GastosCargaDescarga: parseFloat(this.declaracionDeValorForm.get('DeVa_GastosCargaDescarga').value),
+        DeVa_CostosSeguro: parseFloat(this.declaracionDeValorForm.get('DeVa_CostosSeguro').value),
+        DeVa_TotalAjustes: parseFloat(this.declaracionDeValorForm.get('DeVa_TotalAjustes').value),
+        DeVa_GastosConstruccionArmado: parseFloat(this.declaracionDeValorForm.get('DeVa_GastosConstruccionArmado').value),
+        DeVa_CostosTransportePosterior: parseFloat(this.declaracionDeValorForm.get('DeVa_CostosTransportePosterior').value),
+        DeVa_DerechosImpuestos: parseFloat(this.declaracionDeValorForm.get('DeVa_DerechosImpuestos').value),
+        DeVa_MontoIntereses: parseFloat(this.declaracionDeValorForm.get('DeVa_MontoIntereses').value),
+        DeVa_OtrasDeducciones: parseFloat(this.declaracionDeValorForm.get('DeVa_OtrasDeducciones').value),
+        DeVa_TotalDeducciones: parseFloat(this.declaracionDeValorForm.get('DeVa_TotalDeducciones').value),
+        DeVa_ValorAduana: parseFloat(this.declaracionDeValorForm.get('DeVa_ValorAduana').value),
+        DeVa_Estado: this.declaracionDeValorForm.get('DeVa_Estado').value === 'true',
+        DeVa_Creacion: parseInt(this.declaracionDeValorForm.get('DeVa_Creacion').value),
+        DeVa_FechaCreacion: this.declaracionDeValorForm.get('DeVa_FechaCreacion').value,
+        DeVa_Modifica: parseInt(this.declaracionDeValorForm.get('DeVa_Modifica').value),
+        DeVa_FechaModifica: this.declaracionDeValorForm.get('DeVa_FechaModifica').value
+              
       
       }
+      this.dedService.agregarDeva(nuevoDeva);
       console.log(nuevoDeva);
-      window.location.reload();
+      // window.location.reload();
     }
     else {
       // Si el FormGroup no está lleno, muestra un mensaje de error o toma la acción correspondiente
@@ -259,9 +314,13 @@ export class FormDeclaracionValorComponent implements OnInit {
   }
   aduSelect(adus: number, adu: string) {
     this.aduselect = adus.toString();
+    this.adudes = adus;
+    
   }
   aduSelectIn(adus: number, adu: string) {
     this.aduseling = adus.toString();
+    this.aduin = adus;
+
   }
   estadoSelec(esID: number, esd: string) {
     this.estadoselec = esd;
@@ -272,8 +331,8 @@ export class FormDeclaracionValorComponent implements OnInit {
   nivelSelec( ciu: string) {
     this.nivelselected = ciu;
   }
-  paisInfoGeneralSelec( paisId: number, pais: string) {
-    this.paisselectInfoGeneral = pais;
+  paisInfoGeneralSelec( PaisID: number, pais: string) {
+    this.paisselectInfoGeneral = PaisID;
   }
   EstaInfoGeneralSelec( paisId: number, pais: string) {
     this.EstadoSelctInfoGen = pais;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace sistema_aduana.Common.Models
 {
-    class FacturaEncViewModel
+    public class FacturaEncViewModel
     {
         public int Fact_Id { get; set; }
         public string Fact_NumeroFactura { get; set; }

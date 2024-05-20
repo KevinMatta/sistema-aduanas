@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace sistema_aduana.Common.Models
 {
-    class DeVaViewModel4
+    public class DeVaViewModel4
     {
         public int DeVa_Id { get; set; }
         public int? DeVa_AduanaIngreso { get; set; }

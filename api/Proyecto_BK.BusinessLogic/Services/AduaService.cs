@@ -13,10 +13,16 @@ namespace sistema_aduana.BusinessLogic.Services
     {
         private readonly AduanaRepository _aduaRepository;
         private readonly ArancelRepository _arancelRepository;
-        public AduaService(AduanaRepository aduanaRepository, ArancelRepository arancelRepository)
+        private readonly DeVaRepository _deVaRepository;
+        private readonly FacturaRepository _facturaRepository;
+        private readonly FactDetRepository _factDetRepository;
+        public AduaService(AduanaRepository aduanaRepository, ArancelRepository arancelRepository, DeVaRepository deVaRepository, FacturaRepository facturaRepository, FactDetRepository factDetRepository)
         {
             _arancelRepository = arancelRepository;
             _aduaRepository = aduanaRepository;
+            _deVaRepository = deVaRepository;
+            _facturaRepository = facturaRepository;
+            _factDetRepository = factDetRepository;
         }
 
         #region Aduana
@@ -133,6 +139,52 @@ namespace sistema_aduana.BusinessLogic.Services
             }
         }
 
+        #endregion
+        #region DEVA
+        public ServiceResult DeVaCreate(tbDeclaracionDeValor item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _deVaRepository.Insert(item);
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+        #endregion
+
+        #region FactEnc
+        public ServiceResult FactEncCreate(tbFacturas item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _facturaRepository.Insert(item);
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+        #endregion
+        #region FactDet
+        public ServiceResult FactDetCreate(tbFacturaDetalle item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _factDetRepository.Insert(item);
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
         #endregion
     }
 }

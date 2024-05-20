@@ -33,6 +33,9 @@ namespace Proyecto_BK.BusinessLogic.Services
             service.AddScoped<CategoriaRepository>();
             service.AddScoped<ArancelRepository>();
             service.AddScoped<ItemRepository>();
+            service.AddScoped<DeVaRepository>();
+            service.AddScoped<FactDetRepository>();
+            service.AddScoped<FacturaRepository>();
 
             sistema_aduanaContext.BuildConnectionString(conn);
         }

@@ -27,6 +27,9 @@ namespace Sistema_Turnos.API.Extensions
             CreateMap<ArancelesViewModel, tbAranceles>().ReverseMap();
             CreateMap<CategoriaViewModel, tbCategorias>().ReverseMap();
             CreateMap<ItemsViewModel, tbItems>().ReverseMap();
+            CreateMap<FacturaDetalleViewModel, tbFacturaDetalle>().ReverseMap();
+            CreateMap<FacturaEncViewModel, tbFacturas>().ReverseMap();
+            CreateMap<DeVaViewModel4, tbDeclaracionDeValor>().ReverseMap();
 
 
         }
