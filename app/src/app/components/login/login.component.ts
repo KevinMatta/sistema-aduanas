@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   claveError = false;
   loadingPIN = false;
 
+
   mostrarReestablecerForm = false;
   inputArr = ["-", "-", "-", "-", "-", "-"];
   pinError = false;
@@ -34,6 +35,7 @@ export class LoginComponent implements OnInit {
     if (this.authenticationService.userValue) {
       // this.router.navigate(['/']);
     }
+
   }
 
   ngOnInit() {

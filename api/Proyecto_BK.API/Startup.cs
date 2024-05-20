@@ -8,8 +8,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Proyecto_BK.BusinessLogic.Services;
+
+using sistema_aduana.DataAccess.Repository;
+
 using sistema_aduana.BusinessLogic.Services;
 using sistema_aduana.Common.Models;
+
 using Sistema_Turnos.API.Extensions;
 using System;
 using System.Collections.Generic;
@@ -29,6 +33,7 @@ namespace Proyecto_BK.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            
 
             services.DataAccess(Configuration.GetConnectionString("sistema_aduana"));
             services.BusinessLogic();

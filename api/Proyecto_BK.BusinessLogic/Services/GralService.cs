@@ -28,26 +28,38 @@ namespace sistema_aduana.BusinessLogic.Services
         private readonly EmpresaRepository _empresaRepository;
         private readonly EmpleadoRepository _empleadoRepository;
         private readonly EstadoCivilRepository _estadoCivilRepository;
-        private readonly OficinasRepository _oficinasRepository;
         private readonly ProfesionesRepository _profesionesRepository;
         private readonly PersonaNaturalRepository _personaNaturalRepository;
         private readonly ComercianteIndividualRepository _comercianteIndividualRepository;
         private readonly PersonaJuridicaRepository _personaJuridicaRepository;
-        public GralService(CiudadRepository ciudadRepository, EstadoRepository estadoRepository, EstadoCivilRepository estadoCivilRepository, PaisRepository paisRepository, EmpresaRepository empresaRepository, EmpleadoRepository empleadoRepository, OficinasRepository oficinasRepository, ProfesionesRepository profesionesRepository, PersonaNaturalRepository personaNaturalRepository, ComercianteIndividualRepository comercianteIndividualRepository, PersonaJuridicaRepository personaJuridicaRepository, IConfiguration configuration, IOptions<MailSettings> mailSettingsOptions)
+
+        private readonly ItemRepository _itemRepository;
+        private readonly CategoriaRepository _categoriaRepository;
+
+        public GralService(CiudadRepository ciudadRepository, EstadoRepository estadoRepository,
+            EstadoCivilRepository estadoCivilRepository, PaisRepository paisRepository, EmpresaRepository empresaRepository, 
+            EmpleadoRepository empleadoRepository, ProfesionesRepository profesionesRepository,
+            PersonaNaturalRepository personaNaturalRepository, ComercianteIndividualRepository comercianteIndividualRepository, 
+            PersonaJuridicaRepository personaJuridicaRepository, ItemRepository itemRepository, CategoriaRepository categoriaRepository)
+
         {
             _ciudadRepository = ciudadRepository;
+            _categoriaRepository = categoriaRepository;
             _estadoRepository = estadoRepository;
             _estadoCivilRepository = estadoCivilRepository;
             _paisRepository = paisRepository;
             _empresaRepository = empresaRepository;
             _empleadoRepository = empleadoRepository;
-            _oficinasRepository = oficinasRepository;
             _profesionesRepository = profesionesRepository;
             _personaNaturalRepository = personaNaturalRepository;
             _comercianteIndividualRepository = comercianteIndividualRepository;
             _personaJuridicaRepository = personaJuridicaRepository;
+
+            _itemRepository = itemRepository;
+
             _configuration = configuration;
             _mailSettings = mailSettingsOptions.Value;
+
         }
 
         #region Utilitarios
@@ -562,76 +574,9 @@ namespace sistema_aduana.BusinessLogic.Services
         #endregion
 
         #region Oficinas
-        public ServiceResult OficinasListar()
-        {
-            var result = new ServiceResult();
-            try
-            {
-                var list = _oficinasRepository.List();
-                return result.Ok(list);
-            }
-            catch (Exception ex)
-            {
-                return result.Error(ex.Message);
-            }
-        }
-
-        public ServiceResult OficinasBuscar(int id)
-        {
-            var result = new ServiceResult();
-            try
-            {
-                var item = _oficinasRepository.Find(id);
-                return result.Ok(item);
-            }
-            catch (Exception ex)
-            {
-                return result.Error(ex.Message);
-            }
-        }
-
-        public ServiceResult OficinasCrear(tbOficinas item)
-        {
-            var result = new ServiceResult();
-            try
-            {
-                var createdItem = _oficinasRepository.Insert(item);
-                return createdItem.CodeStatus > 0 ? result.Ok(createdItem) : result.Error(createdItem);
-            }
-            catch (Exception ex)
-            {
-                return result.Error(ex.Message);
-            }
-        }
-
-        public ServiceResult OficinasActualizar(tbOficinas item)
-        {
-            var result = new ServiceResult();
-            try
-            {
-                var updatedItem = _oficinasRepository.Update(item);
-                return updatedItem.CodeStatus > 0 ? result.Ok(updatedItem) : result.Error(updatedItem);
-            }
-            catch (Exception ex)
-            {
-                return result.Error(ex.Message);
-            }
-        }
-
-        public ServiceResult OficinasEliminar(int id, int usuario, DateTime fecha)
-        {
-            var result = new ServiceResult();
-            try
-            {
-                var deletedItem = _oficinasRepository.Delete(id, usuario, fecha);
-                return deletedItem.CodeStatus > 0 ? result.Ok(deletedItem) : result.Error(deletedItem);
-            }
-            catch (Exception ex)
-            {
-                return result.Error(ex.Message);
-            }
-        }
-
+       
+       
+       
         #endregion
 
         #region Profesiones
@@ -936,6 +881,66 @@ namespace sistema_aduana.BusinessLogic.Services
                 return result.Error(ex.Message);
             }
         }
+
+        #endregion
+        #region item
+        public ServiceResult ItemCrear(tbItems item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var createdItem = _itemRepository.Insert(item);
+                return createdItem.CodeStatus > 0 ? result.Ok(createdItem) : result.Error(createdItem);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult ItemActualizar(tbItems item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var updatedItem = _itemRepository.Update(item);
+                return updatedItem.CodeStatus > 0 ? result.Ok(updatedItem) : result.Error(updatedItem);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        #endregion
+        public ServiceResult CategoriasCrear(tbCategorias item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var createdItem = _categoriaRepository.Insert(item);
+                return createdItem.CodeStatus > 0 ? result.Ok(createdItem) : result.Error(createdItem);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult CategoriasActualizar(tbCategorias item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var updatedItem = _categoriaRepository.Update(item);
+                return updatedItem.CodeStatus > 0 ? result.Ok(updatedItem) : result.Error(updatedItem);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+        #region
 
         #endregion
     }

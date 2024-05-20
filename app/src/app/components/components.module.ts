@@ -2,7 +2,7 @@ import { NO_ERRORS_SCHEMA, NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-
+import { FormsModule } from '@angular/forms';
 import { FooterComponent } from "./footer/footer.component";
 import { FormUbicacionComponent } from "./form-ubicacion/form-ubicacion.component";
 import { FormComercianteIndividualComponent } from "./form-comerciante-individual/form-comerciante-individual.component";
@@ -16,6 +16,7 @@ import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { BrowserModule } from "@angular/platform-browser";
 import { FormContactoComponent } from "./form-contacto/form-contacto.component";
 import { FormDeclaracionValorComponent } from "./form-declaracion-valor/form-declaracion-valor.component";
+
 // import { FormUsuariosComponent } from "./form-usuarios/form-usuarios.component";
 import { RolesPorPantallaComponent } from "./roles-por-pantalla/roles-por-pantalla.component";
 import { MensajesComponent } from "./mensajes/mensajes.component";
@@ -23,12 +24,14 @@ import { PdfPersonaNaturalComponent } from "./pdf-persona-natural/pdf-persona-na
 import { PdfComercianteIndividualComponent } from "./pdf-comerciante-individual/pdf-comerciante-individual.component";
 import { FormUsuariosComponent } from "./form-usuarios/form-usuarios.component";
 
+
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     NgxDatatableModule,
     BrowserModule,
+    FormsModule,
     NgbModule,
   ],
   declarations: [
@@ -43,7 +46,7 @@ import { FormUsuariosComponent } from "./form-usuarios/form-usuarios.component";
     FormComercianteIndividualComponent,
     PdfComercianteIndividualComponent,
     FormPersonaJuridicaComponent,
-    FormDeclaracionValorComponent,
+    // FormDeclaracionValorComponent,
     IndexListaComponent,
     MensajesComponent,
     LoginComponent,
@@ -59,7 +62,7 @@ import { FormUsuariosComponent } from "./form-usuarios/form-usuarios.component";
     PdfPersonaNaturalComponent,
     FormComercianteIndividualComponent,
     FormPersonaJuridicaComponent,
-    FormDeclaracionValorComponent,
+    // FormDeclaracionValorComponent,
     IndexListaComponent,
     MensajesComponent,
     LoginComponent,

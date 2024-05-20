@@ -1,0 +1,125 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Items</h4>
+  <button
+    type="button"
+    class="btn btn-sm btn-outline-primary"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <i class="now-ui-icons ui-1_simple-remove"></i>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="title text-center">Agregar Item</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="Itemsss" (ngSubmit)="agregarItem()">
+        <div class="row">
+          <div class="col">
+          
+            <div class="form-group">
+              <label for="Item_Id">Item:</label>
+              <input type="text" class="form-control" id="Item_Id" formControlName="Item_Id" name="Item_Id">
+            </div>
+            <!-- <div class="form-group">
+              <label for="FaDe_NumeroItem">:</label>
+              <input type="text" class="form-control" id="FaDe_NumeroItem" name="FaDe_NumeroItem">
+            </div> -->
+            <div class="form-group">
+              <label for="FaDe_Cantidad">Cantidad:</label>
+              <input type="text" class="form-control" formControlName="FaDe_Cantidad" id="FaDe_Cantidad" name="FaDe_Cantidad">
+            </div>
+            <div class="form-group">
+              <label for="FaDe_UnidadMedida">Unidad Medida :</label>
+              
+              <div ngbDropdown class="d-block">
+                <button
+                  type="button"
+                  class="btn btn-primary m-0 m-0"
+                  id="dropdownMenu1"
+                  ngbDropdownToggle
+                >
+                  {{UnidadMedida}}
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                  <button
+                  *ngFor="let pais of UnidadMed"
+                  type="button"
+                  class="dropdown-item"
+                  (click)="UnMedSel(pais)"
+                >
+                  {{ pais }}
+                </button>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="FaDe_Caracteristicas">Caracteristicas de Mercancía:</label>
+              <input type="text" class="form-control" formControlName="FaDe_Caracteristicas" id="FaDe_Caracteristicas" name="FaDe_Caracteristicas">
+            </div>
+
+            <div class="form-group">
+              <label for="Pais_Id">Origen Mercancías:</label>
+                  <div ngbDropdown class="d-block">
+                    <button
+                      type="button"
+                      class="btn btn-primary m-0 m-0"
+                      id="dropdownMenu1"
+                      ngbDropdownToggle
+                    >
+                      {{paisorigen}}
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                      <button
+                      *ngFor="let pais of paises"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="porigens(pais.Id, pais.Pais)"
+                    >
+                      {{ pais.Pais }}
+                    </button>
+                    </div>
+                  </div>
+            </div>
+            <div class="form-group">
+
+              <label for="FaDe_ValorUnitario">Valor Unitario:</label>
+              <input type="text" class="form-control" formControlName="FaDe_ValorUnitario" id="FaDe_ValorUnitario" name="FaDe_ValorUnitario">
+            </div>
+            <div class="form-group">
+              <label for="FaDe_TotalFactura">Total Factura:</label>
+              <input type="text" class="form-control" formControlName="FaDe_TotalFactura" id="FaDe_TotalFactura" name="FaDe_TotalFactura" readonly>
+            </div>
+            
+            
+           
+            
+            
+          </div>
+        </div>
+        <div class="modal-footer" style="gap: 5px">
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            (click)="activeModal.close('Save click')"
+          >
+            <i class="now-ui-icons ui-1_simple-remove" style="margin-right: 5px"></i>
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary"><i class="now-ui-icons ui-1_check" style="margin-right: 5px"></i>Guardar</button>
+          <!-- <button class="btn btn-primary" type="submit"  >
+            <i class="now-ui-icons ui-1_check" style="margin-right: 5px"></i>
+            Guardar
+          </button> -->
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

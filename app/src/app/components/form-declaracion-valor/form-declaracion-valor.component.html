@@ -7,7 +7,7 @@
           <h5 class="title">Registro de Declaración de Valor</h5>
         </div>
         <div class="card-body">
-          <form>
+          <form [formGroup]="declaracionDeValorForm" (ngSubmit)="GuardarDeva()">
             <h6>I. Información General</h6>
             <h6>A. Información General de la Aduana</h6>
             <div class="row">
@@ -21,14 +21,16 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{aduseling}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
+                      <button
+                        *ngFor="let pais of aduanas"
+                        type="button"
+                        class="dropdown-item"
+                        (click)="aduSelectIn(pais.Id, pais.Aduana)"
+                      >
+                        {{ pais.Aduana }}
                       </button>
                     </div>
                   </div>
@@ -44,14 +46,16 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                    {{aduselect}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
+                      <button
+                        *ngFor="let pais of aduanas"
+                        type="button"
+                        class="dropdown-item"
+                        (click)="aduSelect(pais.Id, pais.Aduana)"
+                      >
+                        {{ pais.Aduana }}
                       </button>
                     </div>
                   </div>
@@ -67,6 +71,7 @@
                     type="text"
                     class="form-control"
                     placeholder="Empresa Los Riques S.A."
+                    
                   />
                 </div>
               </div>
@@ -76,6 +81,9 @@
                   <input
                     type="text"
                     class="form-control"
+                    formControlName="DeVa_RtnImportador"
+                    id="DeVa_RtnImportador"
+                    name="DeVa_RtnImportador"
                     placeholder="05019001042021"
                   />
                 </div>
@@ -102,15 +110,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                    {{paiselect}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of paises"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="paisSelect(pais.Id, pais.Pais)"
+                    >
+                      {{ pais.Pais }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -126,15 +136,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{estadoselec}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of estados"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="estadoSelec(pais.Id, pais.Estado)"
+                    >
+                      {{ pais.Estado }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -149,14 +161,16 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{ciuselec}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
+                      <button
+                        *ngFor="let pais of ciudades"
+                        type="button"
+                        class="dropdown-item"
+                        (click)="ciudadSelec(pais.Id, pais.Ciudad)"
+                      >
+                        {{ pais.Ciudad }}
                       </button>
                     </div>
                   </div>
@@ -171,6 +185,7 @@
                     type="text"
                     class="form-control"
                     placeholder="3 calle 4 avenida frente a Ferretería Los Hermanos"
+                    id="DeVa_LugarEntrega" name="DeVa_LugarEntrega" formControlName="DeVa_LugarEntrega"
                   />
                 </div>
               </div>
@@ -215,15 +230,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                    {{nivelselected}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let coso of nivelcomercial"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="nivelSelec(coso)"
+                    >
+                      {{ coso }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -253,15 +270,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                     {{paisselectInfoGeneral}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of paises"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="paisInfoGeneralSelec(pais.Id, pais.Pais)"
+                    >
+                      {{ pais.Pais }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -278,15 +297,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{EstadoSelctInfoGen}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of estados"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="EstaInfoGeneralSelec(pais.Id, pais.Estado)"
+                    >
+                      {{ pais.Estado }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -301,15 +322,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{ciuSelctInfoGen}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of ciudades"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="ciuInfoGeneralSelec(pais.Id, pais.Ciudad)"
+                    >
+                      {{ pais.Ciudad }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -366,15 +389,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{siruacioncomselected}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of situacioncomercial"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="siruacionselec( pais)"
+                    >
+                      {{ pais }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -404,15 +429,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                     {{paisselectInterme}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of paises"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="paisselecInterm(pais.Id, pais.Pais)"
+                    >
+                      {{ pais.Pais }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -429,15 +456,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{EstadoSelctInterm}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of estados"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="estselecInterm(pais.Id, pais.Estado)"
+                    >
+                      {{ pais.Estado }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -452,15 +481,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{ciuSelctInterm}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of ciudades"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="CiuselecInterm(pais.Id, pais.Ciudad)"
+                    >
+                      {{ pais.Ciudad }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -507,7 +538,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6">
+              <!-- <div class="col-md-6">
                 <div class="form-group">
                   <label>14. Tipo Intermediario</label>
                   <div ngbDropdown class="d-block">
@@ -529,7 +560,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Otro Tipo Intermediario</label>
@@ -549,15 +580,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{paisselectCARC}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of paises"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="paisSelectCarac(pais.Id, pais.Pais)"
+                    >
+                      {{ pais.Pais }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -594,15 +627,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{FormaEnvioSelect}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of FormaEnvio"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="FormaEnvioS(pais)"
+                    >
+                      {{ pais }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -625,15 +660,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{pagoefecSel}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of SiNo"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="PagoEfecS(pais)"
+                    >
+                      {{ pais }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -648,15 +685,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{FormaPago}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of FormaP"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="FormaPagoS(pais)"
+                    >
+                      {{ pais }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -666,24 +705,9 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Otra Forma de Pago (Especifique)</label>
-                  <div ngbDropdown class="d-block">
-                    <button
-                      type="button"
-                      class="btn btn-primary m-0"
-                      id="dropdownMenu1"
-                      ngbDropdownToggle
-                    >
-                      - Seleccionar -
-                    </button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
-                    </div>
-                  </div>
+                  <input type="text" class="form-control" />
+                    
+                  
                 </div>
               </div>
               <div class="col-md-6">
@@ -701,14 +725,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{EmbarSelecAduana}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
+
+                    <button
+                        *ngFor="let pais of aduanas"
+                        type="button"
+                        class="dropdown-item"
+                        (click)="Embaraduasel(pais.Id, pais.Aduana)"
+                      >
+                        {{ pais.Aduana }}
                       </button>
                     </div>
                   </div>
@@ -726,15 +753,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{paiselecttrans}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of paises"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="PaisSelectrans(pais.Id, pais.Pais)"
+                    >
+                      {{ pais.Pais }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -757,15 +786,17 @@
                       id="dropdownMenu1"
                       ngbDropdownToggle
                     >
-                      - Seleccionar -
+                      {{MonedaSel}}
                     </button>
                     <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
-                      <button type="button" class="dropdown-item">
-                        Action - 1
-                      </button>
-                      <button type="button" class="dropdown-item">
-                        Action - 2
-                      </button>
+                      <button
+                      *ngFor="let pais of Monedas"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="MonSl(pais)"
+                    >
+                      {{ pais }}
+                    </button>
                     </div>
                   </div>
                 </div>
@@ -825,7 +856,7 @@
               </div>
             </ng-template>
             <h6>Facturas</h6>
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center" >
               <small
                 >- Mostrando un total de:
                 <span style="color: aquamarine"></span> Facturas</small
@@ -834,7 +865,7 @@
                 type="button"
                 type="button"
                 class="btn btn-outline-primary"
-                (click)="open(content)"
+                (click)="open()"
               >
                 <i
                   class="now-ui-icons ui-1_simple-add"
@@ -848,14 +879,18 @@
                 <thead class="text-primary">
                   <th>Nro. Factura</th>
                   <th>Fecha</th>
-                  <th>Operaciones</th>
+                  <th>Total</th>
                 </thead>
                 <tbody>
+                  <tr *ngFor="let item of dedService.Encabezado">
+                    <td>{{ item.Fact_NumeroFactura }}</td>
+                    <td>{{item.Fact_Fecha }}</td>
+                    <td></td>
+                  </tr>
                   <tr>
                     <td></td>
                     <td></td>
-                    <td></td>
-                  </tr>
+                    <td >{{ this.dedService.subtotal}}</td></tr>
                 </tbody>
               </table>
             </div>
@@ -1218,14 +1253,15 @@
                     <td>39</td>
                     <td>Precio según factura</td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" />
+                      <input type="text" class="form-control" [value]="this.dedService.subtotal"  />
                     </td>
                   </tr>
                   <tr>
                     <td>40</td>
                     <td>Pagos indirectos y/o descuentos retroactivos</td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" />
+                      <input type="text" class="form-control" placeholder="0" id="DeVa_PagosIndirectosDescuentosRetroactivos" 
+                      name="DeVa_PagosIndirectosDescuentosRetroactivos" formControlName="DeVa_PagosIndirectosDescuentosRetroactivos" />
                     </td>
                   </tr>
                   <tr>
@@ -1240,6 +1276,7 @@
                         class="form-control"
                         placeholder="0"
                         disabled
+                        id="DeVa_PrecioRealPagado" name="DeVa_PrecioRealPagado" formControlName="DeVa_PrecioRealPagado"
                       />
                     </td>
                   </tr>
@@ -1257,7 +1294,7 @@
                       la casilla 25.1
                     </td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" />
+                      <input type="text" class="form-control" placeholder="0" id="DeVa_MontoCondicionContraprestacion" formControlName="DeVa_MontoCondicionContraprestacion" name="DeVa_MontoCondicionContraprestacion"/>
                     </td>
                   </tr>
                   <tr>
@@ -1266,7 +1303,7 @@
                       Monto de la reversión a la que se refiere la casilla 25
                     </td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" />
+                      <input type="text" class="form-control" placeholder="0" id="DeVa_MontoReversionCasilla" name="DeVa_MontoReversionCasilla" formControlName="DeVa_MontoReversionCasilla"/>
                     </td>
                   </tr>
                   <tr>
@@ -1276,17 +1313,17 @@
                       comisiones de compra
                     </td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" />
+                      <input type="text" class="form-control" placeholder="0" id="DeVa_GastosComisiones" name="DeVa_GastosComisiones" formControlName="DeVa_GastosComisiones"/>
                     </td>
                   </tr>
                   <tr>
                     <td>42.4</td>
                     <td>Gastos y costos de envases y embalajes</td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" />
+                      <input type="text" class="form-control" placeholder="0" id="DeVa_GastosEnvasesEmbalajes" name="DeVa_GastosEnvasesEmbalajes" formControlName="DeVa_GastosEnvasesEmbalajes" />
                     </td>
                   </tr>
-                  <tr>
+                  <!-- <tr>
                     <td>42.5</td>
                     <td>
                       Valor de los materiales consumidos en la producción de las
@@ -1337,7 +1374,7 @@
                     <td>
                       <input type="text" class="form-control" placeholder="0" />
                     </td>
-                  </tr>
+                  </tr> -->
                   <tr>
                     <td>42.10</td>
                     <td>
@@ -1345,7 +1382,7 @@
                       puerto o lugar de importación
                     </td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" />
+                      <input type="text" class="form-control" placeholder="0" id="DeVa_GastosTransporteMercaderia" name="DeVa_GastosTransporteMercaderia" formControlName="DeVa_GastosTransporteMercaderia" />
                     </td>
                   </tr>
                   <tr>
@@ -1356,14 +1393,14 @@
                       puerto o lugar de importación
                     </td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" />
+                      <input type="text" class="form-control" placeholder="0" name="DeVa_GastosCargaDescarga" id="DeVa_GastosCargaDescarga" formControlName="DeVa_GastosCargaDescarga"/>
                     </td>
                   </tr>
                   <tr>
                     <td>42.12</td>
                     <td>Costos del Seguro</td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" />
+                      <input type="text" class="form-control" placeholder="0" id="DeVa_CostosSeguro" name="DeVa_CostosSeguro" formControlName="DeVa_CostosSeguro"/>
                     </td>
                   </tr>
                   <tr>
@@ -1378,6 +1415,7 @@
                         class="form-control"
                         placeholder="0"
                         disabled
+                        id="DeVa_TotalAjustes" name="DeVa_TotalAjustes" formControlName="DeVa_TotalAjustes"
                       />
                     </td>
                   </tr>
@@ -1396,7 +1434,7 @@
                       en relación con las mercancías importadas
                     </td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" />
+                      <input type="text" class="form-control" placeholder="0" id="DeVa_GastosConstruccionArmado" name="DeVa_GastosConstruccionArmado" formControlName="DeVa_GastosConstruccionArmado" />
                     </td>
                   </tr>
                   <tr>
@@ -1406,7 +1444,7 @@
                       importación
                     </td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" />
+                      <input type="text" class="form-control" placeholder="0"  id="DeVa_CostosTransportePosterior" name="DeVa_CostosTransportePosterior" formControlName="DeVa_CostosTransportePosterior"/>
                     </td>
                   </tr>
                   <tr>
@@ -1415,21 +1453,21 @@
                       Derechos e impuestos aplicables en el país de importación
                     </td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" />
+                      <input type="text" class="form-control" placeholder="0" id="DeVa_DerechosImpuestos" name="DeVa_DerechosImpuestos" formControlName="DeVa_DerechosImpuestos"/>
                     </td>
                   </tr>
                   <tr>
                     <td>44.4</td>
                     <td>Monto de intereses</td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" />
+                      <input type="text" class="form-control" placeholder="0" id="DeVa_MontoIntereses" name="DeVa_MontoIntereses" formControlName="DeVa_MontoIntereses"/>
                     </td>
                   </tr>
                   <tr>
                     <td>44.5</td>
                     <td>Otras deducciones legalmente aplicables</td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" />
+                      <input type="text" class="form-control" placeholder="0" id="DeVa_OtrasDeducciones" name="DeVa_OtrasDeducciones" formControlName="DeVa_OtrasDeducciones"/>
                     </td>
                   </tr>
                   <tr>
@@ -1444,6 +1482,7 @@
                         class="form-control"
                         placeholder="0"
                         disabled
+                        id="DeVa_TotalDeducciones" name="DeVa_TotalDeducciones" formControlName="DeVa_TotalDeducciones" 
                       />
                     </td>
                   </tr>
@@ -1456,6 +1495,7 @@
                         class="form-control"
                         placeholder="0"
                         disabled
+                        id="DeVa_ValorAduana" name="DeVa_ValorAduana" formControlName="DeVa_ValorAduana"
                       />
                     </td>
                   </tr>
@@ -1468,6 +1508,17 @@
               indicar el número y fecha de estas, así como el número de la
               casilla/s a la que corresponde.</small
             >
+          
+          <div class="card-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="GuardarDeva()"
+            > 
+              Guardar
+               
+            </button>
+          </div>
           </form>
         </div>
       </div>

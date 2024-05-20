@@ -20,13 +20,21 @@ namespace sistema_aduana.DataAccess.Context
         }
 
         public virtual DbSet<tbAduanas> tbAduanas { get; set; }
+        public virtual DbSet<tbAranceles> tbAranceles { get; set; }
+        public virtual DbSet<tbArancelesPorItems> tbArancelesPorItems { get; set; }
+        public virtual DbSet<tbBoletinDePago> tbBoletinDePago { get; set; }
+        public virtual DbSet<tbCategorias> tbCategorias { get; set; }
         public virtual DbSet<tbCiudades> tbCiudades { get; set; }
         public virtual DbSet<tbComerciantesIndividuales> tbComerciantesIndividuales { get; set; }
+        public virtual DbSet<tbDeclaracionDeValor> tbDeclaracionDeValor { get; set; }
         public virtual DbSet<tbEmpleados> tbEmpleados { get; set; }
         public virtual DbSet<tbEmpresas> tbEmpresas { get; set; }
+        public virtual DbSet<tbEsquemas> tbEsquemas { get; set; }
         public virtual DbSet<tbEstados> tbEstados { get; set; }
         public virtual DbSet<tbEstadosCiviles> tbEstadosCiviles { get; set; }
-        public virtual DbSet<tbOficinas> tbOficinas { get; set; }
+        public virtual DbSet<tbFacturaDetalle> tbFacturaDetalle { get; set; }
+        public virtual DbSet<tbFacturas> tbFacturas { get; set; }
+        public virtual DbSet<tbItems> tbItems { get; set; }
         public virtual DbSet<tbPaises> tbPaises { get; set; }
         public virtual DbSet<tbPantallas> tbPantallas { get; set; }
         public virtual DbSet<tbPantallasPorRoles> tbPantallasPorRoles { get; set; }
@@ -75,6 +83,171 @@ namespace sistema_aduana.DataAccess.Context
                     .HasConstraintName("FK__tbAduanas__Ciud___3C34F16F");
             });
 
+            modelBuilder.Entity<tbAranceles>(entity =>
+            {
+                entity.HasKey(e => e.Aran_Id)
+                    .HasName("PK__tbArance__360EAA48698C17C5");
+
+                entity.ToTable("tbAranceles", "Adua");
+
+                entity.Property(e => e.Aran_Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Aran_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Aran_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.Aran_FechaModifica).HasColumnType("datetime");
+
+                entity.Property(e => e.Aran_Porcentaje).HasColumnType("decimal(5, 2)");
+
+                entity.HasOne(d => d.Aran_CreacionNavigation)
+                    .WithMany(p => p.tbArancelesAran_CreacionNavigation)
+                    .HasForeignKey(d => d.Aran_Creacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_tbAranceles_tbUsuarios_Aran_Creacion");
+
+                entity.HasOne(d => d.Aran_ModificaNavigation)
+                    .WithMany(p => p.tbArancelesAran_ModificaNavigation)
+                    .HasForeignKey(d => d.Aran_Modifica)
+                    .HasConstraintName("fk_tbAranceles_tbUsuarios_Aran_Modifica");
+            });
+
+            modelBuilder.Entity<tbArancelesPorItems>(entity =>
+            {
+                entity.HasKey(e => e.ArIt_Id)
+                    .HasName("PK__tbArance__4E95EE489D3A0AAC");
+
+                entity.ToTable("tbArancelesPorItems", "Adua");
+
+                entity.Property(e => e.ArIt_Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ArIt_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.ArIt_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.ArIt_FechaModifica).HasColumnType("datetime");
+
+                entity.HasOne(d => d.ArIt_CreacionNavigation)
+                    .WithMany(p => p.tbArancelesPorItemsArIt_CreacionNavigation)
+                    .HasForeignKey(d => d.ArIt_Creacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_tbArancelesPorItems_tbUsuarios_ArIt_Creacion");
+
+                entity.HasOne(d => d.ArIt_ModificaNavigation)
+                    .WithMany(p => p.tbArancelesPorItemsArIt_ModificaNavigation)
+                    .HasForeignKey(d => d.ArIt_Modifica)
+                    .HasConstraintName("fk_tbArancelesPorItems_tbUsuarios_ArIt_Modifica");
+
+                entity.HasOne(d => d.Aran)
+                    .WithMany(p => p.tbArancelesPorItems)
+                    .HasForeignKey(d => d.Aran_Id)
+                    .HasConstraintName("FK__tbArancel__Aran___2610A626");
+
+                entity.HasOne(d => d.Item)
+                    .WithMany(p => p.tbArancelesPorItems)
+                    .HasForeignKey(d => d.Item_Id)
+                    .HasConstraintName("FK__tbArancel__Item___251C81ED");
+            });
+
+            modelBuilder.Entity<tbBoletinDePago>(entity =>
+            {
+                entity.HasKey(e => e.BoPa_Id)
+                    .HasName("PK__tbBoleti__D55DABA6B8E5D6C5");
+
+                entity.ToTable("tbBoletinDePago", "Adua");
+
+                entity.HasIndex(e => e.DeVa_Id, "UQ__tbBoleti__1EA65228B74D7F87")
+                    .IsUnique();
+
+                entity.Property(e => e.BoPa_Declarante)
+                    .HasMaxLength(14)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.BoPa_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.BoPa_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.BoPa_FechaEmision).HasColumnType("datetime");
+
+                entity.Property(e => e.BoPa_FechaModifica).HasColumnType("datetime");
+
+                entity.Property(e => e.BoPa_Liquidacion)
+                    .HasMaxLength(14)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.BoPa_NumeroDeclaracion)
+                    .HasMaxLength(13)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.BoPa_Observaciones)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.BoPa_Preimpreso)
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.BoPa_TipoEstado)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.BoPa_TipoLiquidacion)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.BoPa_CreacionNavigation)
+                    .WithMany(p => p.tbBoletinDePagoBoPa_CreacionNavigation)
+                    .HasForeignKey(d => d.BoPa_Creacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_tbBoletinDePago_tbUsuarios_BoPa_Creacion");
+
+                entity.HasOne(d => d.BoPa_ModificaNavigation)
+                    .WithMany(p => p.tbBoletinDePagoBoPa_ModificaNavigation)
+                    .HasForeignKey(d => d.BoPa_Modifica)
+                    .HasConstraintName("fk_tbBoletinDePago_tbUsuarios_BoPa_Modifica");
+
+                entity.HasOne(d => d.DeVa)
+                    .WithOne(p => p.tbBoletinDePago)
+                    .HasForeignKey<tbBoletinDePago>(d => d.DeVa_Id)
+                    .HasConstraintName("FK__tbBoletin__DeVa___22401542");
+            });
+
+            modelBuilder.Entity<tbCategorias>(entity =>
+            {
+                entity.HasKey(e => e.Cate_Id)
+                    .HasName("PK__tbCatego__297787C60FDA6B55");
+
+                entity.ToTable("tbCategorias", "Gral");
+
+                entity.Property(e => e.Cate_Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Cate_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Cate_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.Cate_FechaModifica).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Cate_CreacionNavigation)
+                    .WithMany(p => p.tbCategoriasCate_CreacionNavigation)
+                    .HasForeignKey(d => d.Cate_Creacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_tbCategorias_tbUsuarios_Cate_Creacion");
+
+                entity.HasOne(d => d.Cate_ModificaNavigation)
+                    .WithMany(p => p.tbCategoriasCate_ModificaNavigation)
+                    .HasForeignKey(d => d.Cate_Modifica)
+                    .HasConstraintName("fk_tbCategorias_tbUsuarios_Cate_Modifica");
+            });
+
             modelBuilder.Entity<tbCiudades>(entity =>
             {
                 entity.HasKey(e => e.Ciud_Id)
@@ -118,6 +291,9 @@ namespace sistema_aduana.DataAccess.Context
 
                 entity.ToTable("tbComerciantesIndividuales", "Gral");
 
+                entity.HasIndex(e => e.CoIn_Declaracion, "UQ_CoIn_Declaracion")
+                    .IsUnique();
+
                 entity.Property(e => e.CoIn_Aldea)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -143,14 +319,36 @@ namespace sistema_aduana.DataAccess.Context
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.CoIn_Correo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_CorreoAlternativo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_DNI)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.CoIn_DNIRepresentanteLegal)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_DNIRepresentanteLegalUrl).IsUnicode(false);
+
+                entity.Property(e => e.CoIn_DNIUrl).IsUnicode(false);
 
                 entity.Property(e => e.CoIn_Declaracion)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_DeclaracionUrl).IsUnicode(false);
+
+                entity.Property(e => e.CoIn_Direccion).IsUnicode(false);
+
+                entity.Property(e => e.CoIn_DireccionRepresentanteLegal).IsUnicode(false);
 
                 entity.Property(e => e.CoIn_EdificioYnum)
                     .IsRequired()
@@ -175,17 +373,43 @@ namespace sistema_aduana.DataAccess.Context
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.CoIn_Rtn)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.CoIn_RtnRepresentanteLegal)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_RtnRepresentanteLegalUrl).IsUnicode(false);
 
                 entity.Property(e => e.CoIn_RtnSolicitante)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.Ciud_RepresentanteLegalNavigation)
+                entity.Property(e => e.CoIn_RtnUrl).IsUnicode(false);
+
+                entity.Property(e => e.CoIn_TelefonoCelular)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CoIn_TelefonoFijo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Adua)
                     .WithMany(p => p.tbComerciantesIndividuales)
+                    .HasForeignKey(d => d.Adua_Id)
+                    .HasConstraintName("FK__tbComerci__Adua___76619304");
+
+                entity.HasOne(d => d.Ciud)
+                    .WithMany(p => p.tbComerciantesIndividualesCiud)
+                    .HasForeignKey(d => d.Ciud_Id)
+                    .HasConstraintName("FK__tbComerci__Ciud___756D6ECB");
+
+                entity.HasOne(d => d.Ciud_RepresentanteLegalNavigation)
+                    .WithMany(p => p.tbComerciantesIndividualesCiud_RepresentanteLegalNavigation)
                     .HasForeignKey(d => d.Ciud_RepresentanteLegal)
                     .HasConstraintName("FK__tbComerci__Ciud___0E6E26BF");
 
@@ -200,21 +424,136 @@ namespace sistema_aduana.DataAccess.Context
                     .HasForeignKey(d => d.CoIn_Modifica)
                     .HasConstraintName("FK__tbComerci__CoIn___114A936A");
 
+                entity.HasOne(d => d.EsCi)
+                    .WithMany(p => p.tbComerciantesIndividualesEsCi)
+                    .HasForeignKey(d => d.EsCi_Id)
+                    .HasConstraintName("FK__tbComerci__EsCi___73852659");
+
                 entity.HasOne(d => d.EsCi_RepresentanteLegalNavigation)
-                    .WithMany(p => p.tbComerciantesIndividuales)
+                    .WithMany(p => p.tbComerciantesIndividualesEsCi_RepresentanteLegalNavigation)
                     .HasForeignKey(d => d.EsCi_RepresentanteLegal)
                     .HasConstraintName("FK__tbComerci__EsCi___0D7A0286");
 
-                entity.HasOne(d => d.PeNa)
-                    .WithMany(p => p.tbComerciantesIndividuales)
-                    .HasForeignKey(d => d.PeNa_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tbComerci__PeNa___0C85DE4D");
+                entity.HasOne(d => d.Prof)
+                    .WithMany(p => p.tbComerciantesIndividualesProf)
+                    .HasForeignKey(d => d.Prof_Id)
+                    .HasConstraintName("FK__tbComerci__Prof___74794A92");
 
                 entity.HasOne(d => d.Prof_RepresentanteLegalNavigation)
-                    .WithMany(p => p.tbComerciantesIndividuales)
+                    .WithMany(p => p.tbComerciantesIndividualesProf_RepresentanteLegalNavigation)
                     .HasForeignKey(d => d.Prof_RepresentanteLegal)
                     .HasConstraintName("FK__tbComerci__Prof___0F624AF8");
+            });
+
+            modelBuilder.Entity<tbDeclaracionDeValor>(entity =>
+            {
+                entity.HasKey(e => e.DeVa_Id)
+                    .HasName("PK__tbDeclar__1EA6522966FE70B4");
+
+                entity.ToTable("tbDeclaracionDeValor", "Adua");
+
+                entity.Property(e => e.DeVa_CanonDerechosLicencia)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DeVa_CondicionContraprestacion)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DeVa_CostosSeguro).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_CostosTransportePosterior).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_DerechosImpuestos).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DeVa_FechaAceptacion).HasColumnType("datetime");
+
+                entity.Property(e => e.DeVa_FechaContrado).HasColumnType("datetime");
+
+                entity.Property(e => e.DeVa_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.DeVa_FechaExportacion).HasColumnType("datetime");
+
+                entity.Property(e => e.DeVa_FechaModifica).HasColumnType("datetime");
+
+                entity.Property(e => e.DeVa_GastosCargaDescarga).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_GastosComisiones).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_GastosConstruccionArmado).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_GastosEnvasesEmbalajes).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_GastosTransporteMercaderia).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_LugarEntrega)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DeVa_MontoCondicionContraprestacion).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_MontoIntereses).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_MontoReversion).HasColumnType("numeric(9, 2)");
+
+                entity.Property(e => e.DeVa_MontoReversionCasilla).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_NumeroContrado)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DeVa_OtrasDeducciones).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_PagosIndirectosDescuentos)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DeVa_PagosIndirectosDescuentosRetroactivos).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_PrecioFactura).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_PrecioRealPagado).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_Restricciones)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DeVa_RtnImportador)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DeVa_TipoVinculacion)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DeVa_TotalAjustes).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_TotalDeducciones).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_ValorAduana).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_ValorCanoDerechosLicencia).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_ValorHerramientas).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_ValorIngenieriaCreacion).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_ValorMaterialesConsumidos).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.DeVa_ValorMaterialesConsumidos2).HasColumnType("decimal(9, 2)");
+
+                entity.HasOne(d => d.DeVa_CreacionNavigation)
+                    .WithMany(p => p.tbDeclaracionDeValorDeVa_CreacionNavigation)
+                    .HasForeignKey(d => d.DeVa_Creacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_tbDeclaracionDeValor_tbUsuarios_DeVa_Creacion");
+
+                entity.HasOne(d => d.DeVa_ModificaNavigation)
+                    .WithMany(p => p.tbDeclaracionDeValorDeVa_ModificaNavigation)
+                    .HasForeignKey(d => d.DeVa_Modifica)
+                    .HasConstraintName("fk_tbDeclaracionDeValor_tbUsuarios_DeVa_Modifica");
             });
 
             modelBuilder.Entity<tbEmpleados>(entity =>
@@ -313,6 +652,34 @@ namespace sistema_aduana.DataAccess.Context
                     .HasConstraintName("FK__tbEmpresa__Empr___5AEE82B9");
             });
 
+            modelBuilder.Entity<tbEsquemas>(entity =>
+            {
+                entity.HasKey(e => e.Esqu_Id)
+                    .HasName("PK__tbEsquem__4C0B604871BA34AA");
+
+                entity.ToTable("tbEsquemas", "Acce");
+
+                entity.Property(e => e.Esqu_Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Esqu_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.Esqu_FechaModifica).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Esqu_CreacionNavigation)
+                    .WithMany(p => p.tbEsquemasEsqu_CreacionNavigation)
+                    .HasForeignKey(d => d.Esqu_Creacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbEsquema__Esqu___5F7E2DAC");
+
+                entity.HasOne(d => d.Esqu_ModificaNavigation)
+                    .WithMany(p => p.tbEsquemasEsqu_ModificaNavigation)
+                    .HasForeignKey(d => d.Esqu_Modifica)
+                    .HasConstraintName("FK__tbEsquema__Esqu___607251E5");
+            });
+
             modelBuilder.Entity<tbEstados>(entity =>
             {
                 entity.HasKey(e => e.Esta_Id)
@@ -378,40 +745,124 @@ namespace sistema_aduana.DataAccess.Context
                     .HasConstraintName("FK__tbEstados__EsCi___5535A963");
             });
 
-            modelBuilder.Entity<tbOficinas>(entity =>
+            modelBuilder.Entity<tbFacturaDetalle>(entity =>
             {
-                entity.HasKey(e => e.Ofic_Id)
-                    .HasName("PK__tbOficin__F1DA4A4CB33794D1");
+                entity.HasKey(e => e.FaDe_Id)
+                    .HasName("PK__tbFactur__99C2F8F91A77EB80");
 
-                entity.ToTable("tbOficinas", "Gral");
+                entity.ToTable("tbFacturaDetalle", "Adua");
 
-                entity.Property(e => e.Ofic_Descripcion)
-                    .IsRequired()
-                    .HasMaxLength(100)
+                entity.Property(e => e.FaDe_Caracteristicas)
+                    .HasMaxLength(200)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Ofic_Estado).HasDefaultValueSql("((1))");
+                entity.Property(e => e.FaDe_Estado).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.Ofic_FechaCreacion).HasColumnType("datetime");
+                entity.Property(e => e.FaDe_FechaCreacion).HasColumnType("datetime");
 
-                entity.Property(e => e.Ofic_FechaModifica).HasColumnType("datetime");
+                entity.Property(e => e.FaDe_FechaModifica).HasColumnType("datetime");
 
-                entity.HasOne(d => d.Adua)
-                    .WithMany(p => p.tbOficinas)
-                    .HasForeignKey(d => d.Adua_Id)
+                entity.Property(e => e.FaDe_TotalFactura).HasColumnType("decimal(9, 2)");
+
+                entity.Property(e => e.FaDe_UnidadMedida)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FaDe_ValorUnitario).HasColumnType("decimal(8, 2)");
+
+                entity.HasOne(d => d.FaDe_CreacionNavigation)
+                    .WithMany(p => p.tbFacturaDetalleFaDe_CreacionNavigation)
+                    .HasForeignKey(d => d.FaDe_Creacion)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tbOficina__Adua___05D8E0BE");
+                    .HasConstraintName("fk_tbFacturaDetalle_tbUsuarios_FaDe_Creacion");
 
-                entity.HasOne(d => d.Ofic_CreacionNavigation)
-                    .WithMany(p => p.tbOficinasOfic_CreacionNavigation)
-                    .HasForeignKey(d => d.Ofic_Creacion)
+                entity.HasOne(d => d.FaDe_ModificaNavigation)
+                    .WithMany(p => p.tbFacturaDetalleFaDe_ModificaNavigation)
+                    .HasForeignKey(d => d.FaDe_Modifica)
+                    .HasConstraintName("fk_tbFacturaDetalle_tbUsuarios_FaDe_Modifica");
+
+                entity.HasOne(d => d.Fact)
+                    .WithMany(p => p.tbFacturaDetalle)
+                    .HasForeignKey(d => d.Fact_Id)
+                    .HasConstraintName("FK__tbFactura__Fact___2334397B");
+
+                entity.HasOne(d => d.Item)
+                    .WithMany(p => p.tbFacturaDetalle)
+                    .HasForeignKey(d => d.Item_Id)
+                    .HasConstraintName("FK__tbFactura__Item___24285DB4");
+            });
+
+            modelBuilder.Entity<tbFacturas>(entity =>
+            {
+                entity.HasKey(e => e.Fact_Id)
+                    .HasName("PK__tbFactur__8327E027953F5FC3");
+
+                entity.ToTable("tbFacturas", "Adua");
+
+                entity.Property(e => e.Fact_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Fact_Fecha).HasColumnType("datetime");
+
+                entity.Property(e => e.Fact_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.Fact_FechaModifica).HasColumnType("datetime");
+
+                entity.Property(e => e.Fact_NumeroFactura)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Deva)
+                    .WithMany(p => p.tbFacturas)
+                    .HasForeignKey(d => d.Deva_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tbOficina__Ofic___02FC7413");
+                    .HasConstraintName("FK__tbFactura__Deva___214BF109");
 
-                entity.HasOne(d => d.Ofic_ModificaNavigation)
-                    .WithMany(p => p.tbOficinasOfic_ModificaNavigation)
-                    .HasForeignKey(d => d.Ofic_Modifica)
-                    .HasConstraintName("FK__tbOficina__Ofic___03F0984C");
+                entity.HasOne(d => d.Fact_CreacionNavigation)
+                    .WithMany(p => p.tbFacturasFact_CreacionNavigation)
+                    .HasForeignKey(d => d.Fact_Creacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_tbFacturas_tbUsuarios_Fact_Creacion");
+
+                entity.HasOne(d => d.Fact_ModificaNavigation)
+                    .WithMany(p => p.tbFacturasFact_ModificaNavigation)
+                    .HasForeignKey(d => d.Fact_Modifica)
+                    .HasConstraintName("fk_tbFacturas_tbUsuarios_Fact_Modifica");
+            });
+
+            modelBuilder.Entity<tbItems>(entity =>
+            {
+                entity.HasKey(e => e.Item_Id)
+                    .HasName("PK__tbItems__3FB50874ECE7E5ED");
+
+                entity.ToTable("tbItems", "Gral");
+
+                entity.Property(e => e.Item_Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Item_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Item_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.Item_FechaModifica).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Cate)
+                    .WithMany(p => p.tbItems)
+                    .HasForeignKey(d => d.Cate_Id)
+                    .HasConstraintName("FK__tbItems__Cate_Id__2704CA5F");
+
+                entity.HasOne(d => d.Item_CreacionNavigation)
+                    .WithMany(p => p.tbItemsItem_CreacionNavigation)
+                    .HasForeignKey(d => d.Item_Creacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_tbItems_tbUsuarios_Item_Creacion");
+
+                entity.HasOne(d => d.Item_ModificaNavigation)
+                    .WithMany(p => p.tbItemsItem_ModificaNavigation)
+                    .HasForeignKey(d => d.Item_Modifica)
+                    .HasConstraintName("fk_tbItems_tbUsuarios_Cate_Modifica");
             });
 
             modelBuilder.Entity<tbPaises>(entity =>
@@ -420,6 +871,9 @@ namespace sistema_aduana.DataAccess.Context
                     .HasName("PK__tbPaises__6356B8339E868C67");
 
                 entity.ToTable("tbPaises", "Gral");
+
+                entity.HasIndex(e => e.Pais_Descripcion, "UQ_tbPaises_Pais_Descripcion")
+                    .IsUnique();
 
                 entity.Property(e => e.Pais_Descripcion)
                     .IsRequired()
@@ -461,6 +915,11 @@ namespace sistema_aduana.DataAccess.Context
                 entity.Property(e => e.Pant_FechaCreacion).HasColumnType("datetime");
 
                 entity.Property(e => e.Pant_FechaModifica).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Esqu)
+                    .WithMany(p => p.tbPantallas)
+                    .HasForeignKey(d => d.Esqu_Id)
+                    .HasConstraintName("FK__tbPantall__Esqu___6166761E");
 
                 entity.HasOne(d => d.Pant_CreacionNavigation)
                     .WithMany(p => p.tbPantallasPant_CreacionNavigation)
@@ -604,12 +1063,6 @@ namespace sistema_aduana.DataAccess.Context
                     .HasForeignKey(d => d.PeJu_Modifica)
                     .HasConstraintName("FK__tbPersona__PeJu___1EA48E88");
 
-                entity.HasOne(d => d.PeNa)
-                    .WithMany(p => p.tbPersonasJuridicas)
-                    .HasForeignKey(d => d.PeNa_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tbPersona__PeNa___19DFD96B");
-
                 entity.HasOne(d => d.Prof_RepresentanteLegalNavigation)
                     .WithMany(p => p.tbPersonasJuridicas)
                     .HasForeignKey(d => d.Prof_RepresentanteLegal)
@@ -622,6 +1075,9 @@ namespace sistema_aduana.DataAccess.Context
                     .HasName("PK__tbPerson__D364BF30F3F6BB60");
 
                 entity.ToTable("tbPersonasNaturales", "Gral");
+
+                entity.HasIndex(e => e.PeNa_DNI, "UQ_PeNa_DNI")
+                    .IsUnique();
 
                 entity.Property(e => e.PeNa_Apellido)
                     .IsRequired()
@@ -695,6 +1151,11 @@ namespace sistema_aduana.DataAccess.Context
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.HasOne(d => d.Adua)
+                    .WithMany(p => p.tbPersonasNaturales)
+                    .HasForeignKey(d => d.Adua_Id)
+                    .HasConstraintName("fk_tbpersonasnaturales_tbaduanas_Adua_Id");
+
                 entity.HasOne(d => d.Ciud)
                     .WithMany(p => p.tbPersonasNaturales)
                     .HasForeignKey(d => d.Ciud_Id)
@@ -706,12 +1167,6 @@ namespace sistema_aduana.DataAccess.Context
                     .HasForeignKey(d => d.EsCi_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__tbPersona__EsCi___08B54D69");
-
-                entity.HasOne(d => d.Ofic)
-                    .WithMany(p => p.tbPersonasNaturales)
-                    .HasForeignKey(d => d.Ofic_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tbPersona__Ofic___09A971A2");
 
                 entity.HasOne(d => d.PeNa_CreacionNavigation)
                     .WithMany(p => p.tbPersonasNaturalesPeNa_CreacionNavigation)
@@ -799,6 +1254,14 @@ namespace sistema_aduana.DataAccess.Context
                 entity.ToTable("tbUsuarios", "Acce");
 
                 entity.Property(e => e.Usua_Clave).IsRequired();
+
+                entity.Property(e => e.Usua_CodigoVerificacion)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Usua_Email)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Usua_Estado).HasDefaultValueSql("((1))");
 

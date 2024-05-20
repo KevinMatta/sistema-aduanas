@@ -30,8 +30,12 @@ namespace Proyecto_BK.BusinessLogic.Services
             service.AddScoped<ComercianteIndividualRepository>();
             service.AddScoped<PersonaJuridicaRepository>();
             service.AddScoped<ProfesionesRepository>();
-            service.AddScoped<OficinasRepository>();
-
+            service.AddScoped<CategoriaRepository>();
+            service.AddScoped<ArancelRepository>();
+            service.AddScoped<ItemRepository>();
+            service.AddScoped<DeVaRepository>();
+            service.AddScoped<FactDetRepository>();
+            service.AddScoped<FacturaRepository>();
 
             sistema_aduanaContext.BuildConnectionString(conn);
         }
@@ -40,7 +44,6 @@ namespace Proyecto_BK.BusinessLogic.Services
             service.AddScoped<AcceService>();
             service.AddScoped<GralService>();
             service.AddScoped<AduaService>();
-
         }
     }
 }
