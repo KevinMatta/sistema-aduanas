@@ -32,7 +32,7 @@ export class RolesPorPantallaComponent implements OnInit, AfterViewInit {
 
   isLoading: boolean = true;
 
-  @ViewChild("outer") outerDiv: ElementRef;
+  @ViewChild("Sist_CkBox") sistCkBox: ElementRef;
   @ViewChildren("Esqu_CkBox") esquCkBoxes: QueryList<ElementRef>;
 
   constructor(
@@ -79,17 +79,15 @@ export class RolesPorPantallaComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.outerDiv) {
-      const outerElement = this.outerDiv.nativeElement;
-      const esquCkBoxElements = outerElement.querySelectorAll(".Esqu_CkBox");
+      const sistCkBoxElement = this.sistCkBox.nativeElement;
 
       console.log(this.esquCkBoxes, 'this.esquCkBoxes');
-      
-
-      console.log(outerElement, "outerElement");
-      console.log(esquCkBoxElements, "esquCkBoxElements");
+      const esquCkBoxesArr = Array.from(this.esquCkBoxes);
+      console.log(esquCkBoxesArr, 'esquCkBoxesArr');
   
-      esquCkBoxElements.forEach((esquCkBox: any) => {
+      this.esquCkBoxes.forEach((esquCkBox: any) => {
+        console.log(esquCkBox, 'esquCkBox');
+        
         const pantCkBoxesDentroDeEsqu =
           esquCkBox.parentElement.children[2].querySelectorAll(".Pant_CkBox");
         if (
@@ -100,10 +98,10 @@ export class RolesPorPantallaComponent implements OnInit, AfterViewInit {
           esquCkBox.checked = true;
         }
       });
-      if (esquCkBoxElements.every((esquCk: any) => esquCk.checked)) {
-        // outerElement.checked = true;
+      
+      if (esquCkBoxesArr.length > 0 && esquCkBoxesArr.every((esquCk: any) => esquCk.checked)) {
+        sistCkBoxElement.checked = true;
       }
-    }
   }
 
   isPantallaChecked(pantallaId: number): boolean {
