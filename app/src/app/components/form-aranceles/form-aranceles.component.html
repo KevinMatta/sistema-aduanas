@@ -15,23 +15,29 @@
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
-        <label>Porcentaje</label>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group">
         <label>Arancel</label>
         <input
-          type="text"
+        type="text"
           class="form-control"
-          placeholder="Cortés"
-          maxlength="20"
+          placeholder="IMP. SOBRE VENTAS"
           (change)="arancelOnChange($event)"
           [value]="arancel.Arancel"
           style="max-width: 150px"
-        />
+          />
+        </div>
       </div>
-    </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Porcentaje</label>
+          <input
+            type="number"
+            class="form-control"
+            (input)="porcentajeOnChange($event)"
+            [value]="arancel.Porcentaje"
+            style="max-width: 150px"
+          />
+        </div>
+      </div>
   </div>
 </div>
 <div class="modal-footer" style="gap: 5px">

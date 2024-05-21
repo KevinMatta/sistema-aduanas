@@ -37,13 +37,13 @@ export class ArancelesService implements DataService {
 
   Editar(aran: Arancel): Observable<any> {
     const json = {
-      aran_Id: 0,
+      aran_Id: aran.Id,
       aran_Descripcion: aran.Arancel,
       aran_Porcentaje: aran.Porcentaje,
       aran_Estado: true,
-      aran_Creacion: 0,
+      aran_Creacion: 1,
       aran_FechaCreacion: new Date().toISOString(),
-      aran_Modifica: 0,
+      aran_Modifica: 1,
       aran_FechaModifica: new Date().toISOString(),
     };
     return this.http
@@ -59,9 +59,9 @@ export class ArancelesService implements DataService {
       aran_Descripcion: aran.Arancel,
       aran_Porcentaje: aran.Porcentaje,
       aran_Estado: true,
-      aran_Creacion: 0,
+      aran_Creacion: 1,
       aran_FechaCreacion: new Date().toISOString(),
-      aran_Modifica: 0,
+      aran_Modifica: 1,
       aran_FechaModifica: new Date().toISOString(),
     };
     return this.http
@@ -76,8 +76,8 @@ export class ArancelesService implements DataService {
       const model: Arancel = {
         Id: item.aran_Id,
         Arancel: item.aran_Descripcion,
-        Porcentaje: item.porcentaje,
-        _Estado: item.aran_Estado,
+        Porcentaje: item.aran_Porcentaje,
+        _Estado:  item.aran_Estado
       };
       return model;
     });

@@ -38,6 +38,7 @@ export class AduanasService implements DataService {
   Editar(adua: Aduana): Observable<any> {
     const json = {
       adua_Id: adua.Id,
+      adua_Descripcion: adua.Aduana,
       esta_Id: adua.esta_Id,
       ciud_Id: adua.ciud_Id,
       esta_Descripcion: adua.Estado,
@@ -60,6 +61,7 @@ export class AduanasService implements DataService {
   Crear(adua: Aduana): Observable<any> {
     const json = {
       adua_Id: 0,
+      adua_Descripcion: adua.Aduana,
       esta_Id: adua.esta_Id,
       ciud_Id: adua.ciud_Id,
       esta_Descripcion: adua.Estado,

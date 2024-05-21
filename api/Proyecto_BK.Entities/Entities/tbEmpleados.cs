@@ -27,6 +27,14 @@ namespace sistema_aduana.Entities.Entities
         public string Empr_Descripcion { get; set; }
         [NotMapped]
         public string EsCi_Descripcion { get; set; }
+        [NotMapped]
+        public int? Esta_Id { get; set; }
+        [NotMapped]
+        public string Esta_Descripcion { get; set; }
+        [NotMapped]
+        public int? Ciud_Id { get; set; }
+        [NotMapped]
+        public string Ciud_Descripcion { get; set; }
 
 
         public virtual tbUsuarios Empl_CreacionNavigation { get; set; }

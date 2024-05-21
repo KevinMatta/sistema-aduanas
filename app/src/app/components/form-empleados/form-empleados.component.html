@@ -4,44 +4,84 @@
     <div class="col">
       <div class="card">
         <div class="card-header">
-          <h5 class="title">Nuevo Usuario</h5>
+          <h5 class="title">Nuevo Empleado</h5>
         </div>
         <div class="card-body">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label>Usuario</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="SuperStar003"
-                  maxlength="20"
-                  (change)="usuarioOnChange($event)"
-                  [value]="usuario.Usuario"
-                />
+                <label>Nombre</label>
+                <input type="text" class="form-control" [value]="empleado.Nombre" (change)="nombreOnChange($event)" />
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label>Rol</label>
+                <label>Apellido</label>
+                <input type="text" class="form-control" [value]="empleado.Apellido"
+                  (change)="apellidoOnChange($event)" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>DNI</label>
+                <input type="text" class="form-control" [value]="empleado.DNI" (change)="DNIOnChange($event)" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Correo electrónico</label>
+                <input type="text" class="form-control" [value]="empleado.Email" (change)="emailOnChange($event)" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Estado</label>
                 <div ngbDropdown class="d-block">
                   <button
                     type="button"
                     class="btn btn-primary m-0"
                     id="dropdownMenu1"
                     ngbDropdownToggle
-                    [disabled]="usuario.EsAdmin"
                   >
-                    {{ usuario.Rol }}
+                    {{ empleado.Estado_ }}
                   </button>
                   <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
                     <button
-                      *ngFor="let rol of roles"
+                      *ngFor="let estado of estados"
                       type="button"
                       class="dropdown-item"
-                      (click)="rolSelect(rol.Id, rol.Rol)"
+                      (click)="estadosSelect(estado.Id, estado.Estado)"
                     >
-                      {{ rol.Rol }}
+                      {{ estado.Estado }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Ciudad</label>
+                <div ngbDropdown class="d-block">
+                  <button
+                    type="button"
+                    class="btn btn-primary m-0"
+                    id="dropdownMenu1"
+                    ngbDropdownToggle
+                  >
+                    {{ empleado.Ciudad_ }}
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                    <button
+                      *ngFor="let ciudad of ciudadesFiltradas"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="ciudadesSelect(ciudad.Id, ciudad.Ciudad)"
+                    >
+                      {{ ciudad.Ciudad }}
                     </button>
                   </div>
                 </div>
@@ -51,98 +91,56 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label>Contraseña</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  placeholder="*******"
-                  minlength="6"
-                  (change)="contraOnChange($event)"
-                />
+                <label>Empresa</label>
+                <div ngbDropdown class="d-block">
+                  <button type="button" class="btn btn-primary m-0" id="dropdownMenu1" ngbDropdownToggle>
+                    {{ empleado.Empresa }}
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                    <button *ngFor="let empr of empresasFiltradas" type="button" class="dropdown-item"
+                      (click)="empresaSelect(empr.Id, empr.Empresa)">
+                      {{ empr.Empresa }}
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label>Confirmar Contraseña</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  placeholder="*******"
-                  minlength="6"
-                  (change)="confirmarContraOnChange($event)"
-                />
+                <label>Estado civil</label>
+                <div ngbDropdown class="d-block">
+                  <button type="button" class="btn btn-primary m-0" id="dropdownMenu1" ngbDropdownToggle>
+                    {{ empleado['Estado Civil'] }}
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                    <button *ngFor="let esCi of estadosCiviles" type="button" class="dropdown-item"
+                      (click)="esCiSelect(esCi.Id, esCi['Estado Civil'])">
+                      {{ esCi['Estado Civil'] }}
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Empleado DNI</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="0501200504202"
-                  [value]="usuario.DNI"
-                  (change)="DNIOnChange($event)"
-                />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Empleado</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  [value]="usuario.Empleado"
-                  disabled
-                />
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div
-              class="col d-flex justify-content-center"
-              style="min-height: 80px"
-            >
-              <div class="form-group">
-                <label for="">Administrador</label>
-                <input
-                  class="switch-input"
-                  type="radio"
-                  name="rdo"
-                  id="si"
-                  (click)="adminToggle()"
-                  [checked]="usuario.EsAdmin"
-                />
-                <input
-                  class="switch-input"
-                  type="radio"
-                  name="rdo"
-                  id="no"
-                  (click)="adminToggle()"
-                  [checked]="!usuario.EsAdmin"
-                />
+            <div class="col d-flex justify-content-center" style="min-height: 80px">
+              <div class="form-group" style="left: -8%;">
+                <label for="">Sexo</label>
+                <input class="switch-input" type="radio" name="rdo" id="si" (click)="sexoToggle()"
+                  [checked]="empleado.Sexo === 'FEMENINO'" />
+                <input class="switch-input" type="radio" name="rdo" id="no" (click)="sexoToggle()"
+                  [checked]="empleado.Sexo === 'MASCULINO'" />
                 <div class="switch">
-                  <label for="si">Sí</label>
-                  <label for="no">No</label>
+                  <label for="si">F</label>
+                  <label for="no">M</label>
                   <span></span>
                 </div>
               </div>
             </div>
           </div>
-          <div
-            class="d-flex justify-content-end align-items-center"
-            style="gap: 5px"
-          >
-            <button
-              type="button"
-              class="btn btn-outline-primary"
-              (click)="cancelar()"
-            >
-              <i
-                class="now-ui-icons ui-1_simple-remove"
-                style="margin-right: 5px"
-              ></i>
+          <div class="d-flex justify-content-end align-items-center" style="gap: 5px">
+            <button type="button" class="btn btn-outline-primary" (click)="cancelar()">
+              <i class="now-ui-icons ui-1_simple-remove" style="margin-right: 5px"></i>
               Cancelar
             </button>
             <button class="btn btn-primary" (click)="guardar()">

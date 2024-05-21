@@ -40,7 +40,7 @@ namespace sistema_aduana.API.Controllers
         [HttpGet("List")]
         public IActionResult Index()
         {
-            var list = _aduaService.AduanaListar();
+            var list = _aduaService.ArancelListar();
             return Ok(list);
         }
 

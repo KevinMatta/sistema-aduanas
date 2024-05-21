@@ -29,16 +29,21 @@ export class FormArancelesComponent implements OnInit {
       this.arancel.Porcentaje = this.objetoParaEditar.Porcentaje;
     } else {
       this.arancel.Arancel = "";
-      this.arancel.Porcentaje = 0.0;
+      this.arancel.Porcentaje = 0;
     }
   }
 
   arancelOnChange(event: any) {
     this.arancel.Arancel = event.target.value;
   }
-
+  
   porcentajeOnChange(event: any) {
-    this.arancel.Porcentaje = event.target.value;
+    const regex = /^\d{0,1}\.?\d{0,2}$/;
+    if (regex.test(event.target.value)) {
+      this.arancel.Porcentaje = parseFloat(event.target.value);
+    } else {
+      event.target.value = event.target.value.slice(event.target.value.length - 1,-1);
+    }
   }
 
   async guardar() {
@@ -46,8 +51,9 @@ export class FormArancelesComponent implements OnInit {
       this.mostrarWarning("Por favor ingrese el nombre del arancel.");
       return;
     }
-    if (!this.arancel.Porcentaje) {
-      this.mostrarWarning("Por favor ingrese el porcentaje del arancel.");
+    const regex = /^0\.\d{1,2}$/;
+    if (!regex.test(this.arancel.Porcentaje.toString())) {
+      this.mostrarWarning("Por favor ingrese el porcentaje del arancel en decimal.");
       return;
     }
     if (!this.objetoParaEditar) {

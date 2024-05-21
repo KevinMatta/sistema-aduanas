@@ -30,7 +30,7 @@
               *ngFor="let estado of estados"
               type="button"
               class="dropdown-item"
-              (click)="estadoSelect(estado.Id, estado.Estado)"
+              (click)="estadosSelect(estado.Id, estado.Estado)"
             >
               {{ estado.Estado }}
             </button>
@@ -55,7 +55,7 @@
               *ngFor="let ciudad of ciudadesFiltradas"
               type="button"
               class="dropdown-item"
-              (click)="ciudadSelect(ciudad.Id, ciudad.Ciudad)"
+              (click)="ciudadesSelect(ciudad.Id, ciudad.Ciudad)"
             >
               {{ ciudad.Ciudad }}
             </button>

@@ -68,7 +68,7 @@ export class FormEstadosComponent implements OnInit {
       await this.estadosService.Crear(this.estado).subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
-            this.mostrarSuccess("estado creado con éxito.");
+            this.mostrarSuccess("Estado creado con éxito.");
             this.activeModal.close(true);
           } else {
             this.activeModal.close(false);
@@ -85,7 +85,7 @@ export class FormEstadosComponent implements OnInit {
       await this.estadosService.Editar(this.estado).subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
-            this.mostrarSuccess("estado editado con éxito.");
+            this.mostrarSuccess("Estado editado con éxito.");
             this.activeModal.close(true);
           } else {
             this.activeModal.close(false);

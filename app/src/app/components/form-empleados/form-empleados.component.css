@@ -22,29 +22,17 @@
 }
 .switch span {
   position: absolute;
-  width: 20px;
-  height: 4px;
-  top: 50%;
-  left: 50%;
+  width: 25px;
+  height: 25px;
+  top: 21%;
+  left: 14.5%;
+  border: 2px solid #fff;
+  border-radius: 50%;
   margin: -2px 0px 0px -4px;
-  background: white;
+  background: transparent;
   display: block;
-  transform: rotate(-45deg);
-  transition: all 0.2s ease;
-  border-radius: 2px;
+  transition: all 0.3s ease-in-out;
 }
-.switch span:after {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 4px;
-  height: 12px;
-  margin-top: -8px;
-  background: white;
-  transition: all 0.2s ease;
-  border-radius: 2px;
-}
-
 .switch-input {
   display: none;
 }
@@ -54,7 +42,7 @@
   color: #fff;
   width: 60px;
   line-height: 50px;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease-in-out;
 }
 
 label[for=si] {
@@ -76,25 +64,29 @@ label[for=no] {
 }
 
 #no:checked ~ .switch span {
-  background: #61c3db;
-  margin-left: -8px;
+  left: 74%;
+  border: 2px solid #61c3db;
 }
-#no:checked ~ .switch span:after {
+/* #no:checked ~ .switch span:after {
   background: #61c3db;
   height: 20px;
   margin-top: -8px;
   margin-left: 8px;
-}
+} */
 
 #si:checked ~ .switch label[for=si] {
   color: white;
 }
 
 #si:checked ~ .switch label[for=no] {
-  color: #3b3333;
+  color: white;
 }
 
 #no:checked ~ .switch label[for=no] {
+  color: #61c3db;
+}
+
+#no:checked ~ .switch label[for=si] {
   color: #61c3db;
 }
 

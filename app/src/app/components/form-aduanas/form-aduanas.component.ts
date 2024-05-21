@@ -18,7 +18,7 @@ export class FormAduanasComponent implements OnInit {
   @Input() objetoParaEditar: Aduana;
   estados: Estado[];
   ciudades: Ciudad[];
-  ciudadesFiltrados: Ciudad[];
+  ciudadesFiltradas: Ciudad[];
 
   aduana: Aduana = new Aduana();
   confirmarClave: string;
@@ -36,6 +36,8 @@ export class FormAduanasComponent implements OnInit {
     if (this.objetoParaEditar) {
       this.aduana.Id = this.objetoParaEditar.Id;
       this.aduana.Aduana = this.objetoParaEditar.Aduana;
+      this.aduana.esta_Id = this.objetoParaEditar.esta_Id;
+      this.aduana.ciud_Id = this.objetoParaEditar.ciud_Id;
       this.aduana.Estado = this.objetoParaEditar.Estado ?? "- Seleccionar -";
       this.aduana.Ciudad = this.objetoParaEditar.Ciudad ?? "- Seleccionar -";
     } else {
@@ -43,10 +45,10 @@ export class FormAduanasComponent implements OnInit {
       this.aduana.Estado = "- Seleccionar -";
       this.aduana.Ciudad = "- Seleccionar -";
     }
-
+    
     this.estadosService.getData().subscribe(
       (data: Estado[]) => {
-        this.estados = data;
+        this.estados = data.filter(esta=>esta.Pais === 'Honduras');
       },
       (error) => {
         console.log(error);
@@ -56,18 +58,22 @@ export class FormAduanasComponent implements OnInit {
     this.ciudadesService.getData().subscribe(
       (data: Ciudad[]) => {
         this.ciudades = data;
+        if (this.aduana.esta_Id) {
+          this.filtrarCiudades(this.aduana.esta_Id);
+        }
       },
       (error) => {
         console.log(error);
         this.isLoading = false;
       }
     );
+
   }
 
   filtrarCiudades(esta_Id: number) {
     console.log(esta_Id, "esta_Id", this.ciudades, "this.ciudades");
 
-    this.ciudadesFiltrados = this.ciudades.filter(
+    this.ciudadesFiltradas = this.ciudades.filter(
       (ciudad) => ciudad.esta_Id === esta_Id
     );
   }
@@ -75,6 +81,8 @@ export class FormAduanasComponent implements OnInit {
   estadosSelect(estaId: number, esta: string) {
     this.aduana.esta_Id = estaId;
     this.aduana.Estado = esta;
+    this.aduana.ciud_Id = null;
+    this.aduana.Ciudad = "- Seleccionar -";
     this.filtrarCiudades(this.aduana.esta_Id);
   }
 

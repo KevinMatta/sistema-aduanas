@@ -1,14 +1,17 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Location } from "@angular/common";
-import { Rol } from "../../Models/RolesViewModel";
-import { RolesService } from "../../Services/roles.service";
-import { Usuario } from "../../Models/UsuariosViewModel";
+import { Empleado } from "../../Models/EmpleadosViewModel";
 import { ToastrService } from "ngx-toastr";
-import { UsuariosService } from "../../Services/usuarios.service";
-import { APIResponse } from "../../Models/APIResponseViewModel";
 import { EmpleadosService } from "../../Services/empleados.service";
+import { APIResponse } from "../../Models/APIResponseViewModel";
 import { EstadoCivil } from "../../Models/EstadosCivilesViewModel";
 import { EstadosCivilesService } from "../../Services/estados-civiles.service";
+import { Empresa } from "../../Models/EmpresasViewModel";
+import { EmpresasService } from "../../Services/empresas.service";
+import { Estado } from "../../Models/EstadosViewModel";
+import { Ciudad } from "../../Models/CiudadesViewModel";
+import { EstadosService } from "../../Services/estados.service";
+import { CiudadesService } from "../../Services/ciudades.service";
 
 @Component({
   selector: "app-form-empleados",
@@ -16,27 +19,95 @@ import { EstadosCivilesService } from "../../Services/estados-civiles.service";
   styleUrls: ["./form-empleados.component.css"],
 })
 export class FormEmpleadosComponent implements OnInit {
+  objetoParaEditar: Empleado;
+
+  estados: Estado[];
+  ciudades: Ciudad[];
+  ciudadesFiltradas: Ciudad[];
+  empresas: Empresa[];
+  empresasFiltradas: Empresa[];
   estadosCiviles: EstadoCivil[];
 
-  usuario: Usuario = new Usuario();
-  confirmarClave: string;
+  empleado: Empleado = new Empleado();
 
   constructor(
     private estadosCivilesService: EstadosCivilesService,
+    private estadosService: EstadosService,
     private toastr: ToastrService,
-    private empleadosService: EmpleadosService,
+    private ciudadesService: CiudadesService,
     private location: Location,
-    private usuariosService: UsuariosService
-  ) {}
+    private empleadosService: EmpleadosService,
+    private empresasService: EmpresasService
+  ) { }
 
   isLoading = true;
   ngOnInit(): void {
-    this.usuario.Usuario = "";
-    this.usuario.Rol = "- Seleccionar -";
-    this.usuario.DNI = "";
-    this.usuario.Empleado = "";
-    this.usuario.EsAdmin = false;
+    this.empleado.Nombre = "";
+    this.empleado.Apellido = "";
+    this.empleado.DNI = "";
+    this.empleado.Email = "";
+    this.empleado.Empresa = "- Seleccionar -";
+    this.empleado.Estado_ = "- Seleccionar -";
+    this.empleado.Ciudad_ = "- Seleccionar -";
+    this.empleado["Estado Civil"] = "- Seleccionar -";
+    this.empleado.Sexo = "FEMENINO";
 
+    this.objetoParaEditar = this.empleadosService.getObjetoParaEditar()
+
+    console.log(this.objetoParaEditar, 'this.objetoParaEditar');
+    
+    if (this.objetoParaEditar) {
+      this.empleado.Id = this.objetoParaEditar.Id
+      this.empleado.Nombre = this.objetoParaEditar.Nombre;
+      this.empleado.Apellido = this.objetoParaEditar.Apellido;
+      this.empleado.DNI = this.objetoParaEditar.DNI;
+      this.empleado.Email = this.objetoParaEditar.Email;
+      this.empleado.esta_Id = this.objetoParaEditar.esta_Id;
+      this.empleado.Estado_ = this.objetoParaEditar.Estado_;
+      this.empleado.ciud_Id = this.objetoParaEditar.ciud_Id;
+      this.empleado.Ciudad_ = this.objetoParaEditar.Ciudad_;
+      this.empleado._empr_Id = this.objetoParaEditar._empr_Id;
+      this.empleado._esCi_Id = this.objetoParaEditar._esCi_Id;
+      this.empleado["Estado Civil"] = this.objetoParaEditar["Estado Civil"];
+      this.empleado.Empresa = this.objetoParaEditar.Empresa;
+      this.empleado.Sexo = this.objetoParaEditar.Sexo;
+    }
+
+
+    this.estadosService.getData().subscribe(
+      (data: Estado[]) => {
+        this.estados = data.filter(esta=>esta.Pais === 'Honduras');
+        this.ciudadesService.getData().subscribe(
+          (data: Ciudad[]) => {
+            this.ciudades = data;
+            if (this.empleado.esta_Id) {
+              this.filtrarCiudades(this.empleado.esta_Id);
+            }
+            this.empresasService.getData().subscribe(
+              (data: Empresa[]) => {
+                this.empresas = data;
+                if (this.empleado.ciud_Id) {
+                  this.filtrarEmpresas(this.empleado.ciud_Id);
+                }
+              },
+              (error) => {
+                console.log(error);
+                this.isLoading = false;
+              }
+            );
+          },
+          (error) => {
+            console.log(error);
+            this.isLoading = false;
+          }
+        );
+      },
+      (error) => {
+        console.log(error);
+        this.isLoading = false;
+      }
+    );
+    
     this.estadosCivilesService.getData().subscribe(
       (data: EstadoCivil[]) => {
         this.estadosCiviles = data;
@@ -47,49 +118,59 @@ export class FormEmpleadosComponent implements OnInit {
       }
     );
   }
-
-  rolSelect(rolId: number, rol: string) {
-    this.usuario.rol_Id = rolId;
-    this.usuario.Rol = rol;
+  
+  
+  nombreOnChange(event: any) {
+    this.empleado.Nombre = event.target.value;
   }
-  usuarioOnChange(event: any) {
-    this.usuario.Usuario = event.target.value;
-  }
-  contraOnChange(event: any) {
-    this.usuario.Clave = event.target.value;
-  }
-  confirmarContraOnChange(event: any) {
-    this.confirmarClave = event.target.value;
+  apellidoOnChange(event: any) {
+    this.empleado.Apellido = event.target.value;
   }
   DNIOnChange(event: any) {
-    if (event.target.value) {
-      this.empleadosService.BuscarPorDNI(event.target.value).subscribe(
-        (response: APIResponse<any>) => {
-          if (response.data !== null) {
-            this.usuario.DNI = event.target.value;
-            this.usuario.empl_Id = response.data.empl_Id;
-            this.usuario.Empleado =
-              response.data.empl_PrimerNombre +
-              " " +
-              response.data.empl_PrimerApellido;
-          } else {
-            this.usuario.empl_Id = null;
-            this.usuario.Empleado = "";
-            this.mostrarWarning("No existe ningun empleado con ese DNI.");
-          }
-        },
-        (error) => {
-          this.mostrarError("Error al buscar al empleado por el DNI.");
-          console.log(error, "Error al buscar al empleado por el DNI");
-          this.isLoading = false;
-        }
-      );
-    }
+    this.empleado.DNI = event.target.value;
   }
-  adminToggle() {
-    this.usuario.rol_Id = null;
-    this.usuario.Rol = "- Seleccionar -";
-    this.usuario.EsAdmin = !this.usuario.EsAdmin;
+  emailOnChange(event: any) {
+    this.empleado.Email = event.target.value;
+  }
+
+  filtrarCiudades(esta_Id: number) {
+    this.ciudadesFiltradas = this.ciudades.filter(
+      (ciudad) => ciudad.esta_Id === esta_Id
+    );
+  }
+
+  filtrarEmpresas(ciud_Id: number) {
+    this.empresasFiltradas = this.empresas.filter(
+      (empr) => empr.ciud_Id === ciud_Id
+    );
+  }
+
+  estadosSelect(estaId: number, esta: string) {
+    this.empleado.esta_Id = estaId;
+    this.empleado.Estado_ = esta;
+    this.empleado.ciud_Id = null;
+    this.empleado.Ciudad_ = "- Seleccionar -";
+    this.filtrarCiudades(this.empleado.esta_Id);
+  }
+
+  ciudadesSelect(ciudId: number, ciudad: string) {
+    this.empleado.ciud_Id = ciudId;
+    this.empleado.Ciudad_ = ciudad;
+    this.empleado._empr_Id = null;
+    this.empleado.Empresa = "- Seleccionar -";
+    this.filtrarEmpresas(this.empleado.ciud_Id);
+  }
+
+  empresaSelect(emprId: number, empr: string) {
+    this.empleado._empr_Id = emprId;
+    this.empleado.Empresa = empr;
+  }
+  esCiSelect(esCiId: number, esCi: string) {
+    this.empleado._esCi_Id = esCiId;
+    this.empleado["Estado Civil"] = esCi;
+  }
+  sexoToggle() {
+    this.empleado.Sexo = this.empleado.Sexo === 'FEMENINO' ? 'MASCULINO' : 'FEMENINO';
   }
 
   cancelar() {
@@ -97,39 +178,59 @@ export class FormEmpleadosComponent implements OnInit {
   }
 
   async guardar() {
-    if (!this.usuario.Usuario) {
-      this.mostrarWarning("Por favor ingrese el nombre de usuario.");
+    if (!this.empleado.Nombre) {
+      this.mostrarWarning("Por favor ingrese el nombre del empleado.");
       return;
     }
-    if (!this.usuario.EsAdmin) {
-      if (!this.usuario.rol_Id) {
-        this.mostrarWarning("Por favor seleccione un rol.");
-        return;
-      }
-    }
-    if (!this.usuario.Clave) {
-      this.mostrarWarning("Por favor ingrese su contraseña.");
+    if (!this.empleado.Apellido) {
+      this.mostrarWarning("Por favor ingrese el apellido del empleado.");
       return;
     }
-    if (this.usuario.Clave !== this.confirmarClave) {
-      this.mostrarWarning("Las contraseñas no coinciden.");
+    if (!this.empleado.DNI) {
+      this.mostrarWarning("Por favor ingrese su número de identidad.");
       return;
     }
-    if (!this.usuario.empl_Id) {
-      this.mostrarWarning("Por favor ingrese un empleado.");
+    if (!this.empleado.Email) {
+      this.mostrarWarning("Por favor ingrese su correo electrónico.");
       return;
     }
-    await this.usuariosService.Crear(this.usuario).subscribe(
+    if (!this.empleado._empr_Id) {
+      this.mostrarWarning("Por favor seleccione la empresa en la que labura el empleado.");
+      return;
+    }
+    if (!this.empleado._esCi_Id) {
+      this.mostrarWarning("Por favor seleccione un estado civil.");
+      return;
+    }
+    if (this.objetoParaEditar) {
+      this.empleadosService.Editar(this.empleado).subscribe(
+        (data: any) => {
+          if (data.code >= 200 && data.code <= 300) {
+            this.mostrarSuccess("Empleado editado con éxito.");
+            this.location.back();
+          } else {
+            this.mostrarError("Ya existe ese empleado.");
+          }
+        },
+        (error) => {
+          this.mostrarError("Error al editar el empleado.");
+          console.log(error);
+          this.isLoading = false;
+        }
+      );
+      return;
+    }
+    this.empleadosService.Crear(this.empleado).subscribe(
       (data: any) => {
         if (data.code >= 200 && data.code <= 300) {
-          this.mostrarSuccess("Usuario creado con éxito.");
+          this.mostrarSuccess("Empleado creado con éxito.");
           this.location.back();
         } else {
-          this.mostrarError("Ya existe ese usuario.");
+          this.mostrarError("Ya existe ese empleado.");
         }
       },
       (error) => {
-        this.mostrarError("Error al crear el usuario.");
+        this.mostrarError("Error al crear el empleado.");
         console.log(error);
         this.isLoading = false;
       }

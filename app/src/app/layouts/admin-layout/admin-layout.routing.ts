@@ -16,6 +16,7 @@ import { FormDeclaracionValorComponent } from "../../components/form-declaracion
 import { BoletinComponent } from "../../components/boletin/boletin.component";
 import { FormUsuariosComponent } from "../../components/form-usuarios/form-usuarios.component";
 import { RolesPorPantallaComponent } from "../../components/roles-por-pantalla/roles-por-pantalla.component";
+import { FormEmpleadosComponent } from "../../components/form-empleados/form-empleados.component";
 // import { LoginComponent } from "../../components/login/login.component";
 
 export const AdminLayoutRoutes: Routes = [
@@ -28,6 +29,10 @@ export const AdminLayoutRoutes: Routes = [
   {
     path: "layout/form-usuarios",
     component: FormUsuariosComponent,
+  },
+  {
+    path: "layout/form-empleados",
+    component: FormEmpleadosComponent,
   },
   // { path: "layout/form-usuarios", component: FormUsuariosComponent },
   {

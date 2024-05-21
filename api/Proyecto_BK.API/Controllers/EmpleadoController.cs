@@ -71,19 +71,11 @@ namespace sistema_aduana.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        [HttpDelete("Eliminar")]
-        public IActionResult Eliminar(int id, int usuario)
+        [HttpPut("ToggleEstado")]
+        public IActionResult ToggleEstado(int Empl_Id, int Usua_Modifica, bool estado)
         {
-            try
-            {
-                var result = _gralService.EmpleadoEliminar(id, usuario, DateTime.Now);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var response = _gralService.EmpleadoToggleEstado(Empl_Id, estado, Usua_Modifica, DateTime.Now);
+            return Ok(response);
         }
     }
 }

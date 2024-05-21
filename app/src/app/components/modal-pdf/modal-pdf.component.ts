@@ -20,7 +20,5 @@ export class ModalPdfComponent implements OnInit {
     public activeModal: NgbActiveModal
   ) { }
   ngOnInit(): void {
-    console.log(this.pdfUrl, 'pdfUrl');
-    
   }
 }

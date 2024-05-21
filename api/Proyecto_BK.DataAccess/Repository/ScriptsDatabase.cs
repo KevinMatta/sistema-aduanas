@@ -154,12 +154,14 @@ namespace SistemaMedico.DataAcces.Repository
         #region Categorias
 
         public static string CategoriasToggleEstado = "[Gral].[sp_Categorias_toggleEstado]";
+        public static string CategoriasListar = "[Gral].[sp_Categorias_listar]";
 
         #endregion
 
         #region Items
 
         public static string ItemsToggleEstado = "[Gral].[sp_Items_toggleEstado]";
+        public static string ItemsListar = "[Gral].[sp_Items_listar]";
 
         #endregion
     }

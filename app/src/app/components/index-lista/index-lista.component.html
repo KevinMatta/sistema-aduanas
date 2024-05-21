@@ -122,7 +122,7 @@
                   let-row="row"
                   style="display: flex; gap: 5px"
                 >
-                  <div style="display: flex; min-width: 305px; gap: 5px">
+                  <div style="display: flex;min-width: 305px; gap: 5px">
                     <button
                       type="button"
                       class="btn btn-sm btn-warning btn-outline-warning btn-round"
@@ -170,7 +170,7 @@
                 prop="{{ column.prop }}"
                 style="display: flex; gap: 5px"
                 [flexGrow]="1"
-                [minWidth]="325"
+                [minWidth]="titulo !== 'Aranceles' ? 325 : 220"
               >
                 <ng-template
                   ngx-datatable-cell-template
@@ -178,7 +178,7 @@
                   let-row="row"
                   style="display: flex; gap: 5px"
                 >
-                  <div style="display: flex; min-width: 305px; gap: 5px">
+                  <div style="display: flex; gap: 5px"  [ngStyle]="{'min-width': titulo !== 'Aranceles' ? '305px' : '220px'}">
                     <button
                       type="button"
                       class="btn btn-sm btn-primary btn-outline-warning btn-round"
@@ -198,6 +198,7 @@
                       Detalle
                     </button>
                     <button
+                      *ngIf="titulo !== 'Aranceles'"
                       type="button"
                       class="btn btn-sm btn-primary btn-outline-danger btn-round"
                       (click)="confirmDeleteModal(row)"

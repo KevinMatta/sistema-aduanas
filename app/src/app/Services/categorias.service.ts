@@ -29,7 +29,7 @@ export class CategoriasService implements DataService {
     return this.http.put<any>(
       `${
         this.BaseUrl + "ToggleEstado/"
-      }?Usua_Id=${id}&Usua_Modifica=1&estado=${estado}
+      }?Cate_Id=${id}&Usua_Modifica=1&estado=${estado}
       `,
       { observe: "response" }
     );

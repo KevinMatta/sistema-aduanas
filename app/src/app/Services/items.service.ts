@@ -40,7 +40,7 @@ export class ItemsService implements DataService {
     return this.http.put<any>(
       `${
         this.BaseUrl + "ToggleEstado/"
-      }?Rol_Id=${id}&Usua_Modifica=1&estado=${estado}
+      }?Item_Id=${id}&Usua_Modifica=1&estado=${estado}
       `,
       { observe: "response" }
     );

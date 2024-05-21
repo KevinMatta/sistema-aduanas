@@ -40,8 +40,8 @@ namespace sistema_aduana.API.Controllers
         [HttpGet("List")]
         public IActionResult Index()
         {
-            //var list = _gralService.AduanaListar();
-            return Ok();
+            var list = _gralService.ItemsListar();
+            return Ok(list);
         }
 
         [HttpGet("Buscar/{id}")]
@@ -88,18 +88,11 @@ namespace sistema_aduana.API.Controllers
             }
         }
 
-        [HttpDelete("Eliminar/{id}")]
-        public IActionResult Eliminar(int id, int usuario)
+        [HttpPut("ToggleEstado")]
+        public IActionResult ToggleEstado(int Item_Id, int Usua_Modifica, bool estado)
         {
-            try
-            {
-                //var result = _gralService.(id, usuario, DateTime.Now);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var response = _gralService.ItemsToggleEstado(Item_Id, estado, Usua_Modifica, DateTime.Now);
+            return Ok(response);
         }
     }
 }

@@ -65,9 +65,9 @@ namespace sistema_aduana.DataAccess.Repository
 
                 try
                 {
-                    var result = db.QueryFirstOrDefault<int>(sql, parameter, commandType: CommandType.StoredProcedure);
-                    string mensaje = (result != -1) ? "exito" : "error";
-                    return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+                    var result = db.QueryFirst(sql, parameter, commandType: CommandType.StoredProcedure);
+                    string mensaje = (result.Resultado != -1) ? "exito" : "error";
+                    return new RequestStatus { CodeStatus = result.Resultado, MessageStatus = mensaje };
                 }
                 catch (Exception ex)
                 {

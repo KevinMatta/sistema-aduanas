@@ -29,8 +29,8 @@ export class EstadosCivilesService implements DataService {
     console.log(val + "Para Eliminar");
     return this.http.delete<any>(
       `${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1`,
-      { observe: "response" }
-    );
+    )
+    .pipe(map((response) => response));
   }
 
   Editar(esta: any): Observable<any> {

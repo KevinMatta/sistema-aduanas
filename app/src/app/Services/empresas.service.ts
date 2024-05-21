@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import { DataService } from "./data.service";
@@ -26,14 +26,59 @@ export class EmpresasService implements DataService {
       .pipe(map((response) => this.mapResponse(response.data)));
   }
 
-  ToggleEstado(id: number, estado: boolean): Observable<any> {
-    return this.http.put<any>(
-      `${
-        this.BaseUrl + "ToggleEstado/"
-      }?Usua_Id=${id}&Usua_Modifica=1&estado=${estado}
-      `,
-      { observe: "response" }
-    );
+  Eliminar(val: any): Observable<any> {
+    return this.http
+      .delete<any>(
+        `${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1
+        `
+      )
+      .pipe(map((response) => response));
+  }
+
+  Editar(empr: Empresa): Observable<any> {
+    const json = {
+      empre_Id: empr.Id,
+      empr_Descripcion: empr.Empresa,
+      esta_Id: empr.esta_Id,
+      ciud_Id: empr.ciud_Id,
+      esta_Descripcion: empr.Estado,
+      ciud_Descripcion: empr.Ciudad,
+      empr_Estado: true,
+      empr_Creacion: 1,
+      empr_FechaCreacion: new Date().toISOString(),
+      empr_Modifica: 1,
+      empr_FechaModifica: new Date().toISOString(),
+      Creacion: "string",
+      Modifica: "string",
+    };
+    return this.http
+      .put<any>(this.BaseUrl + "Actualizar", json, {
+        headers: new HttpHeaders({ "Content-Type": "application/json" }),
+      })
+      .pipe(map((response) => response));
+  }
+
+  Crear(empr: Empresa): Observable<any> {
+    const json = {
+      empr_Id: 0,
+      empr_Descripcion: empr.Empresa,
+      esta_Id: empr.esta_Id,
+      ciud_Id: empr.ciud_Id,
+      esta_Descripcion: empr.Estado,
+      ciud_Descripcion: empr.Ciudad,
+      empr_Estado: true,
+      empr_Creacion: 1,
+      empr_FechaCreacion: new Date().toISOString(),
+      empr_Modifica: 1,
+      empr_FechaModifica: new Date().toISOString(),
+      Creacion: "string",
+      Modifica: "string",
+    };
+    return this.http
+      .post<any>(this.BaseUrl + "Crear", json, {
+        headers: new HttpHeaders({ "Content-Type": "application/json" }),
+      })
+      .pipe(map((response) => response));
   }
 
   private mapResponse(data: any[]): Empresa[] {
@@ -45,7 +90,7 @@ export class EmpresasService implements DataService {
         Ciudad: item.ciud_Descripcion,
         esta_Id: item.esta_Id,
         Estado: item.esta_Descripcion,
-        _Activo: item.empr_Estado,
+        _Estado: item.empr_Estado,
       };
       return model;
     });

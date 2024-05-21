@@ -7,6 +7,7 @@ import { Ciudad } from "../../Models/CiudadesViewModel";
 import { CiudadesService } from "../../Services/ciudades.service";
 import { Empresa } from "../../Models/EmpresasViewModel";
 import { EmpresasService } from "../../Services/empresas.service";
+import { APIResponse } from "../../Models/APIResponseViewModel";
 
 @Component({
   selector: "app-form-empresas",
@@ -17,7 +18,7 @@ export class FormEmpresasComponent implements OnInit {
   @Input() objetoParaEditar: Empresa;
   estados: Estado[];
   ciudades: Ciudad[];
-  ciudadesFiltrados: Ciudad[];
+  ciudadesFiltradas: Ciudad[];
 
   empresa: Empresa = new Empresa();
   confirmarClave: string;
@@ -35,6 +36,8 @@ export class FormEmpresasComponent implements OnInit {
     if (this.objetoParaEditar) {
       this.empresa.Id = this.objetoParaEditar.Id;
       this.empresa.Empresa = this.objetoParaEditar.Empresa;
+      this.empresa.esta_Id = this.objetoParaEditar.esta_Id;
+      this.empresa.ciud_Id = this.objetoParaEditar.ciud_Id;
       this.empresa.Estado = this.objetoParaEditar.Estado ?? "- Seleccionar -";
       this.empresa.Ciudad = this.objetoParaEditar.Ciudad ?? "- Seleccionar -";
     } else {
@@ -42,32 +45,36 @@ export class FormEmpresasComponent implements OnInit {
       this.empresa.Estado = "- Seleccionar -";
       this.empresa.Ciudad = "- Seleccionar -";
     }
-
+    
     this.estadosService.getData().subscribe(
       (data: Estado[]) => {
-        this.estados = data;
+        this.estados = data.filter(esta=>esta.Pais === 'Honduras');
       },
       (error) => {
         console.log(error);
         this.isLoading = false;
       }
     );
-
+    
     this.ciudadesService.getData().subscribe(
       (data: Ciudad[]) => {
         this.ciudades = data;
+        if (this.empresa.esta_Id) {
+          this.filtrarCiudades(this.empresa.esta_Id);
+        }
       },
       (error) => {
         console.log(error);
         this.isLoading = false;
       }
     );
+
   }
 
   filtrarCiudades(esta_Id: number) {
     console.log(esta_Id, "esta_Id", this.ciudades, "this.ciudades");
 
-    this.ciudadesFiltrados = this.ciudades.filter(
+    this.ciudadesFiltradas = this.ciudades.filter(
       (ciudad) => ciudad.esta_Id === esta_Id
     );
   }
@@ -75,6 +82,8 @@ export class FormEmpresasComponent implements OnInit {
   estadosSelect(estaId: number, esta: string) {
     this.empresa.esta_Id = estaId;
     this.empresa.Estado = esta;
+    this.empresa.ciud_Id = null;
+    this.empresa.Ciudad = "- Seleccionar -";
     this.filtrarCiudades(this.empresa.esta_Id);
   }
 
@@ -100,41 +109,41 @@ export class FormEmpresasComponent implements OnInit {
       this.mostrarWarning("Por favor ingrese el nombre de la aduana.");
       return;
     }
-    // if (!this.objetoParaEditar) {
-    //   await this.empresasService.Crear(this.empresa).subscribe(
-    //     (data: any) => {
-    //       if (data.code >= 200 && data.code <= 300) {
-    //         this.mostrarSuccess("Aduana creada con éxito.");
-    //         this.activeModal.close(true);
-    //       } else {
-    //         this.activeModal.close(false);
-    //         this.mostrarError("Ya existe una aduana con este nombre.");
-    //       }
-    //     },
-    //     (error) => {
-    //       this.mostrarError("Error al crear la aduana.");
-    //       console.log(error);
-    //       this.isLoading = false;
-    //     }
-    //   );
-    // } else {
-    //   await this.empresasService.Editar(this.empresa).subscribe(
-    //     (data: any) => {
-    //       if (data.code >= 200 && data.code <= 300) {
-    //         this.mostrarSuccess("Aduana editada con éxito.");
-    //         this.activeModal.close(true);
-    //       } else {
-    //         this.activeModal.close(false);
-    //         this.mostrarError("Ya existe una aduana con este nombre.");
-    //       }
-    //     },
-    //     (error) => {
-    //       this.mostrarError("Error al editar la aduana.");
-    //       console.log(error);
-    //       this.isLoading = false;
-    //     }
-    //   );
-    // }
+    if (!this.objetoParaEditar) {
+      await this.empresasService.Crear(this.empresa).subscribe(
+        (data: APIResponse<any>) => {
+          if (data.code >= 200 && data.code <= 300) {
+            this.mostrarSuccess("Empresa creada con éxito.");
+            this.activeModal.close(true);
+          } else {
+            this.activeModal.close(false);
+            this.mostrarError("Ya existe una empresa con este nombre.");
+          }
+        },
+        (error) => {
+          this.mostrarError("Error al crear la empresa.");
+          console.log(error);
+          this.isLoading = false;
+        }
+      );
+    } else {
+      await this.empresasService.Editar(this.empresa).subscribe(
+        (data: APIResponse<any>) => {
+          if (data.code >= 200 && data.code <= 300) {
+            this.mostrarSuccess("Empresa editada con éxito.");
+            this.activeModal.close(true);
+          } else {
+            this.activeModal.close(false);
+            this.mostrarError("Ya existe una empresa con este nombre.");
+          }
+        },
+        (error) => {
+          this.mostrarError("Error al editar la empresa.");
+          console.log(error);
+          this.isLoading = false;
+        }
+      );
+    }
   }
   mostrarSuccess(mensaje: string) {
     this.toastr.success(

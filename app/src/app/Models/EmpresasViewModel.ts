@@ -5,7 +5,7 @@ export class Empresa {
   Ciudad: string;
   Estado?: string;
   esta_Id?: number;
-  _Activo?: boolean;
+  _Estado?: boolean;
   empr_Creacion?: number;
   empr_FechaCreacion?: string;
   empr_Modifica?: number;

@@ -118,16 +118,7 @@ export class IndexListaComponent implements OnInit {
 
   ngOnInit() {
     this.rolesService.setObjetoParaEditar(null);
-    // this.rolesService.getData().subscribe(
-    //   (data: Rol[]) => {
-    //     this.roles = data;
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //     this.isLoading = false;
-    //   }
-    // );
-
+    
     this.route.data.subscribe((data) => {
       const titulo = data["titulo"];
       this.titulo = titulo;
@@ -293,13 +284,13 @@ export class IndexListaComponent implements OnInit {
               );
             } else {
               this.toastr.error(
-                '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo eliminar el elemento',
+                '<span class="now-ui-icons ui-1_bell-53"></span> El elemento está siendo referenciado por otro registro.',
                 "Error",
                 {
                   timeOut: 3000,
                   closeButton: true,
                   enableHtml: true,
-                  toastClass: "alert alert-success alert-with-icon",
+                  toastClass: "alert alert-error alert-with-icon",
                   positionClass: "toast-top-right",
                 }
               );
@@ -314,7 +305,7 @@ export class IndexListaComponent implements OnInit {
                 timeOut: 3000,
                 closeButton: true,
                 enableHtml: true,
-                toastClass: "alert alert-success alert-with-icon",
+                toastClass: "alert alert-error alert-with-icon",
                 positionClass: "toast-top-right",
               }
             );
@@ -380,318 +371,6 @@ export class IndexListaComponent implements OnInit {
         );
       }
     }
-    // if (this.itemToDelete) {
-    //   switch (this.titulo) {
-    //     case "Usuarios":
-    //       this.usuariosService.Eliminar(this.itemToDelete.Id).subscribe(
-    //         (response: HttpResponse<any>) => {
-    //           if (response.status === 200) {
-    //             this.itemToDelete = null;
-    //             this.toastr.success(
-    //               '<span class="now-ui-icons ui-1_bell-53"></span> Registro Eliminado correctamente',
-    //               "Exito",
-    //               {
-    //                 timeOut: 3000,
-    //                 closeButton: true,
-    //                 enableHtml: true,
-    //                 toastClass: "alert alert-success alert-with-icon",
-    //                 positionClass: "toast-top-right",
-    //               }
-    //             );
-    //             setTimeout(() => {
-    //               window.location.reload();
-    //             }, 1000);
-    //           } else {
-    //             this.toastr.warning(
-    //               '<span class="now-ui-icons ui-1_bell-53"></span> Ya existe un registro con el mismoo id',
-    //               "Alerta",
-    //               {
-    //                 timeOut: 3000,
-    //                 closeButton: true,
-    //                 enableHtml: true,
-    //                 toastClass: "alert alert-success alert-with-icon",
-    //                 positionClass: "toast-top-right",
-    //               }
-    //             );
-    //           }
-    //           this.itemToDelete = null;
-    //         },
-    //         (error) => {
-    //           this.toastr.error(
-    //             '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo  realizar la peticionn',
-    //             "Error",
-    //             {
-    //               timeOut: 3000,
-    //               closeButton: true,
-    //               enableHtml: true,
-    //               toastClass: "alert alert-success alert-with-icon",
-    //               positionClass: "toast-top-right",
-    //             }
-    //           );
-    //         }
-    //       );
-    //       break;
-    //     case "Roles":
-    //       this.rolesService
-    //         .Eliminar(this.itemToDelete.Id)
-    //         .subscribe((response: HttpResponse<any>) => {
-    //           if (response.status === 200) {
-    //             this.itemToDelete = null;
-    //             this.toastr.success(
-    //               '<span class="now-ui-icons ui-1_bell-53"></span> Registro Eliminado correctamente',
-    //               "Exito",
-    //               {
-    //                 timeOut: 3000,
-    //                 closeButton: true,
-    //                 enableHtml: true,
-    //                 toastClass: "alert alert-success alert-with-icon",
-    //                 positionClass: "toast-top-right",
-    //               }
-    //             );
-    //             setTimeout(() => {
-    //               window.location.reload();
-    //             });
-    //           } else {
-    //             this.toastr.warning(
-    //               '<span class="now-ui-icons ui-1_bell-53"></span> Ya existe un registro con el mismo id',
-    //               "Alerta",
-
-    //               {
-    //                 timeOut: 3000,
-    //               }
-    //             );
-    //           }
-    //         }),
-    //         (error) => {
-    //           this.toastr.error(
-    //             '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo  realizar la peticionn',
-    //             "Error",
-    //             {
-    //               timeOut: 3000,
-    //             }
-    //           );
-    //         };
-    //       break;
-    //     case "Aduanas":
-    //       this.aduanasService.Eliminar(this.itemToDelete.Id).subscribe(
-    //         (response: HttpResponse<any>) => {
-    //           if (response.status === 200) {
-    //             this.itemToDelete = null;
-    //             this.toastr.success(
-    //               '<span class="now-ui-icons ui-1_bell-53"></span> Registro Eliminado correctamente',
-    //               "Exito",
-    //               {
-    //                 timeOut: 3000,
-    //                 closeButton: true,
-    //                 enableHtml: true,
-    //                 toastClass: "alert alert-success alert-with-icon",
-    //                 positionClass: "toast-top-right",
-    //               }
-    //             );
-    //             setTimeout(() => {
-    //               window.location.reload();
-    //             });
-    //           } else {
-    //             this.toastr.warning(
-    //               '<span class="now-ui-icons ui-1_bell-53"></span> Ya existe un registro con el mismo id',
-    //               "Alerta",
-    //               {
-    //                 timeOut: 3000,
-    //               }
-    //             );
-    //           }
-    //         },
-    //         (error) => {
-    //           this.toastr.error(
-    //             '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo  realizar la peticionn',
-    //             "Error",
-    //             {
-    //               timeOut: 3000,
-    //             }
-    //           );
-    //         }
-    //       );
-    //       break;
-    //     case "Paises":
-    //       this.paisesService.Eliminar(this.itemToDelete.Id).subscribe(
-    //         (response: HttpResponse<any>) => {
-    //           console.log(response, "response");
-    //           if (response.body.code >= 200 && response.body.code < 300) {
-    //             this.itemToDelete = null;
-    //             this.mostrarSuccess("País eliminado correctamente.");
-    //             setTimeout(() => {
-    //               window.location.reload();
-    //             }, 2000);
-    //           } else {
-    //             this.mostrarError("Hay Estados que dependen de este país.");
-    //           }
-    //         },
-    //         (error) => {
-    //           this.mostrarError("Error al intentar eliminar el país.");
-    //         }
-    //       );
-    //       break;
-
-    //     case "Estados":
-    //       this.estadosService
-    //         .Eliminar(this.itemToDelete.Id)
-    //         .subscribe((response: HttpResponse<any>) => {
-    //           if (response.body.code >= 200 && response.body.code < 300) {
-    //             this.itemToDelete = null;
-    //             this.mostrarSuccess("Estado eliminado correctamente.");
-    //             setTimeout(() => {
-    //               window.location.reload();
-    //             }, 2000);
-    //           } else {
-    //             this.mostrarError("Hay Ciudades que dependen de este Estado.");
-    //           }
-    //         }),
-    //         (error) => {
-    //           this.mostrarError("Error al intentar eliminar la ciudad.");
-    //         };
-    //       break;
-    //     case "Estados Civiles":
-    //       this.estadosCivilesService
-    //         .Eliminar(this.itemToDelete.Id)
-    //         .subscribe((response: HttpResponse<any>) => {
-    //           if (response.status === 200) {
-    //             this.itemToDelete = null;
-    //             this.toastr.success(
-    //               '<span class="now-ui-icons ui-1_bell-53"></span> Registro Eliminado correctamente',
-    //               "Exito",
-    //               {
-    //                 timeOut: 3000,
-    //                 closeButton: true,
-    //                 enableHtml: true,
-    //                 toastClass: "alert alert-success alert-with-icon",
-    //                 positionClass: "toast-top-right",
-    //               }
-    //             );
-    //             setTimeout(() => {
-    //               window.location.reload();
-    //             });
-    //           } else {
-    //             this.toastr.warning(
-    //               '<span class="now-ui-icons ui-1_bell-53"></span> Ya existe un registro con el mismo id',
-    //               "Alerta",
-    //               {
-    //                 timeOut: 3000,
-    //               }
-    //             );
-    //           }
-    //         }),
-    //         (error) => {
-    //           this.toastr.error(
-    //             '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo  realizar la peticionn',
-    //             "Error",
-    //             {
-    //               timeOut: 3000,
-    //             }
-    //           );
-    //         };
-    //       break;
-    //     case "Empresas":
-    //       this.empresasService
-    //         .Eliminar(this.itemToDelete.Id)
-    //         .subscribe((response: HttpResponse<any>) => {
-    //           if (response.status === 200) {
-    //             this.itemToDelete = null;
-    //             this.toastr.success(
-    //               '<span class="now-ui-icons ui-1_bell-53"></span> Registro Eliminado correctamente',
-    //               "Exito",
-    //               {
-    //                 timeOut: 3000,
-    //                 closeButton: true,
-    //                 enableHtml: true,
-    //                 toastClass: "alert alert-success alert-with-icon",
-    //                 positionClass: "toast-top-right",
-    //               }
-    //             );
-    //             setTimeout(() => {
-    //               window.location.reload();
-    //             });
-    //           } else {
-    //             this.toastr.warning(
-    //               '<span class="now-ui-icons ui-1_bell-53"></span> Ya existe un registro con el mismo id',
-    //               "Alerta",
-    //               {
-    //                 timeOut: 3000,
-    //               }
-    //             );
-    //           }
-    //         }),
-    //         (error) => {
-    //           this.toastr.error(
-    //             '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo  realizar la peticionn',
-    //             "Error",
-    //             {
-    //               timeOut: 3000,
-    //             }
-    //           );
-    //         };
-    //       break;
-    //     case "Empleados":
-    //       this.empleadosService
-    //         .Eliminar(this.itemToDelete.Id)
-    //         .subscribe((response: HttpResponse<any>) => {
-    //           if (response.status === 200) {
-    //             this.itemToDelete = null;
-    //             this.toastr.success(
-    //               '<span class="now-ui-icons ui-1_bell-53"></span> Registro Eliminado correctamente',
-    //               "Exito",
-    //               {
-    //                 timeOut: 3000,
-    //                 closeButton: true,
-    //                 enableHtml: true,
-    //                 toastClass: "alert alert-success alert-with-icon",
-    //                 positionClass: "toast-top-right",
-    //               }
-    //             );
-    //             setTimeout(() => {
-    //               window.location.reload();
-    //             });
-    //           } else {
-    //             this.toastr.warning(
-    //               '<span class="now-ui-icons ui-1_bell-53"></span> Ya existe un registro con el mismo id',
-    //               "Alerta",
-    //               {
-    //                 timeOut: 3000,
-    //               }
-    //             );
-    //           }
-    //         }),
-    //         (error) => {
-    //           this.toastr.error(
-    //             '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo  realizar la peticionn',
-    //             "Error",
-    //             {
-    //               timeOut: 3000,
-    //             }
-    //           );
-    //         };
-    //       break;
-    //     case "Ciudades":
-    //       this.ciudadesService
-    //         .Eliminar(this.itemToDelete.Id)
-    //         .subscribe((response: HttpResponse<any>) => {
-    //           if (response.body.code >= 200 && response.body.code < 300) {
-    //             this.itemToDelete = null;
-    //             this.mostrarSuccess("Ciudad eliminada correctamente.");
-    //             setTimeout(() => {
-    //               window.location.reload();
-    //             }, 2000);
-    //           } else {
-    //             this.mostrarError("Hay registros que dependen de esta ciudad.");
-    //           }
-    //         }),
-    //         (error) => {
-    //           this.mostrarError("Error al intentar eliminar ciudad.");
-    //         };
-    //     default:
-    //       console.error("Tipo de servicio no manejado para eliminar");
-    //       break;
-    //   }
-    // }
   }
 
   mostrarSuccess(mensaje: string) {
@@ -756,19 +435,19 @@ export class IndexListaComponent implements OnInit {
     <div class="modal-footer">
       <button
         type="button"
-        class="btn btn-outline-danger btn-round"
+        class="btn btn-primary btn-outline-primary"
+        (click)="activeModal.dismiss('cancel')"
+      >
+        Cancelar
+      </button>
+      <button
+        type="button"
+        [class]="deshabilitar ? (activo ? 'btn btn-danger' : 'btn btn-success') : 'btn btn-danger'"
         (click)="activeModal.close('confirm')"
       >
         {{
           deshabilitar ? (activo ? "Deshabilitar" : "Habilitar") : "Eliminar"
         }}
-      </button>
-      <button
-        type="button"
-        class="btn btn-outline-secondary btn-round"
-        (click)="activeModal.dismiss('cancel')"
-      >
-        Cancelar
       </button>
     </div>
   `,

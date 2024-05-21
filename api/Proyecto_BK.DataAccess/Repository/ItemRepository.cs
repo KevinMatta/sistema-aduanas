@@ -135,7 +135,10 @@ namespace sistema_aduana.DataAccess.Repository
             }
         }
 
-
+        public RequestStatus Delete(int? id, int usuario, DateTime fecha)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

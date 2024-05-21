@@ -1060,24 +1060,40 @@ fieldset[disabled] .navbar .navbar-nav > a.btn.active {
   background-color: transparent;
   border: 1px solid #61c3db;
   color: #61c3db;
+  transition: all 0.2s ease-in-out;
 }
 
 .btn-outline-warning {
   background-color: transparent;
   border: 1px solid #FFB236;
   color: #FFB236;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-outline-warning:hover {
+  background-color: #FFB236;
 }
 
 .btn-outline-success {
   background-color: transparent;
   border: 1px solid #18ce0f;
   color: #18ce0f;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-outline-success:hover {
+  background-color: #18ce0f;
 }
 
 .btn-outline-danger {
   background-color: transparent;
   border: 1px solid #E20000;
   color: #E20000;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-outline-danger:hover {
+  background-color: #E20000;
 }
 
 .btn:disabled, .btn[disabled], .btn.disabled {

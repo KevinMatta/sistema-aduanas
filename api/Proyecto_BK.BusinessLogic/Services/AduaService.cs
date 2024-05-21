@@ -97,7 +97,7 @@ namespace sistema_aduana.BusinessLogic.Services
         }
         #endregion
 
-        public ServiceResult ArancelListar(tbAranceles item)
+        public ServiceResult ArancelListar()
         {
             var result = new ServiceResult();
             try
