@@ -11,6 +11,8 @@ import { UsuariosService } from "../../Services/usuarios.service";
 import { DEDService } from "../../Services/DeVa-Enc-Item.service";
 // import { MensajesService } from "../../Services/mensajes.service";
 import { Pais } from "../../Models/PaisesViewModel";
+import { FacturaDetalle } from "../../Models/FacDetalleViewModel";
+import { CategoriaViewModel } from "../../Models/CategoriasViewModel";
 
 
 @Component({
@@ -25,7 +27,13 @@ export class FormFacturaitemComponent implements OnInit {
   roles: Rol[];
   paises: Pais[];
   numfacc:string;
+  Items:Item[]= [];
+  Categorias:CategoriaViewModel[]=[];
   UnidadMedida: string;
+  itemselc:string;
+  iditems:number;
+  idcatselc:number;
+  categselc:string;
   UnidadMed:string[]  = [
     "Metro",
     "Pulgada",
@@ -67,6 +75,17 @@ export class FormFacturaitemComponent implements OnInit {
         console.log(error);
       }
     );
+    this.dedService.getData().subscribe(
+      (data: CategoriaViewModel[]) => {
+        this.Categorias = data;
+        
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+   
     this.Itemsss = this.fb.group({
       Item_Id: [''],
       FaDe_Cantidad: [''],
@@ -95,8 +114,10 @@ export class FormFacturaitemComponent implements OnInit {
   }
   agregarItem() {
     if (this.Itemsss.valid) {
-      let nuevoItem: Item = {
-        Item_Id: this.Itemsss.get('Item_Id').value,
+      let nuevoItem: FacturaDetalle = {
+        Item_Id: this.iditems,
+        FaDe_Id:0,
+        Fact_Id:0,
         FaDe_Cantidad: this.Itemsss.get('FaDe_Cantidad').value,
         FaDe_UnidadMedida: this.UnidadMedida, 
         FaDe_Caracteristicas: this.Itemsss.get('FaDe_Caracteristicas').value,
@@ -118,6 +139,25 @@ export class FormFacturaitemComponent implements OnInit {
 
     }
   }
+  catselec(id: number, des:string){
+    this.categselc=des;
+    
+    this.dedService.getDataItem(id).subscribe(
+      (data: Item[]) => {
+        this.Items = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  ItemSelec(id: number, des: string){
+    this.itemselc =des;
+    this.iditems = id;
+    console.log(this.iditems);
+  }
+
 
   // agregarItem() {
   //   console.log(this.Itemsss.value);

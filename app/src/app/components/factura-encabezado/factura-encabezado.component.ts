@@ -13,6 +13,7 @@ import { FormFacturaitemComponent } from '../items-Factura/factura-item.componen
 import { Item } from "../../Models/ItemsViewModel";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Factura } from "../../Models/FacEncViewModel";
+import { FacturaDetalle } from "../../Models/FacDetalleViewModel";
 
 @Component({
   selector: "app-factura-encabezado",
@@ -22,7 +23,7 @@ import { Factura } from "../../Models/FacEncViewModel";
 export class FormFacturaEncabezadoComponent implements OnInit {
   @Input() usuarioParaEditar: Usuario;
   roles: Rol[];
-  Items: Item[] = [];
+  Items: FacturaDetalle[] = [];
   FactEnc: FormGroup;
   fechafac: string;
   itemsFiltrados: any[];
