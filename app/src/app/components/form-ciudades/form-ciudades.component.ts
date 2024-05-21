@@ -20,7 +20,6 @@ export class FormCiudadesComponent implements OnInit {
   estadosFiltrados: Estado[];
 
   ciudad: Ciudad = new Ciudad();
-  confirmarClave: string;
 
   constructor(
     public activeModal: NgbActiveModal,

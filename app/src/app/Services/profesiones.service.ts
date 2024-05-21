@@ -28,11 +28,12 @@ export class ProfesionesService implements DataService {
 
   Eliminar(val: any): Observable<any> {
     console.log(val + "Para Eliminar");
-    return this.http.delete<any>(
-      `${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1
-        `,
-      { observe: "response" }
-    );
+    return this.http
+      .delete<any>(
+        `${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1
+        `
+      )
+      .pipe(map((response) => response));
   }
 
   Editar(prof: any): Observable<any> {
@@ -78,6 +79,7 @@ export class ProfesionesService implements DataService {
       const model: Profesion = {
         Id: item.prof_Id,
         Profesion: item.prof_Descripcion,
+        _Estado: item.prof_Estado,
       };
       return model;
     });

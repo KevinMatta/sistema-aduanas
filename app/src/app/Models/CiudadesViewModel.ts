@@ -5,6 +5,7 @@ export class Ciudad {
   Estado: string;
   esta_Id?: number;
   Ciudad: string;
+  _Estado?: boolean;
   ciud_Creacion?: number;
   ciud_FechaCreacion?: string;
   ciud_Modifica?: number;

@@ -150,5 +150,17 @@ namespace SistemaMedico.DataAcces.Repository
         public static string ComerciantesIndividualesListar { get; internal set; }
         #endregion
         #endregion
+
+        #region Categorias
+
+        public static string CategoriasToggleEstado = "[Gral].[sp_Categorias_toggleEstado]";
+
+        #endregion
+
+        #region Items
+
+        public static string ItemsToggleEstado = "[Gral].[sp_Items_toggleEstado]";
+
+        #endregion
     }
 }

@@ -23,8 +23,14 @@ import { FormEstadosCivilesComponent } from "../form-estados-civiles/form-estado
 import { ProfesionesService } from "../../Services/profesiones.service";
 import { FormUsuariosModalComponent } from "../form-usuarios-modal/form-usuarios-modal.component";
 import { APIResponse } from "../../Models/APIResponseViewModel";
+import { FormArancelesComponent } from "../form-aranceles/form-aranceles.component";
+import { ArancelesService } from "../../Services/aranceles.service";
+import { FormEmpresasComponent } from "../form-empresas/form-empresas.component";
+import { FormCategoriasComponent } from "../form-categorias/form-categorias.component";
+import { CategoriasService } from "../../Services/categorias.service";
+import { ItemsService } from "../../Services/items.service";
 
-type ColumnType = { prop: string } | { name: string };
+type ColumnType = { prop: string } | { name: string } | { width: number };
 
 declare interface RouteInfo {
   path: string;
@@ -86,14 +92,17 @@ export class IndexListaComponent implements OnInit {
     private router: Router,
     private usuariosService: UsuariosService,
     private rolesService: RolesService,
-    private aduanasService: AduanasService,
+    private estadosCivilesService: EstadosCivilesService,
+    private profesionesService: ProfesionesService,
     private empleadosService: EmpleadosService,
     private empresasService: EmpresasService,
     private paisesService: PaisesService,
     private estadosService: EstadosService,
     private ciudadesService: CiudadesService,
-    private profesionesService: ProfesionesService,
-    private estadosCivilesService: EstadosCivilesService,
+    private aduanasService: AduanasService,
+    private categoriasService: CategoriasService,
+    private arancelesService: ArancelesService,
+    private itemsService: ItemsService,
     private toastr: ToastrService
   ) {}
   @ViewChild(DatatableComponent) table: DatatableComponent;
@@ -108,15 +117,16 @@ export class IndexListaComponent implements OnInit {
   ColumnMode = ColumnMode;
 
   ngOnInit() {
-    this.rolesService.getData().subscribe(
-      (data: Rol[]) => {
-        this.roles = data;
-      },
-      (error) => {
-        console.log(error);
-        this.isLoading = false;
-      }
-    );
+    this.rolesService.setObjetoParaEditar(null);
+    // this.rolesService.getData().subscribe(
+    //   (data: Rol[]) => {
+    //     this.roles = data;
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //     this.isLoading = false;
+    //   }
+    // );
 
     this.route.data.subscribe((data) => {
       const titulo = data["titulo"];
@@ -124,13 +134,11 @@ export class IndexListaComponent implements OnInit {
       this.service = this.getService(titulo);
       this.service.getData().subscribe(
         (data: any[]) => {
-          console.log(data);
-
           this.rows = this.formatFilas(data);
           this.temp = [...this.rows];
           if (this.rows.length > 0) {
             this.columns = this.formatColumnas(Object.keys(this.rows[0]));
-            console.log(this.columns, "this.columns");
+            // console.log(this.columns);
           }
           this.isLoading = false;
         },
@@ -140,6 +148,25 @@ export class IndexListaComponent implements OnInit {
         }
       );
     });
+  }
+
+  refrescar() {
+    this.isLoading = true;
+    this.rows = [];
+    this.service.getData().subscribe(
+      (data: any[]) => {
+        this.rows = this.formatFilas(data);
+        this.temp = [...this.rows];
+        if (this.rows.length > 0) {
+          this.columns = this.formatColumnas(Object.keys(this.rows[0]));
+        }
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error);
+        this.isLoading = false;
+      }
+    );
   }
 
   formatFilas(data: any[]): { [key: string]: string }[] {
@@ -158,7 +185,7 @@ export class IndexListaComponent implements OnInit {
   formatColumnas(keys: string[]): ColumnType[] {
     const result: ColumnType[] = [];
     keys.forEach((key) => {
-      result.push({ name: key, prop: key });
+      result.push({ name: key, prop: key, width: 300 });
     });
     return result;
   }
@@ -172,12 +199,6 @@ export class IndexListaComponent implements OnInit {
       case "Roles":
         this.path = "/layout/layout/roles-por-pantalla";
         return this.rolesService;
-      case "Aduanas":
-        this.modal = FormAduanasComponent;
-        return this.aduanasService;
-      case "Empresas":
-        this.path = "/layout/layout/form-empresas";
-        return this.empresasService;
       case "Paises":
         this.modal = FormPaisesComponent;
         return this.paisesService;
@@ -187,15 +208,30 @@ export class IndexListaComponent implements OnInit {
       case "Ciudades":
         this.modal = FormCiudadesComponent;
         return this.ciudadesService;
-      case "Empleados":
-        this.path = "/layout/layout/form-empleados";
-        return this.empleadosService;
       case "Profesiones":
         this.modal = FormProfesionesComponent;
         return this.profesionesService;
       case "Estados Civiles":
         this.modal = FormEstadosCivilesComponent;
         return this.estadosCivilesService;
+      case "Empresas":
+        this.modal = FormEmpresasComponent;
+        return this.empresasService;
+      case "Empleados":
+        this.path = "/layout/layout/form-empleados";
+        return this.empleadosService;
+      case "Aduanas":
+        this.modal = FormAduanasComponent;
+        return this.aduanasService;
+      case "Categorias":
+        this.modal = FormCategoriasComponent;
+        return this.categoriasService;
+      case "Aranceles":
+        this.modal = FormArancelesComponent;
+        return this.arancelesService;
+      case "Productos":
+        this.path = "/layout/layout/form-items";
+        return this.itemsService;
       default:
         throw new Error("Invalid service type");
     }
@@ -240,9 +276,7 @@ export class IndexListaComponent implements OnInit {
       if (this.itemToDelete) {
         this.service.Eliminar(this.itemToDelete.Id).subscribe(
           (response: APIResponse<any>) => {
-            console.log(response, "response");
             if (response.code >= 200 && response.code < 300) {
-              this.itemToDelete = null;
               this.toastr.success(
                 '<span class="now-ui-icons ui-1_bell-53"></span> Registro eliminado correctamente',
                 "Eliminado",
@@ -254,7 +288,9 @@ export class IndexListaComponent implements OnInit {
                   positionClass: "toast-top-right",
                 }
               );
-              this.rows.filter((row) => row.Id !== this.itemToDelete.Id);
+              this.rows = this.rows.filter(
+                (row) => row.Id !== this.itemToDelete.Id
+              );
             } else {
               this.toastr.error(
                 '<span class="now-ui-icons ui-1_bell-53"></span> No se pudo eliminar el elemento',
@@ -282,6 +318,7 @@ export class IndexListaComponent implements OnInit {
                 positionClass: "toast-top-right",
               }
             );
+            this.itemToDelete = null;
           }
         );
       }

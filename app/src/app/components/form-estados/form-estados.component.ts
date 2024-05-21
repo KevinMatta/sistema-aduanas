@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { Rol } from "../../Models/RolesViewModel";
-import { RolesService } from "../../Services/roles.service";
 import { ToastrService } from "ngx-toastr";
 import { EstadosService } from "../../Services/estados.service";
 import { Pais } from "../../Models/PaisesViewModel";
@@ -19,7 +17,6 @@ export class FormEstadosComponent implements OnInit {
   paises: Pais[];
 
   estado: Estado = new Estado();
-  confirmarClave: string;
 
   constructor(
     public activeModal: NgbActiveModal,

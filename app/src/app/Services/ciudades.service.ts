@@ -28,10 +28,9 @@ export class CiudadesService implements DataService {
 
   Eliminar(val: any): Observable<any> {
     console.log(val + "Para Eliminar");
-    return this.http.delete<any>(
-      `${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1`,
-      { observe: "response" }
-    );
+    return this.http
+      .delete<any>(`${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1`)
+      .pipe(map((response) => response));
   }
 
   Editar(ciud: any): Observable<any> {
@@ -84,7 +83,8 @@ export class CiudadesService implements DataService {
         esta_Id: item.esta_Id,
         Estado: item.esta_Descripcion,
         pais_Id: item.pais_Id,
-        Pais: item.pais_Descripcion
+        Pais: item.pais_Descripcion,
+        _Estado: item.ciud_Estado,
       };
       return model;
     });

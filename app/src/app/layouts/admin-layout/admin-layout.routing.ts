@@ -37,6 +37,21 @@ export const AdminLayoutRoutes: Routes = [
   },
   { path: "layout/roles-por-pantalla", component: RolesPorPantallaComponent },
   {
+    path: "layout/index-aranceles",
+    component: IndexListaComponent,
+    data: { titulo: "Aranceles" },
+  },
+  {
+    path: "layout/index-categorias",
+    component: IndexListaComponent,
+    data: { titulo: "Categorias" },
+  },
+  {
+    path: "layout/index-items",
+    component: IndexListaComponent,
+    data: { titulo: "Items" },
+  },
+  {
     path: "layout/index-aduanas",
     component: IndexListaComponent,
     data: { titulo: "Aduanas" },

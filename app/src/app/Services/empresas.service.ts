@@ -14,7 +14,7 @@ import { Empresa } from "../Models/EmpresasViewModel";
 export class EmpresasService implements DataService {
   constructor(private http: HttpClient) {}
 
-  Url = environment.urlAPI + "/API/Empresa/List";
+  BaseUrl = environment.urlAPI + "/API/Empresa/";
 
   getData(): Observable<any[]> {
     return this.getEmpresas();
@@ -22,15 +22,16 @@ export class EmpresasService implements DataService {
 
   getEmpresas(): Observable<Empresa[]> {
     return this.http
-      .get<APIResponse<Empresa[]>>(this.Url)
+      .get<APIResponse<Empresa[]>>(this.BaseUrl + "List")
       .pipe(map((response) => this.mapResponse(response.data)));
   }
 
-  Eliminar(val: any): Observable<any> {
-    console.log(val + "Para Eliminar");
-    return this.http.delete<any>(
-      `${environment.urlAPI}/API/Empresa/Eliminar/?Empr_Id=${val}&Empr_Modifica=1
-        `,
+  ToggleEstado(id: number, estado: boolean): Observable<any> {
+    return this.http.put<any>(
+      `${
+        this.BaseUrl + "ToggleEstado/"
+      }?Usua_Id=${id}&Usua_Modifica=1&estado=${estado}
+      `,
       { observe: "response" }
     );
   }
@@ -40,8 +41,11 @@ export class EmpresasService implements DataService {
       const model: Empresa = {
         Id: item.empr_Id,
         Empresa: item.empr_Descripcion,
-        Estado: item.esta_Descripcion,
+        ciud_Id: item.ciud_Id,
         Ciudad: item.ciud_Descripcion,
+        esta_Id: item.esta_Id,
+        Estado: item.esta_Descripcion,
+        _Activo: item.empr_Estado,
       };
       return model;
     });

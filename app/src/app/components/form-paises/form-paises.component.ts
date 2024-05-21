@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { Rol } from "../../Models/RolesViewModel";
-import { RolesService } from "../../Services/roles.service";
 import { Pais } from "../../Models/PaisesViewModel";
 import { ToastrService } from "ngx-toastr";
 import { PaisesService } from "../../Services/paises.service";
@@ -14,14 +12,11 @@ import { PaisesService } from "../../Services/paises.service";
 })
 export class FormPaisesComponent implements OnInit {
   @Input() objetoParaEditar: Pais;
-  roles: Rol[];
 
   pais: Pais = new Pais();
-  confirmarClave: string;
 
   constructor(
     public activeModal: NgbActiveModal,
-    private rolesService: RolesService,
     private toastr: ToastrService,
     private paisService: PaisesService
   ) {}
@@ -34,16 +29,6 @@ export class FormPaisesComponent implements OnInit {
     } else {
       this.pais.Pais = "";
     }
-
-    this.rolesService.getData().subscribe(
-      (data: Rol[]) => {
-        this.roles = data;
-      },
-      (error) => {
-        console.log(error);
-        this.isLoading = false;
-      }
-    );
   }
 
   paisOnChange(event: any) {

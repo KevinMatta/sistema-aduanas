@@ -3,6 +3,7 @@ export class Estado {
   Pais: string;
   pais_Id?: number;
   Estado: string;
+  _Estado?: boolean;
   esta_Creacion?: number;
   esta_FechaCreacion?: string;
   esta_Modifica?: number;

@@ -5,7 +5,6 @@ import { DataService } from "./data.service";
 import { APIResponse } from "../Models/APIResponseViewModel";
 import { environment } from "../../environments/environment";
 import { map } from "rxjs/operators";
-import { Estado } from "../Models/EstadosViewModel";
 import { Arancel } from "../Models/ArancelesViewModel";
 
 @Injectable({
@@ -17,34 +16,35 @@ export class ArancelesService implements DataService {
   BaseUrl = environment.urlAPI + "/API/Arancel/";
 
   getData(): Observable<any[]> {
-    return this.getEstados();
+    return this.getAranceles();
   }
 
-  getEstados(): Observable<Estado[]> {
+  getAranceles(): Observable<Arancel[]> {
     return this.http
-      .get<APIResponse<Estado[]>>(this.BaseUrl + "List")
+      .get<APIResponse<Arancel[]>>(this.BaseUrl + "List")
       .pipe(map((response) => this.mapResponse(response.data)));
   }
 
-  Eliminar(val: any): Observable<any> {
-    console.log(val + "Para Eliminar");
-    return this.http.delete<any>(
-      `${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1
-        `,
+  ToggleEstado(id: number, estado: boolean): Observable<any> {
+    return this.http.put<any>(
+      `${
+        this.BaseUrl + "ToggleEstado/"
+      }?Usua_Id=${id}&Usua_Modifica=1&estado=${estado}
+      `,
       { observe: "response" }
     );
   }
 
   Editar(aran: Arancel): Observable<any> {
     const json = {
-      "aran_Id": 0,
-      "aran_Descripcion": aran.Arancel,
-      "aran_Porcentaje": aran.Porcentaje,
-      "aran_Estado": true,
-      "aran_Creacion": 0,
-      "aran_FechaCreacion": new Date().toISOString(),
-      "aran_Modifica": 0,
-      "aran_FechaModifica": new Date().toISOString()
+      aran_Id: 0,
+      aran_Descripcion: aran.Arancel,
+      aran_Porcentaje: aran.Porcentaje,
+      aran_Estado: true,
+      aran_Creacion: 0,
+      aran_FechaCreacion: new Date().toISOString(),
+      aran_Modifica: 0,
+      aran_FechaModifica: new Date().toISOString(),
     };
     return this.http
       .put<any>(this.BaseUrl + "Actualizar", json, {
@@ -55,14 +55,14 @@ export class ArancelesService implements DataService {
 
   Crear(aran: Arancel): Observable<any> {
     const json = {
-        "aran_Id": 0,
-        "aran_Descripcion": aran.Arancel,
-        "aran_Porcentaje": aran.Porcentaje,
-        "aran_Estado": true,
-        "aran_Creacion": 0,
-        "aran_FechaCreacion": new Date().toISOString(),
-        "aran_Modifica": 0,
-        "aran_FechaModifica": new Date().toISOString()
+      aran_Id: 0,
+      aran_Descripcion: aran.Arancel,
+      aran_Porcentaje: aran.Porcentaje,
+      aran_Estado: true,
+      aran_Creacion: 0,
+      aran_FechaCreacion: new Date().toISOString(),
+      aran_Modifica: 0,
+      aran_FechaModifica: new Date().toISOString(),
     };
     return this.http
       .post<any>(this.BaseUrl + "Crear", json, {
@@ -71,13 +71,13 @@ export class ArancelesService implements DataService {
       .pipe(map((response) => response));
   }
 
-  private mapResponse(data: any[]): Estado[] {
+  private mapResponse(data: any[]): Arancel[] {
     return data.map((item) => {
-      const model: Estado = {
-        Id: item.esta_Id,
-        Estado: item.esta_Descripcion,
-        pais_Id: item.pais_Id,
-        Pais: item.pais_Descripcion,
+      const model: Arancel = {
+        Id: item.aran_Id,
+        Arancel: item.aran_Descripcion,
+        Porcentaje: item.porcentaje,
+        _Estado: item.aran_Estado,
       };
       return model;
     });

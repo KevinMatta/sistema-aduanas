@@ -32,25 +32,17 @@ export class EmpleadosService implements DataService {
       .pipe(first());
   }
 
-  Eliminar(val: any): Observable<any> {
-    console.log(val + "Para Eliminar");
-    return this.http.delete<any>(
-      `${environment.urlAPI}/API/Empleado/Eliminar/?Empl_Id=${val}&Empl_Modifica=1
-        `,
-      { observe: "response" }
-    );
-  }
-
   private mapResponse(data: any[]): Empleado[] {
     return data.map((item) => {
       const model: Empleado = {
         Id: item.empl_Id,
-        Rtn: item.empl_Rtn,
+        DNI: item.empl_DNI,
         Empleado: item.empl_PrimerNombre + " " + item.empl_PrimerApellido,
         Sexo: item.empl_Sexo,
-        Usuario: item.usua_Usuario,
+        Email: item.empl_Email,
         ["Estado Civil"]: item.esCi_Descripcion,
         Empresa: item.empr_Descripcion,
+        _Activo: item.empl_Estado,
       };
       return model;
     });

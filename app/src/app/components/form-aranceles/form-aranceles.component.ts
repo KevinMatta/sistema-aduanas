@@ -1,13 +1,10 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { Rol } from "../../Models/RolesViewModel";
-import { RolesService } from "../../Services/roles.service";
 import { ToastrService } from "ngx-toastr";
 import { ArancelesService } from "../../Services/aranceles.service";
 import { Pais } from "../../Models/PaisesViewModel";
 import { Arancel } from "../../Models/ArancelesViewModel";
 import { PaisesService } from "../../Services/paises.service";
-// import { MensajesService } from "../../Services/mensajes.service";
 
 @Component({
   selector: "app-form-aranceles",
@@ -16,14 +13,10 @@ import { PaisesService } from "../../Services/paises.service";
 })
 export class FormArancelesComponent implements OnInit {
   @Input() objetoParaEditar: Arancel;
-  paises: Pais[];
-
   arancel: Arancel = new Arancel();
-  confirmarClave: string;
 
   constructor(
     public activeModal: NgbActiveModal,
-    private paisesService: PaisesService,
     private toastr: ToastrService,
     private arancelesService: ArancelesService
   ) {}
@@ -38,16 +31,6 @@ export class FormArancelesComponent implements OnInit {
       this.arancel.Arancel = "";
       this.arancel.Porcentaje = 0.0;
     }
-
-    this.paisesService.getData().subscribe(
-      (data: Pais[]) => {
-        this.paises = data;
-      },
-      (error) => {
-        console.log(error);
-        this.isLoading = false;
-      }
-    );
   }
 
   arancelOnChange(event: any) {

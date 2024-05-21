@@ -52,7 +52,7 @@
         white-space: nowrap;
         .datatable-header-cell {
           white-space: nowrap;
-          overflow: hidden;
+          // overflow: hidden;
           text-overflow: ellipsis;
         }
       }
@@ -70,7 +70,7 @@
         white-space: nowrap;
 
         .datatable-body-cell {
-          overflow: hidden;
+          // overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
         }
@@ -108,7 +108,7 @@
   .datatable-header-cell {
     display: flex !important;
     justify-content: center !important;
-    overflow-x: hidden;
+    // overflow-x: hidden;
     vertical-align: top;
     // display: inline-block;
     line-height: 1.625;
