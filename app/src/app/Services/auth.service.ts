@@ -57,7 +57,7 @@ export class AuthenticationService {
       Modifica: "string",
     };
     return this.http
-      .post<any>(`${environment.urlAPI}/API/Usuario/IniciarSesion`, json, {
+      .post<any>(`https://localhost:44332/API/Usuario/IniciarSesion`, json, {
         headers: new HttpHeaders({ "Content-Type": "application/json" }),
       })
       .pipe(

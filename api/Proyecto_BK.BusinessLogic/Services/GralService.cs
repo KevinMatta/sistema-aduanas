@@ -886,7 +886,34 @@ namespace sistema_aduana.BusinessLogic.Services
         }
 
         #endregion
+        public ServiceResult itemListarcat(int cat)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _itemRepository.Listddl(cat);
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
         #region item
+        public ServiceResult itemListar()
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _itemRepository.List();
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
         public ServiceResult ItemCrear(tbItems item)
         {
             var result = new ServiceResult();
@@ -916,6 +943,22 @@ namespace sistema_aduana.BusinessLogic.Services
         }
 
         #endregion
+
+
+        public ServiceResult catListart()
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _categoriaRepository.List();
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
         public ServiceResult CategoriasCrear(tbCategorias item)
         {
             var result = new ServiceResult();

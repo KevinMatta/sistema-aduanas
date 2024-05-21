@@ -20,6 +20,18 @@ export class DEDService {
   subtotal: number = 0;
   numFactura: string;
 
+  BaseUrl = environment.urlAPI + "/API/Ciudad/";
+
+  getData(): Observable<any[]> {
+    return this.getCiudades();
+  }
+
+  getCiudades(): Observable<Cate[]> {
+    return this.http
+      .get<APIResponse<Ciudad[]>>(this.BaseUrl + "List")
+      .pipe(map((response) => this.mapResponse(response.data)));
+  }
+
   agregaritem(item: Item) {
     this.Items.push(item);
     console.log(this.Items + "agregado");
