@@ -43,8 +43,90 @@ export class DEDService {
   }
   enviarDatos(): Observable<any> {
     const request = {
-      deVaViewModel: this.Deva,
-      facturaEncViewModel: this.Encabezado,
+      "deVaViewModel": {
+        "deVa_Id": 0,
+        "deVa_AduanaIngreso": 0,
+        "deVa_AduanaDespacho": 0,
+        "deVa_FechaAceptacion": "2024-05-20T19:57:54.621Z",
+        "deVa_RtnImportador": "string",
+        "deVa_LugarEntrega": "string",
+        "deVa_PaisEntrega": 0,
+        "deVa_NumeroContrado": "string",
+        "deVa_FechaContrado": "2024-05-20T19:57:54.621Z",
+        "deVa_PaisEmbarque": 0,
+        "deva_LugarEmbarque": 0,
+        "deVa_PaisExportacion": 0,
+        "deVa_FechaExportacion": "2024-05-20T19:57:54.621Z",
+        "deVa_Restricciones": "string",
+        "deVa_CondicionContraprestacion": "string",
+        "deVa_MontoReversion": 0,
+        "deVa_TipoVinculacion": "string",
+        "deVa_InfluenciaPrecio": true,
+        "deVa_PagosIndirectosDescuentos": "string",
+        "deVa_CanonDerechosLicencia": "string",
+        "deVa_PrecioFactura": 0,
+        "deVa_PagosIndirectosDescuentosRetroactivos": 0,
+        "deVa_PrecioRealPagado": 0,
+        "deVa_MontoCondicionContraprestacion": 0,
+        "deVa_MontoReversionCasilla": 0,
+        "deVa_GastosComisiones": 0,
+        "deVa_GastosEnvasesEmbalajes": 0,
+        "deVa_ValorMaterialesConsumidos": 0,
+        "deVa_ValorHerramientas": 0,
+        "deVa_ValorMaterialesConsumidos2": 0,
+        "deVa_ValorIngenieriaCreacion": 0,
+        "deVa_ValorCanoDerechosLicencia": 0,
+        "deVa_GastosTransporteMercaderia": 0,
+        "deVa_GastosCargaDescarga": 0,
+        "deVa_CostosSeguro": 0,
+        "deVa_TotalAjustes": 0,
+        "deVa_GastosConstruccionArmado": 0,
+        "deVa_CostosTransportePosterior": 0,
+        "deVa_DerechosImpuestos": 0,
+        "deVa_MontoIntereses": 0,
+        "deVa_OtrasDeducciones": 0,
+        "deVa_TotalDeducciones": 0,
+        "deVa_ValorAduana": 0,
+        "deVa_Estado": true,
+        "deVa_Creacion": 0,
+        "deVa_FechaCreacion": "2024-05-20T19:57:54.621Z",
+        "deVa_Modifica": 0,
+        "deVa_FechaModifica": "2024-05-20T19:57:54.621Z"
+      },
+      "facturaEncViewModel": {
+        "fact_Id": 0,
+        "fact_NumeroFactura": "string",
+        "fact_Fecha": "2024-05-20T19:57:54.621Z",
+        "deva_Id": 0,
+        "fact_Estado": true,
+        "fact_Creacion": 0,
+        "fact_FechaCreacion": "2024-05-20T19:57:54.621Z",
+        "fact_Modifica": 0,
+        "fact_FechaModifica": "2024-05-20T19:57:54.621Z"
+      },
+      "facturaDetalleViewModel": [
+        {
+          "faDe_Id": 0,
+          "fact_Id": 0,
+          "item_Id": 0,
+          "faDe_NumeroItem": 0,
+          "faDe_Cantidad": 0,
+          "faDe_UnidadMedida": "string",
+          "faDe_Caracteristicas": "string",
+          "pais_Id": 0,
+          "faDe_ValorUnitario": 0,
+          "faDe_TotalFactura": 0,
+          "faDe_Estado": true,
+          "faDe_Creacion": 0,
+          "faDe_FechaCreacion": "2024-05-20T19:57:54.621Z",
+          "faDe_Modifica": 0,
+          "faDe_FechaModifica": "2024-05-20T19:57:54.621Z"
+        }
+      ]
+    }
+    const request2 = {
+      deVaViewModel: this.Deva[0],
+      facturaEncViewModel: this.Encabezado[0],
       facturaDetalleViewModel: this.Items
     };
 

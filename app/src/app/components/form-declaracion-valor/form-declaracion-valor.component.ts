@@ -31,6 +31,7 @@ export class FormDeclaracionValorComponent implements OnInit {
   factura: Factura[] = [];
   Deva: DeclaracionDeValor[];
   paisselectInfoGeneral: number;
+  paisselectInfoGeneralTexto: string;
   paisselectInterme: string;
   paisselectCARC: string;
   FormaEnvioSelect: string;
@@ -84,6 +85,7 @@ export class FormDeclaracionValorComponent implements OnInit {
     this.nivelselected = "- Seleccionar -";
     this.MonedaSel = "- Seleccionar -";
     this.EmbarSelecAduana = "- Seleccionar -";
+    this.paisselectInfoGeneralTexto = "- Seleccionar -";
     this.paisselectInfoGeneral;
     this.EstadoSelctInfoGen = "- Seleccionar -";
     this.ciuSelctInfoGen = "- Seleccionar -";
@@ -292,7 +294,7 @@ export class FormDeclaracionValorComponent implements OnInit {
 
       }
       // this.dedService.agregarDeva(nuevoDeva);
-      console.log(nuevoDeva);
+      console.log(nuevoDeva, 'nuevoDeva');
       this.dedService.agregarDeva(nuevoDeva)
       // window.location.reload();
     }
@@ -332,6 +334,7 @@ export class FormDeclaracionValorComponent implements OnInit {
   }
   paisInfoGeneralSelec(PaisID: number, pais: string) {
     this.paisselectInfoGeneral = PaisID;
+    this.paisselectInfoGeneralTexto = pais;
   }
   EstaInfoGeneralSelec(paisId: number, pais: string) {
     this.EstadoSelctInfoGen = pais;

@@ -84,6 +84,8 @@ namespace sistema_aduana.Entities.Entities
         public string Empl_DNI { get; set; }
         [NotMapped]
         public bool? Rol_Estado { get; set; }
+        [NotMapped]
+        public string Rol_Descripcion { get; set; }
 
         public virtual tbRoles Rol { get; set; }
         public virtual tbUsuarios Usua_CreacionNavigation { get; set; }
