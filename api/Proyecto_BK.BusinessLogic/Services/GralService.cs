@@ -40,7 +40,9 @@ namespace sistema_aduana.BusinessLogic.Services
             EstadoCivilRepository estadoCivilRepository, PaisRepository paisRepository, EmpresaRepository empresaRepository, 
             EmpleadoRepository empleadoRepository, ProfesionesRepository profesionesRepository,
             PersonaNaturalRepository personaNaturalRepository, ComercianteIndividualRepository comercianteIndividualRepository,
+
             IConfiguration configuration, IOptions<MailSettings> mailSettingsOptions,
+
             PersonaJuridicaRepository personaJuridicaRepository, ItemRepository itemRepository, CategoriaRepository categoriaRepository)
 
         {
