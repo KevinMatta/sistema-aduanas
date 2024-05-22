@@ -15,6 +15,7 @@ import { FormFacturaitemComponent } from '../items-Factura/factura-item.componen
 import { DEDService } from "../../Services/DeVa-Enc-Item.service";
 import { Factura } from "../../Models/FacEncViewModel";
 import { DeclaracionDeValor } from "../../Models/DeVaViewModel";
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-form-declaracion-valor',
@@ -55,7 +56,7 @@ export class FormDeclaracionValorComponent implements OnInit {
   paiselecttrans: string;
   Monedas: string[] = ["Dolar", "Lempira", "Yuan", "Rublos", "Libras Esterlinas"];
   MonedaSel: string;
-
+  fechaacep:string;
   estadoselec: string;
   aduselect: string;
   aduseling: string;
@@ -203,8 +204,101 @@ export class FormDeclaracionValorComponent implements OnInit {
       this.calcularTotalFactura();
     });
 
+    this.declaracionDeValorForm.get('DeVa_MontoCondicionContraprestacion').valueChanges.subscribe(() => {
+      this.TotalAjustes();
+    });
+    this.declaracionDeValorForm.get('DeVa_MontoReversionCasilla').valueChanges.subscribe(() => {
+      this.TotalAjustes();
+    });
+    this.declaracionDeValorForm.get('DeVa_GastosComisiones').valueChanges.subscribe(() => {
+      this.TotalAjustes();
+    });
+    this.declaracionDeValorForm.get('DeVa_GastosEnvasesEmbalajes').valueChanges.subscribe(() => {
+      this.TotalAjustes();
+    });
+    this.declaracionDeValorForm.get('DeVa_GastosTransporteMercaderia').valueChanges.subscribe(() => {
+      this.TotalAjustes();
+    });
+    this.declaracionDeValorForm.get('DeVa_GastosCargaDescarga').valueChanges.subscribe(() => {
+      this.TotalAjustes();
+    });
+    this.declaracionDeValorForm.get('DeVa_CostosSeguro').valueChanges.subscribe(() => {
+      this.TotalAjustes();
+    });
+    // TOTAL DEDUCCIONES
+    this.declaracionDeValorForm.get('DeVa_GastosConstruccionArmado').valueChanges.subscribe(() => {
+      this.TotalDeducciones();
+    });
+    this.declaracionDeValorForm.get('DeVa_CostosTransportePosterior').valueChanges.subscribe(() => {
+      this.TotalDeducciones();
+    });
+    this.declaracionDeValorForm.get('DeVa_DerechosImpuestos').valueChanges.subscribe(() => {
+      this.TotalDeducciones();
+    });
+    this.declaracionDeValorForm.get('DeVa_MontoIntereses').valueChanges.subscribe(() => {
+      this.TotalDeducciones();
+    });
+    this.declaracionDeValorForm.get('DeVa_OtrasDeducciones').valueChanges.subscribe(() => {
+      this.TotalDeducciones();
+    });
   }
+  // TotalAjustes() {
+
+  //   const totajus = 0;
+  //   const monto = parseFloat(this.declaracionDeValorForm.get('DeVa_MontoCondicionContraprestacion').value ?? 0);
+  //   const gastoscons = parseFloat(this.declaracionDeValorForm.get('DeVa_MontoReversionCasilla').value ?? 0);
+  //   const costotransp = parseFloat(this.declaracionDeValorForm.get('DeVa_GastosComisiones').value    ?? 0);
+  //   const derechos = parseFloat(this.declaracionDeValorForm.get('DeVa_GastosEnvasesEmbalajes').value ?? 0);
+  //   const montoIntereses = parseFloat(this.declaracionDeValorForm.get('DeVa_GastosTransporteMercaderia').value ?? 0);
+  //   const OtrasDeducciones = parseFloat(this.declaracionDeValorForm.get('DeVa_GastosCargaDescarga').value ?? 0);
+  //   const costoseguro = parseFloat(this.declaracionDeValorForm.get('DeVa_CostosSeguro').value ?? 0);
+    
+
+  //   const totalFactura = totajus + monto+ gastoscons + costotransp + derechos + montoIntereses + OtrasDeducciones + costoseguro ;
+
+  //   // Usar interpolación de cadenas para convertir el valor numérico a cadena de texto
+  //   this.declaracionDeValorForm.get('DeVa_TotalAjustes').setValue(`${totalFactura}`);
+
+  // }
+  TotalDeducciones() {
+    const totajus = 0;
+
+    const parseSafeFloat = (value) => parseFloat(value) || 0;
+
+    const gastoscons = parseSafeFloat(this.declaracionDeValorForm.get('DeVa_GastosConstruccionArmado').value);
+    const costotransp = parseSafeFloat(this.declaracionDeValorForm.get('DeVa_CostosTransportePosterior').value);
+    const derechos = parseSafeFloat(this.declaracionDeValorForm.get('DeVa_DerechosImpuestos').value);
+    const montoIntereses = parseSafeFloat(this.declaracionDeValorForm.get('DeVa_MontoIntereses').value);
+    const OtrasDeducciones = parseSafeFloat(this.declaracionDeValorForm.get('DeVa_OtrasDeducciones').value);
+   
+
+    const totalFactura = totajus  + gastoscons + costotransp + derechos + montoIntereses + OtrasDeducciones ;
+    
+    const valoraduana =  parseSafeFloat(this.declaracionDeValorForm.get('DeVa_TotalAjustes').value ) + parseSafeFloat(this.declaracionDeValorForm.get('DeVa_PrecioRealPagado').value) - totalFactura;
+    this.declaracionDeValorForm.get('DeVa_ValorAduana').setValue(`${valoraduana} `);
+
+
+    this.declaracionDeValorForm.get('DeVa_TotalDeducciones').setValue(`${totalFactura}`);
+}
+  TotalAjustes() {
+    const totajus = 0;
+
+    const parseSafeFloat = (value) => parseFloat(value) || 0;
+
+    const monto = parseSafeFloat(this.declaracionDeValorForm.get('DeVa_MontoCondicionContraprestacion').value);
+    const gastoscons = parseSafeFloat(this.declaracionDeValorForm.get('DeVa_MontoReversionCasilla').value);
+    const costotransp = parseSafeFloat(this.declaracionDeValorForm.get('DeVa_GastosComisiones').value);
+    const derechos = parseSafeFloat(this.declaracionDeValorForm.get('DeVa_GastosEnvasesEmbalajes').value);
+    const montoIntereses = parseSafeFloat(this.declaracionDeValorForm.get('DeVa_GastosTransporteMercaderia').value);
+    const OtrasDeducciones = parseSafeFloat(this.declaracionDeValorForm.get('DeVa_GastosCargaDescarga').value);
+    const costoseguro = parseSafeFloat(this.declaracionDeValorForm.get('DeVa_CostosSeguro').value);
+
+    const totalFactura = totajus + monto + gastoscons + costotransp + derechos + montoIntereses + OtrasDeducciones + costoseguro;
+
+    this.declaracionDeValorForm.get('DeVa_TotalAjustes').setValue(`${totalFactura}`);
+}
   calcularTotalFactura() {
+
     const precioFac = this.dedService.subtotal;
     const Pagos = parseFloat(this.declaracionDeValorForm.get('DeVa_PagosIndirectosDescuentosRetroactivos').value);
 
@@ -217,6 +311,8 @@ export class FormDeclaracionValorComponent implements OnInit {
   }
 
 
+
+
   open() {
 
     let modalRef = this.modalService.open(FormFacturaEncabezadoComponent, { size: 'lg' });
@@ -227,8 +323,27 @@ export class FormDeclaracionValorComponent implements OnInit {
       console.log(data);
     });
   }
-
-
+  onDateSelect(date: NgbDateStruct) {
+    // Aquí puedes hacer lo que necesites con la fecha seleccionada
+    console.log(date); // Esto imprimirá la fecha seleccionada en la consola
+    // this.FactEnc.patchValue({
+    //   Fact_Fecha: date
+    // });
+    if (date!= null) {
+      // (dateSelect)="onDateSelect($event)"
+      // this.fechafac = date;
+      // Verificar si el FormControl existe y está definido
+      this.fechaacep = `${date.year}-${this.formatTwoDigits(date.month)}-${this.formatTwoDigits(date.day)}`;
+      //  this.fechafac  = `${date.year}-${date.month.toString().padStart(2, '0')}-${date.day.toString().padStart(2, '0')}`;
+      console.log(this.fechaacep); 
+      
+    } else {
+      console.error('FormControl Fact_Fecha is undefined or null');
+    }
+  }
+  formatTwoDigits(num: number): string {
+    return num < 10 ? '0' + num : num.toString();
+  }
 
   GuardarDeva() {
     if (this.declaracionDeValorForm.valid) {
@@ -239,14 +354,14 @@ export class FormDeclaracionValorComponent implements OnInit {
         // DeVa_LugarEntrega: this.declaracionDeValorForm.get('DeVa_LugarEntrega').value,
         DeVa_AduanaIngreso: this.aduin,
         DeVa_AduanaDespacho: this.adudes,
-        DeVa_FechaAceptacion: this.declaracionDeValorForm.get('DeVa_FechaAceptacion').value,
+        DeVa_FechaAceptacion: this.fechaacep,
         DeVa_RtnImportador: this.declaracionDeValorForm.get('DeVa_RtnImportador').value,
         DeVa_LugarEntrega: this.declaracionDeValorForm.get('DeVa_LugarEntrega').value,
 
         DeVa_PaisEntrega: parseInt(this.paiselect),
 
         DeVa_NumeroContrado: this.declaracionDeValorForm.get('DeVa_NumeroContrado').value,
-        DeVa_FechaContrado: this.declaracionDeValorForm.get('DeVa_FechaContrado').value,
+        DeVa_FechaContrado: '2024-05-01',
 
         DeVa_PaisEmbarque: parseInt(this.declaracionDeValorForm.get('DeVa_PaisEmbarque').value),
 
@@ -254,7 +369,7 @@ export class FormDeclaracionValorComponent implements OnInit {
 
         DeVa_PaisExportacion: parseInt(this.declaracionDeValorForm.get('DeVa_PaisExportacion').value),
 
-        DeVa_FechaExportacion: this.declaracionDeValorForm.get('DeVa_FechaExportacion').value,
+        DeVa_FechaExportacion:  '2024-05-01',
         DeVa_Restricciones: this.declaracionDeValorForm.get('DeVa_Restricciones').value,
         DeVa_CondicionContraprestacion: this.declaracionDeValorForm.get('DeVa_CondicionContraprestacion').value,
         DeVa_MontoReversion: parseFloat(this.declaracionDeValorForm.get('DeVa_MontoReversion').value),
@@ -286,10 +401,10 @@ export class FormDeclaracionValorComponent implements OnInit {
         DeVa_TotalDeducciones: parseFloat(this.declaracionDeValorForm.get('DeVa_TotalDeducciones').value),
         DeVa_ValorAduana: parseFloat(this.declaracionDeValorForm.get('DeVa_ValorAduana').value),
         DeVa_Estado: this.declaracionDeValorForm.get('DeVa_Estado').value === 'true',
-        DeVa_Creacion: parseInt(this.declaracionDeValorForm.get('DeVa_Creacion').value),
-        DeVa_FechaCreacion: this.declaracionDeValorForm.get('DeVa_FechaCreacion').value,
+        DeVa_Creacion: 1,
+        DeVa_FechaCreacion: '2024-05-21',
         DeVa_Modifica: parseInt(this.declaracionDeValorForm.get('DeVa_Modifica').value),
-        DeVa_FechaModifica: this.declaracionDeValorForm.get('DeVa_FechaModifica').value
+        DeVa_FechaModifica: '2024-05-21'
 
 
       }

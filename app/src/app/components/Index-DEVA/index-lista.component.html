@@ -1,0 +1,182 @@
+<!-- <app-form-usuarios></app-form-usuarios> -->
+
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col">
+      <div class="card" style="height: 80vh">
+        <div class="card-header">
+          <h5
+            class="title"
+            style="margin-bottom: 0; color: aliceblue; font-size: 1.6em"
+          >
+            Lista de {{ titulo }}
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="d-flex justify-content-between" style="gap: 10px">
+            <a
+              *ngIf="path"
+              [routerLink]="path"
+              class="btn btn-primary"
+              style="min-width: 130px; margin: 0; padding: 5px; font-size: 1rem"
+            >
+              <i
+                class="now-ui-icons ui-1_simple-add"
+                style="margin-right: 5px"
+              ></i
+              >Nuevo
+            </a>
+            <button
+              *ngIf="!path"
+              class="btn btn-primary"
+              style="min-width: 130px; margin: 0; padding: 5px; font-size: 1rem"
+              (click)="open()"
+            >
+              <i
+                class="now-ui-icons ui-1_simple-add"
+                style="margin-right: 5px"
+              ></i
+              >Nuevo
+            </button>
+            <input
+              type="text"
+              class="form-control"
+              style="padding: 8px; width: 180px; color: #61c3db"
+              placeholder="Buscar por {{ titulo }}..."
+              (keyup)="updateFilter($event)"
+            />
+          </div>
+          <ngx-datatable
+            #table
+            [columns]="columns"
+            [rows]="rows"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            class="material table"
+            [columnMode]="ColumnMode.force"
+            rowHeight="auto"
+            [limit]="7"
+            [scrollbarH]="true"
+            [messages]="{ emptyMessage: 'No se encontraron registros' }"
+          >
+            <ng-container *ngFor="let column of columns">
+              <ngx-datatable-column
+                *ngIf="!column.name.includes('_')"
+                name="{{ column.name }}"
+                prop="{{ column.prop }}"
+                [flexGrow]="1"
+                [maxWidth]="
+                  column.name === 'Id' ||
+                  column.name === 'Admin' ||
+                  column.name === 'Sexo'
+                    ? 90
+                    : column.name === 'Empresa'
+                    ? 305
+                    : 'auto'
+                "
+              >
+              </ngx-datatable-column>
+              <ngx-datatable-column
+                *ngIf="column.name === '_Activo'"
+                name="Acciones"
+                prop="{{ column.prop }}"
+                style="display: flex; gap: 5px"
+                [flexGrow]="1"
+                [minWidth]="325"
+              >
+                <ng-template
+                  ngx-datatable-cell-template
+                  let-rowIndex="rowIndex"
+                  let-row="row"
+                  style="display: flex; gap: 5px"
+                >
+                  <div style="display: flex; min-width: 305px; gap: 5px">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-primary btn-outline-primary btn-round"
+                      (click)="open(row.Id)"
+                      style="font-size: 12px; padding: 2px 15px"
+                    >
+                      <i class="now-ui-icons design-2_ruler-pencil"></i>
+                      Editar
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-primary btn-outline-primary btn-round"
+                      style="font-size: 12px; padding: 2px 15px"
+                      (click)="VerDetalle(row.Id)"
+                    >
+                      <i class="now-ui-icons ui-1_zoom-bold"></i>
+                      Detalle
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-primary btn-outline-primary btn-round"
+                      (click)="confirmDeleteModal(row, row._Activo)"
+                      style="font-size: 12px; padding: 2px 15px; width: 39.5%"
+                    >
+                      <i
+                        [ngClass]="
+                          row._Activo
+                            ? 'now-ui-icons ui-1_simple-remove'
+                            : 'now-ui-icons ui-1_check'
+                        "
+                      ></i>
+                      {{ row._Activo ? "Deshabilitar" : "Habilitar" }}
+                    </button>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column
+                *ngIf="column.name === '_Estado'"
+                name="Acciones"
+                prop="{{ column.prop }}"
+                style="display: flex; gap: 5px"
+                [flexGrow]="1"
+                [minWidth]="325"
+              >
+                <ng-template
+                  ngx-datatable-cell-template
+                  let-rowIndex="rowIndex"
+                  let-row="row"
+                  style="display: flex; gap: 5px"
+                >
+                  <div style="display: flex; min-width: 305px; gap: 5px">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-primary btn-outline-primary btn-round"
+                      (click)="open(row.Id)"
+                      style="font-size: 12px; padding: 2px 15px"
+                    >
+                      <i class="now-ui-icons design-2_ruler-pencil"></i>
+                      Editar
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-primary btn-outline-primary btn-round"
+                      style="font-size: 12px; padding: 2px 15px"
+                      (click)="VerDetalle(row.Id)"
+                    >
+                      <i class="now-ui-icons ui-1_zoom-bold"></i>
+                      Detalle
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-primary btn-outline-primary btn-round"
+                      (click)="confirmDeleteModal(row)"
+                      style="font-size: 12px; padding: 2px 15px"
+                    >
+                      <i class="now-ui-icons ui-1_simple-remove"></i>
+                      Eliminar
+                    </button>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+            </ng-container>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

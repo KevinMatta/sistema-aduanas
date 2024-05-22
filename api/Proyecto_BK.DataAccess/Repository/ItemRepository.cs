@@ -95,7 +95,20 @@ namespace sistema_aduana.DataAccess.Repository
 
         public IEnumerable<tbItems> List()
         {
-            string sql = "[Adua].[sp_Aranceles_listar]";
+            string sql = "[Gral].[sp_Items_listar]";
+
+            List<tbItems> result = new List<tbItems>();
+
+            using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
+            {
+                result = db.Query<tbItems>(sql, commandType: CommandType.Text).ToList();
+
+                return result;
+            }
+        }
+        public IEnumerable<tbItems> Listddl(int cat)
+        {
+            string sql = $"[Gral].[sp_Items_listar_Cate] {cat}";
 
             List<tbItems> result = new List<tbItems>();
 

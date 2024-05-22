@@ -40,7 +40,9 @@ namespace sistema_aduana.API.Controllers
         [HttpGet("List")]
         public IActionResult Index()
         {
+
             var list = _gralService.ItemsListar();
+
             return Ok(list);
         }
 
@@ -49,7 +51,22 @@ namespace sistema_aduana.API.Controllers
         {
             try
             {
-                //var result = _aduaService.AduanaBuscar(id);
+                var result = _gralService.itemListarcat(id);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        [HttpGet("BuscarCat/{id}")]
+        public IActionResult BuscarCat(int id)
+        {
+            try
+            {
+                var result = _gralService.itemListarcat(id);
                 return Ok();
             }
             catch (Exception ex)
@@ -57,6 +74,7 @@ namespace sistema_aduana.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
 
         [HttpPost("Crear")]
         public IActionResult Crear(ItemsViewModel item)

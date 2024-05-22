@@ -93,7 +93,9 @@ namespace sistema_aduana.DataAccess.Repository
 
         public IEnumerable<tbCategorias> List()
         {
+
             string sql = ScriptsDatabase.CategoriasListar;
+
 
             List<tbCategorias> result = new List<tbCategorias>();
 

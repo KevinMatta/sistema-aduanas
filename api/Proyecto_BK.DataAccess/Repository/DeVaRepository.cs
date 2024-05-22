@@ -85,7 +85,7 @@ namespace sistema_aduana.DataAccess.Repository
                 parameter.Add("@DeVa_TotalDeducciones", item.DeVa_TotalDeducciones);
                 parameter.Add("@DeVa_ValorAduana", item.DeVa_ValorAduana);
                 parameter.Add("@DeVa_Creacion", item.DeVa_Creacion);
-                parameter.Add("@DeVa_FechaCreacion", item.DeVa_FechaCreacion);
+                parameter.Add("@DeVa_FechaCreacion", DateTime.Now);
 
                 try
                 {

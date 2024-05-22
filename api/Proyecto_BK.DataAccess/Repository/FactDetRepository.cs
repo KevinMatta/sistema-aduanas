@@ -63,8 +63,8 @@ namespace sistema_aduana.DataAccess.Repository
                 parameter.Add("@Pais_Id", item.Pais_Id);
                 parameter.Add("@FaDe_ValorUnitario", item.FaDe_ValorUnitario);
                 parameter.Add("@FaDe_TotalFactura", item.FaDe_TotalFactura);
-                parameter.Add("@FaDe_Creacion", item.FaDe_Creacion);
-                parameter.Add("@FaDe_FechaCreacion", item.FaDe_FechaCreacion);
+                parameter.Add("@FaDe_Creacion",1);
+                parameter.Add("@FaDe_FechaCreacion", DateTime.Now);
 
                 try
                 {

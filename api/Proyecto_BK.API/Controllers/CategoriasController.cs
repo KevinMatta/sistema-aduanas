@@ -41,7 +41,9 @@ namespace sistema_aduana.API.Controllers
         [HttpGet("List")]
         public IActionResult Index()
         {
+
             var list = _gralService.CategoriasListar();
+
             return Ok(list);
         }
 

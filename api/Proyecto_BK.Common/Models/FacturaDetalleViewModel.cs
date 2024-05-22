@@ -20,8 +20,6 @@ namespace sistema_aduana.Common.Models
         public decimal? FaDe_TotalFactura { get; set; }
         public bool? FaDe_Estado { get; set; }
         public int FaDe_Creacion { get; set; }
-        public DateTime FaDe_FechaCreacion { get; set; }
         public int? FaDe_Modifica { get; set; }
-        public DateTime? FaDe_FechaModifica { get; set; }
     }
 }

@@ -55,9 +55,8 @@ namespace sistema_aduana.DataAccess.Repository
                 var parameter = new DynamicParameters();
                 parameter.Add("@Fact_NumeroFactura", item.Fact_NumeroFactura);
                 parameter.Add("@Fact_Fecha", item.Fact_Fecha);
-                parameter.Add("@Deva_Id", item.Deva_Id);
-                parameter.Add("@Fact_Creacion", item.Fact_Creacion);
-                parameter.Add("@Fact_FechaCreacion", item.Fact_FechaCreacion);
+                parameter.Add("@Fact_Creacion", 1);
+                parameter.Add("@Fact_FechaCreacion", DateTime.Now);
 
                 try
                 {

@@ -40,7 +40,9 @@ namespace sistema_aduana.BusinessLogic.Services
             EstadoCivilRepository estadoCivilRepository, PaisRepository paisRepository, EmpresaRepository empresaRepository, 
             EmpleadoRepository empleadoRepository, ProfesionesRepository profesionesRepository,
             PersonaNaturalRepository personaNaturalRepository, ComercianteIndividualRepository comercianteIndividualRepository,
+
             IConfiguration configuration, IOptions<MailSettings> mailSettingsOptions,
+
             PersonaJuridicaRepository personaJuridicaRepository, ItemRepository itemRepository, CategoriaRepository categoriaRepository)
 
         {
@@ -884,14 +886,17 @@ namespace sistema_aduana.BusinessLogic.Services
 
         #endregion
 
+
         #region item
 
-        public ServiceResult ItemsListar()
+    
+
+        public ServiceResult itemListarcat(int cat)
         {
             var result = new ServiceResult();
             try
             {
-                var list = _categoriaRepository.List();
+                var list = _itemRepository.Listddl(cat);
                 return result.Ok(list);
             }
             catch (Exception ex)
@@ -899,6 +904,24 @@ namespace sistema_aduana.BusinessLogic.Services
                 return result.Error(ex.Message);
             }
         }
+        #region item
+        public ServiceResult itemListar()
+
+        {
+            var result = new ServiceResult();
+            try
+            {
+
+                var list = _itemRepository.List();
+
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
         public ServiceResult ItemCrear(tbItems item)
         {
             var result = new ServiceResult();
@@ -943,10 +966,12 @@ namespace sistema_aduana.BusinessLogic.Services
 
         #endregion
 
+
         #region Categorias
 
 
         public ServiceResult CategoriasListar()
+
         {
             var result = new ServiceResult();
             try
@@ -959,6 +984,7 @@ namespace sistema_aduana.BusinessLogic.Services
                 return result.Error(ex.Message);
             }
         }
+
         public ServiceResult CategoriasCrear(tbCategorias item)
         {
             var result = new ServiceResult();
