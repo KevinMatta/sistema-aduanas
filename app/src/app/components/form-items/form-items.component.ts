@@ -10,13 +10,13 @@ import {
   ViewChild,
   ViewChildren,
 } from "@angular/core";
-import { Esquema } from "../../Models/EsquemasViewModel";
-import { PantallasService } from "../../Services/pantallas.service";
-import { Pantalla } from "../../Models/PantallasViewModel";
 import { ToastrService } from "ngx-toastr";
 import { RolesService } from "../../Services/roles.service";
 import { APIResponse } from "../../Models/APIResponseViewModel";
-import { Rol } from "../../Models/RolesViewModel";
+import { Item } from "../../Models/ItemsViewModel";
+import { Arancel } from "../../Models/ArancelesViewModel";
+import { ItemsService } from "../../Services/items.service";
+import { ArancelesService } from "../../Services/aranceles.service";
 
 @Component({
   selector: "app-form-items",
@@ -24,57 +24,38 @@ import { Rol } from "../../Models/RolesViewModel";
   styleUrls: ["./form-items.component.css"],
 })
 export class FormItemsComponent implements OnInit, AfterViewChecked {
-  objetoParaEditar: Rol;
+  objetoParaEditar: Item;
 
-  rol: Rol = new Rol();
-  pantallas: Pantalla[];
-  esquemas: Esquema[];
+  item: Item = new Item();
+  aranceles: Arancel[];
 
   isLoading: boolean = true;
 
   @ViewChild("Sist_CkBox") sistCkBox: ElementRef;
-  @ViewChildren("Esqu_CkBox") esquCkBoxes: QueryList<ElementRef>;
+  @ViewChildren("Aran_CkBox") aranCkBoxes: QueryList<ElementRef>;
 
   constructor(
-    private rolesService: RolesService,
-    private pantallasService: PantallasService,
+    private itemsService: ItemsService,
+    private arancelesService: ArancelesService,
     private location: Location,
-    private cdr: ChangeDetectorRef,
     private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
-    this.rol.Rol = "";
-    this.rol._pantallas = [];
+    this.item.Item = "";
+    this.item._aranceles = [];
 
-    this.objetoParaEditar = this.rolesService.getObjetoParaEditar();
+    this.objetoParaEditar = this.itemsService.getObjetoParaEditar();
 
     if (this.objetoParaEditar) {
-      this.rol.Id = this.objetoParaEditar.Id;
-      this.rol.Rol = this.objetoParaEditar.Rol;
-      this.rol._pantallas = this.objetoParaEditar._pantallas;
+      this.item.Item_Id = this.objetoParaEditar.Item_Id;
+      this.item.Item = this.objetoParaEditar.Item;
+      this.item._aranceles = this.objetoParaEditar._aranceles;
     }
 
-    this.pantallasService.getEsquemasData().subscribe(
-      (data: Esquema[]) => {
-        this.esquemas = data;
-        this.pantallasService.getData().subscribe(
-          (data: Pantalla[]) => {
-            this.pantallas = data;
-            this.pantallas.forEach((pant) => {
-              const index = this.esquemas.findIndex(
-                (esqu) => esqu.Id === pant.Esqu_Id
-              );
-              if (index !== -1) {
-                this.esquemas[index].NumPantallas++;
-              }
-            });
-            this.cdr.detectChanges();
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+    this.arancelesService.getData().subscribe(
+      (data: Arancel[]) => {
+        this.aranceles = data;
       },
       (error) => {
         console.log(error);
@@ -84,33 +65,14 @@ export class FormItemsComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked(): void {
     const sistCkBoxElement = this.sistCkBox.nativeElement;
-    if (this.esquCkBoxes && this.esquCkBoxes.length > 0) {
-      this.esquCkBoxes.map((el) => {
-        const pantCkBoxesDentroDeEsqu =
-          el.nativeElement.parentElement.children[2].querySelectorAll(
-            ".Pant_CkBox"
-          );
-        if (
-          pantCkBoxesDentroDeEsqu.length > 0 &&
-          Array.from(pantCkBoxesDentroDeEsqu).every(
-            (esquCk: any) => esquCk.checked
-          )
-        ) {
-          el.nativeElement.checked = true;
-        }
-      });
-      if (
-        this.esquCkBoxes.toArray().length > 0 &&
-        this.esquCkBoxes.toArray().every((el) => el.nativeElement.checked)
-      ) {
-        sistCkBoxElement.checked = true;
-      }
+    if (this.aranCkBoxes && this.aranCkBoxes.length > 0) {
+      this.aranCkBoxes.map((el) => {});
     }
   }
 
-  isPantallaChecked(pantallaId: number): boolean {
+  isArancelChecked(arancelId: number): boolean {
     return this.objetoParaEditar
-      ? this.objetoParaEditar._pantallas.some((id) => id === pantallaId)
+      ? this.objetoParaEditar._aranceles.some((tuple) => tuple[0] === arancelId)
       : false;
   }
 
@@ -123,52 +85,22 @@ export class FormItemsComponent implements OnInit, AfterViewChecked {
       checkboxes.forEach(function (checkbox) {
         checkbox.checked = true;
       });
-      this.rol._pantallas = this.pantallas.map((pant) => pant.Id);
+      this.item._aranceles = this.aranceles.map((aran) => [aran.Id, 0]);
     } else {
       checkboxes.forEach(function (checkbox) {
         checkbox.checked = false;
       });
-      this.rol._pantallas = [];
-    }
-  }
-
-  esquCkBoxChange(event: any) {
-    const ckBox = event.target;
-    const pantCkBoxesDentroDeEsqu =
-      ckBox.parentElement.children[2].querySelectorAll(".Pant_CkBox");
-    const sistCkBox: any = document.querySelector(".Sist_CkBox");
-    const esquCkBoxes = Array.from(document.querySelectorAll(".Esqu_CkBox"));
-    if (ckBox.checked) {
-      if (esquCkBoxes.every((esquCk: any) => esquCk.checked)) {
-        sistCkBox.checked = true;
-      }
-      pantCkBoxesDentroDeEsqu.forEach((checkbox) => {
-        checkbox.checked = true;
-        const index = this.rol._pantallas.indexOf(parseInt(checkbox.id));
-        if (index === -1) {
-          this.rol._pantallas.push(parseInt(checkbox.id));
-        }
-      });
-    } else {
-      sistCkBox.checked = false;
-
-      pantCkBoxesDentroDeEsqu.forEach((checkbox) => {
-        checkbox.checked = false;
-        const index = this.rol._pantallas.indexOf(parseInt(checkbox.id));
-        if (index !== -1) {
-          this.rol._pantallas.splice(index, 1);
-        }
-      });
+      this.item._aranceles = [];
     }
   }
 
   pantCkBoxChange(event: any) {
     const ckBox = event.target;
-    const index = this.rol._pantallas.indexOf(ckBox.id);
+    const index = this.item._aranceles.indexOf(ckBox.id);
     if (index === -1) {
-      this.rol._pantallas.push(parseInt(ckBox.id));
+      this.item._aranceles.push([parseInt(ckBox.id), 0]);
     } else {
-      this.rol._pantallas.splice(index, 1);
+      this.item._aranceles.splice(index, 1);
     }
   }
 
@@ -178,54 +110,60 @@ export class FormItemsComponent implements OnInit, AfterViewChecked {
     event.target.parentElement
       .querySelector(".nested")
       .classList.toggle("active");
-    if (!toggle) {
-      const texto = event.target.children[0].textContent;
+    // if (!toggle) {
+    //   const texto = event.target.children[0].textContent;
 
-      const esquema = this.esquemas.find((esqu) => esqu.Esquema === texto);
-      event.target.parentElement
-        .querySelector(".nested")
-        .closest("li").style.marginBottom =
-        esquema.NumPantallas * 30 + 10 + "px";
-    } else {
-      event.target.parentElement
-        .querySelector(".nested")
-        .closest("li").style.marginBottom = "0";
-    }
+    //   const arancel = this.aranceles.find((esqu) => esqu.Arancel === texto);
+    //   event.target.parentElement
+    //     .querySelector(".nested")
+    //     .closest("li").style.marginBottom =
+    //     arancel.NumPantallas * 30 + 10 + "px";
+    // } else {
+    //   event.target.parentElement
+    //     .querySelector(".nested")
+    //     .closest("li").style.marginBottom = "0";
+    // }
   }
 
-  rolDescripcionOnChange(event: any) {
-    this.rol.Rol = event.target.value;
+  itemDescripcionOnChange(event: any) {
+    this.item.Item = event.target.value;
   }
 
   guardar() {
-    if (!this.rol.Rol) {
-      this.mostrarWarning("Por favor ingrese el nombre del rol");
+    if (!this.item.Item) {
+      this.mostrarWarning("Por favor ingrese el nombre del producto");
       return;
     }
     if (this.objetoParaEditar) {
-      this.rolesService.Editar(this.rol).subscribe(
+      this.itemsService.Editar(this.item).subscribe(
         (data: APIResponse<any>) => {
           if (data.code >= 200 && data.code < 300) {
-            this.mostrarSuccess("Rol editado con éxito!");
+            this.mostrarSuccess("Producto editado con éxito!");
             this.location.back();
           } else {
-            this.mostrarError("Ha ocurrido un error al intentar editar el rol");
+            this.mostrarError(
+              "Ha ocurrido un error al intentar editar el producto"
+            );
           }
         },
         (error) => {
-          console.log(error, "error al editar el rol");
-          this.mostrarError("Ha ocurrido un error al intentar editar el rol");
+          console.log(error, "Error al editar el producto");
+          this.mostrarError(
+            "Ha ocurrido un error al intentar editar el producto"
+          );
         }
       );
       return;
     }
-    this.rolesService.Crear(this.rol).subscribe(
+    this.itemsService.Crear(this.item).subscribe(
       (data: APIResponse<any>) => {
         if (data.code >= 200 && data.code < 300) {
-          this.mostrarSuccess("Rol creado con éxito!");
+          this.mostrarSuccess("Producto creado con éxito!");
           this.location.back();
         } else {
-          this.mostrarError("Ha ocurrido un error al intentar editar el rol");
+          this.mostrarError(
+            "Ha ocurrido un error al intentar editar el producto"
+          );
         }
       },
       (error) => {

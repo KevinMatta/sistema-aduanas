@@ -39,7 +39,6 @@ export class ArancelesService implements DataService {
     const json = {
       aran_Id: aran.Id,
       aran_Descripcion: aran.Arancel,
-      aran_Porcentaje: aran.Porcentaje,
       aran_Estado: true,
       aran_Creacion: 1,
       aran_FechaCreacion: new Date().toISOString(),
@@ -57,7 +56,6 @@ export class ArancelesService implements DataService {
     const json = {
       aran_Id: 0,
       aran_Descripcion: aran.Arancel,
-      aran_Porcentaje: aran.Porcentaje,
       aran_Estado: true,
       aran_Creacion: 1,
       aran_FechaCreacion: new Date().toISOString(),
@@ -76,8 +74,7 @@ export class ArancelesService implements DataService {
       const model: Arancel = {
         Id: item.aran_Id,
         Arancel: item.aran_Descripcion,
-        Porcentaje: item.aran_Porcentaje,
-        _Estado:  item.aran_Estado
+        _Estado: item.aran_Estado,
       };
       return model;
     });

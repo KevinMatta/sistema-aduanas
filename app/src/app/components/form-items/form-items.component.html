@@ -28,8 +28,8 @@
                   name="rolDescripcion"
                   class="form-control"
                   style="max-width: 280px"
-                  [value]="rol.Rol"
-                  (change)="rolDescripcionOnChange($event)"
+                  [value]="item.Item"
+                  (change)="itemDescripcionOnChange($event)"
                 />
               </div>
               <button
@@ -68,16 +68,16 @@
                   >
                     <ng-container>
                       <li
-                        *ngFor="let esquema of esquemas"
+                        *ngFor="let arancel of aranceles"
                         style="
                           position: relative;
                           min-height: 30px;
                           border-bottom: 3px dashed gray;
                         "
-                        [ngStyle]="{
-                          'margin-bottom': esquema.NumPantallas * 30 + 10 + 'px'
-                        }"
                       >
+                        <!-- [ngStyle]="{
+                          'margin-bottom': esquema.NumPantallas * 30 + 10 + 'px'
+                        }" -->
                         <div
                           style="
                             position: absolute;
@@ -89,7 +89,7 @@
                           "
                         >
                           <span class="caretRP" (click)="caretClick($event)">
-                            <label>{{ esquema.Esquema }}</label>
+                            <label>{{ arancel.Arancel }}</label>
                           </span>
                           <input
                             class="Esqu_CkBox"
@@ -98,7 +98,7 @@
                             style="margin-left: 10px"
                             (change)="esquCkBoxChange($event)"
                           />
-                          <ul
+                          <!-- <ul
                             class="nested esquemaRoot active"
                             style="
                               left: -26px;
@@ -141,7 +141,7 @@
                                 </div>
                               </li>
                             </ng-container>
-                          </ul>
+                          </ul> -->
                         </div>
                       </li>
                     </ng-container>

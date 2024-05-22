@@ -18,23 +18,7 @@ namespace sistema_aduana.DataAccess.Repository
     {
         public RequestStatus Delete(int? id, int usuario, DateTime fecha)
         {
-            string sql = ScriptsDatabase.AduanasEliminar;
-            using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
-            {
-                var parametro = new DynamicParameters();
-                parametro.Add("@Adua_Id", id);
-                parametro.Add("@Adua_Modifica", usuario);
-                parametro.Add("@Adua_FechaModifica", fecha);
-
-                var result = db.Execute(
-                    sql, parametro,
-                    commandType: CommandType.StoredProcedure
-                );
-
-                string mensaje = (result == 1) ? "exito" : "error";
-
-                return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
-            };
+            throw new NotImplementedException();
         }
 
         public tbAranceles Find(int? id)
@@ -59,7 +43,6 @@ namespace sistema_aduana.DataAccess.Repository
             {
                 var parameter = new DynamicParameters();
                 parameter.Add("@Aran_Descripcion", item.Aran_Descripcion);
-                parameter.Add("@Aran_Porcentaje", item.Aran_Porcentaje);
                 parameter.Add("@Aran_Creacion", item.Aran_Creacion);
                 parameter.Add("@Aran_FechaCreacion", item.Aran_FechaCreacion);
 
@@ -101,15 +84,14 @@ namespace sistema_aduana.DataAccess.Repository
                 var parameter = new DynamicParameters();
                 parameter.Add("@Aran_Id", item.Aran_Id);
                 parameter.Add("@Aran_Descripcion", item.Aran_Descripcion);
-                parameter.Add("@Aran_Porcentaje", item.Aran_Porcentaje);
                 parameter.Add("@Aran_Modifica", item.Aran_Modifica);
                 parameter.Add("@Aran_FechaModifica", item.Aran_FechaModifica);
 
                 try
                 {
-                    var result = db.QueryFirstOrDefault<int>(sql, parameter, commandType: CommandType.StoredProcedure);
-                    string mensaje = (result == 1) ? "exito" : "error";
-                    return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+                    var result = db.QueryFirst(sql, parameter, commandType: CommandType.StoredProcedure);
+                    string mensaje = (result.Resultado == 1) ? "exito" : "error";
+                    return new RequestStatus { CodeStatus = result.Resultado, MessageStatus = mensaje };
                 }
                 catch (Exception ex)
                 {

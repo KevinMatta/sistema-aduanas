@@ -144,7 +144,7 @@ namespace SistemaMedico.DataAcces.Repository
         public static string AduanasBuscar = "[Adua].[sp_Aduanas_buscar]";
         public static string AduanasCrear = "[Adua].[sp_Aduanas_crear]";
         public static string AduanasActualizar = "[Adua].[sp_Aduanas_actualizar]";
-        public static string AduanasEliminar = "[Adua].[sp_Aduanas_eliminar]";
+        public static string AduanasToggleEstado = "[Adua].[sp_Aduanas_toggleEstado]";
 
         public static string ComerciantesIndividualesActualizar { get; internal set; }
         public static string ComerciantesIndividualesListar { get; internal set; }

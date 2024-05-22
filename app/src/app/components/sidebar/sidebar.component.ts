@@ -1,4 +1,10 @@
 import { Component, OnInit } from "@angular/core";
+import { AuthenticationService } from "../../Services/auth.service";
+import { RolesService } from "../../Services/roles.service";
+import { Rol } from "../../Models/RolesViewModel";
+import { APIResponse } from "../../Models/APIResponseViewModel";
+import { PantallasService } from "../../Services/pantallas.service";
+import { Pantalla } from "../../Models/PantallasViewModel";
 
 declare interface RouteInfo {
   path: string;
@@ -118,7 +124,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: "layout/form-comerciante-individual",
-    title: "Adua.Comerciante individual",
+    title: "Adua.Comerciante Individual",
     icon: "users_single-02",
     class: "",
   },
@@ -130,7 +136,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: "layout/form-declaracion-valor",
-    title: "Adua.Declaración de valor",
+    title: "Adua.Declaración De Valor",
     icon: "files_single-copy-04",
     class: "",
   },
@@ -164,11 +170,15 @@ export class SidebarComponent implements OnInit {
   // public isGeneralCollapsed = true;
   // public isAduanaCollapsed = true;
 
+  pantallasDelUsuario: Pantalla[];
+
   esquemasMap: Map<string, string> = new Map<string, string>();
 
   toggleCollapse(schema: string) {
     this.isCollapsed[schema] = !this.isCollapsed[schema];
   }
+
+  rolDelUsuario: Rol;
 
   belongsToSchema(menuItem: RouteInfo, schema: string): boolean {
     return menuItem.title.includes(schema);
@@ -176,13 +186,57 @@ export class SidebarComponent implements OnInit {
 
   menuItems: any[];
 
-  constructor() {}
+  constructor(
+    private authenticationService: AuthenticationService,
+    private rolesService: RolesService,
+    private pantallasService: PantallasService
+  ) {}
 
   ngOnInit() {
-    this.esquemasMap.set("Acce", "Acceso.ui-1_lock-circle-open");
-    this.esquemasMap.set("Gral", "General.ui-1_settings-gear-63");
-    this.esquemasMap.set("Adua", "Aduana.shopping_box");
-    this.menuItems = ROUTES.filter((menuItem) => menuItem);
+    const user = this.authenticationService.userValue;
+    console.log(user, "user from sidebar component");
+
+    this.pantallasService.getData().subscribe(
+      (pantallas) => {
+        console.log(pantallas, "data pantallas");
+
+        this.rolesService.getData().subscribe(
+          (roles) => {
+            this.esquemasMap.set("Acce", "Acceso.ui-1_lock-circle-open");
+            this.esquemasMap.set("Gral", "General.ui-1_settings-gear-63");
+            this.esquemasMap.set("Adua", "Aduana.shopping_box");
+            this.rolDelUsuario = roles.find((rol) => rol.Rol === user.Rol);
+
+            if (this.rolDelUsuario) {
+              this.pantallasDelUsuario = pantallas.filter((pant) =>
+                this.rolDelUsuario._pantallas.includes(pant.Id)
+              );
+              this.menuItems = ROUTES.filter((menuItem) => {
+                if (menuItem.title && menuItem.title.includes(".")) {
+                  return this.pantallasDelUsuario.some(
+                    (pant) => pant.Pantalla === menuItem.title.split(".")[1]
+                  );
+                } else {
+                  return true;
+                }
+              });
+            } else {
+              this.menuItems = ROUTES.slice();
+            }
+            console.log(this.rolDelUsuario);
+          },
+          (err) => {
+            console.log(err, "Error al obtener roles en el sidebar component");
+          }
+        );
+      },
+      (err) => {
+        console.log(
+          err,
+          "Error al obtener las pantallas en el sidebar component"
+        );
+      }
+    );
   }
   isMobileMenu() {
     if (window.innerWidth > 991) {

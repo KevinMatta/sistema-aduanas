@@ -17,6 +17,7 @@ namespace sistema_aduana.Entities.Entities
         public DateTime ArIt_FechaCreacion { get; set; }
         public int? ArIt_Modifica { get; set; }
         public DateTime? ArIt_FechaModifica { get; set; }
+        public double ArIt_Porcentaje { get; set; }
 
         public virtual tbUsuarios ArIt_CreacionNavigation { get; set; }
         public virtual tbUsuarios ArIt_ModificaNavigation { get; set; }

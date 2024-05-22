@@ -71,19 +71,11 @@ namespace sistema_aduana.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        [HttpDelete("Eliminar/{id}")]
-        public IActionResult Eliminar(int id, int usuario)
+        [HttpPut("ToggleEstado")]
+        public IActionResult ToggleEstado(int Adua_Id, int Usua_Modifica, bool estado)
         {
-            try
-            {
-                var result = _aduaService.AduanaEliminar(id, usuario, DateTime.Now);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var response = _aduaService.AduanaToggleEstado(Adua_Id, estado, Usua_Modifica, DateTime.Now);
+            return Ok(response);
         }
     }
 }

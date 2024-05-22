@@ -101,7 +101,7 @@ namespace sistema_aduana.DataAccess.Context
 
                 entity.Property(e => e.Aran_FechaModifica).HasColumnType("datetime");
 
-                entity.Property(e => e.Aran_Porcentaje).HasColumnType("decimal(5, 2)");
+                //entity.Property(e => e.Aran_Porcentaje).HasColumnType("decimal(5, 2)");
 
                 entity.HasOne(d => d.Aran_CreacionNavigation)
                     .WithMany(p => p.tbArancelesAran_CreacionNavigation)

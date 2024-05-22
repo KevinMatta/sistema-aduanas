@@ -6,6 +6,7 @@ import { Rol } from "../Models/RolesViewModel";
 import { APIResponse } from "../Models/APIResponseViewModel";
 import { environment } from "../../environments/environment";
 import { map } from "rxjs/operators";
+import { Item } from "../Models/ItemsViewModel";
 
 @Injectable({
   providedIn: "root",
@@ -13,10 +14,10 @@ import { map } from "rxjs/operators";
 export class ItemsService implements DataService {
   constructor(private http: HttpClient) {}
 
-  private objetoParaEditar = new BehaviorSubject<Rol>(null);
+  private objetoParaEditar = new BehaviorSubject<Item>(null);
   data$ = this.objetoParaEditar.asObservable();
 
-  setObjetoParaEditar(data: Rol) {
+  setObjetoParaEditar(data: Item) {
     this.objetoParaEditar.next(data);
   }
 

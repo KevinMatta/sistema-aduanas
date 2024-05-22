@@ -15,7 +15,6 @@ namespace sistema_aduana.Entities.Entities
 
         public int Aran_Id { get; set; }
         public string Aran_Descripcion { get; set; }
-        public decimal? Aran_Porcentaje { get; set; }
         public bool? Aran_Estado { get; set; }
         public int Aran_Creacion { get; set; }
         public DateTime Aran_FechaCreacion { get; set; }

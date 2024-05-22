@@ -1,7 +1,6 @@
 export class Arancel {
   Id: number;
   Arancel: string;
-  Porcentaje: number;
   _Estado: boolean;
   esta_Creacion?: number;
   esta_FechaCreacion?: string;

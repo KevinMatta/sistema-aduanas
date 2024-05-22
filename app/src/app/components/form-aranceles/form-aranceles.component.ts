@@ -26,25 +26,25 @@ export class FormArancelesComponent implements OnInit {
     if (this.objetoParaEditar) {
       this.arancel.Id = this.objetoParaEditar.Id;
       this.arancel.Arancel = this.objetoParaEditar.Arancel;
-      this.arancel.Porcentaje = this.objetoParaEditar.Porcentaje;
+      // this.arancel.Porcentaje = this.objetoParaEditar.Porcentaje;
     } else {
       this.arancel.Arancel = "";
-      this.arancel.Porcentaje = 0;
+      // this.arancel.Porcentaje = 0;
     }
   }
 
   arancelOnChange(event: any) {
     this.arancel.Arancel = event.target.value;
   }
-  
-  porcentajeOnChange(event: any) {
-    const regex = /^\d{0,1}\.?\d{0,2}$/;
-    if (regex.test(event.target.value)) {
-      this.arancel.Porcentaje = parseFloat(event.target.value);
-    } else {
-      event.target.value = event.target.value.slice(event.target.value.length - 1,-1);
-    }
-  }
+
+  // porcentajeOnChange(event: any) {
+  //   const regex = /^\d{0,1}\.?\d{0,2}$/;
+  //   if (regex.test(event.target.value)) {
+  //     this.arancel.Porcentaje = parseFloat(event.target.value);
+  //   } else {
+  //     event.target.value = event.target.value.slice(event.target.value.length - 1,-1);
+  //   }
+  // }
 
   async guardar() {
     if (!this.arancel.Arancel) {
@@ -52,12 +52,12 @@ export class FormArancelesComponent implements OnInit {
       return;
     }
     const regex = /^0\.\d{1,2}$/;
-    if (!regex.test(this.arancel.Porcentaje.toString())) {
-      this.mostrarWarning("Por favor ingrese el porcentaje del arancel en decimal.");
-      return;
-    }
+    // if (!regex.test(this.arancel.Porcentaje.toString())) {
+    //   this.mostrarWarning("Por favor ingrese el porcentaje del arancel en decimal.");
+    //   return;
+    // }
     if (!this.objetoParaEditar) {
-      await this.arancelesService.Crear(this.arancel).subscribe(
+      this.arancelesService.Crear(this.arancel).subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
             this.mostrarSuccess("arancel creado con éxito.");
@@ -74,7 +74,7 @@ export class FormArancelesComponent implements OnInit {
         }
       );
     } else {
-      await this.arancelesService.Editar(this.arancel).subscribe(
+      this.arancelesService.Editar(this.arancel).subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
             this.mostrarSuccess("arancel editado con éxito.");

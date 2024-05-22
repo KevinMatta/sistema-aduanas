@@ -82,13 +82,13 @@ namespace sistema_aduana.BusinessLogic.Services
             }
         }
 
-        public ServiceResult AduanaEliminar(int id, int usuario, DateTime fecha)
+        public ServiceResult AduanaToggleEstado(int id, bool estado, int usuario, DateTime fecha)
         {
             var result = new ServiceResult();
             try
             {
-                var deletedItem = _aduaRepository.Delete(id, usuario, fecha);
-                return deletedItem.CodeStatus > 0 ? result.Ok(deletedItem) : result.Error(deletedItem);
+                var list = _aduaRepository.ToggleEstado(id, estado, usuario, fecha);
+                return list.CodeStatus > 0 ? result.Ok(list) : result.Error(list);
             }
             catch (Exception ex)
             {

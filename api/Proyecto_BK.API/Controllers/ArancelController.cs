@@ -87,19 +87,5 @@ namespace sistema_aduana.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        [HttpDelete("Eliminar/{id}")]
-        public IActionResult Eliminar(int id, int usuario)
-        {
-            try
-            {
-                var result = _aduaService.AduanaEliminar(id, usuario, DateTime.Now);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
     }
 }
