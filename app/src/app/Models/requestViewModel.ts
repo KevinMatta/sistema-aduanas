@@ -5,5 +5,5 @@ import { Factura } from "./FacEncViewModel";
 export class request{
     deVaViewModel: DeclaracionDeValor;
     facturaEncViewModel: Factura;
-    facturaDetalleViewModel: FacturaDetalle[];
+    facturaDetalleViewModel: FacturaDetalle;
 }

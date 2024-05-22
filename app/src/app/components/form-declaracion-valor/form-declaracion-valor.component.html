@@ -62,6 +62,54 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Fecha Aceptacion</label>
+
+                  <div class="input-group d-flex align-items-center">
+                    <!-- [(ngModel)]="model" -->
+                    <input
+                      class="form-control"
+                      placeholder="yyyy-mm-dd"
+                      name="dp"
+                      ngbDatepicker
+                      #d="ngbDatepicker"
+                      style="height: 34px"
+                      (dateSelect)="onDateSelect($event)"
+                    />
+                    <button
+                      class="btn btn-outline-secondary calendar"
+                      (click)="d.toggle()"
+                      type="button"
+                    >
+                      <i
+                        class="now-ui-icons ui-1_calendar-60"
+                        style="margin-right: 5px"
+                      ></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Numero Contrato</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="123456 253"
+                    id  ="DeVa_NumeroContrado"
+                    name="DeVa_NumeroContrado"
+                    formControlName="DeVa_NumeroContrado"
+                    
+                  />
+                </div>
+              </div>
+
+            </div>
+            
             <h6>B. Información General del Importador</h6>
             <div class="row">
               <div class="col-md-6">
@@ -1294,7 +1342,7 @@
                       la casilla 25.1
                     </td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" id="DeVa_MontoCondicionContraprestacion" formControlName="DeVa_MontoCondicionContraprestacion" name="DeVa_MontoCondicionContraprestacion"/>
+                      <input type="text" value=0 class="form-control" placeholder="0" id="DeVa_MontoCondicionContraprestacion" formControlName="DeVa_MontoCondicionContraprestacion" name="DeVa_MontoCondicionContraprestacion"/>
                     </td>
                   </tr>
                   <tr>
@@ -1303,7 +1351,7 @@
                       Monto de la reversión a la que se refiere la casilla 25
                     </td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" id="DeVa_MontoReversionCasilla" name="DeVa_MontoReversionCasilla" formControlName="DeVa_MontoReversionCasilla"/>
+                      <input type="text" value=0 class="form-control" placeholder="0" id="DeVa_MontoReversionCasilla" name="DeVa_MontoReversionCasilla" formControlName="DeVa_MontoReversionCasilla"/>
                     </td>
                   </tr>
                   <tr>
@@ -1313,14 +1361,14 @@
                       comisiones de compra
                     </td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" id="DeVa_GastosComisiones" name="DeVa_GastosComisiones" formControlName="DeVa_GastosComisiones"/>
+                      <input type="text" value=0 class="form-control" placeholder="0" id="DeVa_GastosComisiones" name="DeVa_GastosComisiones" formControlName="DeVa_GastosComisiones"/>
                     </td>
                   </tr>
                   <tr>
                     <td>42.4</td>
                     <td>Gastos y costos de envases y embalajes</td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" id="DeVa_GastosEnvasesEmbalajes" name="DeVa_GastosEnvasesEmbalajes" formControlName="DeVa_GastosEnvasesEmbalajes" />
+                      <input type="text" value=0 class="form-control" placeholder="0" id="DeVa_GastosEnvasesEmbalajes" name="DeVa_GastosEnvasesEmbalajes" formControlName="DeVa_GastosEnvasesEmbalajes" />
                     </td>
                   </tr>
                   <!-- <tr>
@@ -1382,7 +1430,7 @@
                       puerto o lugar de importación
                     </td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" id="DeVa_GastosTransporteMercaderia" name="DeVa_GastosTransporteMercaderia" formControlName="DeVa_GastosTransporteMercaderia" />
+                      <input type="text" value=0 class="form-control" placeholder="0" id="DeVa_GastosTransporteMercaderia" name="DeVa_GastosTransporteMercaderia" formControlName="DeVa_GastosTransporteMercaderia" />
                     </td>
                   </tr>
                   <tr>
@@ -1393,14 +1441,14 @@
                       puerto o lugar de importación
                     </td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" name="DeVa_GastosCargaDescarga" id="DeVa_GastosCargaDescarga" formControlName="DeVa_GastosCargaDescarga"/>
+                      <input type="text" value=0 class="form-control" placeholder="0" name="DeVa_GastosCargaDescarga" id="DeVa_GastosCargaDescarga" formControlName="DeVa_GastosCargaDescarga"/>
                     </td>
                   </tr>
                   <tr>
                     <td>42.12</td>
                     <td>Costos del Seguro</td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" id="DeVa_CostosSeguro" name="DeVa_CostosSeguro" formControlName="DeVa_CostosSeguro"/>
+                      <input type="text" value=0 class="form-control" placeholder="0" id="DeVa_CostosSeguro" name="DeVa_CostosSeguro" formControlName="DeVa_CostosSeguro"/>
                     </td>
                   </tr>
                   <tr>
@@ -1415,7 +1463,7 @@
                         class="form-control"
                         placeholder="0"
                         disabled
-                        id="DeVa_TotalAjustes" name="DeVa_TotalAjustes" formControlName="DeVa_TotalAjustes"
+                        id="DeVa_TotalAjustes" value=0 id="DeVa_TotalAjustes" name="DeVa_TotalAjustes" formControlName="DeVa_TotalAjustes"
                       />
                     </td>
                   </tr>
@@ -1434,7 +1482,7 @@
                       en relación con las mercancías importadas
                     </td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" id="DeVa_GastosConstruccionArmado" name="DeVa_GastosConstruccionArmado" formControlName="DeVa_GastosConstruccionArmado" />
+                      <input type="text" value = 0 class="form-control" placeholder="0" id="DeVa_GastosConstruccionArmado" name="DeVa_GastosConstruccionArmado" formControlName="DeVa_GastosConstruccionArmado" />
                     </td>
                   </tr>
                   <tr>
@@ -1444,7 +1492,7 @@
                       importación
                     </td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0"  id="DeVa_CostosTransportePosterior" name="DeVa_CostosTransportePosterior" formControlName="DeVa_CostosTransportePosterior"/>
+                      <input type="text" value=0 class="form-control" placeholder="0"  id="DeVa_CostosTransportePosterior" name="DeVa_CostosTransportePosterior" formControlName="DeVa_CostosTransportePosterior"/>
                     </td>
                   </tr>
                   <tr>
@@ -1453,21 +1501,21 @@
                       Derechos e impuestos aplicables en el país de importación
                     </td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" id="DeVa_DerechosImpuestos" name="DeVa_DerechosImpuestos" formControlName="DeVa_DerechosImpuestos"/>
+                      <input type="text" value=0 class="form-control" placeholder="0" id="DeVa_DerechosImpuestos" name="DeVa_DerechosImpuestos" formControlName="DeVa_DerechosImpuestos"/>
                     </td>
                   </tr>
                   <tr>
                     <td>44.4</td>
                     <td>Monto de intereses</td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" id="DeVa_MontoIntereses" name="DeVa_MontoIntereses" formControlName="DeVa_MontoIntereses"/>
+                      <input type="text" value=0 class="form-control" placeholder="0" id="DeVa_MontoIntereses" name="DeVa_MontoIntereses" formControlName="DeVa_MontoIntereses"/>
                     </td>
                   </tr>
                   <tr>
                     <td>44.5</td>
                     <td>Otras deducciones legalmente aplicables</td>
                     <td>
-                      <input type="text" class="form-control" placeholder="0" id="DeVa_OtrasDeducciones" name="DeVa_OtrasDeducciones" formControlName="DeVa_OtrasDeducciones"/>
+                      <input type="text" value=0 class="form-control" placeholder="0" id="DeVa_OtrasDeducciones" name="DeVa_OtrasDeducciones" formControlName="DeVa_OtrasDeducciones"/>
                     </td>
                   </tr>
                   <tr>

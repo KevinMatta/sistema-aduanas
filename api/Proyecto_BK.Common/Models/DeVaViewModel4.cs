@@ -53,9 +53,7 @@ namespace sistema_aduana.Common.Models
         public decimal? DeVa_ValorAduana { get; set; }
         public bool? DeVa_Estado { get; set; }
         public int DeVa_Creacion { get; set; }
-        public DateTime DeVa_FechaCreacion { get; set; }
         public int? DeVa_Modifica { get; set; }
-        public DateTime? DeVa_FechaModifica { get; set; }
 
     }
 }

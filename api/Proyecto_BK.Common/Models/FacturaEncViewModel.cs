@@ -14,8 +14,6 @@ namespace sistema_aduana.Common.Models
         public int Deva_Id { get; set; }
         public bool? Fact_Estado { get; set; }
         public int Fact_Creacion { get; set; }
-        public DateTime Fact_FechaCreacion { get; set; }
         public int? Fact_Modifica { get; set; }
-        public DateTime? Fact_FechaModifica { get; set; }
     }
 }

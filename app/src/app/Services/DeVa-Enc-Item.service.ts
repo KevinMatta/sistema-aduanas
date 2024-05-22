@@ -26,7 +26,7 @@ export class DEDService {
   mix: request = {
     deVaViewModel: this.Deva[0], 
     facturaEncViewModel: this.Encabezado[0], 
-    facturaDetalleViewModel: this.Items
+    facturaDetalleViewModel: this.Items[0]
   };
 
   BaseUrl = environment.urlAPI + "/API/Ciudad/";
@@ -156,7 +156,7 @@ export class DEDService {
 
     this.mix.deVaViewModel = this.Deva[0];
     this.mix.facturaEncViewModel = this.Encabezado[0];
-    this.mix.facturaDetalleViewModel = this.Items;
+    this.mix.facturaDetalleViewModel = this.Items[0];
 
     console.log(this.mix.deVaViewModel.DeVa_FechaAceptacion, 'DeVa_FechaAceptacion');
     console.log(this.mix, 'payload');
