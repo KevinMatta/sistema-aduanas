@@ -47,7 +47,7 @@ namespace sistema_aduana.API.Controllers
         {
             public DeVaViewModel4 DeVaViewModel { get; set; }
             public FacturaEncViewModel FacturaEncViewModel { get; set; }
-            public List<FacturaDetalleViewModel> FacturaDetalleViewModel { get; set; }
+            public FacturaDetalleViewModel FacturaDetalleViewModel { get; set; }
         }
             
 

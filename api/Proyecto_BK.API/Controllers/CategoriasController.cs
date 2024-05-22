@@ -41,8 +41,8 @@ namespace sistema_aduana.API.Controllers
         [HttpGet("List")]
         public IActionResult Index()
         {
-            //var list = _gralService.AduanaListar();
-            return Ok();
+            var list = _gralService.catListart();
+            return Ok(list);
         }
 
         [HttpGet("Buscar/{id}")]

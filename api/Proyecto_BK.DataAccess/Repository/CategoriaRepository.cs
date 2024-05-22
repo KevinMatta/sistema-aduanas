@@ -92,7 +92,7 @@ namespace sistema_aduana.DataAccess.Repository
 
         public IEnumerable<tbCategorias> List()
         {
-            string sql = "[Adua].[sp_Aranceles_listar]";
+            string sql = "[Gral].[sp_Categorias_listar]";
 
             List<tbCategorias> result = new List<tbCategorias>();
 
