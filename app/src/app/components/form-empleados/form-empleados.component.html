@@ -1,0 +1,155 @@
+<div class="panel-header panel-header-sm"></div>
+<div id="boletin" class="main-content">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Nuevo Empleado</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" class="form-control" [value]="empleado.Nombre" (change)="nombreOnChange($event)" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Apellido</label>
+                <input type="text" class="form-control" [value]="empleado.Apellido"
+                  (change)="apellidoOnChange($event)" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>DNI</label>
+                <input type="text" class="form-control" [value]="empleado.DNI" (change)="DNIOnChange($event)" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Correo electrónico</label>
+                <input type="text" class="form-control" [value]="empleado.Email" (change)="emailOnChange($event)" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Estado</label>
+                <div ngbDropdown class="d-block">
+                  <button
+                    type="button"
+                    class="btn btn-primary m-0"
+                    id="dropdownMenu1"
+                    ngbDropdownToggle
+                  >
+                    {{ empleado.Estado_ }}
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                    <button
+                      *ngFor="let estado of estados"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="estadosSelect(estado.Id, estado.Estado)"
+                    >
+                      {{ estado.Estado }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Ciudad</label>
+                <div ngbDropdown class="d-block">
+                  <button
+                    type="button"
+                    class="btn btn-primary m-0"
+                    id="dropdownMenu1"
+                    ngbDropdownToggle
+                  >
+                    {{ empleado.Ciudad_ }}
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                    <button
+                      *ngFor="let ciudad of ciudadesFiltradas"
+                      type="button"
+                      class="dropdown-item"
+                      (click)="ciudadesSelect(ciudad.Id, ciudad.Ciudad)"
+                    >
+                      {{ ciudad.Ciudad }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Empresa</label>
+                <div ngbDropdown class="d-block">
+                  <button type="button" class="btn btn-primary m-0" id="dropdownMenu1" ngbDropdownToggle>
+                    {{ empleado.Empresa }}
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                    <button *ngFor="let empr of empresasFiltradas" type="button" class="dropdown-item"
+                      (click)="empresaSelect(empr.Id, empr.Empresa)">
+                      {{ empr.Empresa }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Estado civil</label>
+                <div ngbDropdown class="d-block">
+                  <button type="button" class="btn btn-primary m-0" id="dropdownMenu1" ngbDropdownToggle>
+                    {{ empleado['Estado Civil'] }}
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownMenu1">
+                    <button *ngFor="let esCi of estadosCiviles" type="button" class="dropdown-item"
+                      (click)="esCiSelect(esCi.Id, esCi['Estado Civil'])">
+                      {{ esCi['Estado Civil'] }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col d-flex justify-content-center" style="min-height: 80px">
+              <div class="form-group" style="left: -8%;">
+                <label for="">Sexo</label>
+                <input class="switch-input" type="radio" name="rdo" id="si" (click)="sexoToggle()"
+                  [checked]="empleado.Sexo === 'FEMENINO'" />
+                <input class="switch-input" type="radio" name="rdo" id="no" (click)="sexoToggle()"
+                  [checked]="empleado.Sexo === 'MASCULINO'" />
+                <div class="switch">
+                  <label for="si">F</label>
+                  <label for="no">M</label>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end align-items-center" style="gap: 5px">
+            <button type="button" class="btn btn-outline-primary" (click)="cancelar()">
+              <i class="now-ui-icons ui-1_simple-remove" style="margin-right: 5px"></i>
+              Cancelar
+            </button>
+            <button class="btn btn-primary" (click)="guardar()">
+              <i class="now-ui-icons ui-1_check" style="margin-right: 5px"></i>
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

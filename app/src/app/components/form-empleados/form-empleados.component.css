@@ -1,0 +1,93 @@
+.form-control:focus {
+  background-color: transparent;
+}
+
+.form-control {
+  color: #61c3db;
+}
+
+.card {
+  top: -2%;
+}
+
+.switch {
+  font-weight: 700;
+  position: absolute;
+  width: 150px;
+  height: 40px;
+  text-align: center;
+  background: #61c3db;
+  transition: all 0.2s ease;
+  border-radius: 25px;
+}
+.switch span {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: 21%;
+  left: 14.5%;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  margin: -2px 0px 0px -4px;
+  background: transparent;
+  display: block;
+  transition: all 0.3s ease-in-out;
+}
+.switch-input {
+  display: none;
+}
+
+.switch label {
+  cursor: pointer;
+  color: #fff;
+  width: 60px;
+  line-height: 50px;
+  transition: all 0.3s ease-in-out;
+}
+
+label[for=si] {
+  position: absolute;
+  left: 0px;
+  height: 20px;
+  top: -15%;
+}
+
+label[for=no] {
+  position: absolute;
+  right: 0px;
+  top: -15%;
+}
+
+#no:checked ~ .switch {
+  background: transparent;
+  border: 1px solid #61c3db;
+}
+
+#no:checked ~ .switch span {
+  left: 74%;
+  border: 2px solid #61c3db;
+}
+/* #no:checked ~ .switch span:after {
+  background: #61c3db;
+  height: 20px;
+  margin-top: -8px;
+  margin-left: 8px;
+} */
+
+#si:checked ~ .switch label[for=si] {
+  color: white;
+}
+
+#si:checked ~ .switch label[for=no] {
+  color: white;
+}
+
+#no:checked ~ .switch label[for=no] {
+  color: #61c3db;
+}
+
+#no:checked ~ .switch label[for=si] {
+  color: #61c3db;
+}
+
+/*# sourceMappingURL=form-usuarios.component.css.map */

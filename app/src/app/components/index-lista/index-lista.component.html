@@ -39,13 +39,29 @@
               ></i
               >Nuevo
             </button>
-            <input
-              type="text"
-              class="form-control"
-              style="padding: 8px; width: 180px; color: #61c3db"
-              placeholder="Buscar por {{ titulo }}..."
-              (keyup)="updateFilter($event)"
-            />
+            <div class="d-flex justify-content-end" style="gap: 10px">
+              <input
+                type="text"
+                class="form-control"
+                style="padding: 8px; width: 180px; color: #61c3db"
+                placeholder="Buscar por {{ titulo.toLocaleLowerCase() }}..."
+                (keyup)="updateFilter($event)"
+              />
+              <button
+                [disabled]="isLoading"
+                class="btn btn-outline-primary"
+                style="
+                  min-width: 34px;
+                  margin: 0;
+                  padding: 5px;
+                  font-size: 1rem;
+                  border-radius: 50%;
+                "
+                (click)="refrescar()"
+              >
+                <i class="now-ui-icons arrows-1_refresh-69"></i>
+              </button>
+            </div>
           </div>
           <ngx-datatable
             #table
@@ -58,14 +74,30 @@
             rowHeight="auto"
             [limit]="7"
             [scrollbarH]="true"
-            [messages]="{ emptyMessage: 'No se encontraron registros' }"
+            [messages]="{
+              emptyMessage: isLoading
+                ? 'Cargando...'
+                : 'No se encontraron registros'
+            }"
           >
             <ng-container *ngFor="let column of columns">
               <ngx-datatable-column
                 *ngIf="!column.name.includes('_')"
                 name="{{ column.name }}"
                 prop="{{ column.prop }}"
-                [flexGrow]="1"
+                [width]="
+                  column.name === 'Id' || column.name === 'Admin'
+                    ? 90
+                    : column.name === 'Sexo'
+                    ? 180
+                    : column.name === 'Empresa'
+                    ? 350
+                    : column.name === 'Empleado'
+                    ? 350
+                    : column.name === 'Email'
+                    ? 350
+                    : 200
+                "
                 [maxWidth]="
                   column.name === 'Id' ||
                   column.name === 'Admin' ||
@@ -82,7 +114,6 @@
                 name="Acciones"
                 prop="{{ column.prop }}"
                 style="display: flex; gap: 5px"
-                [flexGrow]="1"
                 [minWidth]="325"
               >
                 <ng-template
@@ -91,10 +122,10 @@
                   let-row="row"
                   style="display: flex; gap: 5px"
                 >
-                  <div style="display: flex; min-width: 305px; gap: 5px">
+                  <div style="display: flex;min-width: 305px; gap: 5px">
                     <button
                       type="button"
-                      class="btn btn-sm btn-primary btn-outline-primary btn-round"
+                      class="btn btn-sm btn-warning btn-outline-warning btn-round"
                       (click)="open(row.Id)"
                       style="font-size: 12px; padding: 2px 15px"
                     >
@@ -112,7 +143,12 @@
                     </button>
                     <button
                       type="button"
-                      class="btn btn-sm btn-primary btn-outline-primary btn-round"
+                      class="btn btn-sm btn-round"
+                      [ngClass]="
+                        row._Activo
+                          ? 'btn-danger btn-outline-danger'
+                          : 'btn-success btn-outline-success'
+                      "
                       (click)="confirmDeleteModal(row, row._Activo)"
                       style="font-size: 12px; padding: 2px 15px; width: 39.5%"
                     >
@@ -134,7 +170,7 @@
                 prop="{{ column.prop }}"
                 style="display: flex; gap: 5px"
                 [flexGrow]="1"
-                [minWidth]="325"
+                [minWidth]="titulo !== 'Aranceles' ? 325 : 220"
               >
                 <ng-template
                   ngx-datatable-cell-template
@@ -142,10 +178,10 @@
                   let-row="row"
                   style="display: flex; gap: 5px"
                 >
-                  <div style="display: flex; min-width: 305px; gap: 5px">
+                  <div style="display: flex; gap: 5px"  [ngStyle]="{'min-width': titulo !== 'Aranceles' ? '305px' : '220px'}">
                     <button
                       type="button"
-                      class="btn btn-sm btn-primary btn-outline-primary btn-round"
+                      class="btn btn-sm btn-primary btn-outline-warning btn-round"
                       (click)="open(row.Id)"
                       style="font-size: 12px; padding: 2px 15px"
                     >
@@ -162,8 +198,9 @@
                       Detalle
                     </button>
                     <button
+                      *ngIf="titulo !== 'Aranceles'"
                       type="button"
-                      class="btn btn-sm btn-primary btn-outline-primary btn-round"
+                      class="btn btn-sm btn-primary btn-outline-danger btn-round"
                       (click)="confirmDeleteModal(row)"
                       style="font-size: 12px; padding: 2px 15px"
                     >

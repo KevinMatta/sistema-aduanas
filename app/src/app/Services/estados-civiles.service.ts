@@ -29,14 +29,14 @@ export class EstadosCivilesService implements DataService {
     console.log(val + "Para Eliminar");
     return this.http.delete<any>(
       `${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1`,
-      { observe: "response" }
-    );
+    )
+    .pipe(map((response) => response));
   }
 
   Editar(esta: any): Observable<any> {
     const json = {
       esCi_Id: esta.Id,
-      esCi_Descripcion: esta['Estado Civil'],
+      esCi_Descripcion: esta["Estado Civil"],
       esCi_Estado: true,
       esCi_Creacion: 1,
       esCi_FechaCreacion: new Date().toISOString(),
@@ -55,7 +55,7 @@ export class EstadosCivilesService implements DataService {
   Crear(esta: any): Observable<any> {
     const json = {
       esCi_Id: 0,
-      esCi_Descripcion: esta['Estado Civil'],
+      esCi_Descripcion: esta["Estado Civil"],
       esCi_Estado: true,
       esCi_Creacion: 1,
       esCi_FechaCreacion: new Date().toISOString(),
@@ -76,6 +76,7 @@ export class EstadosCivilesService implements DataService {
       const model: EstadoCivil = {
         Id: item.esCi_Id,
         ["Estado Civil"]: item.esCi_Descripcion,
+        _Estado: item.esCi_Estado,
       };
       return model;
     });

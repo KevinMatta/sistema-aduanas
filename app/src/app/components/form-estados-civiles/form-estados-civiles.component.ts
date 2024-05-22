@@ -5,6 +5,7 @@ import { RolesService } from "../../Services/roles.service";
 import { ToastrService } from "ngx-toastr";
 import { EstadosCivilesService } from "../../Services/estados-civiles.service";
 import { EstadoCivil } from "../../Models/EstadosCivilesViewModel";
+import { APIResponse } from "../../Models/APIResponseViewModel";
 // import { MensajesService } from "../../Services/mensajes.service";
 
 @Component({
@@ -14,14 +15,12 @@ import { EstadoCivil } from "../../Models/EstadosCivilesViewModel";
 })
 export class FormEstadosCivilesComponent implements OnInit {
   @Input() objetoParaEditar: EstadoCivil;
-  roles: Rol[];
 
   estadoCivil: EstadoCivil = new EstadoCivil();
   confirmarClave: string;
 
   constructor(
     public activeModal: NgbActiveModal,
-    private rolesService: RolesService,
     private toastr: ToastrService,
     private estadosCivilesService: EstadosCivilesService
   ) {}
@@ -34,16 +33,6 @@ export class FormEstadosCivilesComponent implements OnInit {
     } else {
       this.estadoCivil["Estado Civil"] = "";
     }
-
-    this.rolesService.getData().subscribe(
-      (data: Rol[]) => {
-        this.roles = data;
-      },
-      (error) => {
-        console.log(error);
-        this.isLoading = false;
-      }
-    );
   }
 
   estadoCivilOnChange(event: any) {
@@ -56,8 +45,8 @@ export class FormEstadosCivilesComponent implements OnInit {
       return;
     }
     if (!this.objetoParaEditar) {
-      await this.estadosCivilesService.Crear(this.estadoCivil).subscribe(
-        (data: any) => {
+      this.estadosCivilesService.Crear(this.estadoCivil).subscribe(
+        (data: APIResponse<any>) => {
           if (data.code >= 200 && data.code <= 300) {
             this.mostrarSuccess("Estado Civil creado con éxito.");
             this.activeModal.close(true);
@@ -72,7 +61,7 @@ export class FormEstadosCivilesComponent implements OnInit {
         }
       );
     } else {
-      await this.estadosCivilesService.Editar(this.estadoCivil).subscribe(
+      this.estadosCivilesService.Editar(this.estadoCivil).subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
             this.mostrarSuccess("Estado civil editado con éxito.");

@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h4 class="modal-title" id="modal-basic-title">
-    {{ objetoParaEditar ? "Editar" : "Nuevo" }} Aduana
+    {{ objetoParaEditar ? "Editar" : "Nueva" }} Empresa
   </h4>
   <button
     type="button"
@@ -30,7 +30,7 @@
               *ngFor="let estado of estados"
               type="button"
               class="dropdown-item"
-              (click)="estadoSelect(estado.Id, estado.Estado)"
+              (click)="estadosSelect(estado.Id, estado.Estado)"
             >
               {{ estado.Estado }}
             </button>
@@ -55,7 +55,7 @@
               *ngFor="let ciudad of ciudadesFiltradas"
               type="button"
               class="dropdown-item"
-              (click)="ciudadSelect(ciudad.Id, ciudad.Ciudad)"
+              (click)="ciudadesSelect(ciudad.Id, ciudad.Ciudad)"
             >
               {{ ciudad.Ciudad }}
             </button>
@@ -67,7 +67,7 @@
   <div class="row">
     <div class="col d-flex justify-content-center">
       <div class="form-group">
-        <label>Aduana</label>
+        <label>Empresa</label>
         <input
           type="text"
           class="form-control"

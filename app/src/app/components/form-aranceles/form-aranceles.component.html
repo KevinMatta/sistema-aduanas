@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h4 class="modal-title" id="modal-basic-title">
-    {{ objetoParaEditar ? "Editar" : "Nuevo" }} Aranceles
+    {{ objetoParaEditar ? "Editar" : "Nuevo" }} Arancel
   </h4>
   <button
     type="button"
@@ -13,19 +13,13 @@
 </div>
 <div class="modal-body">
   <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Porcentaje</label>
-      </div>
-    </div>
-    <div class="col-md-6">
+    <div class="col d-flex justify-content-center">
       <div class="form-group">
         <label>Arancel</label>
         <input
           type="text"
           class="form-control"
-          placeholder="Cortés"
-          maxlength="20"
+          placeholder="IMP. SOBRE VENTAS"
           (change)="arancelOnChange($event)"
           [value]="arancel.Arancel"
           style="max-width: 150px"

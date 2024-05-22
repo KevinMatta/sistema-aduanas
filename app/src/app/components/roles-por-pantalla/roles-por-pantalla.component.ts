@@ -1,6 +1,8 @@
 import { Location } from "@angular/common";
 import {
+  AfterViewChecked,
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnInit,
@@ -21,30 +23,31 @@ import { Rol } from "../../Models/RolesViewModel";
   templateUrl: "./roles-por-pantalla.component.html",
   styleUrls: ["./roles-por-pantalla.component.css"],
 })
-export class RolesPorPantallaComponent implements OnInit, AfterViewInit {
+export class RolesPorPantallaComponent implements OnInit, AfterViewChecked {
   objetoParaEditar: Rol;
 
   rol: Rol = new Rol();
   pantallas: Pantalla[];
   esquemas: Esquema[];
 
-  pantallasPorAgregar: number[] = [];
-
   isLoading: boolean = true;
 
-  @ViewChild("checkboxSistemaElectoral") sistCkBox: ElementRef;
-  @ViewChildren("esquCkBox") esquCkBoxes: QueryList<ElementRef>;
+  @ViewChild("Sist_CkBox") sistCkBox: ElementRef;
+  @ViewChildren("Esqu_CkBox") esquCkBoxes: QueryList<ElementRef>;
 
   constructor(
     private rolesService: RolesService,
     private pantallasService: PantallasService,
     private location: Location,
+    private cdr: ChangeDetectorRef,
     private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
+    this.rol.Rol = "";
+    this.rol._pantallas = [];
+
     this.objetoParaEditar = this.rolesService.getObjetoParaEditar();
-    console.log(this.objetoParaEditar, "this.objetoParaEditar");
 
     if (this.objetoParaEditar) {
       this.rol.Id = this.objetoParaEditar.Id;
@@ -66,6 +69,7 @@ export class RolesPorPantallaComponent implements OnInit, AfterViewInit {
                 this.esquemas[index].NumPantallas++;
               }
             });
+            this.cdr.detectChanges();
           },
           (error) => {
             console.log(error);
@@ -78,32 +82,29 @@ export class RolesPorPantallaComponent implements OnInit, AfterViewInit {
     );
   }
 
-  ngAfterViewInit(): void {
-    // Access the elements after the view has been initialized
-    console.log(this.sistCkBox, "sistCkBox");
-    console.log(this.esquCkBoxes, "this.esquCkBoxes");
+  ngAfterViewChecked(): void {
     const sistCkBoxElement = this.sistCkBox.nativeElement;
-    const esquCkBoxElements = this.esquCkBoxes
-      .toArray()
-      .map((el) => el.nativeElement);
-
-    console.log(sistCkBoxElement, "sistCkBoxElement");
-    console.log(esquCkBoxElements, "esquCkBoxElements");
-
-    esquCkBoxElements.forEach((esquCkBox: any) => {
-      const pantCkBoxesDentroDeEsqu =
-        esquCkBox.parentElement.children[2].querySelectorAll(".Pant_CkBox");
+    if (this.esquCkBoxes && this.esquCkBoxes.length > 0) {
+      this.esquCkBoxes.map((el) => {
+        const pantCkBoxesDentroDeEsqu =
+          el.nativeElement.parentElement.children[2].querySelectorAll(
+            ".Pant_CkBox"
+          );
+        if (
+          pantCkBoxesDentroDeEsqu.length > 0 &&
+          Array.from(pantCkBoxesDentroDeEsqu).every(
+            (esquCk: any) => esquCk.checked
+          )
+        ) {
+          el.nativeElement.checked = true;
+        }
+      });
       if (
-        Array.from(pantCkBoxesDentroDeEsqu).every(
-          (esquCk: any) => esquCk.checked
-        )
+        this.esquCkBoxes.toArray().length > 0 &&
+        this.esquCkBoxes.toArray().every((el) => el.nativeElement.checked)
       ) {
-        esquCkBox.checked = true;
+        sistCkBoxElement.checked = true;
       }
-    });
-
-    if (esquCkBoxElements.every((esquCk: any) => esquCk.checked)) {
-      sistCkBoxElement.checked = true;
     }
   }
 
@@ -122,12 +123,12 @@ export class RolesPorPantallaComponent implements OnInit, AfterViewInit {
       checkboxes.forEach(function (checkbox) {
         checkbox.checked = true;
       });
-      this.pantallasPorAgregar = this.pantallas.map((pant) => pant.Id);
+      this.rol._pantallas = this.pantallas.map((pant) => pant.Id);
     } else {
       checkboxes.forEach(function (checkbox) {
         checkbox.checked = false;
       });
-      this.pantallasPorAgregar = [];
+      this.rol._pantallas = [];
     }
   }
 
@@ -143,18 +144,19 @@ export class RolesPorPantallaComponent implements OnInit, AfterViewInit {
       }
       pantCkBoxesDentroDeEsqu.forEach((checkbox) => {
         checkbox.checked = true;
-        const index = this.pantallasPorAgregar.indexOf(checkbox.id);
+        const index = this.rol._pantallas.indexOf(parseInt(checkbox.id));
         if (index === -1) {
-          this.pantallasPorAgregar.push(parseInt(checkbox.id));
+          this.rol._pantallas.push(parseInt(checkbox.id));
         }
       });
     } else {
       sistCkBox.checked = false;
+
       pantCkBoxesDentroDeEsqu.forEach((checkbox) => {
         checkbox.checked = false;
-        const index = this.pantallasPorAgregar.indexOf(checkbox.id);
+        const index = this.rol._pantallas.indexOf(parseInt(checkbox.id));
         if (index !== -1) {
-          this.pantallasPorAgregar.splice(index, 1);
+          this.rol._pantallas.splice(index, 1);
         }
       });
     }
@@ -162,11 +164,11 @@ export class RolesPorPantallaComponent implements OnInit, AfterViewInit {
 
   pantCkBoxChange(event: any) {
     const ckBox = event.target;
-    const index = this.pantallasPorAgregar.indexOf(ckBox.id);
+    const index = this.rol._pantallas.indexOf(ckBox.id);
     if (index === -1) {
-      this.pantallasPorAgregar.push(parseInt(ckBox.id));
+      this.rol._pantallas.push(parseInt(ckBox.id));
     } else {
-      this.pantallasPorAgregar.splice(index, 1);
+      this.rol._pantallas.splice(index, 1);
     }
   }
 
@@ -200,14 +202,36 @@ export class RolesPorPantallaComponent implements OnInit, AfterViewInit {
       this.mostrarWarning("Por favor ingrese el nombre del rol");
       return;
     }
-    this.rolesService.Crear(this.rol.Rol, this.pantallasPorAgregar).subscribe(
+    if (this.objetoParaEditar) {
+      this.rolesService.Editar(this.rol).subscribe(
+        (data: APIResponse<any>) => {
+          if (data.code >= 200 && data.code < 300) {
+            this.mostrarSuccess("Rol editado con éxito!");
+            this.location.back();
+          } else {
+            this.mostrarError("Ha ocurrido un error al intentar editar el rol");
+          }
+        },
+        (error) => {
+          console.log(error, "error al editar el rol");
+          this.mostrarError("Ha ocurrido un error al intentar editar el rol");
+        }
+      );
+      return;
+    }
+    this.rolesService.Crear(this.rol).subscribe(
       (data: APIResponse<any>) => {
         if (data.code >= 200 && data.code < 300) {
           this.mostrarSuccess("Rol creado con éxito!");
           this.location.back();
+        } else {
+          this.mostrarError("Ha ocurrido un error al intentar editar el rol");
         }
       },
-      (error) => console.log(error, "error al crear el rol")
+      (error) => {
+        console.log(error, "error al crear el rol");
+        this.mostrarError("Ha ocurrido un error al intentar editar el rol");
+      }
     );
   }
 

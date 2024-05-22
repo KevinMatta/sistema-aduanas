@@ -25,14 +25,14 @@ namespace sistema_aduana.DataAccess.Repository
                 parametro.Add("@Empr_Modifica", usuario);
                 parametro.Add("@Empr_FechaModifica", fecha);
 
-                var result = db.Execute(
+                var result = db.QueryFirst(
                     sql, parametro,
                     commandType: CommandType.StoredProcedure
                 );
 
-                string mensaje = (result == 1) ? "exito" : "error";
+                string mensaje = (result.Resultado == 1) ? "exito" : "error";
 
-                return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+                return new RequestStatus { CodeStatus = result.Resultado, MessageStatus = mensaje };
             };
         }
 
@@ -58,12 +58,13 @@ namespace sistema_aduana.DataAccess.Repository
             {
                 var parameter = new DynamicParameters();
                 parameter.Add("@Empr_Descripcion", item.Empr_Descripcion);
+                parameter.Add("@Ciud_Id", item.Ciud_Id);
                 parameter.Add("@Empr_Creacion", item.Empr_Creacion);
                 parameter.Add("@Empr_FechaCreacion", item.Empr_FechaCreacion);
 
-                var result = db.Execute(sql, parameter, commandType: CommandType.StoredProcedure);
-                string mensaje = (result == 1) ? "exito" : "error";
-                return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+                var result = db.QueryFirst(sql, parameter, commandType: CommandType.StoredProcedure);
+                string mensaje = (result.Resultado == 1) ? "exito" : "error";
+                return new RequestStatus { CodeStatus = result.Resultado, MessageStatus = mensaje };
             }
         }
 
@@ -90,12 +91,13 @@ namespace sistema_aduana.DataAccess.Repository
                 var parameter = new DynamicParameters();
                 parameter.Add("@Empr_Id", item.Empr_Id);
                 parameter.Add("@Empr_Descripcion", item.Empr_Descripcion);
+                parameter.Add("@Ciud_Id", item.Ciud_Id);
                 parameter.Add("@Empr_Modifica", item.Empr_Modifica);
                 parameter.Add("@Empr_FechaModifica", item.Empr_FechaModifica);
 
-                var result = db.Execute(sql, parameter, commandType: CommandType.StoredProcedure);
-                string mensaje = (result == 1) ? "exito" : "error";
-                return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+                var result = db.QueryFirst(sql, parameter, commandType: CommandType.StoredProcedure);
+                string mensaje = (result.Resultado == 1) ? "exito" : "error";
+                return new RequestStatus { CodeStatus = result.Resultado, MessageStatus = mensaje };
             }
         }
 

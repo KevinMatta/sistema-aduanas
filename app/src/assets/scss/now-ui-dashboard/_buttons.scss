@@ -95,14 +95,52 @@
 .btn-success { @include btn-styles($success-color, $success-states-color); }
 .btn-info    { @include btn-styles($info-color, $info-states-color); }
 .btn-warning { @include btn-styles($warning-color, $warning-states-color); }
-.btn-danger  { @include btn-styles($danger-color, $danger-states-color); }
+.btn-danger  { @include btn-styles(#E20000, $danger-states-color); }
 .btn-neutral { @include btn-styles($white-color, $white-color); }
 
 .btn-outline-primary {
     background-color: transparent;
     border: 1px solid #61c3db;
     color: #61c3db;
+    transition: all 0.2s ease-in-out;
 }
+.btn-outline-warning {
+    background-color: transparent;
+    border: 1px solid $warning-color;
+    color: $warning-color;
+    transition: all 0.2s ease-in-out;
+}
+.btn-outline-warning:hover {
+    background-color: $warning-color;
+}
+.btn-outline-success {
+    background-color: transparent;
+    border: 1px solid $success-color;
+    color: $success-color;
+    transition: all 0.2s ease-in-out;
+}
+.btn-success:hover {
+    background-color: #48f03f;
+}
+.btn-outline-success:hover {
+    background-color: $success-color;
+}
+.btn-outline-danger {
+    background-color: transparent;
+    border: 1px solid #E20000;
+    color: #E20000;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-outline-danger:hover {
+    background-color: #E20000;
+}
+.btn-danger:hover {
+    background-color: #fa2626;
+}
+
+
+
 .btn{
      &:disabled,
      &[disabled],

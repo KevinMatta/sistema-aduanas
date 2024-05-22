@@ -40,7 +40,7 @@ namespace sistema_aduana.API.Controllers
         [HttpGet("List")]
         public IActionResult Index()
         {
-            var list = _aduaService.AduanaListar();
+            var list = _aduaService.ArancelListar();
             return Ok(list);
         }
 
@@ -80,20 +80,6 @@ namespace sistema_aduana.API.Controllers
             {
                 var aduana = _mapper.Map<tbAranceles>(item);
                 var result = _aduaService.ArancelActualizar(aduana);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpDelete("Eliminar/{id}")]
-        public IActionResult Eliminar(int id, int usuario)
-        {
-            try
-            {
-                var result = _aduaService.AduanaEliminar(id, usuario, DateTime.Now);
                 return Ok(result);
             }
             catch (Exception ex)

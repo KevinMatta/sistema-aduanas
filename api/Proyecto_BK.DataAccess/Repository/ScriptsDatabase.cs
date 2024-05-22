@@ -144,11 +144,25 @@ namespace SistemaMedico.DataAcces.Repository
         public static string AduanasBuscar = "[Adua].[sp_Aduanas_buscar]";
         public static string AduanasCrear = "[Adua].[sp_Aduanas_crear]";
         public static string AduanasActualizar = "[Adua].[sp_Aduanas_actualizar]";
-        public static string AduanasEliminar = "[Adua].[sp_Aduanas_eliminar]";
+        public static string AduanasToggleEstado = "[Adua].[sp_Aduanas_toggleEstado]";
 
         public static string ComerciantesIndividualesActualizar { get; internal set; }
         public static string ComerciantesIndividualesListar { get; internal set; }
         #endregion
+        #endregion
+
+        #region Categorias
+
+        public static string CategoriasToggleEstado = "[Gral].[sp_Categorias_toggleEstado]";
+        public static string CategoriasListar = "[Gral].[sp_Categorias_listar]";
+
+        #endregion
+
+        #region Items
+
+        public static string ItemsToggleEstado = "[Gral].[sp_Items_toggleEstado]";
+        public static string ItemsListar = "[Gral].[sp_Items_listar]";
+
         #endregion
     }
 }

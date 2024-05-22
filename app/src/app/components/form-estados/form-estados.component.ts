@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { Rol } from "../../Models/RolesViewModel";
-import { RolesService } from "../../Services/roles.service";
 import { ToastrService } from "ngx-toastr";
 import { EstadosService } from "../../Services/estados.service";
 import { Pais } from "../../Models/PaisesViewModel";
@@ -19,7 +17,6 @@ export class FormEstadosComponent implements OnInit {
   paises: Pais[];
 
   estado: Estado = new Estado();
-  confirmarClave: string;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -71,7 +68,7 @@ export class FormEstadosComponent implements OnInit {
       await this.estadosService.Crear(this.estado).subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
-            this.mostrarSuccess("estado creado con éxito.");
+            this.mostrarSuccess("Estado creado con éxito.");
             this.activeModal.close(true);
           } else {
             this.activeModal.close(false);
@@ -88,7 +85,7 @@ export class FormEstadosComponent implements OnInit {
       await this.estadosService.Editar(this.estado).subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
-            this.mostrarSuccess("estado editado con éxito.");
+            this.mostrarSuccess("Estado editado con éxito.");
             this.activeModal.close(true);
           } else {
             this.activeModal.close(false);

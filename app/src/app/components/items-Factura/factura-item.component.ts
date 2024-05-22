@@ -6,14 +6,13 @@ import { RolesService } from "../../Services/roles.service";
 import { Usuario } from "../../Models/UsuariosViewModel";
 import { ToastrService } from "ngx-toastr";
 import { PaisesService } from "../../Services/paises.service";
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UsuariosService } from "../../Services/usuarios.service";
 import { DEDService } from "../../Services/DeVa-Enc-Item.service";
 // import { MensajesService } from "../../Services/mensajes.service";
 import { Pais } from "../../Models/PaisesViewModel";
 import { FacturaDetalle } from "../../Models/FacDetalleViewModel";
 import { CategoriaViewModel } from "../../Models/CategoriasViewModel";
-
 
 @Component({
   selector: "app-factura-encabezado",
@@ -26,6 +25,11 @@ export class FormFacturaitemComponent implements OnInit {
   Itemsss: FormGroup;
   roles: Rol[];
   paises: Pais[];
+
+//  numfacc: string;
+  //UnidadMedida: string;
+  //UnidadMed: string[] = [
+
   numfacc:string;
   Items:Item[]= [];
   Categorias:CategoriaViewModel[]=[];
@@ -35,6 +39,7 @@ export class FormFacturaitemComponent implements OnInit {
   idcatselc:number;
   categselc:string;
   UnidadMed:string[]  = [
+
     "Metro",
     "Pulgada",
     "Litro",
@@ -45,7 +50,7 @@ export class FormFacturaitemComponent implements OnInit {
     "Centímetro cúbico",
     "Unidad",
   ];
-  paisorigen:string;
+  paisorigen: string;
   usuario: Usuario = new Usuario();
   confirmarClave: string;
   constructor(
@@ -53,17 +58,17 @@ export class FormFacturaitemComponent implements OnInit {
     private rolesService: RolesService,
     private toastr: ToastrService,
     private usuariosService: UsuariosService,
-     private paisesService: PaisesService,
-     private fb: FormBuilder,
-     private dedService: DEDService,
-    // private mensajesService:MensajesService
-  ) { }
+    private paisesService: PaisesService,
+    private fb: FormBuilder,
+    private dedService: DEDService
+  ) // private mensajesService:MensajesService
+  {}
 
   isLoading = true;
   ngOnInit(): void {
     this.dedService.numFactura;
-    this.paisorigen= "- Seleccionar -";
-    this.UnidadMedida= "- Seleccionar -";
+    this.paisorigen = "- Seleccionar -";
+    this.UnidadMedida = "- Seleccionar -";
     this.numfacc = this.dedService.numFactura;
     console.log(this.numfacc);
     this.paisesService.getData().subscribe(
@@ -87,33 +92,40 @@ export class FormFacturaitemComponent implements OnInit {
 
    
     this.Itemsss = this.fb.group({
-      Item_Id: [''],
-      FaDe_Cantidad: [''],
-      FaDe_UnidadMedida: [''],
-      FaDe_Caracteristicas: [''],
-      Pais_Id: [''],
-      FaDe_ValorUnitario: [''],
-      FaDe_TotalFactura: ['']
+      Item_Id: [""],
+      FaDe_Cantidad: [""],
+      FaDe_UnidadMedida: [""],
+      FaDe_Caracteristicas: [""],
+      Pais_Id: [""],
+      FaDe_ValorUnitario: [""],
+      FaDe_TotalFactura: [""],
     });
-    this.Itemsss.get('FaDe_ValorUnitario').valueChanges.subscribe(() => {
+    this.Itemsss.get("FaDe_ValorUnitario").valueChanges.subscribe(() => {
       this.calcularTotalFactura();
     });
 
-    this.Itemsss.get('FaDe_Cantidad').valueChanges.subscribe(() => {
+    this.Itemsss.get("FaDe_Cantidad").valueChanges.subscribe(() => {
       this.calcularTotalFactura();
     });
   }
 
   calcularTotalFactura() {
-    const valorUnitario = this.Itemsss.get('FaDe_ValorUnitario').value;
-    const cantidad = this.Itemsss.get('FaDe_Cantidad').value;
+    const valorUnitario = this.Itemsss.get("FaDe_ValorUnitario").value;
+    const cantidad = this.Itemsss.get("FaDe_Cantidad").value;
 
     const totalFactura = valorUnitario * cantidad;
 
-    this.Itemsss.get('FaDe_TotalFactura').setValue(totalFactura);
+    this.Itemsss.get("FaDe_TotalFactura").setValue(totalFactura);
   }
   agregarItem() {
     if (this.Itemsss.valid) {
+
+      //let nuevoItem: Item = {
+        //Item_Id: this.Itemsss.get("Item_Id").value,
+        //FaDe_Cantidad: this.Itemsss.get("FaDe_Cantidad").value,
+        //FaDe_UnidadMedida: this.UnidadMedida,
+       // FaDe_Caracteristicas: this.Itemsss.get("FaDe_Caracteristicas").value,
+
       let nuevoItem: FacturaDetalle = {
         Item_Id: this.iditems,
         FaDe_Id:0,
@@ -121,22 +133,23 @@ export class FormFacturaitemComponent implements OnInit {
         FaDe_Cantidad: this.Itemsss.get('FaDe_Cantidad').value,
         FaDe_UnidadMedida: this.UnidadMedida, 
         FaDe_Caracteristicas: this.Itemsss.get('FaDe_Caracteristicas').value,
+
         Fact_NumeroFactura: this.numfacc,
-        Pais: this.paisorigen, 
-        FaDe_ValorUnitario: this.Itemsss.get('FaDe_ValorUnitario').value,
-        FaDe_TotalFactura: this.Itemsss.get('FaDe_TotalFactura').value,
+        Pais: this.paisorigen,
+        FaDe_ValorUnitario: this.Itemsss.get("FaDe_ValorUnitario").value,
+        FaDe_TotalFactura: this.Itemsss.get("FaDe_TotalFactura").value,
         FaDe_Creacion: 0,
-        FaDe_FechaCreacion: ''
+        FaDe_FechaCreacion: "",
+        Item: "",
+        Categoria: "",
+        _aranceles: [],
       };
-  
-    
-      
+
       this.dedService.agregaritem(nuevoItem);
       this.Itemsss.reset();
-      this.activeModal.close('Save click')
-      console.log('Items después de agregar:', nuevoItem);
+      this.activeModal.close("Save click");
+      console.log("Items después de agregar:", nuevoItem);
       console.log(this.dedService.Items);
-
     }
   }
   catselec(id: number, des:string){
@@ -166,17 +179,14 @@ export class FormFacturaitemComponent implements OnInit {
   //     const nuevoItem: Item = this.Itemsss.value;
   //     this.Items.push(nuevoItem);
   //     console.log(this.Items);
-      
+
   //     this.Itemsss.reset(); // Opcional: para limpiar el formulario después de agregar el item
   //   }
   // }
   porigens(paisId: number, pais: string) {
     this.paisorigen = pais;
   }
-  UnMedSel( pais: string) {
+  UnMedSel(pais: string) {
     this.UnidadMedida = pais;
   }
-
- 
- 
 }

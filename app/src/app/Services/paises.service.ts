@@ -27,11 +27,12 @@ export class PaisesService implements DataService {
 
   Eliminar(val: any): Observable<any> {
     console.log(val + "Para Eliminar");
-    return this.http.delete<any>(
-      `${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1
-        `,
-      { observe: "response" }
-    );
+    return this.http
+      .delete<any>(
+        `${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1
+        `
+      )
+      .pipe(map((response) => response));
   }
 
   Editar(pais: any): Observable<any> {
@@ -77,6 +78,7 @@ export class PaisesService implements DataService {
       const model: Pais = {
         Id: item.pais_Id,
         Pais: item.pais_Descripcion,
+        _Estado: item.pais_Estado,
       };
       return model;
     });

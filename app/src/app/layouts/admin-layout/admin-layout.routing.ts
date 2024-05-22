@@ -16,6 +16,8 @@ import { FormDeclaracionValorComponent } from "../../components/form-declaracion
 import { BoletinComponent } from "../../components/boletin/boletin.component";
 import { FormUsuariosComponent } from "../../components/form-usuarios/form-usuarios.component";
 import { RolesPorPantallaComponent } from "../../components/roles-por-pantalla/roles-por-pantalla.component";
+import { FormEmpleadosComponent } from "../../components/form-empleados/form-empleados.component";
+import { AuthGuard } from "../../helpers/auth.guard";
 // import { LoginComponent } from "../../components/login/login.component";
 
 export const AdminLayoutRoutes: Routes = [
@@ -23,11 +25,16 @@ export const AdminLayoutRoutes: Routes = [
   {
     path: "layout/index-usuarios",
     component: IndexListaComponent,
-    data: { titulo: "Usuarios" },
+    canActivate: [AuthGuard],
+    data: { titulo: "Usuarios", roles: ["Editor"] },
   },
   {
     path: "layout/form-usuarios",
     component: FormUsuariosComponent,
+  },
+  {
+    path: "layout/form-empleados",
+    component: FormEmpleadosComponent,
   },
   // { path: "layout/form-usuarios", component: FormUsuariosComponent },
   {
@@ -36,6 +43,21 @@ export const AdminLayoutRoutes: Routes = [
     data: { titulo: "Roles" },
   },
   { path: "layout/roles-por-pantalla", component: RolesPorPantallaComponent },
+  {
+    path: "layout/index-aranceles",
+    component: IndexListaComponent,
+    data: { titulo: "Aranceles" },
+  },
+  {
+    path: "layout/index-categorias",
+    component: IndexListaComponent,
+    data: { titulo: "Categorias" },
+  },
+  {
+    path: "layout/index-items",
+    component: IndexListaComponent,
+    data: { titulo: "Items" },
+  },
   {
     path: "layout/index-aduanas",
     component: IndexListaComponent,

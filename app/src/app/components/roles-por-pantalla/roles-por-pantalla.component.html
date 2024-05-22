@@ -28,6 +28,7 @@
                   name="rolDescripcion"
                   class="form-control"
                   style="max-width: 280px"
+                  [value]="rol.Rol"
                   (change)="rolDescripcionOnChange($event)"
                 />
               </div>
@@ -40,14 +41,13 @@
               </button>
             </div>
             <div class="outer">
-              <ul *ngIf="pantallas" id="ul" style="list-style: none">
+              <ul #outer id="ul" style="list-style: none">
                 <li>
                   <span class="caretRP" (click)="caretClick($event)">
                     <label>Sistema electoral</label>
                   </span>
                   <input
-                    id="checkboxSistemaElectoral"
-                    #checkboxSistemaElectoral
+                    #Sist_CkBox
                     type="checkbox"
                     style="margin-left: 10px"
                     class="Sist_CkBox"
@@ -66,7 +66,7 @@
                       list-style: none;
                     "
                   >
-                    <ng-container *ngIf="esquemas && pantallas">
+                    <ng-container>
                       <li
                         *ngFor="let esquema of esquemas"
                         style="
@@ -92,7 +92,6 @@
                             <label>{{ esquema.Esquema }}</label>
                           </span>
                           <input
-                            [id]="esquema.Id"
                             class="Esqu_CkBox"
                             #Esqu_CkBox
                             type="checkbox"

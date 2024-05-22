@@ -30,6 +30,8 @@ import { FormUsuariosModalComponent } from "./components/form-usuarios-modal/for
 import { FormFacturaitemComponent } from "./components/items-Factura/factura-item.component";
 import { FormFacturaEncabezadoComponent } from "./components/factura-encabezado/factura-encabezado.component";
 import { FormDeclaracionValorComponent } from "./components/form-declaracion-valor/form-declaracion-valor.component";
+import { FormEmpresasComponent } from "./components/form-empresas/form-empresas.component";
+import { FormEmpleadosComponent } from "./components/form-empleados/form-empleados.component";
 
 
 @NgModule({
@@ -63,14 +65,22 @@ import { FormDeclaracionValorComponent } from "./components/form-declaracion-val
     FormUsuariosModalComponent,
     FormEstadosComponent,
     FormCiudadesComponent,
-          FormFacturaitemComponent,FormFacturaEncabezadoComponent,FormDeclaracionValorComponent
+    FormEmpresasComponent,
+    FormEmpleadosComponent,
+    FormFacturaitemComponent,
+    FormFacturaEncabezadoComponent,
+    FormDeclaracionValorComponent
   ],
   entryComponents: [
     FormEstadosComponent,
     FormUsuariosComponent,
     FormUsuariosModalComponent,
     FormCiudadesComponent,
-    FormFacturaitemComponent,FormFacturaEncabezadoComponent,FormDeclaracionValorComponent
+    FormEmpresasComponent,
+    FormEmpleadosComponent,
+    FormFacturaitemComponent,
+    FormFacturaEncabezadoComponent,
+    FormDeclaracionValorComponent
   ],
 
   schemas: [NO_ERRORS_SCHEMA],

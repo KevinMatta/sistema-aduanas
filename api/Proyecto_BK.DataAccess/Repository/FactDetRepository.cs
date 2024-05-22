@@ -30,23 +30,7 @@ namespace sistema_aduana.DataAccess.Repository
     {
         public RequestStatus Delete(int? id, int usuario, DateTime fecha)
         {
-            string sql = ScriptsDatabase.AduanasEliminar;
-            using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
-            {
-                var parametro = new DynamicParameters();
-                parametro.Add("@Adua_Id", id);
-                parametro.Add("@Adua_Modifica", usuario);
-                parametro.Add("@Adua_FechaModifica", fecha);
-
-                var result = db.Execute(
-                    sql, parametro,
-                    commandType: CommandType.StoredProcedure
-                );
-
-                string mensaje = (result == 1) ? "exito" : "error";
-
-                return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
-            };
+            throw new NotImplementedException();
         }
 
         public tbFacturaDetalle Find(int? id)

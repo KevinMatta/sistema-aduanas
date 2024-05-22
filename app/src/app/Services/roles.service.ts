@@ -13,10 +13,10 @@ import { map } from "rxjs/operators";
 export class RolesService implements DataService {
   constructor(private http: HttpClient) {}
 
-  private objetoParaEditar = new BehaviorSubject<any>(null);
+  private objetoParaEditar = new BehaviorSubject<Rol>(null);
   data$ = this.objetoParaEditar.asObservable();
 
-  setObjetoParaEditar(data: any) {
+  setObjetoParaEditar(data: Rol) {
     this.objetoParaEditar.next(data);
   }
 
@@ -46,14 +46,28 @@ export class RolesService implements DataService {
     );
   }
 
-  Crear(
-    rol_Descripcion: string,
-    pantallasPorAgregar: number[]
-  ): Observable<any> {
+  Editar(rol: Rol): Observable<any> {
+    const json = {
+      rol_Id: rol.Id,
+      rol_Descripcion: rol.Rol,
+      pantallasPorAgregar: rol._pantallas,
+      Rol_Creacion: 1,
+      Rol_FechaCreacion: new Date().toISOString(),
+      Rol_Modifica: 1,
+      Rol_FechaModifica: new Date().toISOString(),
+    };
+    return this.http
+      .put<any>(this.BaseUrl + "Actualizar", json, {
+        headers: new HttpHeaders({ "Content-Type": "application/json" }),
+      })
+      .pipe(map((response) => response));
+  }
+
+  Crear(rol: Rol): Observable<any> {
     const json = {
       rol_Id: 0,
-      rol_Descripcion,
-      pantallasPorAgregar,
+      rol_Descripcion: rol.Rol,
+      pantallasPorAgregar: rol._pantallas,
       Rol_Creacion: 1,
       Rol_FechaCreacion: new Date().toISOString(),
       Rol_Modifica: 1,

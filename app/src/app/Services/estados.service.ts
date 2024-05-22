@@ -27,11 +27,12 @@ export class EstadosService implements DataService {
 
   Eliminar(val: any): Observable<any> {
     console.log(val + "Para Eliminar");
-    return this.http.delete<any>(
-      `${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1
-        `,
-      { observe: "response" }
-    );
+    return this.http
+      .delete<any>(
+        `${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1
+        `
+      )
+      .pipe(map((response) => response));
   }
 
   Editar(esta: any): Observable<any> {
@@ -60,11 +61,11 @@ export class EstadosService implements DataService {
       esta_Id: 0,
       pais_Id: esta.pais_Id,
       esta_Descripcion: esta.Estado,
-      pais_Estado: true,
-      pais_Creacion: 1,
-      pais_FechaCreacion: new Date().toISOString(),
-      pais_Modifica: 1,
-      pais_FechaModifica: new Date().toISOString(),
+      esta_Estado: true,
+      esta_Creacion: 1,
+      esta_FechaCreacion: new Date().toISOString(),
+      esta_Modifica: 1,
+      esta_FechaModifica: new Date().toISOString(),
       pais_Descripcion: esta.Pais ?? "pais_descripcion",
       Creacion: "string",
       Modifica: "string",
@@ -83,6 +84,7 @@ export class EstadosService implements DataService {
         Estado: item.esta_Descripcion,
         pais_Id: item.pais_Id,
         Pais: item.pais_Descripcion,
+        _Estado: item.esta_Estado,
       };
       return model;
     });

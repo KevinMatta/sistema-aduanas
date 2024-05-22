@@ -1,4 +1,6 @@
+type ArancelIdPorcentajeTuple = [number, number];
 export class Item {
+
     item_Id: number; // Identificador del item
     cate_Id: number; // ID de la categoría del item
     item_Descripcion:string;
@@ -9,3 +11,4 @@ export class Item {
     item_FechaModifica: string; // Fecha de modificación del registro del item
 
 }
+

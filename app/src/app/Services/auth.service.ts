@@ -67,6 +67,8 @@ export class AuthenticationService {
               if (response.data.usua_Estado) {
                 response.data["expiry"] =
                   new Date().getTime() + 8 * 60 * 60 * 1000;
+                response.data["Rol"] = response.data["rol_Descripcion"];
+                response.data["EsAdmin"] = response.data["usua_IsAdmin"];
                 localStorage.setItem("user", JSON.stringify(response.data));
                 this.userSubject.next(response.data);
               }

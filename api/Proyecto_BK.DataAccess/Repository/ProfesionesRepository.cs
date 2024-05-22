@@ -59,13 +59,12 @@ namespace sistema_aduana.DataAccess.Repository
             {
                 var parameter = new DynamicParameters();
                 parameter.Add("@Prof_Descripcion", item.Prof_Descripcion);
-                parameter.Add("@Prof_Estado", item.Prof_Estado);
                 parameter.Add("@Prof_Creacion", item.Prof_Creacion);
                 parameter.Add("@Prof_FechaCreacion", item.Prof_FechaCreacion);
 
-                var result = db.Execute(sql, parameter, commandType: CommandType.StoredProcedure);
-                string mensaje = (result == 1) ? "exito" : "error";
-                return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+                var result = db.QueryFirst(sql, parameter, commandType: CommandType.StoredProcedure);
+                string mensaje = (result.Resultado == 1) ? "exito" : "error";
+                return new RequestStatus { CodeStatus = result.Resultado, MessageStatus = mensaje };
             }
         }
 
@@ -92,7 +91,6 @@ namespace sistema_aduana.DataAccess.Repository
                 var parameter = new DynamicParameters();
                 parameter.Add("@Prof_Id", item.Prof_Id);
                 parameter.Add("@Prof_Descripcion", item.Prof_Descripcion);
-                parameter.Add("@Prof_Estado", item.Prof_Estado);
                 parameter.Add("@Prof_Modifica", item.Prof_Modifica);
                 parameter.Add("@Prof_FechaModifica", item.Prof_FechaModifica);
 

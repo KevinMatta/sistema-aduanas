@@ -15,25 +15,31 @@ namespace sistema_aduana.DataAccess.Repository
 {
     public class EmpleadoRepository : IRepository<tbEmpleados>
     {
-        public RequestStatus Delete(int? id, int usuario, DateTime fecha)
+        public RequestStatus ToggleEstado(int? id, bool estado, int usuario, DateTime fecha)
         {
-            string sql = ScriptsDatabase.EmpleadosEliminar;
+            string sql = ScriptsDatabase.UsuariosToggleEstado;
             using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
                 parametro.Add("@Empl_Id", id);
+                parametro.Add("@Empl_Estado", estado);
                 parametro.Add("@Empl_Modifica", usuario);
                 parametro.Add("@Empl_FechaModifica", fecha);
 
-                var result = db.Execute(
+                var result = db.QueryFirst(
                     sql, parametro,
                     commandType: CommandType.StoredProcedure
                 );
 
-                string mensaje = (result == 1) ? "exito" : "error";
+                string mensaje = (result.Resultado == 1) ? "exito" : "error";
 
-                return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+                return new RequestStatus { CodeStatus = result.Resultado, MessageStatus = mensaje };
+
             };
+        }
+        public RequestStatus Delete(int? id, int usuario, DateTime fecha)
+        {
+            throw new NotImplementedException();
         }
 
         public tbEmpleados Find(int? id)
@@ -74,6 +80,7 @@ namespace sistema_aduana.DataAccess.Repository
                 parameter.Add("@Empl_PrimerNombre", item.Empl_PrimerNombre);
                 parameter.Add("@Empl_PrimerApellido", item.Empl_PrimerApellido);
                 parameter.Add("@Empl_DNI", item.Empl_DNI);
+                parameter.Add("@Empl_Email", item.Empl_Email);
                 parameter.Add("@Empl_Sexo", item.Empl_Sexo);
                 parameter.Add("@EsCi_Id", item.EsCi_Id);
                 parameter.Add("@Empr_Id", item.Empr_Id);
@@ -111,6 +118,7 @@ namespace sistema_aduana.DataAccess.Repository
                 parameter.Add("@Empl_PrimerNombre", item.Empl_PrimerNombre);
                 parameter.Add("@Empl_PrimerApellido", item.Empl_PrimerApellido);
                 parameter.Add("@Empl_DNI", item.Empl_DNI);
+                parameter.Add("@Empl_Email", item.Empl_Email);
                 parameter.Add("@Empl_Sexo", item.Empl_Sexo);
                 parameter.Add("@EsCi_Id", item.EsCi_Id);
                 parameter.Add("@Empr_Id", item.Empr_Id);

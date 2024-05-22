@@ -28,27 +28,28 @@ namespace sistema_aduana.DataAccess.Repository
 {
     public class CategoriaRepository : IRepository<tbCategorias>
     {
-        public RequestStatus Delete(int? id, int usuario, DateTime fecha)
+        public RequestStatus ToggleEstado(int? id, bool estado, int usuario, DateTime fecha)
         {
-            string sql = ScriptsDatabase.AduanasEliminar;
+            string sql = ScriptsDatabase.CategoriasToggleEstado;
             using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
-                parametro.Add("@Adua_Id", id);
-                parametro.Add("@Adua_Modifica", usuario);
-                parametro.Add("@Adua_FechaModifica", fecha);
+                parametro.Add("@Cate_Id", id);
+                parametro.Add("@Cate_Estado", estado);
+                parametro.Add("@Cate_Modifica", usuario);
+                parametro.Add("@Cate_FechaModifica", fecha);
 
-                var result = db.Execute(
+                var result = db.QueryFirst(
                     sql, parametro,
                     commandType: CommandType.StoredProcedure
                 );
 
-                string mensaje = (result == 1) ? "exito" : "error";
+                string mensaje = (result.Resultado == 1) ? "exito" : "error";
 
-                return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+                return new RequestStatus { CodeStatus = result.Resultado, MessageStatus = mensaje };
+
             };
         }
-
         public tbCategorias Find(int? id)
         {
             string sql = ScriptsDatabase.AduanasBuscar;
@@ -76,9 +77,9 @@ namespace sistema_aduana.DataAccess.Repository
 
                 try
                 {
-                    var result = db.QueryFirstOrDefault<int>(sql, parameter, commandType: CommandType.StoredProcedure);
-                    string mensaje = (result != -1) ? "exito" : "error";
-                    return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+                    var result = db.QueryFirst(sql, parameter, commandType: CommandType.StoredProcedure);
+                    string mensaje = (result.Resultado != -1) ? "exito" : "error";
+                    return new RequestStatus { CodeStatus = result.Resultado, MessageStatus = mensaje };
                 }
                 catch (Exception ex)
                 {
@@ -92,7 +93,9 @@ namespace sistema_aduana.DataAccess.Repository
 
         public IEnumerable<tbCategorias> List()
         {
-            string sql = "[Gral].[sp_Categorias_listar]";
+
+            string sql = ScriptsDatabase.CategoriasListar;
+
 
             List<tbCategorias> result = new List<tbCategorias>();
 
@@ -118,9 +121,9 @@ namespace sistema_aduana.DataAccess.Repository
 
                 try
                 {
-                    var result = db.QueryFirstOrDefault<int>(sql, parameter, commandType: CommandType.StoredProcedure);
-                    string mensaje = (result == 1) ? "exito" : "error";
-                    return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+                    var result = db.QueryFirst(sql, parameter, commandType: CommandType.StoredProcedure);
+                    string mensaje = (result.Resultado == 1) ? "exito" : "error";
+                    return new RequestStatus { CodeStatus = result.Resultado, MessageStatus = mensaje };
                 }
                 catch (Exception ex)
                 {
@@ -131,6 +134,9 @@ namespace sistema_aduana.DataAccess.Repository
             }
         }
 
-
+        public RequestStatus Delete(int? id, int usuario, DateTime fecha)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

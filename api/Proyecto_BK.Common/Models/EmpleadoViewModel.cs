@@ -21,6 +21,8 @@ namespace sistema_aduana.Common.Models
         public DateTime Empl_FechaCreacion { get; set; }
         public int? Empl_Modifica { get; set; }
         public DateTime? Empl_FechaModifica { get; set; }
+        public string Empl_Email { get; set; }
+
         [NotMapped]
         public string Usua_Usuario { get; set; }
         [NotMapped]

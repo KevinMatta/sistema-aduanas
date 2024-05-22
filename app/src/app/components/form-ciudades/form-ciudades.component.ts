@@ -6,6 +6,7 @@ import { Pais } from "../../Models/PaisesViewModel";
 import { Estado } from "../../Models/EstadosViewModel";
 import { Ciudad } from "../../Models/CiudadesViewModel";
 import { PaisesService } from "../../Services/paises.service";
+import { CiudadesService } from "../../Services/ciudades.service";
 // import { MensajesService } from "../../Services/mensajes.service";
 
 @Component({
@@ -20,13 +21,13 @@ export class FormCiudadesComponent implements OnInit {
   estadosFiltrados: Estado[];
 
   ciudad: Ciudad = new Ciudad();
-  confirmarClave: string;
 
   constructor(
     public activeModal: NgbActiveModal,
     private paisesService: PaisesService,
     private toastr: ToastrService,
-    private estadosService: EstadosService
+    private estadosService: EstadosService,
+    private ciudadesService: CiudadesService
   ) {}
 
   isLoading = true;
@@ -34,6 +35,8 @@ export class FormCiudadesComponent implements OnInit {
     if (this.objetoParaEditar) {
       this.ciudad.Id = this.objetoParaEditar.Id;
       this.ciudad.Ciudad = this.objetoParaEditar.Ciudad;
+      this.ciudad.pais_Id = this.objetoParaEditar.pais_Id;
+      this.ciudad.esta_Id = this.objetoParaEditar.esta_Id;
       this.ciudad.Pais = this.objetoParaEditar.Pais ?? "- Seleccionar -";
       this.ciudad.Estado = this.objetoParaEditar.Estado ?? "- Seleccionar -";
     } else {
@@ -54,6 +57,9 @@ export class FormCiudadesComponent implements OnInit {
     this.estadosService.getData().subscribe(
       (data: Estado[]) => {
         this.estados = data;
+        if (this.ciudad.pais_Id) {
+          this.filtrarEstados(this.ciudad.pais_Id);
+        }
       },
       (error) => {
         console.log(error);
@@ -63,8 +69,6 @@ export class FormCiudadesComponent implements OnInit {
   }
 
   filtrarEstados(pais_Id: number) {
-    console.log(pais_Id, "pais_Id", this.estados, "this.estados");
-
     this.estadosFiltrados = this.estados.filter(
       (estado) => estado.pais_Id === pais_Id
     );
@@ -72,6 +76,8 @@ export class FormCiudadesComponent implements OnInit {
 
   paisSelect(paisId: number, pais: string) {
     this.ciudad.pais_Id = paisId;
+    this.ciudad.esta_Id = null;
+    this.ciudad.Estado = "- Seleccionar -";
     this.ciudad.Pais = pais;
     this.filtrarEstados(this.ciudad.pais_Id);
   }
@@ -99,35 +105,35 @@ export class FormCiudadesComponent implements OnInit {
       return;
     }
     if (!this.objetoParaEditar) {
-      await this.estadosService.Crear(this.ciudad).subscribe(
+      await this.ciudadesService.Crear(this.ciudad).subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
-            this.mostrarSuccess("estado creado con éxito.");
+            this.mostrarSuccess("Ciudad creada con éxito.");
             this.activeModal.close(true);
           } else {
             this.activeModal.close(false);
-            this.mostrarError("Error al crear el estado.");
+            this.mostrarError("Error al crear la ciudad.");
           }
         },
         (error) => {
-          this.mostrarError("Error al crear el estado.");
+          this.mostrarError("Error al crear la ciudad.");
           console.log(error);
           this.isLoading = false;
         }
       );
     } else {
-      await this.estadosService.Editar(this.ciudad).subscribe(
+      await this.ciudadesService.Editar(this.ciudad).subscribe(
         (data: any) => {
           if (data.code >= 200 && data.code <= 300) {
-            this.mostrarSuccess("estado editado con éxito.");
+            this.mostrarSuccess("Ciudad editada con éxito.");
             this.activeModal.close(true);
           } else {
             this.activeModal.close(false);
-            this.mostrarError("Error al editar el estado.");
+            this.mostrarError("Error al editar la ciudad.");
           }
         },
         (error) => {
-          this.mostrarError("Error al editar el estado.");
+          this.mostrarError("Error al editar la ciudad.");
           console.log(error);
           this.isLoading = false;
         }

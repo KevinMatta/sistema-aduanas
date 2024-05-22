@@ -65,7 +65,7 @@ namespace sistema_aduana.API.Controllers
             }
         }
 
-        [HttpDelete("Eliminar/{id}")]
+        [HttpDelete("Eliminar")]
         public IActionResult Eliminar(int id, int usuario)
         {
             try

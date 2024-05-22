@@ -206,6 +206,7 @@ namespace sistema_aduana.BusinessLogic.Services
             }
         }
         #endregion
+
         #region Estado
         public ServiceResult EstadoListar()
         {
@@ -277,6 +278,7 @@ namespace sistema_aduana.BusinessLogic.Services
             }
         }
         #endregion
+        
         #region Ciudad
         public ServiceResult CiudadListar()
         {
@@ -348,6 +350,7 @@ namespace sistema_aduana.BusinessLogic.Services
             }
         }
         #endregion
+        
         #region Empresa
         public ServiceResult EmpresaListar()
         {
@@ -419,6 +422,7 @@ namespace sistema_aduana.BusinessLogic.Services
             }
         }
         #endregion
+        
         #region Empleado
         public ServiceResult EmpleadoListar()
         {
@@ -490,13 +494,13 @@ namespace sistema_aduana.BusinessLogic.Services
             }
         }
 
-        public ServiceResult EmpleadoEliminar(int id, int usuario, DateTime fecha)
+        public ServiceResult EmpleadoToggleEstado(int id, bool estado, int usuario, DateTime fecha)
         {
             var result = new ServiceResult();
             try
             {
-                var deletedItem = _empleadoRepository.Delete(id, usuario, fecha);
-                return deletedItem.CodeStatus > 0 ? result.Ok(deletedItem) : result.Error(deletedItem);
+                var list = _empleadoRepository.ToggleEstado(id, estado, usuario, fecha);
+                return list.CodeStatus > 0 ? result.Ok(list) : result.Error(list);
             }
             catch (Exception ex)
             {
@@ -504,6 +508,7 @@ namespace sistema_aduana.BusinessLogic.Services
             }
         }
         #endregion
+
         #region EstadoCivil
         public ServiceResult EstadoCivilListar()
         {
@@ -574,12 +579,6 @@ namespace sistema_aduana.BusinessLogic.Services
                 return result.Error(ex.Message);
             }
         }
-        #endregion
-
-        #region Oficinas
-       
-       
-       
         #endregion
 
         #region Profesiones
@@ -886,6 +885,12 @@ namespace sistema_aduana.BusinessLogic.Services
         }
 
         #endregion
+
+
+        #region item
+
+    
+
         public ServiceResult itemListarcat(int cat)
         {
             var result = new ServiceResult();
@@ -901,11 +906,14 @@ namespace sistema_aduana.BusinessLogic.Services
         }
         #region item
         public ServiceResult itemListar()
+
         {
             var result = new ServiceResult();
             try
             {
+
                 var list = _itemRepository.List();
+
                 return result.Ok(list);
             }
             catch (Exception ex)
@@ -942,10 +950,28 @@ namespace sistema_aduana.BusinessLogic.Services
             }
         }
 
+        public ServiceResult ItemsToggleEstado(int id, bool estado, int usuario, DateTime fecha)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _itemRepository.ToggleEstado(id, estado, usuario, fecha);
+                return list.CodeStatus > 0 ? result.Ok(list) : result.Error(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
         #endregion
 
 
-        public ServiceResult catListart()
+        #region Categorias
+
+
+        public ServiceResult CategoriasListar()
+
         {
             var result = new ServiceResult();
             try
@@ -986,8 +1012,20 @@ namespace sistema_aduana.BusinessLogic.Services
                 return result.Error(ex.Message);
             }
         }
-        #region
 
+        public ServiceResult CategoriasToggleEstado(int id, bool estado, int usuario, DateTime fecha)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _categoriaRepository.ToggleEstado(id, estado, usuario, fecha);
+                return list.CodeStatus > 0 ? result.Ok(list) : result.Error(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
         #endregion
     }
 }

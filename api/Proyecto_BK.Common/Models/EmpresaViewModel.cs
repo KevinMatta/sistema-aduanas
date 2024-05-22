@@ -11,6 +11,7 @@ namespace sistema_aduana.Common.Models
     {
         public int Empr_Id { get; set; }
         public string Empr_Descripcion { get; set; }
+        public int? Ciud_Id { get; set; }
         public bool? Empr_Estado { get; set; }
         public int Empr_Creacion { get; set; }
         public DateTime Empr_FechaCreacion { get; set; }

@@ -25,17 +25,20 @@ export class AduanasService implements DataService {
       .pipe(map((response) => this.mapResponse(response.data)));
   }
 
-  Eliminar(val: any): Observable<any> {
-    console.log(val + "Para Eliminar");
-    return this.http.delete<any>(
-      `${this.BaseUrl + "Eliminar/" }?id=${val}&usuario=1`,
+  ToggleEstado(id: number, estado: boolean): Observable<any> {
+    return this.http.put<any>(
+      `${
+        this.BaseUrl + "ToggleEstado/"
+      }?Adua_Id=${id}&Usua_Modifica=1&estado=${estado}
+      `,
       { observe: "response" }
     );
   }
 
-  Editar(adua: any): Observable<any> {
+  Editar(adua: Aduana): Observable<any> {
     const json = {
-      adua_Id: 0,
+      adua_Id: adua.Id,
+      adua_Descripcion: adua.Aduana,
       esta_Id: adua.esta_Id,
       ciud_Id: adua.ciud_Id,
       esta_Descripcion: adua.Estado,
@@ -55,9 +58,10 @@ export class AduanasService implements DataService {
       .pipe(map((response) => response));
   }
 
-  Crear(adua: any): Observable<any> {
+  Crear(adua: Aduana): Observable<any> {
     const json = {
       adua_Id: 0,
+      adua_Descripcion: adua.Aduana,
       esta_Id: adua.esta_Id,
       ciud_Id: adua.ciud_Id,
       esta_Descripcion: adua.Estado,
@@ -82,10 +86,11 @@ export class AduanasService implements DataService {
       const model: Aduana = {
         Id: item.adua_Id,
         Aduana: item.adua_Descripcion,
-        Estado: item.esta_Descripcion,
-        esta_Id: item.esta_Id,
-        Ciudad: item.ciud_Descripcion,
         ciud_Id: item.ciud_Id,
+        Ciudad: item.ciud_Descripcion,
+        esta_Id: item.esta_Id,
+        Estado: item.esta_Descripcion,
+        _Activo: item.adua_Estado,
       };
       return model;
     });

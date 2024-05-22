@@ -15,25 +15,31 @@ namespace sistema_aduana.DataAccess.Repository
 {
     public class AduanaRepository : IRepository<tbAduanas>
     {
-        public RequestStatus Delete(int? id, int usuario, DateTime fecha)
+        public RequestStatus ToggleEstado(int? id, bool estado, int usuario, DateTime fecha)
         {
-            string sql = ScriptsDatabase.AduanasEliminar;
+            string sql = ScriptsDatabase.AduanasToggleEstado;
             using (var db = new SqlConnection(sistema_aduanaContext.ConnectionString))
             {
                 var parametro = new DynamicParameters();
                 parametro.Add("@Adua_Id", id);
+                parametro.Add("@Adua_Estado", estado);
                 parametro.Add("@Adua_Modifica", usuario);
                 parametro.Add("@Adua_FechaModifica", fecha);
 
-                var result = db.Execute(
+                var result = db.QueryFirst(
                     sql, parametro,
                     commandType: CommandType.StoredProcedure
                 );
 
-                string mensaje = (result == 1) ? "exito" : "error";
+                string mensaje = (result.Resultado == 1) ? "exito" : "error";
 
-                return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+                return new RequestStatus { CodeStatus = result.Resultado, MessageStatus = mensaje };
+
             };
+        }
+        public RequestStatus Delete(int? id, int usuario, DateTime fecha)
+        {
+            throw new NotImplementedException();
         }
 
         public tbAduanas Find(int? id)

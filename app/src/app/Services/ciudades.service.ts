@@ -28,23 +28,23 @@ export class CiudadesService implements DataService {
 
   Eliminar(val: any): Observable<any> {
     console.log(val + "Para Eliminar");
-    return this.http.delete<any>(
-      `${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1`,
-      { observe: "response" }
-    );
+    return this.http
+      .delete<any>(`${this.BaseUrl + "Eliminar/"}?id=${val}&usuario=1`)
+      .pipe(map((response) => response));
   }
 
-  Editar(ciud: any): Observable<any> {
+  Editar(ciud: Ciudad): Observable<any> {
     const json = {
       ciud_Id: ciud.Id,
+      ciud_Descripcion: ciud.Ciudad,
       pais_Id: ciud.pais_Id,
       esta_Id: ciud.esta_Id,
       esta_Descripcion: ciud.Estado,
-      esta_Estado: true,
-      esta_Creacion: 1,
-      esta_FechaCreacion: new Date().toISOString(),
-      esta_Modifica: 1,
-      esta_FechaModifica: new Date().toISOString(),
+      ciud_Estado: true,
+      ciud_Creacion: 1,
+      ciud_FechaCreacion: new Date().toISOString(),
+      ciud_Modifica: 1,
+      ciud_FechaModifica: new Date().toISOString(),
       Creacion: "string",
       Modifica: "string",
     };
@@ -55,17 +55,18 @@ export class CiudadesService implements DataService {
       .pipe(map((response) => response));
   }
 
-  Crear(ciud: any): Observable<any> {
+  Crear(ciud: Ciudad): Observable<any> {
     const json = {
       ciud_Id: 0,
+      ciud_Descripcion: ciud.Ciudad,
       pais_Id: ciud.pais_Id,
       esta_Id: ciud.esta_Id,
-      pais_Descripcion: ciud.Pais,
-      pais_Estado: true,
-      pais_Creacion: 1,
-      pais_FechaCreacion: new Date().toISOString(),
-      pais_Modifica: 1,
-      pais_FechaModifica: new Date().toISOString(),
+      esta_Descripcion: ciud.Estado,
+      ciud_Estado: true,
+      ciud_Creacion: 1,
+      ciud_FechaCreacion: new Date().toISOString(),
+      ciud_Modifica: 1,
+      ciud_FechaModifica: new Date().toISOString(),
       Creacion: "string",
       Modifica: "string",
     };
@@ -84,7 +85,8 @@ export class CiudadesService implements DataService {
         esta_Id: item.esta_Id,
         Estado: item.esta_Descripcion,
         pais_Id: item.pais_Id,
-        Pais: item.pais_Descripcion
+        Pais: item.pais_Descripcion,
+        _Estado: item.ciud_Estado,
       };
       return model;
     });

@@ -15,10 +15,7 @@ import { Profesion } from "../../Models/ProfesionesViewModel";
 import { PersonaNaturalService } from "../../Services/personaNatural.service";
 import { ModalPdfComponent } from "../modal-pdf/modal-pdf.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { SafeResourceUrl } from "@angular/platform-browser";
-import {jsPDF} from "jspdf";
-import html2PDF from 'jspdf-html2canvas';
-// import * as html2pdf from "html2pdf.js";
+import { APIResponse } from "../../Models/APIResponseViewModel";
 
 @Component({
   selector: "app-form-persona-natural",
@@ -37,7 +34,7 @@ export class FormPersonaNaturalComponent implements OnInit {
   estadosCiviles: EstadoCivil[];
   profesiones: Profesion[];
 
-  endpointSubirArchivo = "/API/PersonaNatural/SubirRTNsolicitante";
+  endpointSubirArchivo = "/API/PersonaNatural/SubirArchivo";
 
   personaNatural: PersonaNatural = new PersonaNatural();
 
@@ -210,7 +207,9 @@ export class FormPersonaNaturalComponent implements OnInit {
       this.utilitariosService
         .subirArchivo(this.endpointSubirArchivo, formData)
         .subscribe(
-          (data: any[]) => {
+          (data: APIResponse<any>) => {
+            console.log(data);
+            
             this.personaNatural.RtnSolicitanteUrl =
               "https://kobybucketvjeb.s3.us-east-2.amazonaws.com/" + keyName;
           },
